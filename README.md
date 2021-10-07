@@ -1,2 +1,4 @@
-# CMPUT301F21T04
-CMPUT 301 Project - 
+# Habitize
+CMPUT 301 Project - Group CMPUT301F21T04
+
+
