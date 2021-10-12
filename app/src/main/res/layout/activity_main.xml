@@ -6,13 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <Button
+        android:id="@+id/followReq"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="288dp"
+        android:layout_height="129dp"
+        android:layout_marginTop="36dp"
+        android:text="FOLLOW REQUESTS"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allHabits"
+        app:layout_constraintVertical_bias="0.052" />
 
+    <Button
+        android:id="@+id/todaysHabits"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="288dp"
+        android:layout_height="129dp"
+        android:layout_marginTop="36dp"
+        android:text="TODAY'S HABITS"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addHabit" />
+
+    <Button
+        android:id="@+id/allHabits"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="288dp"
+        android:layout_height="129dp"
+        android:layout_marginTop="36dp"
+        android:text="ALL HABITS"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/todaysHabits" />
+
+    <Button
+        android:id="@+id/addHabit"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="288dp"
+        android:layout_height="129dp"
+        android:layout_marginTop="36dp"
+        android:text="ADD HABIT"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
