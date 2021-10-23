@@ -1,6 +1,10 @@
 package com.example.habitize;
 
+<<<<<<< HEAD
 public class User  {
+=======
+public class User {
+>>>>>>> Login&singup
     private String UserName;
     private String Password;
     private String FirstName;
@@ -10,6 +14,7 @@ public class User  {
     private String Progress;
     private String UserHabits;
     private String Points;
+<<<<<<< HEAD
 
     User(String UserName,String Password,String FirstName,
          String LastName,String Following, String Followers,
@@ -98,4 +103,6 @@ public class User  {
     public void setPoints(String points) {
         Points = points;
     }
+=======
+>>>>>>> Login&singup
 }
