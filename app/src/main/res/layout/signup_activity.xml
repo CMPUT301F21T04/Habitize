@@ -18,61 +18,62 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="-6dp" />
 
+
     <EditText
         android:id="@+id/firstName"
         android:layout_width="209dp"
         android:layout_height="48dp"
         android:hint="First Name"
-        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="147dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="151dp" />
 
     <EditText
         android:id="@+id/lastName"
         android:layout_width="209dp"
         android:layout_height="48dp"
         android:hint="Last Name"
-        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="233dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="213dp" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="209dp"
+        android:layout_height="48dp"
+        android:hint="Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="276dp" />
 
     <EditText
         android:id="@+id/userName"
         android:layout_width="209dp"
         android:layout_height="48dp"
         android:hint="username"
-        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="316dp"
-        tools:ignore="MissingConstraints" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="209dp"
         android:layout_height="48dp"
         android:hint="Password"
-        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="396dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="405dp" />
 
     <EditText
         android:id="@+id/conPassword"
         android:layout_width="209dp"
         android:layout_height="48dp"
         android:hint="Confirm Password"
-        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="481dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="467dp" />
 
     <Button
         android:id="@+id/create_button"
@@ -82,21 +83,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="602dp"
-        tools:ignore="MissingConstraints" />
+        tools:layout_editor_absoluteY="602dp" />
 
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="413dp"
-        android:layout_height="72dp"
-        android:background="@color/purple_500"
-        android:text="         HABITIZE"
-        android:textColor="@color/white"
-        android:textSize="48sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="-6dp"
-        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
