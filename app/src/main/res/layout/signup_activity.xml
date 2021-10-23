@@ -18,6 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="-6dp" />
 
+
     <EditText
         android:id="@+id/firstName"
         android:layout_width="209dp"
@@ -25,7 +26,7 @@
         android:hint="First Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="147dp" />
+        tools:layout_editor_absoluteY="151dp" />
 
     <EditText
         android:id="@+id/lastName"
@@ -34,17 +35,27 @@
         android:hint="Last Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="233dp" />
+        tools:layout_editor_absoluteY="213dp" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="209dp"
+        android:layout_height="48dp"
+        android:hint="Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="276dp" />
 
     <EditText
         android:id="@+id/userName"
         android:layout_width="209dp"
         android:layout_height="48dp"
         android:hint="username"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="316dp" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
 
     <EditText
         android:id="@+id/password"
@@ -53,7 +64,7 @@
         android:hint="Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="396dp" />
+        tools:layout_editor_absoluteY="405dp" />
 
     <EditText
         android:id="@+id/conPassword"
@@ -62,7 +73,7 @@
         android:hint="Confirm Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="481dp" />
+        tools:layout_editor_absoluteY="467dp" />
 
     <Button
         android:id="@+id/create_button"
