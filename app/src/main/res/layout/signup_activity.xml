@@ -104,4 +104,12 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="-6dp"
         tools:ignore="MissingConstraints" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="170dp"
+        tools:layout_editor_absoluteY="537dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
