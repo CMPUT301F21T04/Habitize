@@ -23,7 +23,7 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_activity);
-
+        Button login = findViewById(R.id.loginbutton);
         Button create = findViewById(R.id.create_button);
         EditText firstName = findViewById(R.id.firstName);
         EditText lastName = findViewById(R.id.lastName);
@@ -31,16 +31,22 @@ public class SignUp extends AppCompatActivity {
         EditText password = findViewById(R.id.password);
         EditText email = findViewById(R.id.email);
         ProgressBar progressBar = findViewById(R.id.progressBar2);
+
         FirebaseAuth fAuth;
         fAuth = FirebaseAuth.getInstance();
-
+        progressBar.setVisibility(View.GONE);
 
         if (fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
         }
 
-
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Login_Activity.class));
+            }
+        });
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

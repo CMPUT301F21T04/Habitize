@@ -2,10 +2,12 @@ package com.example.habitize;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,7 +17,11 @@ public class MainActivity extends AppCompatActivity {
     private Button todaysHabits;
     private Button followReq;
 
+    // logging out method
+
+
     @Override
+    
     protected void onCreate(Bundle savedInstanceState) {
 
         db = FirebaseFirestore.getInstance(); // initialize database. We don't really need to do this here.
@@ -25,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         allHabits = findViewById(R.id.allHabits);
         todaysHabits = findViewById(R.id.todaysHabits);
         followReq = findViewById(R.id.followReq);
-
+        
+        
         // branch to new activities here
         addHabit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,5 +61,10 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+    public void logout(View view){
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(),Login_Activity.class));
+        finish();
     }
 }
