@@ -14,39 +14,24 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstName"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/firstName" />
 
     <EditText
         android:id="@+id/firstName"
         android:layout_width="209dp"
         android:layout_height="48dp"
-<<<<<<< HEAD:app/src/main/res/layout/register_activity.xml
         android:layout_marginTop="147dp"
-=======
-        android:layout_marginTop="60dp"
->>>>>>> Login&singup:app/src/main/res/layout/signup_activity.xml
         android:hint="First Name"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD:app/src/main/res/layout/register_activity.xml
-        app:layout_constraintTop_toTopOf="parent"
-=======
-        app:layout_constraintTop_toBottomOf="@+id/textView"
->>>>>>> Login&singup:app/src/main/res/layout/signup_activity.xml
-        tools:ignore="MissingConstraints" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/lastName"
         android:layout_width="209dp"
         android:layout_height="48dp"
-<<<<<<< HEAD:app/src/main/res/layout/register_activity.xml
-        android:layout_marginTop="24dp"
-=======
         android:layout_marginTop="20dp"
->>>>>>> Login&singup:app/src/main/res/layout/signup_activity.xml
         android:hint="Last Name"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,11 +43,7 @@
         android:id="@+id/userName"
         android:layout_width="209dp"
         android:layout_height="48dp"
-<<<<<<< HEAD:app/src/main/res/layout/register_activity.xml
-        android:layout_marginTop="24dp"
-=======
         android:layout_marginTop="96dp"
->>>>>>> Login&singup:app/src/main/res/layout/signup_activity.xml
         android:hint="username"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,68 +51,30 @@
         app:layout_constraintTop_toBottomOf="@+id/lastName"
         tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="209dp"
-        android:layout_height="48dp"
-<<<<<<< HEAD:app/src/main/res/layout/register_activity.xml
-        android:layout_marginTop="24dp"
-        android:hint="Email"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
-=======
-        android:layout_marginTop="20dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName"
-        tools:ignore="MissingConstraints" />
->>>>>>> Login&singup:app/src/main/res/layout/signup_activity.xml
 
     <EditText
         android:id="@+id/password"
         android:layout_width="209dp"
         android:layout_height="48dp"
-<<<<<<< HEAD:app/src/main/res/layout/register_activity.xml
         android:layout_marginTop="24dp"
         android:hint="Password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
-=======
-        android:layout_marginTop="20dp"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        tools:ignore="MissingConstraints" />
->>>>>>> Login&singup:app/src/main/res/layout/signup_activity.xml
+
 
     <Button
         android:id="@+id/create_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="73dp"
-<<<<<<< HEAD:app/src/main/res/layout/register_activity.xml
         android:layout_marginBottom="81dp"
-=======
->>>>>>> Login&singup:app/src/main/res/layout/signup_activity.xml
         android:text="CREATE ACCOUNT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-<<<<<<< HEAD:app/src/main/res/layout/register_activity.xml
         app:layout_constraintStart_toStartOf="parent" />
-=======
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/conPassword"
-        tools:ignore="MissingConstraints" />
->>>>>>> Login&singup:app/src/main/res/layout/signup_activity.xml
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

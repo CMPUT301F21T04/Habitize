@@ -28,8 +28,7 @@ public class SignUp extends AppCompatActivity {
         EditText firstName = findViewById(R.id.firstName);
         EditText lastName = findViewById(R.id.lastName);
         EditText username = findViewById(R.id.userName);
-        EditText password = findViewById(R.id.password);            //find a way that password will not be shown
-        EditText confirmPass = findViewById(R.id.conPassword);
+        EditText password = findViewById(R.id.password);
         EditText email = findViewById(R.id.email);
         ProgressBar progressBar = findViewById(R.id.progressBar);
 
