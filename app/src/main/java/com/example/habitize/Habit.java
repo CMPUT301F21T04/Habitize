@@ -15,6 +15,12 @@ public class Habit {
     public void incrementStreak(){
         this.streak++;
     }
+    public String getName(){
+        return this.name;
+    }
+    public String getDescription(){
+        return this.description;
+    }
 
     // TODO: should this trigger automatically if a day goes by without incrementstreak?
     public void endStreak(){
