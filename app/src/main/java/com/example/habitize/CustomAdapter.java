@@ -17,6 +17,8 @@ public class CustomAdapter extends ArrayAdapter<Habit> {
     private ArrayList<Habit> habits;
     private Context context;
 
+    // TODO: Add more fields here. Image..etc
+
     public CustomAdapter(Context context, ArrayList<Habit> habits){
         super(context,0,habits);
         this.habits = habits;
@@ -25,7 +27,18 @@ public class CustomAdapter extends ArrayAdapter<Habit> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return super.getView(position, convertView, parent);
+        View view = convertView;
+        if(view == null){
+            view = LayoutInflater.from(context).inflate(R.layout.list_content,parent,false);
+        }
+
+        Habit habit = habits.get(position);
+        TextView nameField = view.findViewById(R.id.habitName);
+        nameField.setText(habit.getName());
+
+
+        return view;
+
 
     }
 
