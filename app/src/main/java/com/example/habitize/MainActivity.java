@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance(); // initialize database. We don't really need to do this here.
         // we can have the database instantiated in only the activities where it is needed to pull data
+        setContentView(R.layout.activity_main);
         addHabit = findViewById(R.id.addHabit); // our 4 buttons
         allHabits = findViewById(R.id.allHabits);
         todaysHabits = findViewById(R.id.todaysHabits);

@@ -30,7 +30,7 @@ public class SignUp extends AppCompatActivity {
         EditText username = findViewById(R.id.userName);
         EditText password = findViewById(R.id.password);
         EditText email = findViewById(R.id.email);
-        ProgressBar progressBar = findViewById(R.id.progressBar);
+        ProgressBar progressBar = findViewById(R.id.progressBar2);
         FirebaseAuth fAuth;
         fAuth = FirebaseAuth.getInstance();
 
