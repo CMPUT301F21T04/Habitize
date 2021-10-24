@@ -6,6 +6,17 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/email"
+        android:layout_width="209dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="96dp"
+        android:hint="Email"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstName" />
+
+    <EditText
         android:id="@+id/firstName"
         android:layout_width="209dp"
         android:layout_height="48dp"
@@ -14,15 +25,13 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/lastName"
         android:layout_width="209dp"
         android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:hint="Last Name"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +43,7 @@
         android:id="@+id/userName"
         android:layout_width="209dp"
         android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="96dp"
         android:hint="username"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,17 +51,6 @@
         app:layout_constraintTop_toBottomOf="@+id/lastName"
         tools:ignore="MissingConstraints" />
 
-
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="209dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="24dp"
-        android:hint="Email"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
 
     <EditText
         android:id="@+id/password"
@@ -64,6 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
+
 
     <Button
         android:id="@+id/create_button"

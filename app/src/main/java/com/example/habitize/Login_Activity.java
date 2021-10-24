@@ -96,7 +96,7 @@ public class Login_Activity extends AppCompatActivity {
             //when register button is clicked, redirect user to register screen
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+                startActivity(new Intent(getApplicationContext(),SignUp.class));
             }
         });
         forgot_Button.setOnClickListener(new View.OnClickListener() {
