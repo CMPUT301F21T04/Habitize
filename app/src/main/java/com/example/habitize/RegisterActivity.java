@@ -26,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText lastName_EditText;
     EditText username_EditText;
     EditText password_EditText;
-    EditText confirmPass_EditText;
+    EditText email_EditText;
 
 
     @Override
@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         lastName_EditText = findViewById(R.id.lastName);
         username_EditText = findViewById(R.id.userName);
         password_EditText = findViewById(R.id.password);
-        confirmPass_EditText = findViewById(R.id.conPassword);
+        email_EditText = findViewById(R.id.email);
 
         // Database Accessing
         db = FirebaseFirestore.getInstance();
@@ -52,17 +52,18 @@ public class RegisterActivity extends AppCompatActivity {
                 final String lastName = lastName_EditText.getText().toString();
                 final String username = username_EditText.getText().toString();
                 final String password = password_EditText.getText().toString();
-                final String confirmPass = confirmPass_EditText.getText().toString();
+                final String email = email_EditText.getText().toString();
                 final String TAG = "Sample"; // idk what this is
                 HashMap<String, String> data = new HashMap<>();
 
                 if (firstName.length()>0 && lastName.length()>0 && username.length()>0
-                        && password.length()>0 && confirmPass.length()>0){
+                        && password.length()>0 && email.length()>0){
                     data.put("First Name",firstName);
                     data.put("Last Name", lastName);
                     data.put("Password",password);
+                    data.put("Username",username);
                     collectionReference
-                            .document(username)
+                            .document(email)
                             .set(data)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -71,8 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     firstName_EditText.setText("");
                                     lastName_EditText.setText("");
                                     username_EditText.setText("");
+                                    email_EditText.setText("");
                                     password_EditText.setText("");
-                                    confirmPass_EditText.setText("");
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -90,6 +91,5 @@ public class RegisterActivity extends AppCompatActivity {
 }
 
 // To be implemented:
-// * must confirm that password and confirmpass have the same value
 // * error messages when not all fields are filled
 // * check the username in the database, if it already exist then deny register (display error message)
