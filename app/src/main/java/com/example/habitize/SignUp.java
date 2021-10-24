@@ -18,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUp extends AppCompatActivity {
-    FirebaseAuth fAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +32,16 @@ public class SignUp extends AppCompatActivity {
         EditText confirmPass = findViewById(R.id.conPassword);
         EditText email = findViewById(R.id.email);
         ProgressBar progressBar = findViewById(R.id.progressBar);
+        FirebaseAuth fAuth;
+        fAuth = FirebaseAuth.getInstance();
 
 
         if (fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            finish();
         }
 
-        fAuth = FirebaseAuth.getInstance();
+
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +53,10 @@ public class SignUp extends AppCompatActivity {
                     return;
                 }
                 if (TextUtils.isEmpty(inputPassowrd)){
+                    password.setError("Please enter a password!");
+                    return;
+                }
+                if (inputPassowrd.length() < 8){
                     password.setError("Passsword should be greater than 8 characters");
                     return;
                 }
