@@ -8,7 +8,7 @@ public class Habit {
     // TODO: We need image + date functionality
 
     // TODO: Add image + date constructors
-    public void Habit(String name, String description){
+    public Habit(String name, String description){
         this.name = name;
         this.description = description;
     }
