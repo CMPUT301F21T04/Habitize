@@ -4,8 +4,7 @@ import static org.junit.Assert.*;
 import android.app.Activity;
 import android.widget.EditText;
 import android.widget.ListView;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import com.robotium.solo.Solo;
