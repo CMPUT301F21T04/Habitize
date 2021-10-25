@@ -34,6 +34,7 @@ public class CustomAdapter extends ArrayAdapter<Habit> {
 
         Habit habit = habits.get(position);
         TextView nameField = view.findViewById(R.id.habitName);
+
         nameField.setText(habit.getName());
 
 

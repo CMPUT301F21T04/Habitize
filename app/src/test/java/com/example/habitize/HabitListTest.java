@@ -9,7 +9,7 @@ import com.example.habitize.HabitList;
 
 import org.junit.Test;
 
-public class ListCityTest {
+public class HabitListTest {
     private HabitList testHabitList(){
         HabitList habitlist = new HabitList();
         return habitlist;
