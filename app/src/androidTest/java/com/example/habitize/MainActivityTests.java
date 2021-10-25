@@ -14,11 +14,11 @@ import org.junit.Test;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-public class AllHabitsTest {
+public class MainActivityTests {
     private Solo solo;
     @Rule
-    public ActivityTestRule<AllHabitsActivity> rule =
-            new ActivityTestRule<>(AllHabitsActivity.class,true,true);
+    public ActivityTestRule<MainActivity> rule =
+            new ActivityTestRule<>(MainActivity.class,true,true);
 
     @Before
     public void setUp() throws Exception{
@@ -30,6 +30,12 @@ public class AllHabitsTest {
     }
     @Test
     public void correctViewTest(){
+        solo.assertCurrentActivity("Wrong activity",MainActivity.class);
+    }
+
+    @Test
+    public void switchAllHabitsTest(){
+        solo.clickOnButton("TODAY'S HABITS");
         solo.assertCurrentActivity("Wrong activity",AllHabitsActivity.class);
     }
 
