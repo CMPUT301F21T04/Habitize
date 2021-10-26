@@ -16,10 +16,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 
 public class SignUp extends AppCompatActivity {
     private FirebaseFirestore db; // our database
+    private CollectionReference users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,10 @@ public class SignUp extends AppCompatActivity {
         EditText password = findViewById(R.id.password);
         EditText email = findViewById(R.id.email);
         ProgressBar progressBar = findViewById(R.id.progressBar2);
+
+
+        db = FirebaseFirestore.getInstance(); // init db
+        users = db.collection("Users"); // reference to users collection
 
         FirebaseAuth fAuth;
         fAuth = FirebaseAuth.getInstance();
@@ -75,6 +83,12 @@ public class SignUp extends AppCompatActivity {
                         if (task.isSuccessful()){
                             Toast.makeText(SignUp.this,"You have made an account successfully!",Toast.LENGTH_LONG).show();
                             // we created an account. Lets set up the user stuff
+                            // TODO: Put legit values here later. Just filling the constructor because I need it to work
+                            User newUser = new User(inputEmail,inputPassowrd,inputEmail,inputEmail);
+                            HashMap<String,User> userData = new HashMap<>();
+                            userData.put("User Class",newUser);
+                            users.document(inputEmail).set(userData); // user data gets stored.
+                            // TODO: pass user data down into main
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
 

@@ -1,5 +1,6 @@
 package com.example.habitize;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class User {
@@ -7,25 +8,24 @@ public class User {
     private String Password;
     private String FirstName;
     private String LastName;
-    private String Following;
-    private String Followers;
-    private String Progress;
+    private ArrayList<User> Following;
+    private ArrayList<User> Followers;
+    private int Progress;
     private ArrayList<Habit> UserHabits;
-    private String Points;
+    private int Points;
 
 
     User(String UserName,String Password,String FirstName,
-         String LastName,String Following, String Followers,
-         String Progress, String UserHabits, String Points){
+         String LastName){
         this.UserName = UserName;
         this.Password = Password;
         this.FirstName = FirstName;
         this.LastName = LastName;
-        this.Following = Following;
-        this.Followers = Followers;
-        this.Progress = Progress;
+        this.Following = new ArrayList<>(); // followingList
+        this.Followers = new ArrayList<>(); // followerList
+        this.Progress = 0; // we start with zero progress
         this.UserHabits = new ArrayList<>(); // new arraylist for user habits
-        this.Points = Points;
+        this.Points = 0; // start with zero progress
     }
 
     //Getters and Setters
@@ -62,44 +62,44 @@ public class User {
         LastName = lastName;
     }
 
-    public String getFollowing() {
+    public ArrayList<User> getFollowing() {
         return Following;
     }
 
-    public void setFollowing(String following) {
-        Following = following;
+    public void setFollowing(ArrayList<User> following) {
+        this.Following = following;
     }
 
-    public String getFollowers() {
+    public ArrayList<User> getFollowers() {
         return Followers;
     }
 
-    public void setFollowers(String followers) {
-        Followers = followers;
+    public void setFollowers(ArrayList<User> followers) {
+        this.Followers = followers;
     }
 
-    public String getProgress() {
-        return Progress;
+    public int getProgress() {
+        return this.Progress;
     }
 
-    public void setProgress(String progress) {
-        Progress = progress;
+    public void setProgress(int progress) {
+        this.Progress = progress;
     }
 
     public ArrayList<Habit> getUserHabits() {
-        return UserHabits;
+        return this.UserHabits;
     }
 
     public void addUserHabit(Habit newHabit) {
         this.UserHabits.add(newHabit);
     }
 
-    public String getPoints() {
-        return Points;
+    public int getPoints() {
+        return this.Points;
     }
 
-    public void setPoints(String points) {
-        Points = points;
+    public void setPoints(int points) {
+        this.Points = points;
     }
 
 }
