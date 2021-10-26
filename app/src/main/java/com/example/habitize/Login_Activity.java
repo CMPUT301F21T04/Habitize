@@ -1,6 +1,7 @@
 package com.example.habitize;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,7 +25,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firestore.v1.WriteResult;
 
 import java.util.HashMap;
@@ -39,10 +43,11 @@ public class Login_Activity extends AppCompatActivity {
     FirebaseAuth Authenticator;
     private FirebaseFirestore db; // our database
     private CollectionReference users;
-    private DocumentReference user;
-
+    private DocumentReference docRef;
+    private DocumentSnapshot userData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         // UI components
@@ -90,8 +95,22 @@ public class Login_Activity extends AppCompatActivity {
                         // Determine if the login is successful or not
 //                      // If successful, display a success message and redirect user to MainActivity
                         if (task.isSuccessful()) {
-                            Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            docRef = db.collection("Users").document(email_EditText.getText().toString());
+                           docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                               @Override
+                               public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                   User currentUser = documentSnapshot.toObject(User.class);
+                                   System.out.print(currentUser.getFirstName());
+                                   Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                   Intent intent = new Intent(Login_Activity.this,MainActivity.class);
+                                   Bundle userBundle = new Bundle();
+                                   userBundle.putSerializable("User",currentUser);
+                                   intent.putExtras(userBundle);
+                                   startActivity(intent);
+                               }
+
+                           });
+
 
 
                         } else {

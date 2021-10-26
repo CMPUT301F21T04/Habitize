@@ -19,14 +19,19 @@ public class MainActivity extends AppCompatActivity {
     private Button followReq;
     private Button logOut;
     private Toolbar toolBar;
+    private User currentUser;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         logOut = findViewById(R.id.logout);
 
+        currentUser = (User)getIntent().getExtras().getSerializable("User"); // retrieving the user
 
+
+        System.out.println(currentUser.getFirstName());
         db = FirebaseFirestore.getInstance(); // initialize database. We don't really need to do this here.
         // we can have the database instantiated in only the activities where it is needed to pull data
         addHabit = findViewById(R.id.addHabit); // our 4 buttons
@@ -52,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,AllHabitsActivity.class);
+                Bundle userBundle = new Bundle(); // bundling user and sending them down
+                userBundle.putSerializable("User",currentUser);
+                intent.putExtras(userBundle);
                 startActivity(intent);
 
             }
@@ -72,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        super.onCreate(savedInstanceState);
+
     }
     // get this to log out when "back" is pressed on navBar
     public void logout(){

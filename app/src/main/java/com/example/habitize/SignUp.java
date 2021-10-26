@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SignUp extends AppCompatActivity {
@@ -46,10 +47,13 @@ public class SignUp extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         progressBar.setVisibility(View.GONE);
 
-        if (fAuth.getCurrentUser() != null){
+        // disabling so i stop getting merked
+        /*if (fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
         }
+
+         */
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,12 +88,17 @@ public class SignUp extends AppCompatActivity {
                             Toast.makeText(SignUp.this,"You have made an account successfully!",Toast.LENGTH_LONG).show();
                             // we created an account. Lets set up the user stuff
                             // TODO: Put legit values here later. Just filling the constructor because I need it to work
-                            User newUser = new User(inputEmail,inputPassowrd,inputEmail,inputEmail);
+                            User newUser = new User(inputEmail,inputPassowrd,inputEmail,inputEmail,new ArrayList<User>(),new ArrayList<User>(),0,new ArrayList<Habit>(),0);
                             HashMap<String,User> userData = new HashMap<>();
-                            userData.put("User Class",newUser);
+                            userData.put("User",newUser);
                             users.document(inputEmail).set(userData); // user data gets stored.
                             // TODO: pass user data down into main
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            Intent intent = new Intent(SignUp.this,MainActivity.class);
+                            // we do it with intents so we can pass down arguments.
+                            Bundle userBundle = new Bundle();
+                            userBundle.putSerializable("User",newUser); // bundling the user
+                            intent.putExtras(userBundle);
+                            startActivity(intent); // start the activity with the passed user
 
 
                         }else{
