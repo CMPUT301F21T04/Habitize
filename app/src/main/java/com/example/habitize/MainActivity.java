@@ -1,12 +1,14 @@
 package com.example.habitize;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,10 +17,14 @@ public class MainActivity extends AppCompatActivity {
     private Button allHabits;
     private Button todaysHabits;
     private Button followReq;
+    private Button logOut;
+    private Toolbar toolBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
+        logOut = findViewById(R.id.logout);
 
 
         db = FirebaseFirestore.getInstance(); // initialize database. We don't really need to do this here.
@@ -56,7 +62,21 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout(); // logout
+                finish(); // close, leave to parent activity.
+            }
+        });
+
+
 
         super.onCreate(savedInstanceState);
+    }
+    // get this to log out when "back" is pressed on navBar
+    public void logout(){
+        FirebaseAuth.getInstance().signOut();
+
     }
 }
