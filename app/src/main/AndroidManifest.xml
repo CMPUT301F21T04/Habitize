@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".AllHabitsActivity">
         </activity>
-        <activity android:name=".AllHabitsActivity">
+        <activity android:name=".AllHabitsActivity" >
 
         </activity>
     </application>
