@@ -16,8 +16,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignUp extends AppCompatActivity {
+    private FirebaseFirestore db; // our database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +68,16 @@ public class SignUp extends AppCompatActivity {
                     return;
                 }
                 progressBar.setVisibility(View.VISIBLE);
-
+                // TODO: the startActivity here might mess with NAVCONTROLLER
                 fAuth.createUserWithEmailAndPassword(inputEmail,inputPassowrd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(SignUp.this,"You have made an account successfully!",Toast.LENGTH_LONG).show();
+                            // we created an account. Lets set up the user stuff
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+
                         }else{
                             Toast.makeText(SignUp.this,"Something Wrong!" + task.getException().getMessage(),Toast.LENGTH_LONG).show();
 

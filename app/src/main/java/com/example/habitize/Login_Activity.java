@@ -22,6 +22,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firestore.v1.WriteResult;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Login_Activity extends AppCompatActivity {
     EditText email_EditText, password_EditText;
@@ -30,13 +37,14 @@ public class Login_Activity extends AppCompatActivity {
     AlertDialog.Builder resetPass_alert;
     LayoutInflater inflater;
     FirebaseAuth Authenticator;
-
+    private FirebaseFirestore db; // our database
+    private CollectionReference users;
+    private DocumentReference user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-
         // UI components
         email_EditText = findViewById(R.id.email_login);
         password_EditText = findViewById(R.id.password_login);
@@ -84,6 +92,8 @@ public class Login_Activity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+
                         } else {
                             Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);

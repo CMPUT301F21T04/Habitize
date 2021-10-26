@@ -1,5 +1,7 @@
 package com.example.habitize;
 
+import java.util.ArrayList;
+
 public class User {
     private String UserName;
     private String Password;
@@ -8,7 +10,7 @@ public class User {
     private String Following;
     private String Followers;
     private String Progress;
-    private String UserHabits;
+    private ArrayList<Habit> UserHabits;
     private String Points;
 
 
@@ -22,7 +24,7 @@ public class User {
         this.Following = Following;
         this.Followers = Followers;
         this.Progress = Progress;
-        this.UserHabits = UserHabits;
+        this.UserHabits = new ArrayList<>(); // new arraylist for user habits
         this.Points = Points;
     }
 
@@ -84,12 +86,12 @@ public class User {
         Progress = progress;
     }
 
-    public String getUserHabits() {
+    public ArrayList<Habit> getUserHabits() {
         return UserHabits;
     }
 
-    public void setUserHabits(String userHabits) {
-        UserHabits = userHabits;
+    public void addUserHabit(Habit newHabit) {
+        this.UserHabits.add(newHabit);
     }
 
     public String getPoints() {
