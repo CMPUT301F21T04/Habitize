@@ -99,12 +99,14 @@ public class Login_Activity extends AppCompatActivity {
                            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                @Override
                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                   User currentUser = documentSnapshot.toObject(User.class);
-                                   System.out.print(currentUser.getFirstName());
+                                   HashMap<String,Object> userMap = (HashMap<String, Object>) documentSnapshot.get("User");
+                                   String userFirstName = (String) userMap.get("firstName");
+
+                                   System.out.println(userFirstName);
                                    Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                    Intent intent = new Intent(Login_Activity.this,MainActivity.class);
                                    Bundle userBundle = new Bundle();
-                                   userBundle.putSerializable("User",currentUser);
+                                   //userBundle.putSerializable("User",currentUser);
                                    intent.putExtras(userBundle);
                                    startActivity(intent);
                                }

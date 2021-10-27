@@ -1,6 +1,5 @@
 package com.example.habitize;
 
-import com.google.gson.annotations.JsonAdapter;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
