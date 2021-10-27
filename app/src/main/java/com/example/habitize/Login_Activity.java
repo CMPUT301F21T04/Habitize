@@ -1,6 +1,7 @@
 package com.example.habitize;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +23,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firestore.v1.WriteResult;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Login_Activity extends AppCompatActivity {
     EditText email_EditText, password_EditText;
@@ -30,13 +41,15 @@ public class Login_Activity extends AppCompatActivity {
     AlertDialog.Builder resetPass_alert;
     LayoutInflater inflater;
     FirebaseAuth Authenticator;
-
-
+    private FirebaseFirestore db; // our database
+    private CollectionReference users;
+    private DocumentReference docRef;
+    private DocumentSnapshot userData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-
         // UI components
         email_EditText = findViewById(R.id.email_login);
         password_EditText = findViewById(R.id.password_login);
@@ -82,8 +95,26 @@ public class Login_Activity extends AppCompatActivity {
                         // Determine if the login is successful or not
 //                      // If successful, display a success message and redirect user to MainActivity
                         if (task.isSuccessful()) {
-                            Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            docRef = db.collection("Users").document(email_EditText.getText().toString());
+                           docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                               @Override
+                               public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                   HashMap<String,Object> userMap = (HashMap<String, Object>) documentSnapshot.get("User");
+                                   String userFirstName = (String) userMap.get("firstName");
+
+                                   System.out.println(userFirstName);
+                                   Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                   Intent intent = new Intent(Login_Activity.this,MainActivity.class);
+                                   Bundle userBundle = new Bundle();
+                                   //userBundle.putSerializable("User",currentUser);
+                                   intent.putExtras(userBundle);
+                                   startActivity(intent);
+                               }
+
+                           });
+
+
+
                         } else {
                             Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
