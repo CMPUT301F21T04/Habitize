@@ -1,103 +1,115 @@
 package com.example.habitize;
 
-public class User {
-    private String UserName;
-    private String Password;
-    private String FirstName;
-    private String LastName;
-    private String Following;
-    private String Followers;
-    private String Progress;
-    private String UserHabits;
-    private String Points;
+
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+public class User implements Serializable {
+    private String userName;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private List<User> following;
+    private List<User> followers;
+    private int progress;
+    private List<Habit> userHabits;
+    private int points;
 
 
-    User(String UserName,String Password,String FirstName,
-         String LastName,String Following, String Followers,
-         String Progress, String UserHabits, String Points){
-        this.UserName = UserName;
-        this.Password = Password;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.Following = Following;
-        this.Followers = Followers;
-        this.Progress = Progress;
-        this.UserHabits = UserHabits;
-        this.Points = Points;
+    public User(String UserName,String Password,String FirstName,
+         String LastName,ArrayList<User> following,ArrayList<User> followers, int progress,
+         ArrayList<Habit> userHabits,int points){
+        this.userName = UserName;
+        this.password = Password;
+        this.firstName = FirstName;
+        this.lastName = LastName;
+        this.following = following; // followingList
+        this.followers = followers; // followerList
+        this.progress = progress; // we start with zero progress
+        this.userHabits = userHabits; // new arraylist for user habits
+        this.points = points; // start with zero progress
     }
+    public User(){}; // for firebase
+
+
+
 
     //Getters and Setters
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return this.lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
-    public String getFollowing() {
-        return Following;
+    public List<User> getFollowing() {
+        return this.following;
     }
 
-    public void setFollowing(String following) {
-        Following = following;
+    public void setFollowing(ArrayList<User> following) {
+        this.following = following;
     }
 
-    public String getFollowers() {
-        return Followers;
+    public List<User> getFollowers() {
+        return followers;
     }
 
-    public void setFollowers(String followers) {
-        Followers = followers;
+    public void setFollowers(ArrayList<User> followers) {
+        this.followers = followers;
     }
 
-    public String getProgress() {
-        return Progress;
+    public int getProgress() {
+        return this.progress;
     }
 
-    public void setProgress(String progress) {
-        Progress = progress;
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 
-    public String getUserHabits() {
-        return UserHabits;
+    public List<Habit> getUserHabits() {
+        return this.userHabits;
     }
 
-    public void setUserHabits(String userHabits) {
-        UserHabits = userHabits;
+    public void setUserHabits(ArrayList<Habit> userHabits){this.userHabits = userHabits;}
+
+    public void addUserHabit(Habit newHabit) {
+        this.userHabits.add(newHabit);
     }
 
-    public String getPoints() {
-        return Points;
+    public int getPoints() {
+        return this.points;
     }
 
-    public void setPoints(String points) {
-        Points = points;
+    public void setPoints(int points) {
+        this.points = points;
     }
+
 
 }
