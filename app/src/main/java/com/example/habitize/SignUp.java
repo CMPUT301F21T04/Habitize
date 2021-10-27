@@ -65,7 +65,8 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String inputEmail = email.getText().toString().trim();
-                String inputPassowrd = email.getText().toString().trim();
+                String inputPassowrd = password.getText().toString().trim();
+
 
                 if (TextUtils.isEmpty(inputEmail)){
                     email.setError("Enter an email please!");
@@ -79,6 +80,7 @@ public class SignUp extends AppCompatActivity {
                     password.setError("Passsword should be greater than 8 characters");
                     return;
                 }
+                
                 progressBar.setVisibility(View.VISIBLE);
                 // TODO: the startActivity here might mess with NAVCONTROLLER
                 fAuth.createUserWithEmailAndPassword(inputEmail,inputPassowrd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
