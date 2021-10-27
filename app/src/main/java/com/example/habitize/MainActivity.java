@@ -1,6 +1,7 @@
 package com.example.habitize;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,28 +17,34 @@ public class MainActivity extends AppCompatActivity {
     private Button allHabits;
     private Button todaysHabits;
     private Button followReq;
-
-    // logging out method
+    private Button logOut;
+    private Toolbar toolBar;
 
 
     @Override
-    
     protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_main);
+        logOut = findViewById(R.id.logout);
+
 
         db = FirebaseFirestore.getInstance(); // initialize database. We don't really need to do this here.
         // we can have the database instantiated in only the activities where it is needed to pull data
-        setContentView(R.layout.activity_main);
         addHabit = findViewById(R.id.addHabit); // our 4 buttons
         allHabits = findViewById(R.id.allHabits);
         todaysHabits = findViewById(R.id.todaysHabits);
         followReq = findViewById(R.id.followReq);
-        
-        
+
+
         // branch to new activities here
+
+        /**
+         * When add habit button is clicked upon, it will bring you to a new activity screen
+         */
         addHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent addHabitIntent = new Intent(MainActivity.this, AddHabitActivity.class);
+                startActivity(addHabitIntent);
             }
         });
         allHabits.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         todaysHabits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,AllHabitsActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -58,13 +67,21 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout(); // logout
+                finish(); // close, leave to parent activity.
+            }
+        });
+
+
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
     }
-    public void logout(View view){
+    // get this to log out when "back" is pressed on navBar
+    public void logout(){
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(),Login_Activity.class));
-        finish();
+
     }
 }

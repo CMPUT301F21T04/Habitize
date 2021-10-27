@@ -30,13 +30,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SignUp">
-
+        <activity
+            android:name=".SignUp">
         </activity>
-
-        <activity android:name=".MainActivity">
-
+        <activity
+            android:name=".MainActivity">
         </activity>
+        <activity
+            android:name=".AllHabitsActivity" >
+        </activity>
+        <activity
+            android:name=".AddHabitActivity"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
