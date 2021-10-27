@@ -29,6 +29,7 @@ public class SignUp extends AppCompatActivity {
         EditText lastName = findViewById(R.id.lastName);
         EditText username = findViewById(R.id.userName);
         EditText password = findViewById(R.id.password);
+        EditText ConPassword = findViewById(R.id.conPassword);
         EditText email = findViewById(R.id.email);
         ProgressBar progressBar = findViewById(R.id.progressBar2);
 
@@ -51,23 +52,39 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String inputEmail = email.getText().toString().trim();
-                String inputPassowrd = email.getText().toString().trim();
-
+                String inputPassword = password.getText().toString().trim();
+                String inputConPassword = ConPassword.getText().toString().trim();
+                if (TextUtils.isEmpty(firstName.getText().toString().trim())){
+                    firstName.setError("Enter a name please!");
+                }
+                if (TextUtils.isEmpty(lastName.getText().toString().trim())){
+                    lastName.setError("Enter a name please!");
+                }
+                if (TextUtils.isEmpty(username.getText().toString().trim())){
+                    username.setError("Enter a username please!");
+                }
                 if (TextUtils.isEmpty(inputEmail)){
                     email.setError("Enter an email please!");
                     return;
                 }
-                if (TextUtils.isEmpty(inputPassowrd)){
+                if (TextUtils.isEmpty(inputPassword)){
                     password.setError("Please enter a password!");
                     return;
                 }
-                if (inputPassowrd.length() < 8){
+                if (inputPassword.length() < 8){
                     password.setError("Passsword should be greater than 8 characters");
                     return;
                 }
+                if (TextUtils.isEmpty(inputConPassword)){
+                    ConPassword.setError("Please enter a password!");
+                    return;
+                }
+                if (inputConPassword != inputPassword){
+                    ConPassword.setError("The passwords are not the same!");
+                }
                 progressBar.setVisibility(View.VISIBLE);
 
-                fAuth.createUserWithEmailAndPassword(inputEmail,inputPassowrd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.createUserWithEmailAndPassword(inputEmail,inputPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
