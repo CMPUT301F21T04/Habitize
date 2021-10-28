@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.3067708333333333" />
+        <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/drawable/ic_launcher_background.xml" value="0.21875" />
+        <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/drawable/list_item_outline.xml" value="0.21875" />
+        <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/layout/activity_add_habit_image.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/layout/activity_add_habit_info.xml" value="0.290625" />
+        <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/layout/activity_add_habit_location.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/layout/add_habit.xml" value="0.28020833333333334" />
         <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/layout/all_habits.xml" value="0.33" />
@@ -12,41 +18,22 @@
         <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/layout/signup_activity.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/layout/todays_habits.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/menu/main_menu.xml" value="0.20520833333333333" />
-
+        <entry key="app/src/main/res/layout/activity_add_habit_image.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/activity_add_habit_info.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/activity_add_habit_location.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24851047672717724" />
+        <entry key="app/src/main/res/layout/activity_my_navigation_service.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/all_habits.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/list_content.xml" value="0.335" />
         <entry key="app/src/main/res/layout/login_activity.xml" value="0.21002825169113126" />
-
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_add_habit_image.xml" value="0.2" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_add_habit_info.xml" value="0.19384057971014493" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_add_habit_location.xml" value="0.17028985507246377" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_login.xml" value="0.11018518518518519" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/add_habit.xml" value="0.264" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/add_habit_location.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/login_activity.xml" value="0.25" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/register_activity.xml" value="0.4" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/reset_layout.xml" value="0.136" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/signup_activity.xml" value="0.10400000000000001" />
-        <entry key="app/src/main/res/drawable/round_button.xml" value="0.228125" />
-        <entry key="app/src/main/res/drawable/withborder.xml" value="0.228125" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.24851047672717724" />
-        <entry key="app/src/main/res/layout/login_activity.xml" value="0.21002825169113126" />
-        <entry key="app/src/main/res/layout/signup_activity.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/todays_habits.xml" value="0.3098958333333333" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
-  </component>
-  <component name="VisualizationToolProject">
-    <option name="state">
-      <ProjectState>
-        <option name="scale" value="0.10400000000000001" />
-      </ProjectState>
-    </option>
   </component>
 </project>
