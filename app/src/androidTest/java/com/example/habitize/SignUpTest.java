@@ -32,10 +32,7 @@ import org.junit.runner.RunWith;
 public class SignUpTest {
     @Rule
     public ActivityScenarioRule<Login_Activity> activityRule = new ActivityScenarioRule<Login_Activity>(Login_Activity.class);
-
-
-
-
+    
     /**
      public void setUp() {
      Intents.init();
