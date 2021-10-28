@@ -85,14 +85,15 @@ public class SignUp extends AppCompatActivity {
                     password.setError("Please enter a password!");
                     return;
                 }
-                if (inputPassword.length() < 8){
-                    password.setError("Passsword should be greater than 8 characters");
-                    return;
-                }
                 if (TextUtils.isEmpty(inputConPassword)){
                     ConPassword.setError("Please enter a password!");
                     return;
                 }
+                if (inputPassword.length() < 8){
+                    password.setError("Passsword should be greater than 8 characters");
+                    return;
+                }
+
                 if (inputConPassword != inputPassword){
                     ConPassword.setError("The passwords are not the same!");
                 }
