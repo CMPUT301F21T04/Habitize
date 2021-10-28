@@ -80,7 +80,7 @@ public class SignUp extends AppCompatActivity {
                     return;
                 }
 
-                if (inputPassword != inputConPass) {
+                if (!inputPassword.equals(inputConPass)) {
                     conPassword.setError("The passwords are not the same!");
                     return;
                 }
@@ -98,7 +98,7 @@ public class SignUp extends AppCompatActivity {
                                     // TODO: Put legit values here later. Just filling the constructor because I
                                     // need it to work
                                     User newUser = new User(inputEmail, inputPassword, inputEmail, inputEmail,
-                                            new ArrayList<String>(), new ArrayList<String>(), 0, new ArrayList<Habit>(), 0);
+                                            new ArrayList<String>(), new ArrayList<String>(), 0, new ArrayList<Habit>(), 0,inputEmail);
                                     HashMap<String, User> userData = new HashMap<>();
                                     userData.put("User", newUser);
                                     users.document(inputEmail).set(userData); // user data gets stored.

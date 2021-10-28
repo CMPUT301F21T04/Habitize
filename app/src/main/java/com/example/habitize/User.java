@@ -10,6 +10,7 @@ public class User implements Serializable {
     private String password;
     private String firstName;
     private String lastName;
+    private String email;
     private List<String> following;
     private List<String> followers;
     private long progress;
@@ -19,7 +20,7 @@ public class User implements Serializable {
 
     public User(String UserName,String Password,String FirstName,
          String LastName,ArrayList<String> following,ArrayList<String> followers, long progress,
-         ArrayList<Habit> userHabits,long points){
+         ArrayList<Habit> userHabits,long points,String email){
         this.userName = UserName;
         this.password = Password;
         this.firstName = FirstName;
@@ -29,6 +30,7 @@ public class User implements Serializable {
         this.progress = progress; // we start with zero progress
         this.userHabits = userHabits; // new arraylist for user habits
         this.points = points; // start with zero progress
+        this.email = email;
     }
     public User(){}; // for firebase
 
@@ -109,6 +111,12 @@ public class User implements Serializable {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public String getEmail(){return this.email; }
+
+    public void setEmail(String email){
+        this.email = email;
     }
 
 

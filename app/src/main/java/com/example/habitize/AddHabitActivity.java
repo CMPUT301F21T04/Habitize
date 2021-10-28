@@ -9,6 +9,13 @@ import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.FirebaseError;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Collection;
+import java.util.HashMap;
+
 public class AddHabitActivity extends AppCompatActivity {
     private EditText title;
     private EditText description;
@@ -23,16 +30,23 @@ public class AddHabitActivity extends AppCompatActivity {
     private Switch geolocation;
     private Button imageBtn;
     private Button locationBtn;
-
+    private Button createHabit;
+    private User currentUser;
+    private FirebaseFirestore db;
+    private CollectionReference users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_info);
-
+        currentUser = (User)getIntent().getExtras().getSerializable("User"); // retrieving passed user
         imageBtn = findViewById(R.id.addImage);
         locationBtn = findViewById(R.id.addLocation);
-
+        createHabit = findViewById(R.id.createHabit);
+        title = findViewById((R.id.habitTitle));
+        description = findViewById((R.id.habitDescription));
+        db = FirebaseFirestore.getInstance();
+        users = db.collection("Users");
         //TO DO: make a header w/ title - NEW HABIT - perhaps textview trick
 
         imageBtn.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +63,26 @@ public class AddHabitActivity extends AppCompatActivity {
             }
         });
 
+
+        createHabit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // edit our user profile and send it to the database again
+                // creating new habit
+                Habit newHabit = new Habit(title.getText().toString(), description.getText().toString());
+                // adding habit to user profile
+                currentUser.getUserHabits().add(newHabit);
+                HashMap<String,User> userData = new HashMap<>();
+                userData.put("User",currentUser);
+                String userEmail = currentUser.getEmail();
+                users.document(userEmail).set(userData); // replace the document at the email
+                finish();
+
+
+
+
+            }
+        });
 
 
     }

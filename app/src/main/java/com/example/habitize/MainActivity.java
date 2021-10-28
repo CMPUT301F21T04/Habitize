@@ -77,8 +77,13 @@ public class MainActivity extends AppCompatActivity {
         addHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addHabitIntent = new Intent(MainActivity.this, AddHabitActivity.class);
-                startActivity(addHabitIntent);
+                Intent intent = new Intent(MainActivity.this,AddHabitActivity.class);
+
+                Bundle userBundle = new Bundle();
+                userBundle.putSerializable("User",currentUser);
+                intent.putExtras(userBundle);
+                startActivity(intent);
+
             }
         });
         allHabits.setOnClickListener(new View.OnClickListener() {

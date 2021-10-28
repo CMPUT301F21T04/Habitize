@@ -113,6 +113,7 @@ public class Login_Activity extends AppCompatActivity {
                                     String lastName = (String) userMap.get("lastName");
                                     String userName = (String)userMap.get("userName");
                                     String password = (String) userMap.get("password");
+                                    String email = (String) userMap.get("email");
                                     // retrieving number fields
                                     long progress = (long) userMap.get("progress");
                                     long points = (long) userMap.get("points");
@@ -144,7 +145,7 @@ public class Login_Activity extends AppCompatActivity {
                                     }
 
                                     // creating the User class and passing down into mainActivity
-                                    User newUser = new User(userName,password,firstName,lastName,following,followers,progress,habitList,points);
+                                    User newUser = new User(userName,password,firstName,lastName,following,followers,progress,habitList,points,email);
                                     Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(Login_Activity.this,MainActivity.class);
                                     Bundle userBundle = new Bundle();
