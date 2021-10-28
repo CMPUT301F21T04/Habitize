@@ -36,7 +36,7 @@ public class SignUp extends AppCompatActivity {
         EditText lastName = findViewById(R.id.lastName);
         EditText username = findViewById(R.id.userName);
         EditText password = findViewById(R.id.password);
-        EditText conPassword = findViewById(R.id.conPassword);
+        EditText ConPassword = findViewById(R.id.conPassword);
         EditText email = findViewById(R.id.email);
         ProgressBar progressBar = findViewById(R.id.progressBar2);
 
@@ -67,7 +67,7 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
                 String inputEmail = email.getText().toString().trim();
                 String inputPassword = password.getText().toString().trim();
-                String inputConPass = conPassword.getText().toString().trim();
+                String inputConPass = ConPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(inputEmail)){
                     email.setError("Enter an email please!");
@@ -83,7 +83,7 @@ public class SignUp extends AppCompatActivity {
                 }
 
                 if (inputPassword != inputConPass){
-                    conPassword.setError("The passwords are not the same!");
+                    ConPassword.setError("The passwords are not the same!");
                     return;
                 }
 
