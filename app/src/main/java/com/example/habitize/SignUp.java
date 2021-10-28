@@ -101,7 +101,16 @@ public class SignUp extends AppCompatActivity {
                             Toast.makeText(SignUp.this,"You have made an account successfully!",Toast.LENGTH_LONG).show();
                             // we created an account. Lets set up the user stuff
                             // TODO: Put legit values here later. Just filling the constructor because I need it to work
-                            User newUser = new User(inputEmail,inputPassword,inputEmail,inputEmail,new ArrayList<User>(),new ArrayList<User>(),0,new ArrayList<Habit>(),0);
+                            ArrayList<Habit> testList = new ArrayList<>();
+                            Habit testHabit1 = new Habit("testName","testDesc");
+                            testList.add(testHabit1);
+                            ArrayList<String> followingTest = new ArrayList<>();
+                            followingTest.add("John");
+                            ArrayList<String> followerTest = new ArrayList<>();
+                            followerTest.add("Jared");
+
+                            User newUser = new User(inputEmail,inputPassword,inputEmail,inputEmail,followingTest,followerTest,0,
+                                    testList,0);
                             HashMap<String,User> userData = new HashMap<>();
                             userData.put("User",newUser);
                             users.document(inputEmail).set(userData); // user data gets stored.

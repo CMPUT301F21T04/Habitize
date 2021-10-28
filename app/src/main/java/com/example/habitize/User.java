@@ -10,16 +10,16 @@ public class User implements Serializable {
     private String password;
     private String firstName;
     private String lastName;
-    private List<User> following;
-    private List<User> followers;
-    private int progress;
+    private List<String> following;
+    private List<String> followers;
+    private long progress;
     private List<Habit> userHabits;
-    private int points;
+    private long points;
 
 
     public User(String UserName,String Password,String FirstName,
-         String LastName,ArrayList<User> following,ArrayList<User> followers, int progress,
-         ArrayList<Habit> userHabits,int points){
+         String LastName,ArrayList<String> following,ArrayList<String> followers, long progress,
+         ArrayList<Habit> userHabits,long points){
         this.userName = UserName;
         this.password = Password;
         this.firstName = FirstName;
@@ -69,23 +69,23 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public List<User> getFollowing() {
+    public List<String> getFollowing() {
         return this.following;
     }
 
-    public void setFollowing(ArrayList<User> following) {
+    public void setFollowing(ArrayList<String> following) {
         this.following = following;
     }
 
-    public List<User> getFollowers() {
+    public List<String> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(ArrayList<User> followers) {
+    public void setFollowers(ArrayList<String> followers) {
         this.followers = followers;
     }
 
-    public int getProgress() {
+    public long getProgress() {
         return this.progress;
     }
 
@@ -103,7 +103,7 @@ public class User implements Serializable {
         this.userHabits.add(newHabit);
     }
 
-    public int getPoints() {
+    public long getPoints() {
         return this.points;
     }
 
