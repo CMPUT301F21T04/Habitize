@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habitize">
         <activity
+            android:name=".FollowingActivity"
+            android:exported="false" />
+        <activity
             android:name=".MyNavigationService"
             android:exported="false" />
 

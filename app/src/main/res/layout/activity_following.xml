@@ -22,7 +22,7 @@
         tools:layout_editor_absoluteY="-6dp" />
 
     <Button
-        android:id="@+id/followReq"
+        android:id="@+id/followingReq"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="288dp"
         android:layout_height="129dp"
@@ -39,6 +39,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/followReq" />
+        app:layout_constraintTop_toBottomOf="@+id/followingReq" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
