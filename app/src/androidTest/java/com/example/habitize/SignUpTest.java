@@ -40,6 +40,7 @@ public class SignUpTest {
      **/
     @Before
     public void initValidString() {
+        // Specify a valid string.
         onView(withId(R.id.RegisterBTN)).perform(click());
         String testFirstName = "Rick";
         String testLastName = "Grimes";
