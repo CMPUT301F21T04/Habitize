@@ -10,6 +10,8 @@ public class Habit implements Serializable {
     private String recurrence;
     private Date startDate;
 
+
+    
 //    private photos?
 //    private location
     private Integer completion; //If the habit was completed today = 1, if not = 0
