@@ -16,9 +16,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SignUp extends AppCompatActivity {
-
+    private FirebaseFirestore db;
+    private CollectionReference users;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,31 +77,31 @@ public class SignUp extends AppCompatActivity {
                     email.setError("Enter an email please!");
                     return;
                 }
-                if (TextUtils.isEmpty(inputPassowrd)){
+                if (TextUtils.isEmpty(inputPassword)){
                     password.setError("Please enter a password!");
                     return;
                 }
-                if (inputPassowrd.length() < 8){
-                    password.setError("Passsword should be greater than 8 characters");
+                if (inputPassword.length() < 8){
+                    password.setError("Password should be greater than 8 characters");
                     return;
                 }
                 if (TextUtils.isEmpty(inputConPassword)){
                     ConPassword.setError("Please enter a password!");
                     return;
                 }
-                if (inputConPassword != inputPassword){
+                if (!inputConPassword.equals(inputPassword)){
                     ConPassword.setError("The passwords are not the same!");
                 }
                 progressBar.setVisibility(View.VISIBLE);
                 // TODO: the startActivity here might mess with NAVCONTROLLER
-                fAuth.createUserWithEmailAndPassword(inputEmail,inputPassowrd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.createUserWithEmailAndPassword(inputEmail,inputPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(SignUp.this,"You have made an account successfully!",Toast.LENGTH_LONG).show();
                             // we created an account. Lets set up the user stuff
                             // TODO: Put legit values here later. Just filling the constructor because I need it to work
-                            User newUser = new User(inputEmail,inputPassowrd,inputEmail,inputEmail,new ArrayList<User>(),new ArrayList<User>(),0,new ArrayList<Habit>(),0);
+                            User newUser = new User(inputEmail,inputPassword,inputEmail,inputEmail,new ArrayList<User>(),new ArrayList<User>(),0,new ArrayList<Habit>(),0);
                             HashMap<String,User> userData = new HashMap<>();
                             userData.put("User",newUser);
                             users.document(inputEmail).set(userData); // user data gets stored.
