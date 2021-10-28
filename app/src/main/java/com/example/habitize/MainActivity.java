@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
 
 
-        updateProgress();
+       // updateProgress();
 
 
 
@@ -122,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
 
     }
+
+
+
 /////////////////////////////////////////////////////////////
     //This function is finished until the habit class is changed
     public void updateProgress(){
