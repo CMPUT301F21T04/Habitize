@@ -76,11 +76,11 @@ public class SignUp extends AppCompatActivity {
                     return;
                 }
                 if (inputPassword.length() < 8) {
-                    password.setError("Passsword should be greater than 8 characters");
+                    password.setError("Password should be greater than 8 characters");
                     return;
                 }
 
-                if (inputPassword != inputConPass) {
+                if (!inputPassword.equals(inputConPass) ) {
                     conPassword.setError("The passwords are not the same!");
                     return;
                 }

@@ -117,9 +117,6 @@ public class Login_ActivityTest {
         onView(hasErrorText("Login Failed"));
 
     }
-
-
-
 }
 
 
