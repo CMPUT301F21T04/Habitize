@@ -1,4 +1,4 @@
-package com.example.habitize;
+/**package com.example.habitize;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -47,4 +47,4 @@ public class MainActivityTests {
 
 
 
-}
+}**/
