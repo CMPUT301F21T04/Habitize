@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,AllHabitsActivity.class);
+                // passing user down to populate listView
                 Bundle userBundle = new Bundle(); // bundling user and sending them down
                 userBundle.putSerializable("User",currentUser);
                 intent.putExtras(userBundle);

@@ -104,6 +104,7 @@ public class Login_Activity extends AppCompatActivity {
                             User newUser = null;
                             userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
+                                // on success we retrieve the user and pass them down into the activity
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                     HashMap<String,Object> userMap = (HashMap<String, Object>) documentSnapshot.get("User"); // getting value at "User" key
                                     // retrieving all string fields
@@ -126,14 +127,14 @@ public class Login_Activity extends AppCompatActivity {
                                         habitList.add(newHabit); // add it to the habitList
 
                                     }
-
+                                    // populating followerlist
                                     ArrayList<String> followers = new ArrayList<>();
                                     ArrayList<String> followerMap = (ArrayList<String>) userMap.get("followers"); // getting the follower array
                                     for(int i = 0; i < followerMap.size() ; i++){
                                         String follower = followerMap.get(i);
                                         followers.add(follower); // adding the follower to our list
                                     }
-
+                                    // populating followingList
                                     ArrayList<String> following = new ArrayList<>();
                                     ArrayList<String> followingMap = (ArrayList<String>) userMap.get("following");
                                     for(int i = 0; i < followingMap.size() ; i ++){
@@ -141,7 +142,7 @@ public class Login_Activity extends AppCompatActivity {
                                         following.add(followingUser); // adding the user we are following to our list
                                     }
 
-
+                                    // creating the User class and passing down into mainActivity
                                     User newUser = new User(userName,password,firstName,lastName,following,followers,progress,habitList,points);
                                     Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(Login_Activity.this,MainActivity.class);
