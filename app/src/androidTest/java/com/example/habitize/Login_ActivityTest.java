@@ -58,9 +58,9 @@ public class Login_ActivityTest {
     @Test
     public void checkCorrectInput(){
         onView(withId(R.id.email_login))
-                .perform(typeText("rick0grimes301@gmail.com"), closeSoftKeyboard());
+                .perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.LoginBTN)).perform(click());
-        //onView(withId(R.id.email_login)).check(err);
+        onView(withId(R.id.email_login)).check(matches(hasErrorText("Email is Required.")));
     }
 
 
