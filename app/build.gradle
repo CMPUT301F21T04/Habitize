@@ -34,7 +34,7 @@ dependencies {
     androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.3.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.0.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
-
+    implementation "io.grpc:grpc-okhttp:1.32.2"
     implementation platform('com.google.firebase:firebase-bom:28.4.2')
     implementation 'com.google.firebase:firebase-firestore'
 

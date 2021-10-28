@@ -1,37 +1,32 @@
 package com.example.habitize;
 
-public class Habit {
+import java.io.Serializable;
+
+public class Habit implements Serializable {
     private String name;
     private String description;
-    private int streak;
-    private Boolean isDone;
+
     // TODO: We need image + date functionality
 
     // TODO: Add image + date constructors
+    public Habit(){};
     public Habit(String name, String description){
         this.name = name;
         this.description = description;
     }
-    public void incrementStreak(){
-        this.streak++;
-    }
     public String getName(){
         return this.name;
+    }
+    public void setName(String name){
+        this.name = name;
     }
     public String getDescription(){
         return this.description;
     }
+    public void setDescription(String description){
+        this.description = description;
+    }
 
-    // TODO: should this trigger automatically if a day goes by without incrementstreak?
-    public void endStreak(){
-        this.streak = 0;
-    }
-    public void resetTask(){
-        this.isDone = false;
-    }
-    public void doTask(){
-        this.isDone = true;
-    }
 
 
 }

@@ -11,15 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomAdapter extends ArrayAdapter<Habit> {
 
-    private ArrayList<Habit> habits;
+    private List<Habit> habits;
     private Context context;
 
     // TODO: Add more fields here. Image..etc
 
-    public CustomAdapter(Context context, ArrayList<Habit> habits){
+    public CustomAdapter(Context context, List<Habit> habits){
         super(context,0,habits);
         this.habits = habits;
         this.context = context;
