@@ -40,10 +40,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         // branch to new activities here
+
+        /**
+         * When add habit button is clicked upon, it will bring you to a new activity screen
+         */
         addHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent addHabitIntent = new Intent(MainActivity.this, AddHabitActivity.class);
+                startActivity(addHabitIntent);
             }
         });
         allHabits.setOnClickListener(new View.OnClickListener() {
