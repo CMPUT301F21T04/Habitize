@@ -67,7 +67,20 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
                 String inputEmail = email.getText().toString().trim();
                 String inputPassword = password.getText().toString().trim();
+
                 String inputConPass = ConPassword.getText().toString().trim();
+
+
+                String inputConPassword = ConPassword.getText().toString().trim();
+                if (TextUtils.isEmpty(firstName.getText().toString().trim())){
+                    firstName.setError("Enter a name please!");
+                }
+                if (TextUtils.isEmpty(lastName.getText().toString().trim())){
+                    lastName.setError("Enter a name please!");
+                }
+                if (TextUtils.isEmpty(username.getText().toString().trim())){
+                    username.setError("Enter a username please!");
+                }
 
                 if (TextUtils.isEmpty(inputEmail)){
                     email.setError("Enter an email please!");
@@ -77,22 +90,33 @@ public class SignUp extends AppCompatActivity {
                     password.setError("Please enter a password!");
                     return;
                 }
+                if (TextUtils.isEmpty(inputConPassword)){
+                    ConPassword.setError("Please enter a password!");
+                    return;
+                }
                 if (inputPassword.length() < 8){
                     password.setError("Passsword should be greater than 8 characters");
                     return;
                 }
+
 
                 if (inputPassword != inputConPass){
                     ConPassword.setError("The passwords are not the same!");
                     return;
                 }
 
-
+                if (inputConPassword != inputPassword){
+                    ConPassword.setError("The passwords are not the same!");
+                }
 
 
                 progressBar.setVisibility(View.VISIBLE);
+
+
                 // TODO: the startActivity here might mess with NAVCONTROLLER
                 fAuth.createUserWithEmailAndPassword(inputEmail,inputPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
