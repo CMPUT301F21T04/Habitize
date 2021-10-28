@@ -69,11 +69,18 @@ public class SignUp extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(inputEmail)) {
                     email.setError("Enter an email please!");
-                    return;
                 }
                 if (TextUtils.isEmpty(inputPassword)) {
                     password.setError("Please enter a password!");
-                    return;
+                }
+                if (TextUtils.isEmpty(firstName.getText().toString())){
+                    firstName.setError("Please enter a name!");
+                }
+                if (TextUtils.isEmpty(lastName.getText().toString())){
+                    lastName.setError("Please enter a name!");
+                }
+                if (TextUtils.isEmpty(username.getText().toString())){
+                    username.setError("Please enter a username!");
                 }
                 if (inputPassword.length() < 8) {
                     password.setError("Passsword should be greater than 8 characters");

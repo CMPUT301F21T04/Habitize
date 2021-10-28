@@ -74,12 +74,12 @@ public class Login_Activity extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(email)){
                     email_EditText.setError("Email is Required.");
-                    return;
+
                 }
 
                 if(TextUtils.isEmpty(password)){
                     password_EditText.setError("Password is Required.");
-                    return;
+
                 }
 
                 if (password.length() < 8) {
