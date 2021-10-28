@@ -57,6 +57,8 @@ public class AddHabitActivity extends AppCompatActivity {
         docRef = users.document(passedEmail);
         //TO DO: make a header w/ title - NEW HABIT - perhaps textview trick
 
+
+
         imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,12 +87,10 @@ public class AddHabitActivity extends AppCompatActivity {
                 listMap.put("habits",passedHabits);
                 docRef.set(listMap); // we send the modified list
                 finish();
-
-
-
-
             }
         });
+
+
 
 
     }

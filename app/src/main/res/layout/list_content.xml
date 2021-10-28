@@ -5,9 +5,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-
-    android:clickable="true"
-    android:background="@drawable/list_item_outline">
+    android:background="@drawable/list_item_outline"
+    >
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:layout_marginTop="25dp"
@@ -20,7 +19,8 @@
         app:layout_constraintHorizontal_bias="0.108"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/list_item_outline"/>
+        android:background="@drawable/list_item_outline"
+/>
 
     <TextView
         android:id="@+id/habitName"
@@ -33,7 +33,8 @@
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.122" />
+        app:layout_constraintVertical_bias="0.122"
+  />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/completeHabit"
@@ -47,7 +48,10 @@
         app:layout_constraintHorizontal_bias="0.945"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+
+
+   />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
