@@ -23,11 +23,10 @@ public class AllHabitsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
         // retrieving passsed user
-        currentUser = (User)getIntent().getExtras().getSerializable("User");
+        dataList = (ArrayList<Habit>)getIntent().getExtras().getSerializable("list");
         list = findViewById(R.id.habit_list);
 
 
-        dataList = currentUser.getUserHabits();
 
 
         habitAdapter = new CustomAdapter(this,dataList);

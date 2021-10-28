@@ -99,61 +99,14 @@ public class Login_Activity extends AppCompatActivity {
                         // Determine if the login is successful or not
 //                      // If successful, display a success message and redirect user to MainActivity
                         if (task.isSuccessful()) {
-                            UsersCol = db.collection("Users"); // users collection
-                            DocumentReference userRef = UsersCol.document(email); // get the reference to the user document
                             //TODO: should probably throw an exception if this fails. Although it shouldn't ever fail since the user has to exist
-                            User newUser = null;
-                            userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                // on success we retrieve the user and pass them down into the activity
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    HashMap<String,Object> userMap = (HashMap<String, Object>) documentSnapshot.get("User"); // getting value at "User" key
-                                    // retrieving all string fields
-                                    String firstName = (String) userMap.get("firstName");
-                                    String lastName = (String) userMap.get("lastName");
-                                    String userName = (String)userMap.get("userName");
-                                    String password = (String) userMap.get("password");
-                                    String email = (String) userMap.get("email");
-                                    // retrieving number fields
-                                    long progress = (long) userMap.get("progress");
-                                    long points = (long) userMap.get("points");
-                                    // populating lists
-                                    ArrayList<Habit> habitList = new ArrayList<>();
-                                    ArrayList<HashMap<String,Object>> userHabits = (ArrayList<HashMap<String,Object>>) userMap.get("userHabits");
-                                    for(int i = 0; i < userHabits.size() ; i++){ // looping through every habit
-                                        HashMap<String,Object> habitFields = userHabits.get(i); // map to all the fields
-                                        // retrieves all the habit information and adds it to the habitList
-                                        String habitName = (String) habitFields.get("name");
-                                        String habitDesc = (String) habitFields.get("description");
-                                        Habit newHabit = new Habit(habitName,habitDesc); // create a new habit out of this information
-                                        habitList.add(newHabit); // add it to the habitList
+                            Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(Login_Activity.this,MainActivity.class);
+                            Bundle userBundle = new Bundle();
+                            userBundle.putSerializable("User",email);
+                            intent.putExtras(userBundle);
+                            startActivity(intent);
 
-                                    }
-                                    // populating followerlist
-                                    ArrayList<String> followers = new ArrayList<>();
-                                    ArrayList<String> followerMap = (ArrayList<String>) userMap.get("followers"); // getting the follower array
-                                    for(int i = 0; i < followerMap.size() ; i++){
-                                        String follower = followerMap.get(i);
-                                        followers.add(follower); // adding the follower to our list
-                                    }
-                                    // populating followingList
-                                    ArrayList<String> following = new ArrayList<>();
-                                    ArrayList<String> followingMap = (ArrayList<String>) userMap.get("following");
-                                    for(int i = 0; i < followingMap.size() ; i ++){
-                                        String followingUser = followingMap.get(i);
-                                        following.add(followingUser); // adding the user we are following to our list
-                                    }
-
-                                    // creating the User class and passing down into mainActivity
-                                    User newUser = new User(userName,password,firstName,lastName,following,followers,progress,habitList,points,email);
-                                    Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(Login_Activity.this,MainActivity.class);
-                                    Bundle userBundle = new Bundle();
-                                    userBundle.putSerializable("User",newUser);
-                                    intent.putExtras(userBundle);
-                                    startActivity(intent);
-                                }
-                            });
 
                         } else {
                             Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
