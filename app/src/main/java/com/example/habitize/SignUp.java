@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SignUp extends AppCompatActivity {
-    private FirebaseFirestore db; // our database
+    private FirebaseFirestore db;
     private CollectionReference users;
 
     @Override
@@ -105,7 +105,7 @@ public class SignUp extends AppCompatActivity {
                                     // TODO: Put legit values here later. Just filling the constructor because I
                                     // need it to work
                                     User newUser = new User(inputEmail, inputPassword, inputEmail, inputEmail,
-                                            new ArrayList<User>(), new ArrayList<User>(), 0, new ArrayList<Habit>(), 0);
+                                            new ArrayList<String>(), new ArrayList<String>(), 0, new ArrayList<Habit>(), 0);
                                     HashMap<String, User> userData = new HashMap<>();
                                     userData.put("User", newUser);
                                     users.document(inputEmail).set(userData); // user data gets stored.
