@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <EditText
         android:id="@+id/email"
         android:layout_width="209dp"
         android:layout_height="48dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="84dp"
         android:hint="Email"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/firstName"
         tools:ignore="MissingConstraints" />
@@ -21,14 +23,14 @@
         android:id="@+id/firstName"
         android:layout_width="209dp"
         android:layout_height="48dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="110dp"
         android:hint="First Name"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
-
 
     <EditText
         android:id="@+id/lastName"
@@ -46,37 +48,40 @@
         android:id="@+id/userName"
         android:layout_width="209dp"
         android:layout_height="48dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="144dp"
         android:hint="username"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lastName"
+        app:layout_constraintTop_toBottomOf="@+id/firstName"
         tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="209dp"
         android:layout_height="48dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="204dp"
         android:hint="Password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName"
+        app:layout_constraintTop_toBottomOf="@+id/firstName"
         tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/conPassword"
         android:layout_width="209dp"
         android:layout_height="48dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="260dp"
         android:hint="Confirm Password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintTop_toBottomOf="@+id/firstName"
         tools:ignore="MissingConstraints" />
+
 
     <Button
         android:id="@+id/create_button"
@@ -84,12 +89,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="73dp"
         android:text="CREATE ACCOUNT"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/conPassword"
+        app:layout_constraintVertical_bias="0.055"
         tools:ignore="MissingConstraints" />
-
 
     <TextView
         android:id="@+id/textView"
@@ -110,14 +115,14 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="170dp"
         android:layout_marginTop="14dp"
-        android:layout_marginEnd="193dp"
         android:layout_marginBottom="11dp"
         app:layout_constraintBottom_toTopOf="@+id/create_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/conPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/conPassword"
+        app:layout_constraintVertical_bias="0.152" />
 
     <Button
         android:id="@+id/loginbutton"

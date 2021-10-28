@@ -10,10 +10,12 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="4dp"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -30,55 +32,81 @@
 
 
     </androidx.appcompat.widget.Toolbar>
+
     <Button
         android:id="@+id/followReq"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="288dp"
-        android:layout_height="129dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="257dp"
+        android:layout_height="95dp"
         android:text="FOLLOW REQUESTS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/allHabits"
-        app:layout_constraintVertical_bias="0.052" />
+        app:layout_constraintTop_toTopOf="@+id/my_toolbar"
+        app:layout_constraintVertical_bias="0.943" />
 
     <Button
         android:id="@+id/todaysHabits"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="288dp"
-        android:layout_height="129dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="256dp"
+        android:layout_height="94dp"
         android:text="TODAY'S HABITS"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addHabit" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.58" />
 
     <Button
         android:id="@+id/allHabits"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="288dp"
-        android:layout_height="129dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="256dp"
+        android:layout_height="99dp"
         android:text="ALL HABITS"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/todaysHabits" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.764" />
 
     <Button
         android:id="@+id/addHabit"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="288dp"
-        android:layout_height="129dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="256dp"
+        android:layout_height="102dp"
         android:text="ADD HABIT"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.397" />
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="319dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/addHabit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/my_toolbar"
+        app:layout_constraintVertical_bias="0.918" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Keep up the good work!"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/my_toolbar"
+        app:layout_constraintVertical_bias="0.872" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

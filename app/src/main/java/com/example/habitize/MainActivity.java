@@ -1,15 +1,31 @@
 package com.example.habitize;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.net.Authenticator;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
@@ -18,8 +34,15 @@ public class MainActivity extends AppCompatActivity {
     private Button todaysHabits;
     private Button followReq;
     private Button logOut;
+    private ProgressBar progressBar3;
+    private TextView textView2;
     private Toolbar toolBar;
     private User currentUser;
+    private CollectionReference progress;
+
+
+    private int progressTrack = 0; //starting at 0 (max 100)
+
 
 
     @Override
@@ -38,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
         allHabits = findViewById(R.id.allHabits);
         todaysHabits = findViewById(R.id.todaysHabits);
         followReq = findViewById(R.id.followReq);
+        progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
+
+
+
+
+
+        progressBar3.setProgress(progressTrack);//updating the progress bar
 
 
         // branch to new activities here
@@ -85,6 +115,27 @@ public class MainActivity extends AppCompatActivity {
     // get this to log out when "back" is pressed on navBar
     public void logout(){
         FirebaseAuth.getInstance().signOut();
+
+    }
+/////////////////////////////////////////////////////////////
+    //This function is finished until the habit class is changed
+    public void updateProgress(View v){
+        //.child("userHabits").orderByChild("userHabits").equalTo(userHabits)
+        progress = db.collection("Users/userHabits");
+        progress.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot QueryDocumentSnapshots) {
+                        String data = "";
+                        for (QueryDocumentSnapshot documentSnapshot : QueryDocumentSnapshots){
+                            Habit habit = documentSnapshot.toObject(Habit.class);
+                            //MUST CHANGE HABIT CLASS
+
+                        }
+                    }
+                });
+
+
 
     }
 }
