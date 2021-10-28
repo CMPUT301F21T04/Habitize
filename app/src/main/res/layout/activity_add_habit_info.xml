@@ -156,7 +156,7 @@
     <Switch
         android:id="@+id/geolocation"
         android:layout_width="188dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="48dp"
         android:layout_marginBottom="120dp"
         android:text="Enable Geolocation"
@@ -170,7 +170,7 @@
     <Button
         android:id="@+id/button"
         android:layout_width="96dp"
-        android:layout_height="42dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="#00000000"
@@ -178,6 +178,32 @@
         android:textColor="#6200EE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/addImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="167dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="32dp"
+        android:text="Image"
+        app:layout_constraintBottom_toTopOf="@+id/habitTitle"
+        app:layout_constraintEnd_toStartOf="@+id/addLocation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/addLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="29dp"
+        android:text="Location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addImage"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

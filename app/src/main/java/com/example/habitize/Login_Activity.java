@@ -48,6 +48,7 @@ public class Login_Activity extends AppCompatActivity {
     private DocumentReference userRef;
 
     private DocumentSnapshot userData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
@@ -81,7 +82,7 @@ public class Login_Activity extends AppCompatActivity {
                 }
 
                 if(TextUtils.isEmpty(password)){
-                    password_EditText.setError("Password is Required");
+                    password_EditText.setError("Password is Required.");
                     return;
                 }
 
@@ -142,19 +143,9 @@ public class Login_Activity extends AppCompatActivity {
                                         following.add(followingUser); // adding the user we are following to our list
                                     }
 
-                                    // creating the User class and passing down into mainActivity
-                                    User newUser = new User(userName,password,firstName,lastName,following,followers,progress,habitList,points);
-                                    Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(Login_Activity.this,MainActivity.class);
-                                    Bundle userBundle = new Bundle();
-                                    userBundle.putSerializable("User",newUser);
-                                    intent.putExtras(userBundle);
-                                    startActivity(intent);
-                                }
-                            });
-
+                            progressBar.setVisibility(View.GONE);
                         } else {
-                            Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login_Activity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                         }
                     }
