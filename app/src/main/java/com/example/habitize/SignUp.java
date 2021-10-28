@@ -16,15 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SignUp extends AppCompatActivity {
-    private FirebaseFirestore db; // our database
-    private CollectionReference users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +29,7 @@ public class SignUp extends AppCompatActivity {
         EditText lastName = findViewById(R.id.lastName);
         EditText username = findViewById(R.id.userName);
         EditText password = findViewById(R.id.password);
+        EditText ConPassword = findViewById(R.id.conPassword);
         EditText email = findViewById(R.id.email);
         ProgressBar progressBar = findViewById(R.id.progressBar2);
 
@@ -47,13 +41,10 @@ public class SignUp extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         progressBar.setVisibility(View.GONE);
 
-        // disabling so i stop getting merked
-        /*if (fAuth.getCurrentUser() != null){
+        if (fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
         }
-
-         */
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,8 +56,17 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String inputEmail = email.getText().toString().trim();
-                String inputPassowrd = email.getText().toString().trim();
-
+                String inputPassword = password.getText().toString().trim();
+                String inputConPassword = ConPassword.getText().toString().trim();
+                if (TextUtils.isEmpty(firstName.getText().toString().trim())){
+                    firstName.setError("Enter a name please!");
+                }
+                if (TextUtils.isEmpty(lastName.getText().toString().trim())){
+                    lastName.setError("Enter a name please!");
+                }
+                if (TextUtils.isEmpty(username.getText().toString().trim())){
+                    username.setError("Enter a username please!");
+                }
                 if (TextUtils.isEmpty(inputEmail)){
                     email.setError("Enter an email please!");
                     return;
@@ -78,6 +78,13 @@ public class SignUp extends AppCompatActivity {
                 if (inputPassowrd.length() < 8){
                     password.setError("Passsword should be greater than 8 characters");
                     return;
+                }
+                if (TextUtils.isEmpty(inputConPassword)){
+                    ConPassword.setError("Please enter a password!");
+                    return;
+                }
+                if (inputConPassword != inputPassword){
+                    ConPassword.setError("The passwords are not the same!");
                 }
                 progressBar.setVisibility(View.VISIBLE);
                 // TODO: the startActivity here might mess with NAVCONTROLLER
