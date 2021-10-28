@@ -12,10 +12,6 @@
         <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/layout/signup_activity.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/layout/todays_habits.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/menu/main_menu.xml" value="0.20520833333333333" />
-
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.24851047672717724" />
-        <entry key="app/src/main/res/layout/login_activity.xml" value="0.21002825169113126" />
-
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_add_habit_image.xml" value="0.2" />
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_add_habit_info.xml" value="0.19384057971014493" />
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_add_habit_location.xml" value="0.17028985507246377" />
@@ -29,6 +25,9 @@
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/signup_activity.xml" value="0.10400000000000001" />
         <entry key="app/src/main/res/drawable/round_button.xml" value="0.228125" />
         <entry key="app/src/main/res/drawable/withborder.xml" value="0.228125" />
+        <entry key="app/src/main/res/layout/activity_add_habit_image.xml" value="0.2572463768115942" />
+        <entry key="app/src/main/res/layout/activity_add_habit_info.xml" value="0.10396039603960396" />
+        <entry key="app/src/main/res/layout/activity_add_habit_location.xml" value="0.259375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24851047672717724" />
         <entry key="app/src/main/res/layout/login_activity.xml" value="0.21002825169113126" />
         <entry key="app/src/main/res/layout/signup_activity.xml" value="0.25677083333333334" />
