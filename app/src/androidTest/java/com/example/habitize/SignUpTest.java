@@ -8,6 +8,8 @@ import android.widget.ListView;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 
 public class SignUpTest {
@@ -20,7 +22,11 @@ public class SignUpTest {
     String testUsername = "Rick";
     String testPassword = "12345678";
     String testConPassword = "12345678";
-    
+
+    @BeforeClass
+    public static void checkCorrectInput(){
+        
+    }
     
 
 
