@@ -78,7 +78,7 @@ public class Login_Activity extends AppCompatActivity {
                 }
 
                 if(TextUtils.isEmpty(password)){
-                    password_EditText.setError("Password is Required");
+                    password_EditText.setError("Password is Required.");
                     return;
                 }
 
@@ -116,7 +116,7 @@ public class Login_Activity extends AppCompatActivity {
 
                             progressBar.setVisibility(View.GONE);
                         } else {
-                            Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login_Activity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                         }
                     }
