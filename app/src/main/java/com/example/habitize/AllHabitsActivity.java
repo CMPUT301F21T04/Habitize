@@ -41,8 +41,11 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
 
 
     @Override
-    public void viewHabitPressed() {
+    public void viewHabitPressed(int position) {
         Intent intent = new Intent(AllHabitsActivity.this,ViewHabitActivity.class);
+        Bundle habitBundle = new Bundle();
+        habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
+        intent.putExtras(habitBundle);
         startActivity(intent);
     }
 }

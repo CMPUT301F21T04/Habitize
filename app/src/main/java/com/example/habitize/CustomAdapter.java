@@ -18,7 +18,7 @@ import java.util.List;
 public class CustomAdapter extends ArrayAdapter<Habit>{
 
     public interface habitViewListener{
-        public void viewHabitPressed();
+        public void viewHabitPressed(int position);
 
     }
     private habitViewListener listener;
@@ -49,7 +49,8 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
         viewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.viewHabitPressed();
+                // we view the habit at the position
+                listener.viewHabitPressed(position);
             }
         });
 

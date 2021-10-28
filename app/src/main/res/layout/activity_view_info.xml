@@ -18,7 +18,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="false"/>
 
     <EditText
         android:id="@+id/habitDescription"
@@ -32,7 +33,8 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textIsSelectable="false"/>
+        android:textIsSelectable="false"
+        android:focusable="false"/>
 
     <EditText
         android:id="@+id/startDate"
@@ -44,7 +46,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textIsSelectable="false"/>
+        android:textIsSelectable="false"
+        android:focusable="false"/>
 
     <Button
         android:id="@+id/wednesday"
