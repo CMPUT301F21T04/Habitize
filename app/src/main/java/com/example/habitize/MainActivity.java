@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
 
 
-        updateProgress();
+//        updateProgress();
 
 
 
@@ -118,31 +118,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 /////////////////////////////////////////////////////////////
-    //This function is finished until the habit class is changed
-    public void updateProgress(){
-        //.child("userHabits").orderByChild("userHabits").equalTo(userHabits)
-        progress = db.collection("Users/userHabits");
-        progress.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot QueryDocumentSnapshots) {
-
-                        String habits = "";
-                        for (QueryDocumentSnapshot documentSnapshot : QueryDocumentSnapshots){
-                            Habit habit = documentSnapshot.toObject(Habit.class);
-                            habit.setName(documentSnapshot.getId());
-                            String habitName = habit.getName();
-                            habits += " " + habitName;
-
-                            completion = completion + habit.getCompletion();// how many habits the user completed today
-                            totalHabits = totalHabits + 1;// how many habits the user has
-                        }
-
-                    }
-                });
-
-        progressTrack = (completion/totalHabits)*100;
-        progressBar3.setProgress(progressTrack);//updating the progress bar
-    }
+//    //This function is finished until the habit class is changed
+//    public void updateProgress(){
+//        //.child("userHabits").orderByChild("userHabits").equalTo(userHabits)
+//        progress = db.collection("Users");
+//        progress.get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot QueryDocumentSnapshots) {
+//
+//                        String habits = "";
+//                        for (QueryDocumentSnapshot documentSnapshot : QueryDocumentSnapshots){
+//                            Habit habit = documentSnapshot.toObject(Habit.class);
+//                            habit.setName(documentSnapshot.getId());
+//                            String habitName = habit.getName();
+//                            habits += " " + habitName;
+//
+//                            completion = completion + habit.getCompletion();// how many habits the user completed today
+//                            totalHabits = totalHabits + 1;// how many habits the user has
+//                        }
+//
+//                    }
+//                });
+//
+//        progressTrack = (completion/totalHabits)*100;
+//        progressBar3.setProgress(progressTrack);//updating the progress bar
+//    }
 
 }
