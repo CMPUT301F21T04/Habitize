@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllHabitsActivity extends AppCompatActivity {
+public class AllHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener{
     private List<Habit> dataList;
     private CustomAdapter habitAdapter;
     private ListView list;
@@ -32,12 +32,7 @@ public class AllHabitsActivity extends AppCompatActivity {
         habitAdapter = new CustomAdapter(this,dataList);
         list.setAdapter(habitAdapter);
 
-        list.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                return false;
-            }
-        });
+
 
         // testing here
 
@@ -45,4 +40,9 @@ public class AllHabitsActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void viewHabitPressed() {
+        Intent intent = new Intent(AllHabitsActivity.this,ViewHabitActivity.class);
+        startActivity(intent);
     }
+}

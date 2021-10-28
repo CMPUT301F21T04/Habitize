@@ -13,6 +13,7 @@
         android:layout_marginBottom="313dp"
         android:gravity="center_horizontal"
         android:hint="Enter Your Title"
+        android:textIsSelectable="false"
         app:layout_constraintBottom_toTopOf="@+id/monday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -30,7 +31,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textIsSelectable="false"/>
 
     <EditText
         android:id="@+id/startDate"
@@ -41,7 +43,8 @@
         android:hint="Start Date: YYYY-MM-DD"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textIsSelectable="false"/>
 
     <Button
         android:id="@+id/wednesday"
@@ -56,7 +59,8 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tuesday"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:clickable="false"/>
 
     <Button
         android:id="@+id/thursday"
@@ -71,7 +75,9 @@
         app:layout_constraintEnd_toStartOf="@+id/friday"
         app:layout_constraintStart_toEndOf="@+id/tuesday"
         app:layout_constraintTop_toTopOf="@+id/wednesday"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:clickable="false"
+        />
 
     <Button
         android:id="@+id/friday"
@@ -86,7 +92,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/thursday"
         app:layout_constraintTop_toTopOf="@+id/thursday"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:clickable="false"/>
 
     <Button
         android:id="@+id/tuesday"
@@ -101,7 +108,8 @@
         app:layout_constraintEnd_toStartOf="@+id/thursday"
         app:layout_constraintStart_toEndOf="@+id/monday"
         app:layout_constraintTop_toTopOf="@+id/monday"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:clickable="false"/>
 
     <Button
         android:id="@+id/monday"
@@ -118,7 +126,8 @@
         app:layout_constraintBottom_toTopOf="@+id/geolocation"
         app:layout_constraintEnd_toStartOf="@+id/tuesday"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="false"/>
 
     <Button
         android:id="@+id/saturday"
@@ -135,7 +144,8 @@
         app:layout_constraintBottom_toTopOf="@+id/geolocation"
         app:layout_constraintEnd_toStartOf="@+id/sunday"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wednesday" />
+        app:layout_constraintTop_toBottomOf="@+id/wednesday"
+        android:clickable="false"/>
 
     <Button
         android:id="@+id/sunday"
@@ -151,7 +161,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/saturday"
-        app:layout_constraintTop_toBottomOf="@+id/wednesday" />
+        app:layout_constraintTop_toBottomOf="@+id/wednesday"
+        app:layout_constraintVertical_bias="0.438"
+        android:clickable="false"/>
 
     <Switch
         android:id="@+id/geolocation"
@@ -165,7 +177,8 @@
         android:thumbTint="#6200EE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/monday" />
+        app:layout_constraintTop_toBottomOf="@+id/monday"
+        android:clickable="false"/>
 
     <Button
         android:id="@+id/editHabit"
@@ -174,10 +187,24 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="#00000000"
-        android:text="CREATE"
+        android:text="Edit"
         android:textColor="#6200EE"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:clickable="false"/>
+
+    <Button
+        android:id="@+id/createHabit2"
+        android:layout_width="96dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="276dp"
+        android:layout_marginBottom="16dp"
+        android:background="#00000000"
+        android:text="delete"
+        android:textColor="#6200EE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:clickable="false"/>
 
     <Button
         android:id="@+id/addImage"
@@ -191,7 +218,8 @@
         app:layout_constraintBottom_toTopOf="@+id/habitTitle"
         app:layout_constraintEnd_toStartOf="@+id/addLocation"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="false"/>
 
     <Button
         android:id="@+id/addLocation"
@@ -203,7 +231,8 @@
         android:text="Location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addImage"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="false"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
