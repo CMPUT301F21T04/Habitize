@@ -9,7 +9,7 @@
         android:id="@+id/RegisterBTN"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="193dp"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="244dp"
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,7 +20,7 @@
     <Button
         android:id="@+id/LoginBTN"
         android:layout_width="195dp"
-        android:layout_height="43dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="15dp"
         android:text="LOGIN"
         app:layout_constraintBottom_toTopOf="@+id/RegisterBTN"
@@ -75,10 +75,11 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="413dp"
-        android:layout_height="72dp"
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
         android:background="@color/purple_500"
-        android:text="         HABITIZE"
+        android:text="HABITIZE"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="48sp"
         app:layout_constraintBottom_toTopOf="@+id/email_login"
@@ -90,7 +91,7 @@
     <Button
         android:id="@+id/forgotPassBTN"
         android:layout_width="192dp"
-        android:layout_height="47dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="72dp"
         android:text="Forgot Password"
         app:layout_constraintBottom_toBottomOf="parent"

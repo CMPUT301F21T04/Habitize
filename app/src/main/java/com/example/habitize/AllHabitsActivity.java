@@ -1,32 +1,34 @@
 package com.example.habitize;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class AllHabitsActivity extends AppCompatActivity {
-    private ArrayList<Habit> dataList;
+    private List<Habit> dataList;
     private CustomAdapter habitAdapter;
-
+    private User currentUser;
     private ListView list;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
-        // INTENT TESTS NOT WORKING. THIS IS USED INSTEAD
-        Habit testHabit = new Habit("quit smoking","now");
-        Habit testHabit1 = new Habit("quit smoking","now");
-        Habit testHabit2 = new Habit("quit smoking","now");
-        Habit testHabit3 = new Habit("quit smoking","now");
-        // END TEST
+        // retrieving passsed user
+        currentUser = (User)getIntent().getExtras().getSerializable("User");
         list = findViewById(R.id.habit_list);
-        dataList = new ArrayList<>();
-        dataList.add(testHabit);
-        dataList.add(testHabit1);
-        dataList.add(testHabit2);
-        dataList.add(testHabit3);
+
+
+        dataList = currentUser.getUserHabits();
+
 
         habitAdapter = new CustomAdapter(this,dataList);
         list.setAdapter(habitAdapter);
