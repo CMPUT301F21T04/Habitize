@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private CollectionReference userHabits;
     private DocumentReference user;
     private StructuredQuery.FieldReference fieldReference;
-    private ArrayList<Habit> habitList;
+    public ArrayList<Habit> habitList;
 
 
     private int progressTrack = 0; //starting at 0 (max 100)
@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 // passing list down to populate listView
                 Bundle userBundle = new Bundle();
                 userBundle.putSerializable("list",habitList);
+                userBundle.putSerializable("user",currentUser);
                 intent.putExtras(userBundle);
                 startActivity(intent);
 
