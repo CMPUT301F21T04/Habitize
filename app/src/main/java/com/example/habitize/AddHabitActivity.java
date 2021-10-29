@@ -50,7 +50,7 @@ public class AddHabitActivity extends AppCompatActivity {
 
         imageBtn = findViewById(R.id.addImage);
         locationBtn = findViewById(R.id.addLocation);
-        createHabit = findViewById(R.id.editHabit);
+        createHabit = findViewById(R.id.createHabit);
         Title = findViewById((R.id.habitTitle));
         Description = findViewById((R.id.habitDescription));
         db = FirebaseFirestore.getInstance();
