@@ -31,10 +31,10 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
     private ArrayList<Habit> dataList;
     private CustomAdapter habitAdapter;
     private ListView list;
-    private DocumentReference userRef;
+    private DocumentReference docRef;
     private CollectionReference colRef;
     private FirebaseFirestore db;
-    private String user;
+    private String passedEmail;
     protected void onCreate(Bundle savedInstanceState) {
 
 
@@ -42,16 +42,16 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
         // retrieving passed list to populate listview
-        user = (String)getIntent().getExtras().getSerializable("user");
+        passedEmail = (String)getIntent().getExtras().getSerializable("user");
         db = FirebaseFirestore.getInstance();
         colRef = db.collection("userHabits");
-        userRef = colRef.document(user);
+        docRef = colRef.document(passedEmail);
         dataList = new ArrayList<>(); // reset the list
 
 
 
 
-        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
@@ -93,7 +93,7 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
         habitBundle.putSerializable("index",position);
         habitBundle.putSerializable("habits",dataList);
-        habitBundle.putSerializable("user",user);
+        habitBundle.putSerializable("user",passedEmail);
         intent.putExtras(habitBundle);
         startActivity(intent);
     }
