@@ -73,7 +73,7 @@ public class SignUp extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+
                 // trimming the white space from the input
                 String inputEmail = email.getText().toString().trim();
                 String inputPassword = password.getText().toString().trim();
