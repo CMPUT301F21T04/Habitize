@@ -40,10 +40,10 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
         if(view == null){
             view = LayoutInflater.from(context).inflate(R.layout.list_content,parent,false);
         }
-
+        // retrieve habit
         Habit habit = habits.get(position);
         TextView nameField = view.findViewById(R.id.habitName);
-
+        // Setting our custom list items
         nameField.setText(habit.getName());
         Button viewButton = view.findViewById(R.id.viewHabit);
         viewButton.setOnClickListener(new View.OnClickListener() {

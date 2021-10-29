@@ -39,28 +39,28 @@ public class ViewHabitActivity extends Activity {
         passedHabits = (ArrayList<Habit>)getIntent().getExtras().getSerializable("habits");
         passedUser  = (String)getIntent().getExtras().getSerializable("user");
         db = FirebaseFirestore.getInstance();
+        // initializing database
         colRef = db.collection("userHabits");
         docRef = colRef.document(passedUser);
         habitName = findViewById(R.id.habitTitle);
         habitDescription = findViewById(R.id.habitDescription);
+        deleteButton = findViewById(R.id.deleteButton);
 
+        // setting texts
         habitName.setText(passedHabit.getName());
         habitDescription.setText(passedHabit.getDescription());
 
-        deleteButton = findViewById(R.id.deleteButton);
-
+        // setting listener
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // We have clicked the deleteButton, modify the current habit list
                 passedHabits.remove(passedIndex);
+                // hash the list and replace the one at the database
                 HashMap<String,Object> dataMap = new HashMap<String,Object>();
                 dataMap.put("habits",passedHabits);
                 docRef.set(dataMap);
                 finish();
-
-
-
-
             }
         });
 

@@ -99,8 +99,8 @@ public class Login_Activity extends AppCompatActivity {
                         // Determine if the login is successful or not
 //                      // If successful, display a success message and redirect user to MainActivity
                         if (task.isSuccessful()) {
-                            //TODO: should probably throw an exception if this fails. Although it shouldn't ever fail since the user has to exist
                             Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            // Login is successful, user exists. We pass the user down into main to later retrieve data
                             Intent intent = new Intent(Login_Activity.this,MainActivity.class);
                             Bundle userBundle = new Bundle();
                             userBundle.putSerializable("User",email);

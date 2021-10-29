@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -48,12 +47,15 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         docRef = colRef.document(passedEmail);
         dataList = new ArrayList<>(); // reset the list
 
+        list = findViewById(R.id.habit_list);
+        habitAdapter = new CustomAdapter(this,dataList);
+        list.setAdapter(habitAdapter);
 
-
-
+        // getting the habits from database and updating the view with them.
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                // updating the
                 ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
                 habitAdapter.clear();
                 for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
@@ -69,18 +71,6 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
 
             }
         });
-
-
-
-        list = findViewById(R.id.habit_list);
-
-
-        habitAdapter = new CustomAdapter(this,dataList);
-        list.setAdapter(habitAdapter);
-
-
-
-        // testing here
 
 
     }

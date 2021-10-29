@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,AddHabitActivity.class);
-                // passsing down a list to modify, and a user to change the database of after the change is made
+                // passing down a list to modify, and a user to change the database of after the change is made
                 Bundle userBundle = new Bundle();
                 userBundle.putSerializable("list",habitList);
                 userBundle.putSerializable("User",passedEmail);
