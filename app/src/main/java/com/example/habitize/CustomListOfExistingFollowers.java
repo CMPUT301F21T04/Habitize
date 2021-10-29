@@ -11,16 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+
 import java.util.List;
 
 public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
 
-    private final String[] followers;
+    private final List<String> followers;
     private final Context context;
 
     // TODO: Add more fields here. Image..etc
 
-    public CustomListOfExistingFollowers(Context context, String[] followers){
+    public CustomListOfExistingFollowers(Context context, List<String> followers){
         super(context,0, followers);
         this.followers = followers;
         this.context = context;
@@ -33,7 +36,7 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
             view = LayoutInflater.from(context).inflate(R.layout.activity_custom_list_of_existing_followers,parent,false);
         }
 
-        String follower = followers[position];
+        String follower = followers.get(position);
         TextView nameField = view.findViewById(R.id.existingFollowerName);
 
         nameField.setText(follower);
