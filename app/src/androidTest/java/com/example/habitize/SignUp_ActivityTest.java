@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 
 @RunWith(AndroidJUnit4.class)
-public class SignUpTest {
+public class SignUp_ActivityTest {
     String testFirstName;
     String testLastName;
     String testEmail;
