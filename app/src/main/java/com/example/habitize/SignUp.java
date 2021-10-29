@@ -108,7 +108,6 @@ public class SignUp extends AppCompatActivity {
                                     // need it to work
                                     User newUser = new User(inputEmail, inputPassword, inputEmail, inputEmail,
                                             new ArrayList<String>(), new ArrayList<String>(), 0, new ArrayList<Habit>(), 0,inputEmail);
-                                    HashMap<String, Object> userData = new HashMap<>();
                                     HashMap<String,Object> userNameField = new HashMap<>();
                                     HashMap<String,Object> nameField = new HashMap<>();
                                     HashMap<String,Object> lastNameField = new HashMap<>();
@@ -123,6 +122,7 @@ public class SignUp extends AppCompatActivity {
                                     progressField.put("progress",0L);
                                     // adding Data to User collection
                                     users.document(inputEmail).set(userNameField);
+                                    users.document(inputEmail).set(nameField);
                                     users.document(inputEmail).update(lastNameField);
                                     users.document(inputEmail).update(emailField);
                                     users.document(inputEmail).update(pointField);

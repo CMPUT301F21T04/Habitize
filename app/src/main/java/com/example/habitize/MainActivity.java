@@ -50,34 +50,22 @@ public class MainActivity extends AppCompatActivity {
     private DocumentReference user;
     private StructuredQuery.FieldReference fieldReference;
     public ArrayList<Habit> habitList;
-
-
     private int progressTrack = 0; //starting at 0 (max 100)
-    Integer completion = 0;
-    Integer totalHabits = 0;
-
+    private Integer completion = 0;
+    private Integer totalHabits = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         logOut = findViewById(R.id.logout);
-        db = FirebaseFirestore.getInstance();
-        userHabits = db.collection("userHabits");
-        passedEmail = (String)getIntent().getExtras().getSerializable("User"); // retrieving the user
-        user = userHabits.document(passedEmail); // gets the habits at the current user
-
-
-
-
-
-
         addHabit = findViewById(R.id.addHabit); // our 4 buttons
         allHabits = findViewById(R.id.allHabits);
         todaysHabits = findViewById(R.id.todaysHabits);
         followReq = (Button) findViewById(R.id.followReq);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
 
+        passedEmail = (String)getIntent().getExtras().getSerializable("User"); // retrieving the user
 
        // updateProgress();
 

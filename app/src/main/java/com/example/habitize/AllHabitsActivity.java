@@ -97,11 +97,6 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         intent.putExtras(habitBundle);
         startActivity(intent);
     }
-    public abstract class habitRefresher {
-        ArrayList<Habit> currentList;
-        public abstract void refreshList(); // will be called in main to refresh
 
-
-    }
 
 }
