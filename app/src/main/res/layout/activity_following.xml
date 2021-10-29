@@ -34,8 +34,10 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
+        android:id="@+id/listOfExistingFollowers"
         android:layout_width="288dp"
-        android:layout_height="490dp"
+        android:layout_height="476dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
