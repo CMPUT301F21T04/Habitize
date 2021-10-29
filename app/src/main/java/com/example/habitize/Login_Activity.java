@@ -107,7 +107,7 @@ public class Login_Activity extends AppCompatActivity {
                             intent.putExtras(userBundle);
                             startActivity(intent);
 
-
+                            progressBar.setVisibility(View.GONE);
                         } else {
                             Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
