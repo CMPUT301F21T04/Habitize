@@ -22,7 +22,7 @@ public class AllHabitsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
-        // retrieving passsed list to populate listview
+        // retrieving passed list to populate listview
         dataList = (ArrayList<Habit>)getIntent().getExtras().getSerializable("list");
         list = findViewById(R.id.habit_list);
 
