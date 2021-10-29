@@ -9,13 +9,10 @@ import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.FirebaseError;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,7 +46,7 @@ public class AddHabitActivity extends AppCompatActivity {
 
         imageBtn = findViewById(R.id.addImage);
         locationBtn = findViewById(R.id.addLocation);
-        createHabit = findViewById(R.id.createHabit);
+        createHabit = findViewById(R.id.editHabit);
         title = findViewById((R.id.habitTitle));
         description = findViewById((R.id.habitDescription));
         db = FirebaseFirestore.getInstance();
