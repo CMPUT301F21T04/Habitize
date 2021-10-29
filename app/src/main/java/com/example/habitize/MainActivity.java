@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         addHabit = findViewById(R.id.addHabit); // our 4 buttons
         allHabits = findViewById(R.id.allHabits);
         todaysHabits = findViewById(R.id.todaysHabits);
-        followReq = findViewById(R.id.followReq);
+        followReq = (Button) findViewById(R.id.followReq);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
 
 
@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         followReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                openFollowingPage();
 
             }
         });
@@ -176,6 +177,11 @@ public class MainActivity extends AppCompatActivity {
     public void logout(){
         FirebaseAuth.getInstance().signOut();
 
+    }
+
+    public void openFollowingPage() {
+        Intent intent = new Intent(this, FollowingActivity.class);
+        startActivity(intent);
     }
 
 

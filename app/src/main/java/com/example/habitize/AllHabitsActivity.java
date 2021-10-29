@@ -39,7 +39,7 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
-        // retrieving passsed list to populate listview
+        // retrieving passed list to populate listview
         dataList = (ArrayList<Habit>)getIntent().getExtras().getSerializable("list");
         user = (String)getIntent().getExtras().getSerializable("user");
         db = FirebaseFirestore.getInstance();

@@ -18,6 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habitize">
         <activity
+            android:name=".CustomListOfExistingFollowers"
+            android:exported="false" />
+        <activity
+            android:name=".FollowingActivity"
+            android:exported="false" />
+        <activity
             android:name=".MyNavigationService"
             android:exported="false" />
 
