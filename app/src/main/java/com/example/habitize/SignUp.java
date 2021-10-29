@@ -25,6 +25,9 @@ import java.util.HashMap;
 public class SignUp extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference users;
+    private CollectionReference userHabits;
+    private CollectionReference followers;
+    private CollectionReference following;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,9 @@ public class SignUp extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance(); // init db
         users = db.collection("Users"); // reference to users collection
+        userHabits = db.collection("userHabits");
+        followers = db.collection("followers");
+        following = db.collection("following");
 
         FirebaseAuth fAuth;
         fAuth = FirebaseAuth.getInstance();
@@ -66,6 +72,9 @@ public class SignUp extends AppCompatActivity {
                 String inputEmail = email.getText().toString().trim();
                 String inputPassword = password.getText().toString().trim();
                 String inputConPass = conPassword.getText().toString().trim();
+                String first = firstName.getText().toString().trim();
+                String last = lastName.getText().toString().trim();
+                String user = username.getText().toString().trim();
 
                 if (TextUtils.isEmpty(inputEmail)) {
                     email.setError("Enter an email please!");
@@ -87,7 +96,7 @@ public class SignUp extends AppCompatActivity {
                     return;
                 }
 
-                if (inputPassword != inputConPass) {
+                if (!inputPassword.equals(inputConPass)) {
                     conPassword.setError("The passwords are not the same!");
                     return;
                 }
@@ -105,17 +114,49 @@ public class SignUp extends AppCompatActivity {
                                     // TODO: Put legit values here later. Just filling the constructor because I
                                     // need it to work
                                     User newUser = new User(inputEmail, inputPassword, inputEmail, inputEmail,
-                                            new ArrayList<String>(), new ArrayList<String>(), 0, new ArrayList<Habit>(), 0);
-                                    HashMap<String, User> userData = new HashMap<>();
-                                    userData.put("User", newUser);
-                                    users.document(inputEmail).set(userData); // user data gets stored.
-                                    // TODO: pass user data down into main
+                                            new ArrayList<String>(), new ArrayList<String>(), 0, new ArrayList<Habit>(), 0,inputEmail);
+                                    HashMap<String,Object> userNameField = new HashMap<>();
+                                    HashMap<String,Object> nameField = new HashMap<>();
+                                    HashMap<String,Object> lastNameField = new HashMap<>();
+                                    HashMap<String,Object> emailField = new HashMap<>();
+                                    HashMap<String, Object> pointField = new HashMap<>();
+                                    HashMap<String, Object> progressField = new HashMap<>();
+                                    userNameField.put("userName",user);
+                                    nameField.put("firstName",first);
+                                    lastNameField.put("lastName",last);
+                                    emailField.put("email",inputEmail);
+                                    pointField.put("points", 0L);
+                                    progressField.put("progress",0L);
+                                    // adding Data to User collection
+                                    users.document(inputEmail).set(userNameField);
+                                    users.document(inputEmail).set(nameField);
+                                    users.document(inputEmail).update(lastNameField);
+                                    users.document(inputEmail).update(emailField);
+                                    users.document(inputEmail).update(pointField);
+                                    users.document(inputEmail).update(progressField);
+                                    // adding Data to UsersHabits collection
+                                    HashMap<String,Object> habits = new HashMap<>();
+                                    habits.put("habits",new ArrayList<Habit>());
+                                    userHabits.document(inputEmail).set(habits);
+                                    // adding Data to followers Collection
+                                    HashMap<String,Object> followList = new HashMap<>();
+                                    followList.put("followers",new ArrayList<String>());
+                                    followers.document(inputEmail).set(followList);
+                                    // adding Data to following Collection
+                                    HashMap<String,Object> followingList = new HashMap<>();
+                                    followingList.put("following",new ArrayList<String>());
+                                    following.document(inputEmail).set(followingList);
+
+
+
+
                                     Intent intent = new Intent(SignUp.this, MainActivity.class);
                                     // we do it with intents so we can pass down arguments.
                                     Bundle userBundle = new Bundle();
-                                    userBundle.putSerializable("User", newUser); // bundling the user
+                                    userBundle.putSerializable("User", inputEmail); // sending user identifier down
                                     intent.putExtras(userBundle);
                                     startActivity(intent); // start the activity with the passed user
+
 
                                 } else {
                                     Toast.makeText(SignUp.this, "Something Wrong!" + task.getException().getMessage(),

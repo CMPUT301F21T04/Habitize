@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,13 +18,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habitize">
         <activity
+            android:name=".CustomListOfExistingFollowers"
+            android:exported="false" />
+        <activity
+            android:name=".FollowingActivity"
+            android:exported="false" />
+        <activity
             android:name=".MyNavigationService"
             android:exported="false" />
 
         <service
             android:name=".MyNavigationService"
             android:exported="false"
-            android:foregroundServiceType="location" />
+            android:foregroundServiceType="location"
+            />
 
         <activity
             android:name=".AddHabitImage"
@@ -31,6 +39,7 @@
         <activity
             android:name=".AddHabitLocation"
             android:exported="false" />
+        <activity android:name=".ViewHabitActivity"/>
         <activity
             android:name=".Login_Activity"
             android:exported="true">
