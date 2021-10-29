@@ -116,6 +116,7 @@ public class SignUp_ActivityTest {
         SystemClock.sleep(5000);
         intended(hasComponent(MainActivity.class.getName()));
 
+
     }
 
     //    Tests if the user failed to login
@@ -128,6 +129,7 @@ public class SignUp_ActivityTest {
         onView(hasErrorText("Login Failed"));
 
     }
+
 }
 
 
