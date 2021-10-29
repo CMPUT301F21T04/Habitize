@@ -76,17 +76,14 @@ public class AddHabitActivity extends AppCompatActivity {
                 //check if empty and user left fields blank
                 if(TextUtils.isEmpty(inputTitle)){
                     title.setError("Enter a habit title!");
-                    return;
                 }
 
                 if(TextUtils.isEmpty(inputDescription)){
                     description.setError("Enter a habit description!");
-                    return;
                 }
 
                 if(TextUtils.isEmpty(inputDate)){
                     startDate.setError("Enter a habit start date!");
-                    return;
                 }
 
                 //make sure title is up to 20 chars
@@ -100,6 +97,7 @@ public class AddHabitActivity extends AppCompatActivity {
                     description.setError("Habit description should be no more than 30 characters!");
                     return;
                 }
+
 
 
             }
