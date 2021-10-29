@@ -20,10 +20,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class AllHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener{
     private ArrayList<Habit> dataList;
@@ -40,11 +42,35 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
         // retrieving passed list to populate listview
-        dataList = (ArrayList<Habit>)getIntent().getExtras().getSerializable("list");
         user = (String)getIntent().getExtras().getSerializable("user");
         db = FirebaseFirestore.getInstance();
         colRef = db.collection("userHabits");
-        userRef = colRef.document("stasfedyk1911@gmail.com");
+        userRef = colRef.document(user);
+        dataList = new ArrayList<>(); // reset the list
+
+
+
+
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
+                habitAdapter.clear();
+                for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
+                    Map<String,String> habitFields = (Map<String, String>) mappedList.get(i); // map to all the fields
+                    // retrieves all the habit information and adds it to the habitList
+                    String name = habitFields.get("name");
+                    String description = habitFields.get("description");
+                    Habit newHabit = new Habit(name,description); // create a new habit out of this information
+                    dataList.add(newHabit); // add it to the habitList
+
+                }
+                habitAdapter.notifyDataSetChanged();
+
+            }
+        });
+
+
 
         list = findViewById(R.id.habit_list);
 

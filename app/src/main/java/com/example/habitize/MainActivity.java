@@ -68,26 +68,8 @@ public class MainActivity extends AppCompatActivity {
         user = userHabits.document(currentUser); // gets the habits at the current user
 
 
-        // populate the list with the values that are in it at first run.
-        user.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                ArrayList<Habit> mappedList =  (ArrayList<Habit>) documentSnapshot.get("habits");
-                habitList = new ArrayList<>(); // reset the list
 
-                for(int i = 0; i < mappedList.size() ; i++){ // looping through every habit
-                    Map<String,String> habitFields = (Map<String, String>) mappedList.get(i); // map to all the fields
-                    // retrieves all the habit information and adds it to the habitList
-                    String name = habitFields.get("name");
-                    String description = habitFields.get("description");
-                    Habit newHabit = new Habit(name,description); // create a new habit out of this information
-                    habitList.add(newHabit); // add it to the habitList
 
-                }
-            }
-        });
-
-        // if we detect a change in the Habits, we repopulate our habitList
         user.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
