@@ -82,6 +82,10 @@ public class AddHabitActivity extends AppCompatActivity {
         docRef = userCol.document(passedEmail);
 
         /**
+         * TO DO: date and radio buttons
+         */
+
+        /**
          *  We pull the current habit list, modify it, and send it back (only if we create the habit)
          *
          */
