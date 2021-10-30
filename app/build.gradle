@@ -32,7 +32,7 @@ android {
 dependencies {
 
     implementation 'androidx.test.espresso:espresso-intents:3.4.0'
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'com.google.firebase:firebase-database:20.0.2'
     androidTestImplementation 'androidx.test:rules:1.2.0'
     //androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.3.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.0.1'
