@@ -5,30 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="458b0535-d890-4c42-a91e-34c49ffd9b41" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/CustomListOfExistingFollowers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/FollowingActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/layout/activity_custom_list_of_existing_followers.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/layout/activity_following.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/layout/activity_view_info.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/AddHabitActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/AddHabitActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/AllHabitsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/AllHabitsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/CustomAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/CustomAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/Login_Activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/Login_Activity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/SignUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/SignUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_add_habit_info.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_add_habit_info.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/all_habits.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/all_habits.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/login_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/login_activity.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/signup_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/signup_activity.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
