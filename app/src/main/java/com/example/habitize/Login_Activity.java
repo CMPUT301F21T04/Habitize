@@ -31,7 +31,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firestore.v1.WriteResult;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Login_Activity extends AppCompatActivity {
@@ -42,9 +44,11 @@ public class Login_Activity extends AppCompatActivity {
     LayoutInflater inflater;
     FirebaseAuth Authenticator;
     private FirebaseFirestore db; // our database
-    private CollectionReference users;
-    private DocumentReference docRef;
+    private CollectionReference UsersCol;
+    private DocumentReference userRef;
+
     private DocumentSnapshot userData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
@@ -78,7 +82,7 @@ public class Login_Activity extends AppCompatActivity {
                 }
 
                 if(TextUtils.isEmpty(password)){
-                    password_EditText.setError("Password is Required");
+                    password_EditText.setError("Password is Required.");
                     return;
                 }
 
@@ -95,26 +99,15 @@ public class Login_Activity extends AppCompatActivity {
                         // Determine if the login is successful or not
 //                      // If successful, display a success message and redirect user to MainActivity
                         if (task.isSuccessful()) {
-                            docRef = db.collection("Users").document(email_EditText.getText().toString());
-                           docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                               @Override
-                               public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                   HashMap<String,Object> userMap = (HashMap<String, Object>) documentSnapshot.get("User");
-                                   String userFirstName = (String) userMap.get("firstName");
-
-                                   System.out.println(userFirstName);
-                                   Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                   Intent intent = new Intent(Login_Activity.this,MainActivity.class);
-                                   Bundle userBundle = new Bundle();
-                                   //userBundle.putSerializable("User",currentUser);
-                                   intent.putExtras(userBundle);
-                                   startActivity(intent);
-                               }
-
-                           });
+                            Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            // Login is successful, user exists. We pass the user down into main to later retrieve data
+                            Intent intent = new Intent(Login_Activity.this,MainActivity.class);
+                            Bundle userBundle = new Bundle();
+                            userBundle.putSerializable("User",email);
+                            intent.putExtras(userBundle);
+                            startActivity(intent);
 
 
-                            progressBar.setVisibility(View.GONE);
                         } else {
                             Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);

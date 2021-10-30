@@ -1,6 +1,7 @@
 package com.example.habitize;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -19,13 +20,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firestore.v1.StructuredQuery;
 
 import java.net.Authenticator;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
@@ -37,35 +44,32 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar3;
     private TextView textView2;
     private Toolbar toolBar;
-    private User currentUser;
+    private String passedEmail;
     private CollectionReference progress;
-
-
+    private CollectionReference userHabits;
+    private DocumentReference user;
+    private StructuredQuery.FieldReference fieldReference;
+    public ArrayList<Habit> habitList;
     private int progressTrack = 0; //starting at 0 (max 100)
-    Integer completion = 0;
-    Integer totalHabits = 0;
-
+    private Integer completion = 0;
+    private Integer totalHabits = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         logOut = findViewById(R.id.logout);
-
-        // currentUser = (User)getIntent().getExtras().getSerializable("User"); // retrieving the user
-
-
-        // System.out.println(currentUser.getFirstName());
-        db = FirebaseFirestore.getInstance(); // initialize database. We don't really need to do this here.
-        // we can have the database instantiated in only the activities where it is needed to pull data
         addHabit = findViewById(R.id.addHabit); // our 4 buttons
         allHabits = findViewById(R.id.allHabits);
         todaysHabits = findViewById(R.id.todaysHabits);
-        followReq = findViewById(R.id.followReq);
+        followReq = (Button) findViewById(R.id.followReq);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
 
+        passedEmail = (String)getIntent().getExtras().getSerializable("User"); // retrieving the user
 
-//        updateProgress();
+
+       // updateProgress();
+
 
 
 
@@ -78,8 +82,14 @@ public class MainActivity extends AppCompatActivity {
         addHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addHabitIntent = new Intent(MainActivity.this, AddHabitActivity.class);
-                startActivity(addHabitIntent);
+                Intent intent = new Intent(MainActivity.this,AddHabitActivity.class);
+                // passing down a list to modify, and a user to change the database of after the change is made
+                Bundle userBundle = new Bundle();
+                userBundle.putSerializable("list",habitList);
+                userBundle.putSerializable("User",passedEmail);
+                intent.putExtras(userBundle);
+                startActivity(intent);
+
             }
         });
         allHabits.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +102,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,AllHabitsActivity.class);
-                Bundle userBundle = new Bundle(); // bundling user and sending them down
-                userBundle.putSerializable("User",currentUser);
+                // passing list down to populate listView
+                Bundle userBundle = new Bundle();
+                userBundle.putSerializable("list",habitList);
+                userBundle.putSerializable("user",passedEmail);
                 intent.putExtras(userBundle);
                 startActivity(intent);
 
@@ -102,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         followReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                openFollowingPage();
 
             }
         });
@@ -122,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
 
     }
+
 ///////////////////////////////////////////////////////////////
 //    //This function is finished until the habit class is changed
 //    public void updateProgress(){
@@ -149,5 +163,15 @@ public class MainActivity extends AppCompatActivity {
 //        progressTrack = (completion/totalHabits)*100;
 //        progressBar3.setProgress(progressTrack);//updating the progress bar
 //    }
+
+
+    public void openFollowingPage() {
+        Intent intent = new Intent(this, FollowingActivity.class);
+        startActivity(intent);
+    }
+
+
+
+
 
 }
