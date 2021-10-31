@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -18,6 +16,11 @@ public class AddHabitTabsBase extends AppCompatActivity {
     private ViewPager2 pager;
     private int[] views = {R.layout.fragment_add_habit_base,R.layout.fragment_add_habit_image,R.layout.fragment_add_habit_geolocation};
     private TabLayout tabLayout;
+
+
+    private AddHabitBaseFragment addHabitBaseFragment;
+    private AddHabitImageFragment addHabitImageFragment;
+    private AddHabitLocationFragment addHabitLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,9 @@ public class AddHabitTabsBase extends AppCompatActivity {
             }
         }).attach();
 
+
+
+
     }
 
     class addAdapter extends FragmentStateAdapter{
@@ -47,7 +53,16 @@ public class AddHabitTabsBase extends AppCompatActivity {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            return new AddHabitBase(views[position]);
+            Fragment returningFragment;
+            switch(position){
+                case 1: returningFragment = new AddHabitImageFragment();
+                    break;
+                case 2: returningFragment = new AddHabitLocationFragment();
+                    break;
+                default:
+                    returningFragment = new AddHabitBaseFragment();
+            }
+            return returningFragment;
         }
 
         @Override
