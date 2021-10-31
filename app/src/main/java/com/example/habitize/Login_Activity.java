@@ -81,11 +81,6 @@ public class Login_Activity extends AppCompatActivity {
 
                 }
 
-                if(TextUtils.isEmpty(password)){
-                    password_EditText.setError("Password is Required.");
-
-                }
-
                 if (password.length() < 8) {
                     password_EditText.setError("Password must be at least 8 characters");
                     return;
@@ -138,7 +133,9 @@ public class Login_Activity extends AppCompatActivity {
                                 String email = email_EditText.getText().toString();
                                 if(email.isEmpty()){
                                     email_EditText.setError("Email is required.");
+                                    Toast.makeText(Login_Activity.this,"Enter an email!",Toast.LENGTH_SHORT).show();
                                 }
+                                else{
                                 Authenticator.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
@@ -150,6 +147,7 @@ public class Login_Activity extends AppCompatActivity {
                                         Toast.makeText(Login_Activity.this,"Reset Email Failed: " + e.getMessage(),Toast.LENGTH_SHORT).show();
                                     }
                                 });
+                            }
                             }
                         })
                         .setNegativeButton("Cancel", null)
