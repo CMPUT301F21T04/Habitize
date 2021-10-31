@@ -7,8 +7,14 @@ public class Habit implements Serializable {
     private String name;
     private String description;
     private String comments;
-    private String recurrence;
-    private Date startDate;
+    private String startDate;
+    private String mondayR;
+    private String tuesdayR;
+    private String wednesdayR;
+    private String thursdayR;
+    private String fridayR;
+    private String saturdayR;
+    private String sundayR;
 
 //    private photos?
 //    private location
@@ -16,25 +22,102 @@ public class Habit implements Serializable {
     private int totalComplete; // total number of times the habit was checked
     private int totalMissed; //total number of times habit was not checked
 
-    // TODO: We need image + date functionality
+    // TODO: Add image + public vs private function
 
-    // TODO: Add image + date constructors
     public Habit(){};
-    public Habit(String name, String description){
+
+    public Habit(String name, String description, String startDate, String mondayR, String tuesdayR,
+                 String wednesdayR, String thursdayR, String fridayR, String saturdayR, String sundayR){
         this.name = name;
         this.description = description;
+        this.startDate = startDate;
+        this.mondayR = mondayR;
+        this.tuesdayR = tuesdayR;
+        this.wednesdayR = wednesdayR;
+        this.thursdayR = thursdayR;
+        this.fridayR = fridayR;
+        this.saturdayR = saturdayR;
+        this.sundayR = sundayR;
     }
+
     public String getName(){
         return this.name;
     }
+
     public void setName(String name){
         this.name = name;
     }
+
     public String getDescription(){
         return this.description;
     }
+
     public void setDescription(String description){
         this.description = description;
+    }
+
+    public String getStartDate(){
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getMondayR() {
+        return mondayR;
+    }
+
+    public void setMondayR(String mondayR) {
+        this.mondayR = mondayR;
+    }
+
+    public String getTuesdayR() {
+        return tuesdayR;
+    }
+
+    public void setTuesdayR(String tuesdayR) {
+        this.tuesdayR = tuesdayR;
+    }
+
+    public String getWednesdayR() {
+        return wednesdayR;
+    }
+
+    public void setWednesdayR(String wednesdayR) {
+        this.wednesdayR = wednesdayR;
+    }
+
+    public String getThursdayR() {
+        return thursdayR;
+    }
+
+    public void setThursdayR(String thursdayR) {
+        this.thursdayR = thursdayR;
+    }
+
+    public String getFridayR() {
+        return fridayR;
+    }
+
+    public void setFridayR(String fridayR) {
+        this.fridayR = fridayR;
+    }
+
+    public String getSaturdayR() {
+        return saturdayR;
+    }
+
+    public void setSaturdayR(String saturdayR) {
+        this.saturdayR = saturdayR;
+    }
+
+    public String getSundayR() {
+        return sundayR;
+    }
+
+    public void setSundayR(String sundayR) {
+        this.sundayR = sundayR;
     }
 
 
@@ -48,23 +131,6 @@ public class Habit implements Serializable {
     public void setComments(String comments) {
         this.comments = comments;
     }
-
-    public String getRecurrence() {
-        return recurrence;
-    }
-
-    public void setRecurrence(String recurrence) {
-        this.recurrence = recurrence;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
 
     public Integer getCompletion() {
         return completion;

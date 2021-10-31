@@ -7,13 +7,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -44,22 +42,23 @@ public class AddHabitActivity extends AppCompatActivity {
     private TextView startDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
-    private Button Monday;
-    private Button Tuesday;
-    private Button Wednesday;
-    private Button Thursday;
-    private Button Friday;
-    private Button Saturday;
-    private Button Sunday;
+    private CheckBox Monday;
+    private CheckBox Tuesday;
+    private CheckBox Wednesday;
+    private CheckBox Thursday;
+    private CheckBox Friday;
+    private CheckBox Saturday;
+    private CheckBox Sunday;
+
     private Button createHabit;
 
-    private Boolean MonRecurrence;
-    private Boolean TueRecurrence;
-    private Boolean WedRecurrence;
-    private Boolean ThurRecurrence;
-    private Boolean FriRecurrence;
-    private Boolean SatRecurrence;
-    private Boolean SunRecurrence;
+    private String MonRecurrence;
+    private String TueRecurrence;
+    private String WedRecurrence;
+    private String ThurRecurrence;
+    private String FriRecurrence;
+    private String SatRecurrence;
+    private String SunRecurrence;
 
     private Switch geolocation;
     private Switch Geolocation;
@@ -103,7 +102,7 @@ public class AddHabitActivity extends AppCompatActivity {
         docRef = userCol.document(passedEmail);
 
         /*
-         * TO DO: date and radio buttons, public or private
+         * TO DO: public or private, test cases
          */
 
         //We pull the current habit list, modify it, and send it back (only if we create the habit)
@@ -117,7 +116,17 @@ public class AddHabitActivity extends AppCompatActivity {
                     // retrieves all the habit information and adds it to the habitList
                     String name = habitFields.get("name");
                     String description = habitFields.get("description");
-                    Habit newHabit = new Habit(name,description); // create a new habit out of this information
+                    String date = habitFields.get("date");
+                    String mondayRec = habitFields.get("mondayRec");
+                    String tuesdayRec = habitFields.get("tuesdayRec");
+                    String wednesdayRec = habitFields.get("wednesdayRec");
+                    String thursdayRec = habitFields.get("thursdayRec");
+                    String fridayRec = habitFields.get("fridayRec");
+                    String saturdayRec = habitFields.get("saturdayRec");
+                    String sundayRec = habitFields.get("sundayRec");
+
+                    Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
+                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
                     passedHabits.add(newHabit); // add it to the habitList
                 }
             }
@@ -198,9 +207,12 @@ public class AddHabitActivity extends AppCompatActivity {
 
 
                 //creates the habit and stores in database only if validation above is correct
-                if ((!TextUtils.isEmpty(inputTitle)) && (!TextUtils.isEmpty(inputDescription)) && (!TextUtils.isEmpty(inputDate))) {
+                if ((!TextUtils.isEmpty(inputTitle)) && (!TextUtils.isEmpty(inputDescription)) &&
+                        (!TextUtils.isEmpty(inputDate))) {
                     // Create the habit
-                    Habit newHabit = new Habit(Title.getText().toString(), Description.getText().toString());
+                    Habit newHabit = new Habit(Title.getText().toString(), Description.getText().toString(),
+                            startDate.getText().toString(), MonRecurrence, TueRecurrence, WedRecurrence,
+                            ThurRecurrence, FriRecurrence, SatRecurrence, SunRecurrence);
                     // add it to the user list
                     passedHabits.add(newHabit);
                     // Hash it for transportation to database
@@ -210,7 +222,6 @@ public class AddHabitActivity extends AppCompatActivity {
                     docRef.set(listMap);
                     finish();
                 }
-
             }
         });
 
@@ -227,66 +238,69 @@ public class AddHabitActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),AddHabitLocation.class));          // redo intent handling
             }
         });
-
     }
 
-    //RadioButton Implementation below to set up recurrence days of the week
-    public void onRadioButtonClicked(View view){
-        boolean checked = ((RadioButton) view).isChecked();
+    //Checkbox Implementation below to set up recurrence days of the week
+    public void onCheckboxClicked(View view){
+        boolean checked = ((CheckBox) view).isChecked();
 
-        //Check which radio button was clicked, if clicked, it will set the recurrence to true
+        //Check which checkbox was clicked, if clicked, it will set the recurrence to yes. If
+        //un-clicked, the recurrence will say no (habit does not occur on day).
         switch (view.getId()){
             case R.id.monday:
                 if(checked){
-                    MonRecurrence = true;
+                    MonRecurrence = "yes";
                 }
                 else {
-                    MonRecurrence = false;
+                    MonRecurrence = "no";
                 }
                 break;
             case R.id.tuesday:
                 if(checked){
-                    TueRecurrence = true;
+                    TueRecurrence = "yes";
                 }
                 else {
-                    TueRecurrence = false;
+                    TueRecurrence = "no";
                 }
                 break;
             case R.id.wednesday:
                 if(checked){
-                    WedRecurrence = true;
+                    WedRecurrence = "yes";
                 }
                 else {
-                    WedRecurrence = false;
+                    WedRecurrence = "no";
                 }
                 break;
             case R.id.thursday:
                 if(checked){
-                    ThurRecurrence = true;
+                    ThurRecurrence = "yes";
+                }
+                else{
+                    ThurRecurrence = "no";
                 }
                 break;
             case R.id.friday:
                 if(checked){
-                    FriRecurrence = true;
+                    FriRecurrence = "yes";
                 }
                 else {
-                    FriRecurrence = false;
+                    FriRecurrence = "no";
                 }
                 break;
             case R.id.saturday:
                 if(checked){
-                    SatRecurrence = true;
+                    SatRecurrence = "yes";
                 }
                 else {
-                    SatRecurrence = false;
+                    SatRecurrence = "no";
                 }
                 break;
             case R.id.sunday:
                 if(checked){
-                    SunRecurrence = true;
+                    SunRecurrence = "yes";
                 }
                 else {
-                    SunRecurrence = false;
+                    SunRecurrence = "no";
                 }
                 break;
         }
