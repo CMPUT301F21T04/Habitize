@@ -89,10 +89,17 @@ public class SignUp extends AppCompatActivity {
                     return;
                 }
 
+
+                //if (inputPassword != inputConPass) {
+                 //   conPassword.setError("The passwords are not the same!");
+                 //   return;
+                //}
+
                 if (!inputPassword.equals(inputConPass)) {
                     conPassword.setError("The passwords are not the same!");
                     return;
                 }
+
 
                 progressBar.setVisibility(View.VISIBLE);
                 // TODO: the startActivity here might mess with NAVCONTROLLER
