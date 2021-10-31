@@ -120,10 +120,6 @@ public class Habit implements Serializable {
         this.sundayR = sundayR;
     }
 
-
-
-
-
     public String getComments() {
         return comments;
     }
@@ -156,7 +152,5 @@ public class Habit implements Serializable {
         this.totalMissed = totalMissed;
     }
 
-
-
-
 }
+
