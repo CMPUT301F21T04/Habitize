@@ -67,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
         passedEmail = (String)getIntent().getExtras().getSerializable("User"); // retrieving the user
 
+
        // updateProgress();
+
 
 
 
@@ -134,6 +136,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+///////////////////////////////////////////////////////////////
+//    //This function is finished until the habit class is changed
+//    public void updateProgress(){
+//        //.child("userHabits").orderByChild("userHabits").equalTo(userHabits)
+//        progress = db.collection("Users/userHabits");
+//        progress.get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot QueryDocumentSnapshots) {
+//
+//                        String habits = "";
+//                        for (QueryDocumentSnapshot documentSnapshot : QueryDocumentSnapshots){
+//                            Habit habit = documentSnapshot.toObject(Habit.class);
+//                            habit.setName(documentSnapshot.getId());
+//                            String habitName = habit.getName();
+//                            habits += " " + habitName;
+//
+//                            completion = completion + habit.getCompletion();// how many habits the user completed today
+//                            totalHabits = totalHabits + 1;// how many habits the user has
+//                        }
+//
+//                    }
+//                });
+//
+//        progressTrack = (completion/totalHabits)*100;
+//        progressBar3.setProgress(progressTrack);//updating the progress bar
+//    }
+
+
     public void openFollowingPage() {
         Intent intent = new Intent(this, FollowingActivity.class);
         startActivity(intent);
@@ -141,32 +172,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-/////////////////////////////////////////////////////////////
-    //This function is finished until the habit class is changed
-    public void updateProgress(){
-        //.child("userHabits").orderByChild("userHabits").equalTo(userHabits)
-        progress = db.collection("Users/userHabits");
-        progress.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot QueryDocumentSnapshots) {
 
-                        String habits = "";
-                        for (QueryDocumentSnapshot documentSnapshot : QueryDocumentSnapshots){
-                            Habit habit = documentSnapshot.toObject(Habit.class);
-                            habit.setName(documentSnapshot.getId());
-                            String habitName = habit.getName();
-                            habits += " " + habitName;
-
-                            completion = completion + habit.getCompletion();// how many habits the user completed today
-                            totalHabits = totalHabits + 1;// how many habits the user has
-                        }
-
-                    }
-                });
-
-        progressTrack = (completion/totalHabits)*100;
-        progressBar3.setProgress(progressTrack);//updating the progress bar
-    }
 
 }

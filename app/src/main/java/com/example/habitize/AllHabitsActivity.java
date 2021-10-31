@@ -63,12 +63,21 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
                     // retrieves all the habit information and adds it to the habitList
                     String name = habitFields.get("name");
                     String description = habitFields.get("description");
-                    Habit newHabit = new Habit(name,description); // create a new habit out of this information
+                    String date = habitFields.get("date");
+                    String mondayRec = habitFields.get("mondayRec");
+                    String tuesdayRec = habitFields.get("tuesdayRec");
+                    String wednesdayRec = habitFields.get("wednesdayRec");
+                    String thursdayRec = habitFields.get("thursdayRec");
+                    String fridayRec = habitFields.get("fridayRec");
+                    String saturdayRec = habitFields.get("saturdayRec");
+                    String sundayRec = habitFields.get("sundayRec");
+
+                    Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
+                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
                     dataList.add(newHabit); // add it to the habitList
 
                 }
                 habitAdapter.notifyDataSetChanged();
-
             }
         });
 
