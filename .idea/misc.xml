@@ -23,7 +23,7 @@
         <entry key="app/src/main/res/drawable/round_button.xml" value="0.17447916666666666" />
         <entry key="app/src/main/res/drawable/with_border.xml" value="0.17447916666666666" />
         <entry key="app/src/main/res/layout/activity_add_habit_image.xml" value="0.16770833333333332" />
-        <entry key="app/src/main/res/layout/activity_add_habit_info.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/activity_add_habit_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_add_habit_location.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/activity_custom_list_of_existing_followers.xml" value="0.15833333333333333" />
         <entry key="app/src/main/res/layout/activity_following.xml" value="0.15833333333333333" />

@@ -1,12 +1,21 @@
 package com.example.habitize;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,11 +37,12 @@ public class AddHabitActivity extends AppCompatActivity {
 
     private EditText title;
     private EditText description;
-    private EditText startDate;
+
 
     private EditText Title;
     private EditText Description;
-    private EditText StartDate;
+    private TextView startDate;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     private Button Monday;
     private Button Tuesday;
@@ -41,6 +52,14 @@ public class AddHabitActivity extends AppCompatActivity {
     private Button Saturday;
     private Button Sunday;
     private Button createHabit;
+
+    private Boolean MonRecurrence;
+    private Boolean TueRecurrence;
+    private Boolean WedRecurrence;
+    private Boolean ThurRecurrence;
+    private Boolean FriRecurrence;
+    private Boolean SatRecurrence;
+    private Boolean SunRecurrence;
 
     private Switch geolocation;
     private Switch Geolocation;
@@ -53,6 +72,8 @@ public class AddHabitActivity extends AppCompatActivity {
     private DocumentReference docRef;
     private String passedEmail;
     private List<Habit> passedHabits;
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -81,14 +102,11 @@ public class AddHabitActivity extends AppCompatActivity {
         userCol = db.collection("userHabits");
         docRef = userCol.document(passedEmail);
 
-        /**
-         * TO DO: date and radio buttons
+        /*
+         * TO DO: date and radio buttons, public or private
          */
 
-        /**
-         *  We pull the current habit list, modify it, and send it back (only if we create the habit)
-         *
-         */
+        //We pull the current habit list, modify it, and send it back (only if we create the habit)
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -101,29 +119,50 @@ public class AddHabitActivity extends AppCompatActivity {
                     String description = habitFields.get("description");
                     Habit newHabit = new Habit(name,description); // create a new habit out of this information
                     passedHabits.add(newHabit); // add it to the habitList
-
                 }
             }
         });
 
-        imageBtn.setOnClickListener(new View.OnClickListener() {
+        //Will pop up a date picker which will only allow today's date + future dates to be inputted
+        startDate.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AddHabitImage.class));             // redo intent handling
+            public void onClick(View view){
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                    AddHabitActivity.this,
+                    android.R.style.Theme_DeviceDefault,
+                    mDateSetListener,
+                    year, month, day);
+
+                //set a minimum date the user can select (cannot choose past dates to start on)
+                dialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+                //change color of date picker background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.LTGRAY));
+                dialog.show();
             }
         });
 
-        locationBtn.setOnClickListener(new View.OnClickListener() {
+        //format of dialog box for datePicker and will set the textBox to chosen date
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AddHabitLocation.class));          // redo intent handling
-            }
-        });
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                //must add one more month to be able to get the desired month
+                month = month + 1;
+                //formats the date according to mm/dd/yyyy
+                Log.d(TAG, "onDateSet: mm/dd/yyyy: " + month + "/" + day + "/" + year);
 
-        /**
-         * create button that handles potential user error with input after clicking button.
-         * Button will then add the new habit
-         */
+                String date = month + "/" + day + "/" + year;
+                //updates the textBox
+                startDate.setText(date);
+            }
+        };
+
+        //create button that handles potential user error with input after clicking button.
+        //Button will then add the new habit
         createHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,9 +196,8 @@ public class AddHabitActivity extends AppCompatActivity {
                     return;
                 }
 
-                /**
-                 * creates the habit and stores in database only if validation above is correct
-                 */
+
+                //creates the habit and stores in database only if validation above is correct
                 if ((!TextUtils.isEmpty(inputTitle)) && (!TextUtils.isEmpty(inputDescription)) && (!TextUtils.isEmpty(inputDate))) {
                     // Create the habit
                     Habit newHabit = new Habit(Title.getText().toString(), Description.getText().toString());
@@ -176,9 +214,82 @@ public class AddHabitActivity extends AppCompatActivity {
             }
         });
 
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AddHabitImage.class));             // redo intent handling
+            }
+        });
 
+        locationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AddHabitLocation.class));          // redo intent handling
+            }
+        });
 
+    }
 
+    //RadioButton Implementation below to set up recurrence days of the week
+    public void onRadioButtonClicked(View view){
+        boolean checked = ((RadioButton) view).isChecked();
+
+        //Check which radio button was clicked, if clicked, it will set the recurrence to true
+        switch (view.getId()){
+            case R.id.monday:
+                if(checked){
+                    MonRecurrence = true;
+                }
+                else {
+                    MonRecurrence = false;
+                }
+                break;
+            case R.id.tuesday:
+                if(checked){
+                    TueRecurrence = true;
+                }
+                else {
+                    TueRecurrence = false;
+                }
+                break;
+            case R.id.wednesday:
+                if(checked){
+                    WedRecurrence = true;
+                }
+                else {
+                    WedRecurrence = false;
+                }
+                break;
+            case R.id.thursday:
+                if(checked){
+                    ThurRecurrence = true;
+                }
+                break;
+            case R.id.friday:
+                if(checked){
+                    FriRecurrence = true;
+                }
+                else {
+                    FriRecurrence = false;
+                }
+                break;
+            case R.id.saturday:
+                if(checked){
+                    SatRecurrence = true;
+                }
+                else {
+                    SatRecurrence = false;
+                }
+                break;
+            case R.id.sunday:
+                if(checked){
+                    SunRecurrence = true;
+                }
+                else {
+                    SunRecurrence = false;
+                }
+                break;
+        }
     }
 
 }
