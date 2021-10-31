@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="458b0535-d890-4c42-a91e-34c49ffd9b41" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_view_info.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_view_info.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

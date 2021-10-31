@@ -40,7 +40,7 @@ public class ViewHabitActivity extends Activity {
     //edit habits init
     private Button editHabit;
     private EditText startDate;
-    private ToggleButton editable;
+    //private ToggleButton editable;
 
 
     @Override
@@ -117,9 +117,10 @@ public class ViewHabitActivity extends Activity {
             }
         });
          **/
-        habitName.setFocusable(true);
-        habitDescription.setFocusable(true);
-        startDate.setFocusable(true);
+        //System.out.println("********HABIT NAME******" + habitName);
+        //habitName.setFocusable(true);
+        //habitDescription.setFocusable(true);
+        //startDate.setFocusable(true);
 
         //edit Button
         editHabit = findViewById(R.id.editHabit);
