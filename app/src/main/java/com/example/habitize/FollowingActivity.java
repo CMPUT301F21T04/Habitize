@@ -36,6 +36,7 @@ public class FollowingActivity extends AppCompatActivity {
         //Append the existingFollowersDataList with new "userName" string values.
         //Pass the existingFollowersDataList into CustomListOfExistingFollowersAdapter.
         //Set adapter & render each list item in the custom layout file: "listOfExistingFollowers".
+        //This code will store the data from firebase to an array for use in local code.
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
