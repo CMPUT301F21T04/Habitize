@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AddHabitBase">
 
     <EditText
         android:id="@+id/habitTitle"
@@ -51,13 +51,14 @@
         android:id="@+id/geolocation"
         android:layout_width="188dp"
         android:layout_height="0dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginBottom="78dp"
+        android:layout_marginBottom="80dp"
         android:text="Enable Geolocation"
         android:textColorHighlight="#8C9EFF"
         android:textColorLink="#8C9EFF"
         android:thumbTint="#6200EE"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.197"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -128,23 +129,22 @@
 
     <CheckBox
         android:id="@+id/saturday"
-        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="152dp"
+        android:onClick="onCheckboxClicked"
         android:text="S"
-        app:layout_constraintEnd_toStartOf="@+id/sunday"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tuesday" />
 
     <CheckBox
         android:id="@+id/sunday"
-        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onCheckboxClicked"
         android:text="Su"
         app:layout_constraintBaseline_toBaselineOf="@+id/saturday"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/saturday" />
 
 

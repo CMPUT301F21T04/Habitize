@@ -80,23 +80,9 @@ public class AddHabitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_info);
 
-        TabLayout tabLayout = findViewById(R.id.simpleTabLayout); // get the reference of TabLayout
-        TabLayout.Tab firstTab = tabLayout.newTab(); // Create a new Tab names "First Tab"
-        firstTab.setText("First Tab"); // set the Text for the first Tab
-        firstTab.setIcon(R.drawable.ic_baseline_check_24); // set an icon for the first tab
-        tabLayout.addTab(firstTab,0); // add  the tab to the TabLayout
-        TabLayout.Tab secondTab = tabLayout.newTab(); // Create a new Tab names "First Tab"
-        secondTab.setText("Second Tab"); // set the Text for the first Tab
-        secondTab.setIcon(R.drawable.ic_baseline_check_24); // set an icon for the first tab
-        tabLayout.addTab(secondTab,1); // add  the tab to the TabLayout
-        TabLayout.Tab thirdTab = tabLayout.newTab(); // Create a new Tab names "First Tab"
-        thirdTab.setText("Third Tab"); // set the Text for the first Tab
-        thirdTab.setIcon(R.drawable.ic_baseline_check_24); // set an icon for the first tab
-        tabLayout.addTab(thirdTab,2); // add  the tab to the TabLayout
+
         passedEmail = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
 
-        imageBtn = findViewById(R.id.addImage);
-        locationBtn = findViewById(R.id.addLocation);
 
         createHabit = findViewById(R.id.create_habit);
         title = findViewById(R.id.habitTitle);
@@ -110,7 +96,6 @@ public class AddHabitActivity extends AppCompatActivity {
         Saturday = findViewById(R.id.saturday);
         Sunday = findViewById(R.id.sunday);
 
-        createHabit = findViewById(R.id.createHabit);
         Title = findViewById((R.id.habitTitle));
         Description = findViewById((R.id.habitDescription));
         db = FirebaseFirestore.getInstance();
@@ -241,19 +226,6 @@ public class AddHabitActivity extends AppCompatActivity {
             }
         });
 
-        imageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AddHabitImage.class));             // redo intent handling
-            }
-        });
-
-        locationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AddHabitLocation.class));          // redo intent handling
-            }
-        });
     }
 
     //Checkbox Implementation below to set up recurrence days of the week
