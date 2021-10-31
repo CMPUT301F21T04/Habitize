@@ -2,6 +2,7 @@ package com.example.habitize;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,9 +24,15 @@ import java.util.List;
 import java.util.Map;
 
 public class AddHabitActivity extends AppCompatActivity {
+
+    private EditText title;
+    private EditText description;
+    private EditText startDate;
+
     private EditText Title;
     private EditText Description;
     private EditText StartDate;
+
     private Button Monday;
     private Button Tuesday;
     private Button Wednesday;
@@ -33,15 +40,20 @@ public class AddHabitActivity extends AppCompatActivity {
     private Button Friday;
     private Button Saturday;
     private Button Sunday;
+    private Button createHabit;
+
+    private Switch geolocation;
     private Switch Geolocation;
+
     private Button imageBtn;
     private Button locationBtn;
-    private Button createHabit;
+
     private FirebaseFirestore db;
     private CollectionReference userCol;
     private DocumentReference docRef;
     private String passedEmail;
     private List<Habit> passedHabits;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -50,14 +62,29 @@ public class AddHabitActivity extends AppCompatActivity {
 
         imageBtn = findViewById(R.id.addImage);
         locationBtn = findViewById(R.id.addLocation);
-        createHabit = findViewById(R.id.editHabit);
+
+        createHabit = findViewById(R.id.create_habit);
+        title = findViewById(R.id.habitTitle);
+        description = findViewById(R.id.habitDescription);
+        startDate = findViewById(R.id.startDate);
+        Monday = findViewById(R.id.monday);
+        Tuesday = findViewById(R.id.tuesday);
+        Wednesday = findViewById(R.id.wednesday);
+        Thursday = findViewById(R.id.thursday);
+        Friday = findViewById(R.id.friday);
+        Saturday = findViewById(R.id.saturday);
+        Sunday = findViewById(R.id.sunday);
+
         Title = findViewById((R.id.habitTitle));
         Description = findViewById((R.id.habitDescription));
         db = FirebaseFirestore.getInstance();
         userCol = db.collection("userHabits");
         docRef = userCol.document(passedEmail);
 
-        // We pull the current habit list, modify it, and send it back (only if we create the habit)
+        /**
+         *  We pull the current habit list, modify it, and send it back (only if we create the habit)
+         *
+         */
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -89,20 +116,59 @@ public class AddHabitActivity extends AppCompatActivity {
             }
         });
 
-
+        /**
+         * create button that handles potential user error with input after clicking button.
+         * Button will then add the new habit
+         */
         createHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Create the habit
-                Habit newHabit = new Habit(Title.getText().toString(), Description.getText().toString());
-                // add it to the user list
-                passedHabits.add(newHabit);
-                // Hash it for transportation to database
-                HashMap<String,Object> listMap = new HashMap<>();
-                listMap.put("habits",passedHabits);
-                // send to database and close
-                docRef.set(listMap);
-                finish();
+                //get input of all EditTexts and remove whitespace to validate input
+                String inputTitle = title.getText().toString().trim();
+                String inputDescription = description.getText().toString().trim();
+                String inputDate = startDate.getText().toString().trim();
+
+                //check if empty and user left fields blank
+                if(TextUtils.isEmpty(inputTitle)){
+                    title.setError("Enter a habit title!");
+                }
+
+                if(TextUtils.isEmpty(inputDescription)){
+                    description.setError("Enter a habit description!");
+                }
+
+                if(TextUtils.isEmpty(inputDate)){
+                    startDate.setError("Enter a habit start date!");
+                }
+
+                //make sure title is up to 20 chars
+                if (inputTitle.length() > 20){
+                    title.setError("Habit title should be no more than 20 characters!");
+                    return;
+                }
+
+                //make sure habit description is up to 30 chars
+                if (inputDescription.length() > 30){
+                    description.setError("Habit description should be no more than 30 characters!");
+                    return;
+                }
+
+                /**
+                 * creates the habit and stores in database only if validation above is correct
+                 */
+                if ((!TextUtils.isEmpty(inputTitle)) && (!TextUtils.isEmpty(inputDescription)) && (!TextUtils.isEmpty(inputDate))) {
+                    // Create the habit
+                    Habit newHabit = new Habit(Title.getText().toString(), Description.getText().toString());
+                    // add it to the user list
+                    passedHabits.add(newHabit);
+                    // Hash it for transportation to database
+                    HashMap<String,Object> listMap = new HashMap<>();
+                    listMap.put("habits",passedHabits);
+                    // send to database and close
+                    docRef.set(listMap);
+                    finish();
+                }
+
             }
         });
 
@@ -110,4 +176,6 @@ public class AddHabitActivity extends AppCompatActivity {
 
 
     }
+
 }
+

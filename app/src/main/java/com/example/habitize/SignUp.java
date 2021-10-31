@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SignUp extends AppCompatActivity {
+    //Initializing variables
     private FirebaseFirestore db;
     private CollectionReference users;
     private CollectionReference userHabits;
@@ -32,6 +33,7 @@ public class SignUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Connecting variables with XML
         setContentView(R.layout.signup_activity);
         Button login = findViewById(R.id.loginbutton);
         Button create = findViewById(R.id.create_button);
@@ -49,6 +51,7 @@ public class SignUp extends AppCompatActivity {
         followers = db.collection("followers");
         following = db.collection("following");
 
+        //Getting fireBase Authentication
         FirebaseAuth fAuth;
         fAuth = FirebaseAuth.getInstance();
         progressBar.setVisibility(View.GONE);
@@ -66,9 +69,12 @@ public class SignUp extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Login_Activity.class));
             }
         });
+        //Create Account button
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // trimming the white space from the input
                 String inputEmail = email.getText().toString().trim();
                 String inputPassword = password.getText().toString().trim();
                 String inputConPass = conPassword.getText().toString().trim();
@@ -76,30 +82,31 @@ public class SignUp extends AppCompatActivity {
                 String last = lastName.getText().toString().trim();
                 String user = username.getText().toString().trim();
 
+                //Showing Error on the input box when the input is incorrect
                 if (TextUtils.isEmpty(inputEmail)) {
                     email.setError("Enter an email please!");
+                    return;
                 }
                 if (TextUtils.isEmpty(inputPassword)) {
                     password.setError("Please enter a password!");
-                }
-                if (TextUtils.isEmpty(firstName.getText().toString())){
-                    firstName.setError("Please enter a name!");
-                }
-                if (TextUtils.isEmpty(lastName.getText().toString())){
-                    lastName.setError("Please enter a name!");
-                }
-                if (TextUtils.isEmpty(username.getText().toString())){
-                    username.setError("Please enter a username!");
+                    return;
                 }
                 if (inputPassword.length() < 8) {
                     password.setError("Passsword should be greater than 8 characters");
                     return;
                 }
 
+
+                //if (inputPassword != inputConPass) {
+                 //   conPassword.setError("The passwords are not the same!");
+                 //   return;
+                //}
+
                 if (!inputPassword.equals(inputConPass)) {
                     conPassword.setError("The passwords are not the same!");
                     return;
                 }
+
 
                 progressBar.setVisibility(View.VISIBLE);
                 // TODO: the startActivity here might mess with NAVCONTROLLER

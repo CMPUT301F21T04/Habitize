@@ -141,9 +141,8 @@
         android:id="@+id/sunday"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="139dp"
-        android:layout_marginBottom="212dp"
         android:background="@drawable/round_button"
         android:gravity="center_vertical|center_horizontal"
         android:text="Su"
@@ -151,7 +150,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/saturday"
-        app:layout_constraintTop_toBottomOf="@+id/wednesday" />
+        app:layout_constraintTop_toBottomOf="@+id/wednesday"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Switch
         android:id="@+id/geolocation"
@@ -168,7 +168,7 @@
         app:layout_constraintTop_toBottomOf="@+id/monday" />
 
     <Button
-        android:id="@+id/editHabit"
+        android:id="@+id/create_habit"
         android:layout_width="96dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
