@@ -36,13 +36,10 @@ public class AddHabitActivity extends AppCompatActivity {
 
     private EditText title;
     private EditText description;
-
-
     private EditText Title;
     private EditText Description;
     private TextView startDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-
     private CheckBox Monday;
     private CheckBox Tuesday;
     private CheckBox Wednesday;
@@ -50,9 +47,7 @@ public class AddHabitActivity extends AppCompatActivity {
     private CheckBox Friday;
     private CheckBox Saturday;
     private CheckBox Sunday;
-
     private Button createHabit;
-
     private String MonRecurrence;
     private String TueRecurrence;
     private String WedRecurrence;
@@ -60,19 +55,15 @@ public class AddHabitActivity extends AppCompatActivity {
     private String FriRecurrence;
     private String SatRecurrence;
     private String SunRecurrence;
-
     private Switch geolocation;
     private Switch Geolocation;
-
     private Button imageBtn;
     private Button locationBtn;
-
     private FirebaseFirestore db;
     private CollectionReference userCol;
     private DocumentReference docRef;
-    private String passedEmail;
+    private String passedUser;
     private List<Habit> passedHabits;
-
     private static final String TAG = "MainActivity";
 
     @Override
@@ -81,7 +72,7 @@ public class AddHabitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_habit_info);
 
 
-        passedEmail = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
+        passedUser = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
 
 
         createHabit = findViewById(R.id.create_habit);
@@ -99,8 +90,8 @@ public class AddHabitActivity extends AppCompatActivity {
         Title = findViewById((R.id.habitTitle));
         Description = findViewById((R.id.habitDescription));
         db = FirebaseFirestore.getInstance();
-        userCol = db.collection("userHabits");
-        docRef = userCol.document(passedEmail);
+        userCol = db.collection("Users");
+        docRef = userCol.document(passedUser);
 
         /*
          * TO DO: public or private, test cases
@@ -220,7 +211,7 @@ public class AddHabitActivity extends AppCompatActivity {
                     HashMap<String,Object> listMap = new HashMap<>();
                     listMap.put("habits",passedHabits);
                     // send to database and close
-                    docRef.set(listMap);
+                    docRef.update(listMap);
                     finish();
                 }
             }

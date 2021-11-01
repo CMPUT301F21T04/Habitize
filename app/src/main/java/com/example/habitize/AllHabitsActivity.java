@@ -33,7 +33,7 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
     private DocumentReference docRef;
     private CollectionReference colRef;
     private FirebaseFirestore db;
-    private String passedEmail;
+    private String passedUser;
     protected void onCreate(Bundle savedInstanceState) {
 
 
@@ -41,10 +41,10 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
         // retrieving passed list to populate listview
-        passedEmail = (String)getIntent().getExtras().getSerializable("user");
+        passedUser = (String)getIntent().getExtras().getSerializable("user");
         db = FirebaseFirestore.getInstance();
-        colRef = db.collection("userHabits");
-        docRef = colRef.document(passedEmail);
+        colRef = db.collection("Users");
+        docRef = colRef.document(passedUser);
         dataList = new ArrayList<>(); // reset the list
 
         list = findViewById(R.id.habit_list);
@@ -92,7 +92,7 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
         habitBundle.putSerializable("index",position);
         habitBundle.putSerializable("habits",dataList);
-        habitBundle.putSerializable("user",passedEmail);
+        habitBundle.putSerializable("user",passedUser);
         intent.putExtras(habitBundle);
         startActivity(intent);
     }
