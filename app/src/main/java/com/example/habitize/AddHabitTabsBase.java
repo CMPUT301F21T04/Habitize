@@ -8,16 +8,17 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class AddHabitTabsBase extends AppCompatActivity {
     private ViewPager2 pager;
-    private int[] views = {R.layout.fragment_add_habit_base,R.layout.fragment_add_habit_image,R.layout.fragment_add_habit_geolocation};
     private TabLayout tabLayout;
 
-
+    private Button createButton;
     private AddHabitBaseFragment addHabitBaseFragment;
     private AddHabitImageFragment addHabitImageFragment;
     private AddHabitLocationFragment addHabitLocation;
@@ -27,6 +28,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_tabs_base);
         pager = findViewById(R.id.viewPager);
+        createButton = findViewById(R.id.create_button);
         pager.setAdapter(
                 new addAdapter(this)
         );
@@ -38,6 +40,16 @@ public class AddHabitTabsBase extends AppCompatActivity {
                 tab.setIcon(R.drawable.ic_baseline_check_24);
             }
         }).attach();
+
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // get information from children and pack that ho into a habit
+
+
+            }
+        });
+
 
 
 
