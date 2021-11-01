@@ -94,6 +94,7 @@ public class ViewHabitActivity extends Activity {
                 }
             }
         });
+
         /**
         habitName.setEnabled(true);
         habitDescription.setEnabled(true);
@@ -131,7 +132,7 @@ public class ViewHabitActivity extends Activity {
 
                 String inputTitle = habitName.getText().toString().trim();
                 String inputDescription = habitDescription.getText().toString().trim();
-                String inputDate = startDate.getText().toString().trim();
+                //String inputDate = startDate.getText().toString().trim();
 
                 //check if empty and user left fields blank
                 if(TextUtils.isEmpty(inputTitle)){
@@ -142,9 +143,9 @@ public class ViewHabitActivity extends Activity {
                     habitDescription.setError("Enter a habit description!");
                 }
 
-                if(TextUtils.isEmpty(inputDate)){
-                    startDate.setError("Enter a habit start date!");
-                }
+                //if(TextUtils.isEmpty(inputDate)){
+                  //  startDate.setError("Enter a habit start date!");
+               // }
 
                 //make sure title is up to 20 chars
                 if (inputTitle.length() > 20){
@@ -161,14 +162,25 @@ public class ViewHabitActivity extends Activity {
                 /**
                  * creates the habit and stores in database only if validation above is correct
                  */
-                if ((!TextUtils.isEmpty(inputTitle)) && (!TextUtils.isEmpty(inputDescription)) && (!TextUtils.isEmpty(inputDate))) {
+                if ((!TextUtils.isEmpty(inputTitle)) && (!TextUtils.isEmpty(inputDescription)) ) {
                     // Create the habit
-                    Habit newHabit = new Habit(habitName.getText().toString(), habitDescription.getText().toString());
+                    //Habit newHabit = new Habit(habitName.getText().toString(), habitDescription.getText().toString());
                     // add it to the user list
-                    passedHabits.add(newHabit);
+                    //passedHabits.add(newHabit);
                     // Hash it for transportation to database
+
+                    System.out.println("BEFORE EDITING NAME*******************" + passedHabit.getName());
+                    System.out.println("BEFORE EDITING DESCRIPTION*******************" + passedHabit.getDescription());
+
+                    passedHabit.setName(inputTitle);
+                    passedHabit.setDescription(inputDescription);
+
+                    System.out.println("AFTER EDITING NAME*******************" + passedHabit.getName());
+                    System.out.println("AFTER EDITING DESCRIPTION*******************" + passedHabit.getDescription());
+
+
                     HashMap<String,Object> listMap = new HashMap<>();
-                    listMap.put("habits",passedHabits);
+                    listMap.put("habits",passedHabit);
                     // send to database and close
                     docRef.set(listMap);
                     finish();
