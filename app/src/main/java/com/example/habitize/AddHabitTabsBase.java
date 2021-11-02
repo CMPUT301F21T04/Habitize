@@ -41,6 +41,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
     private CollectionReference userCol;
     private DocumentReference docRef;
     private List<Habit> passedHabits;
+    private addAdapter mAdapter;
     String[] titles = {"Info","Image"};
 
 
