@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <EditText
         android:id="@+id/habitTitle"
         android:layout_width="296dp"
         android:layout_height="48dp"
-        android:layout_marginTop="17dp"
         android:layout_marginBottom="20dp"
         android:gravity="center_horizontal"
         android:hint="Enter Your Title"
@@ -17,20 +17,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addLocation"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/habitDescription"
         android:layout_width="295dp"
         android:layout_height="181dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="180dp"
         android:background="@drawable/with_border"
         android:gravity="center_horizontal"
         android:hint="Enter Habit Description"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/addImage" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/startDate"
@@ -58,11 +58,10 @@
         android:textColorLink="#8C9EFF"
         android:thumbTint="#6200EE"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addImage" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/create_habit"
+        android:id="@+id/create_habit_tabs"
         android:layout_width="96dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
@@ -73,31 +72,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/addImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="91dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="552dp"
-        android:text="Image"
-        app:layout_constraintBottom_toTopOf="@+id/geolocation"
-        app:layout_constraintStart_toStartOf="@+id/habitTitle"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/addLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="11dp"
-        android:text="Location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <CheckBox
         android:id="@+id/monday"
+        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -110,6 +88,7 @@
 
     <CheckBox
         android:id="@+id/thursday"
+        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Th"
@@ -119,6 +98,7 @@
 
     <CheckBox
         android:id="@+id/wednesday"
+        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="W"
@@ -128,6 +108,7 @@
 
     <CheckBox
         android:id="@+id/friday"
+        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F"
@@ -137,6 +118,7 @@
 
     <CheckBox
         android:id="@+id/tuesday"
+        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="T"
@@ -146,6 +128,7 @@
 
     <CheckBox
         android:id="@+id/saturday"
+        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="S"
@@ -156,6 +139,7 @@
 
     <CheckBox
         android:id="@+id/sunday"
+        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Su"

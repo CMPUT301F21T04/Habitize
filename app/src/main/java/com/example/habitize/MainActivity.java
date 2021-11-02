@@ -82,11 +82,10 @@ public class MainActivity extends AppCompatActivity {
         addHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,AddHabitActivity.class);
-                // passing down a list to modify, and a user to change the database of after the change is made
+                Intent intent = new Intent(MainActivity.this,AddHabitTabsBase.class);
                 Bundle userBundle = new Bundle();
-                userBundle.putSerializable("list",habitList);
                 userBundle.putSerializable("User",passedEmail);
+                userBundle.putSerializable("list",habitList);
                 intent.putExtras(userBundle);
                 startActivity(intent);
 
@@ -95,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         allHabits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
             }
         });

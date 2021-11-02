@@ -75,7 +75,7 @@
         android:text="Th"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="@+id/wednesday"
-        app:layout_constraintEnd_toStartOf="@+id/friday"
+        app:layout_constraintEnd_toStartOf="@+id/fragmentFriday"
         app:layout_constraintStart_toEndOf="@+id/tuesday"
         app:layout_constraintTop_toTopOf="@+id/wednesday"
         app:layout_constraintVertical_bias="0.0"
@@ -83,7 +83,7 @@
         />
 
     <Button
-        android:id="@+id/friday"
+        android:id="@+id/fragmentFriday"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginEnd="34dp"
@@ -184,7 +184,7 @@
         android:clickable="false"/>
 
     <Button
-        android:id="@+id/editHabit"
+        android:id="@+id/createHabit"
         android:layout_width="96dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
