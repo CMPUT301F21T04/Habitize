@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <EditText
         android:id="@+id/habitTitle"
         android:layout_width="296dp"
         android:layout_height="48dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginBottom="313dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center_horizontal"
         android:hint="Enter Your Title"
-        app:layout_constraintBottom_toTopOf="@+id/monday"
+        app:layout_constraintBottom_toTopOf="@+id/habitDescription"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,152 +23,45 @@
         android:id="@+id/habitDescription"
         android:layout_width="295dp"
         android:layout_height="181dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="180dp"
         android:background="@drawable/with_border"
         android:gravity="center_horizontal"
-        android:hint="Habit Description"
+        android:hint="Enter Habit Description"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/startDate"
-        android:layout_width="296dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="368dp"
+        android:layout_marginStart="57dp"
+        android:layout_marginEnd="57dp"
         android:gravity="center_horizontal"
-        android:hint="Start Date: YYYY-MM-DD"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/wednesday"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:background="@drawable/round_button"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="W"
-        android:textColor="#fff"
-        app:layout_constraintBottom_toBottomOf="@+id/tuesday"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tuesday"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/thursday"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/round_button"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="Th"
-        android:textColor="#fff"
-        app:layout_constraintBottom_toBottomOf="@+id/wednesday"
-        app:layout_constraintEnd_toStartOf="@+id/friday"
-        app:layout_constraintStart_toEndOf="@+id/tuesday"
-        app:layout_constraintTop_toTopOf="@+id/wednesday"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/friday"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginEnd="34dp"
-        android:background="@drawable/round_button"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="F"
-        android:textColor="#fff"
-        app:layout_constraintBottom_toBottomOf="@+id/thursday"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/thursday"
-        app:layout_constraintTop_toTopOf="@+id/thursday"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/tuesday"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginEnd="80dp"
-        android:background="@drawable/round_button"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="T"
-        android:textColor="#fff"
-        app:layout_constraintBottom_toBottomOf="@+id/monday"
-        app:layout_constraintEnd_toStartOf="@+id/thursday"
-        app:layout_constraintStart_toEndOf="@+id/monday"
-        app:layout_constraintTop_toTopOf="@+id/monday"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/monday"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="37dp"
-        android:layout_marginTop="465dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="107dp"
-        android:background="@drawable/round_button"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="M"
-        android:textColor="#fff"
-        app:layout_constraintBottom_toTopOf="@+id/geolocation"
-        app:layout_constraintEnd_toStartOf="@+id/tuesday"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/saturday"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="129dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="52dp"
-        android:background="@drawable/round_button"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="S"
-        android:textColor="#fff"
-        app:layout_constraintBottom_toTopOf="@+id/geolocation"
-        app:layout_constraintEnd_toStartOf="@+id/sunday"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wednesday" />
-
-    <Button
-        android:id="@+id/sunday"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="139dp"
-        android:background="@drawable/round_button"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="Su"
-        android:textColor="#fff"
+        android:hint="Click here to select a start date"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/saturday"
-        app:layout_constraintTop_toBottomOf="@+id/wednesday"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.568" />
 
     <Switch
         android:id="@+id/geolocation"
         android:layout_width="188dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="120dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginBottom="78dp"
         android:text="Enable Geolocation"
         android:textColorHighlight="#8C9EFF"
         android:textColorLink="#8C9EFF"
         android:thumbTint="#6200EE"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/monday" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/create_habit"
+        android:id="@+id/create_habit_tabs"
         android:layout_width="96dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
@@ -179,31 +72,80 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/addImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="167dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="27dp"
-        android:layout_marginBottom="32dp"
-        android:text="Image"
-        app:layout_constraintBottom_toTopOf="@+id/habitTitle"
-        app:layout_constraintEnd_toStartOf="@+id/addLocation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/addLocation"
+    <CheckBox
+        android:id="@+id/monday"
+        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="29dp"
-        android:text="Location"
+        android:layout_marginStart="5dp"
+        android:orientation="horizontal"
+        android:text="M"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tuesday"
+        app:layout_constraintEnd_toStartOf="@+id/tuesday"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/thursday"
+        android:onClick="onCheckboxClicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Th"
+        app:layout_constraintEnd_toStartOf="@+id/friday"
+        app:layout_constraintStart_toEndOf="@+id/wednesday"
+        app:layout_constraintTop_toBottomOf="@+id/startDate" />
+
+    <CheckBox
+        android:id="@+id/wednesday"
+        android:onClick="onCheckboxClicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="W"
+        app:layout_constraintBaseline_toBaselineOf="@+id/thursday"
+        app:layout_constraintEnd_toStartOf="@+id/thursday"
+        app:layout_constraintStart_toEndOf="@+id/tuesday" />
+
+    <CheckBox
+        android:id="@+id/friday"
+        android:onClick="onCheckboxClicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="F"
+        app:layout_constraintBaseline_toBaselineOf="@+id/thursday"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addImage"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/thursday" />
+
+    <CheckBox
+        android:id="@+id/tuesday"
+        android:onClick="onCheckboxClicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="T"
+        app:layout_constraintEnd_toStartOf="@+id/wednesday"
+        app:layout_constraintStart_toEndOf="@+id/monday"
+        app:layout_constraintTop_toTopOf="@+id/wednesday" />
+
+    <CheckBox
+        android:id="@+id/saturday"
+        android:onClick="onCheckboxClicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="S"
+        app:layout_constraintEnd_toStartOf="@+id/sunday"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tuesday" />
+
+    <CheckBox
+        android:id="@+id/sunday"
+        android:onClick="onCheckboxClicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Su"
+        app:layout_constraintBaseline_toBaselineOf="@+id/saturday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/saturday" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
