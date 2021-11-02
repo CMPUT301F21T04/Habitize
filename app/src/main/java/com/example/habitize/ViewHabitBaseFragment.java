@@ -95,7 +95,6 @@ public class ViewHabitBaseFragment extends Fragment {
         Sunday  = root.findViewById(R.id.FragmentViewHabitSunday);
 
 
-
         startDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -255,6 +254,44 @@ public class ViewHabitBaseFragment extends Fragment {
     }
     public boolean getSun(){
         return SunRecurrence;
+    }
+    // setters for fields
+    public void setMon(boolean mon){
+        this.MonRecurrence = mon;
+        Monday.setChecked(this.MonRecurrence);
+    }
+    public void setTue(boolean tue){
+        this.TueRecurrence = tue;
+        Tuesday.setChecked(tue);
+    }
+    public void setWed(boolean wed){
+        this.WedRecurrence = wed;
+        Wednesday.setChecked(wed);
+    }
+    public void setThurs(boolean thurs){
+        this.ThurRecurrence = thurs;
+        Thursday.setChecked(thurs);
+    }
+    public void setFri(boolean fri){
+        this.FriRecurrence = fri;
+        Friday.setChecked(fri);
+    }
+    public void setSat(boolean sat){
+        this.SatRecurrence = sat;
+        Saturday.setChecked(sat);
+    }
+    public void setSun(boolean sun){
+        this.SunRecurrence = sun;
+        Sunday.setChecked(sun);
+    }
+    public void setDate(String date){
+        this.startDate.setText(date);
+    }
+    public void setTitle(String title){
+        this.title.setText(title);
+    }
+    public void setDesc(String desc){
+        this.description.setText(desc);
     }
     public void onCheckboxClicked(View view){
         boolean checked = ((CheckBox) view).isChecked();

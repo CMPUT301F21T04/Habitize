@@ -30,6 +30,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
     private Button editButton;
     private String passedUser;
+    private Habit passedHabit; // habit to view
     private FirebaseFirestore db;
     private CollectionReference userCol;
     private DocumentReference docRef;
@@ -43,6 +44,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         editButton = findViewById(R.id.edit_habit_tabs);
 
         passedUser = (String)getIntent().getExtras().getSerializable("User");
+        passedHabit = (Habit)getIntent().getExtras().getSerializable("habit");
         passedHabits = new ArrayList<>();
 
         db = FirebaseFirestore.getInstance(); // document references
