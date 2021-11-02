@@ -1,7 +1,6 @@
 package com.example.habitize;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -75,7 +73,7 @@ public class AddHabitActivity extends AppCompatActivity {
         passedUser = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
 
 
-        createHabit = findViewById(R.id.create_habit);
+        createHabit = findViewById(R.id.create_habit_tabs);
         title = findViewById(R.id.habitTitle);
         description = findViewById(R.id.habitDescription);
         startDate = findViewById(R.id.startDate);
@@ -86,12 +84,9 @@ public class AddHabitActivity extends AppCompatActivity {
         Friday = findViewById(R.id.friday);
         Saturday = findViewById(R.id.saturday);
         Sunday = findViewById(R.id.sunday);
-
         Title = findViewById((R.id.habitTitle));
         Description = findViewById((R.id.habitDescription));
-        db = FirebaseFirestore.getInstance();
-        userCol = db.collection("Users");
-        docRef = userCol.document(passedUser);
+
 
         /*
          * TO DO: public or private, test cases
@@ -219,6 +214,8 @@ public class AddHabitActivity extends AppCompatActivity {
 
     }
 
+
+
     //Checkbox Implementation below to set up recurrence days of the week
     public void onCheckboxClicked(View view){
         boolean checked = ((CheckBox) view).isChecked();
@@ -258,7 +255,7 @@ public class AddHabitActivity extends AppCompatActivity {
                     ThurRecurrence = false;
                 }
                 break;
-            case R.id.friday:
+            case R.id.fragmentFriday:
                 if(checked){
                     FriRecurrence = true;
                 }

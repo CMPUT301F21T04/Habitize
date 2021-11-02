@@ -13,6 +13,9 @@ import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddHabitTabsBase extends AppCompatActivity {
     private ViewPager2 pager;
@@ -22,16 +25,24 @@ public class AddHabitTabsBase extends AppCompatActivity {
     private AddHabitBaseFragment addHabitBaseFragment;
     private AddHabitImageFragment addHabitImageFragment;
     private AddHabitLocationFragment addHabitLocation;
+    private String passedUser;
+    private FirebaseFirestore db;
+    private CollectionReference userCol;
+    private DocumentReference docRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_tabs_base);
         pager = findViewById(R.id.viewPager);
-        createButton = findViewById(R.id.create_button);
-        pager.setAdapter(
-                new addAdapter(this)
-        );
+        createButton = findViewById(R.id.create_habit_tabs);
+        //passedUser = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
+        //db = FirebaseFirestore.getInstance(); // document references
+        //userCol = db.collection("Users");
+        //docRef = userCol.document(passedUser);
+
+        addAdapter mAdapter = new addAdapter(this);
+        pager.setAdapter(mAdapter);
         tabLayout = findViewById(R.id.AddHabitTabs);
         new TabLayoutMediator(tabLayout, pager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -44,14 +55,25 @@ public class AddHabitTabsBase extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // get information from children and pack that ho into a habit
+                AddHabitBaseFragment addFrag = (AddHabitBaseFragment)getSupportFragmentManager().findFragmentByTag("f0");
+                String title = addFrag.getTitle();
+                String description = addFrag.getDescription();
+                String startDate = addFrag.getDate();
+                boolean monRec = addFrag.getMon();
+                boolean tueRec = addFrag.getTue();
+                boolean wedRec = addFrag.getWed();
+                boolean thurRec = addFrag.getThur();
+                boolean friRec = addFrag.getFri();
+                boolean satRec = addFrag.getSat();
+                boolean sunRec = addFrag.getSun();
 
+                Habit newHabit = new Habit(title,description,startDate,monRec,tueRec,wedRec,thurRec,friRec,satRec,sunRec);
+
+
+                System.out.println("Hello");
 
             }
         });
-
-
-
 
 
     }
@@ -74,8 +96,8 @@ public class AddHabitTabsBase extends AppCompatActivity {
                 default:
                     returningFragment = new AddHabitBaseFragment();
             }
-            return returningFragment;
-        }
+            return returningFragment; }
+
 
         @Override
         public int getItemCount() {

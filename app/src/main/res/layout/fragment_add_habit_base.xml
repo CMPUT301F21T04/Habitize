@@ -61,74 +61,62 @@
         app:layout_constraintHorizontal_bias="0.197"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/create_habit"
-        android:layout_width="96dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#00000000"
-        android:text="CREATE"
-        android:textColor="#6200EE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
 
     <CheckBox
-        android:id="@+id/monday"
+        android:id="@+id/fragmentMonday"
         android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:orientation="horizontal"
         android:text="M"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tuesday"
-        app:layout_constraintEnd_toStartOf="@+id/tuesday"
+        app:layout_constraintBaseline_toBaselineOf="@+id/fragmentTuesday"
+        app:layout_constraintEnd_toStartOf="@+id/fragmentTuesday"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
-        android:id="@+id/thursday"
+        android:id="@+id/fragmentThursday"
         android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Th"
-        app:layout_constraintEnd_toStartOf="@+id/friday"
-        app:layout_constraintStart_toEndOf="@+id/wednesday"
+        app:layout_constraintEnd_toStartOf="@+id/fragmentFriday"
+        app:layout_constraintStart_toEndOf="@+id/fragmentWednesday"
         app:layout_constraintTop_toBottomOf="@+id/startDate" />
 
     <CheckBox
-        android:id="@+id/wednesday"
+        android:id="@+id/fragmentWednesday"
         android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="W"
-        app:layout_constraintBaseline_toBaselineOf="@+id/thursday"
-        app:layout_constraintEnd_toStartOf="@+id/thursday"
-        app:layout_constraintStart_toEndOf="@+id/tuesday" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/fragmentThursday"
+        app:layout_constraintEnd_toStartOf="@+id/fragmentThursday"
+        app:layout_constraintStart_toEndOf="@+id/fragmentTuesday" />
 
     <CheckBox
-        android:id="@+id/friday"
+        android:id="@+id/fragmentFriday"
         android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F"
-        app:layout_constraintBaseline_toBaselineOf="@+id/thursday"
+        app:layout_constraintBaseline_toBaselineOf="@+id/fragmentThursday"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/thursday" />
+        app:layout_constraintStart_toEndOf="@+id/fragmentThursday" />
 
     <CheckBox
-        android:id="@+id/tuesday"
+        android:id="@+id/fragmentTuesday"
         android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="T"
-        app:layout_constraintEnd_toStartOf="@+id/wednesday"
-        app:layout_constraintStart_toEndOf="@+id/monday"
-        app:layout_constraintTop_toTopOf="@+id/wednesday" />
+        app:layout_constraintEnd_toStartOf="@+id/fragmentWednesday"
+        app:layout_constraintStart_toEndOf="@+id/fragmentMonday"
+        app:layout_constraintTop_toTopOf="@+id/fragmentWednesday" />
 
     <CheckBox
-        android:id="@+id/saturday"
+        android:id="@+id/fragmentSaturday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="152dp"
@@ -136,16 +124,16 @@
         android:text="S"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tuesday" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentTuesday" />
 
     <CheckBox
-        android:id="@+id/sunday"
+        android:id="@+id/fragmentSunday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onCheckboxClicked"
         android:text="Su"
-        app:layout_constraintBaseline_toBaselineOf="@+id/saturday"
-        app:layout_constraintStart_toEndOf="@+id/saturday" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/fragmentSaturday"
+        app:layout_constraintStart_toEndOf="@+id/fragmentSaturday" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
