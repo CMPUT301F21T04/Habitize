@@ -122,7 +122,7 @@ public class SignUp extends AppCompatActivity {
 
                                 if (task.isSuccessful()) {
                                     // checking if the user already exists.
-                                    users.document(inputEmail).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    users.document(user).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                                             if(!documentSnapshot.exists()){
