@@ -88,6 +88,11 @@ public class AddHabitActivity extends AppCompatActivity {
         Description = findViewById((R.id.habitDescription));
 
 
+        db = FirebaseFirestore.getInstance();
+        userCol = db.collection("Users");
+        docRef = userCol.document(passedUser);
+
+
         /*
          * TO DO: public or private, test cases
          */

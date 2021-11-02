@@ -39,7 +39,7 @@ public class ViewHabitActivity extends Activity {
         passedUser  = (String)getIntent().getExtras().getSerializable("user");
         db = FirebaseFirestore.getInstance();
         // initializing database
-        colRef = db.collection("userHabits");
+        colRef = db.collection("Users");
         docRef = colRef.document(passedUser);
         habitName = findViewById(R.id.habitTitle);
         habitDescription = findViewById(R.id.habitDescription);

@@ -20,8 +20,14 @@ public class AddHabitImageFragment extends Fragment {
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
     public AddHabitImageFragment(){
-
     }
+
+
+    // get image from fragment to send to the database
+    public Uri getImage(){
+        return this.imageUri;
+    }
+
 
 
     @Override

@@ -64,7 +64,6 @@
 
     <CheckBox
         android:id="@+id/fragmentMonday"
-        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -77,7 +76,6 @@
 
     <CheckBox
         android:id="@+id/fragmentThursday"
-        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Th"
@@ -87,7 +85,6 @@
 
     <CheckBox
         android:id="@+id/fragmentWednesday"
-        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="W"
@@ -97,7 +94,6 @@
 
     <CheckBox
         android:id="@+id/fragmentFriday"
-        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F"
@@ -107,7 +103,6 @@
 
     <CheckBox
         android:id="@+id/fragmentTuesday"
-        android:onClick="onCheckboxClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="T"
@@ -120,7 +115,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="152dp"
-        android:onClick="onCheckboxClicked"
         android:text="S"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +124,6 @@
         android:id="@+id/fragmentSunday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onCheckboxClicked"
         android:text="Su"
         app:layout_constraintBaseline_toBaselineOf="@+id/fragmentSaturday"
         app:layout_constraintStart_toEndOf="@+id/fragmentSaturday" />

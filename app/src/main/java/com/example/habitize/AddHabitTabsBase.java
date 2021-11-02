@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -68,8 +69,8 @@ public class AddHabitTabsBase extends AppCompatActivity {
                 boolean sunRec = addFrag.getSun();
 
                 Habit newHabit = new Habit(title,description,startDate,monRec,tueRec,wedRec,thurRec,friRec,satRec,sunRec);
-
-
+                AddHabitImageFragment imageFrag = (AddHabitImageFragment)getSupportFragmentManager().findFragmentByTag("f1");
+                Uri image = imageFrag.getImage();
                 System.out.println("Hello");
 
             }
