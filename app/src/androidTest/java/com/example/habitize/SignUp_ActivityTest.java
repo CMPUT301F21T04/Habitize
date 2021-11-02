@@ -10,7 +10,6 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 
@@ -18,7 +17,6 @@ import android.app.Activity;
 import android.os.SystemClock;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.ViewAssertion;
@@ -37,20 +35,27 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 
 @RunWith(AndroidJUnit4.class)
-public class Login_ActivityTest {
+public class SignUp_ActivityTest {
+    String testFirstName;
+    String testLastName;
     String testEmail;
+    String testUsername;
     String testPassword;
+    String testConPassword;
     String testIncorrectPass;
-
-
     @Rule
     public ActivityScenarioRule<Login_Activity> activityRule = new ActivityScenarioRule<Login_Activity>(Login_Activity.class);
+
 
     @Before
     public void initValidate(){
         Intents.init();
-        testEmail = "shanemel@ualberta.ca";
-        testPassword = "password";
+        testFirstName = "Rick";
+        testLastName = "Grimes";
+        testEmail = "rick0grimes301@gmail.com";
+        testUsername = "Rick";
+        testPassword = "12345678";
+        testConPassword = "12345678";
         testIncorrectPass = "123";
     }
 
@@ -59,64 +64,72 @@ public class Login_ActivityTest {
         Intents.release();
     }
 
-
-//   Tests if the error handling for email works
+    //   Tests if the error handling for email works
     @Test
     public void emptyEmail(){
-        onView(withId(R.id.email_login))
+        onView(withId(R.id.RegisterBTN)).perform(click());
+        onView(withId(R.id.email))
                 .perform(typeText(""), closeSoftKeyboard());
-        onView(withId(R.id.LoginBTN)).perform(click());
-        onView(withId(R.id.email_login)).check(matches(hasErrorText("Email is Required.")));
+        onView(withId(R.id.create_button)).perform(click());
+        onView(withId(R.id.email)).check(matches(hasErrorText("Enter an email please!")));
     }
-//  Tests if the error handling for password works
+    //  Tests if the error handling for password works
     @Test
     public void emptyPass(){
-        onView(withId(R.id.email_login))
+        onView(withId(R.id.RegisterBTN)).perform(click());
+        onView(withId(R.id.email))
                 .perform(typeText(testEmail),closeSoftKeyboard());
-        onView(withId(R.id.LoginBTN)).perform(click());
-        onView(withId(R.id.password_login)).check(matches(hasErrorText("Password is Required.")));
+        onView(withId(R.id.create_button)).perform(click());
+        onView(withId(R.id.password)).check(matches(hasErrorText("Please enter a password!")));
     }
 
-//  Tests if the user enters a valid password (>= 8 characters)
+    //  Tests if the user enters a valid password (>= 8 characters)
     @Test
     public void lessthan8Pass(){
-        onView(withId(R.id.email_login))
+        onView(withId(R.id.RegisterBTN)).perform(click());
+        onView(withId(R.id.email))
                 .perform(typeText(testEmail), closeSoftKeyboard());
-        onView(withId(R.id.password_login))
+        onView(withId(R.id.password))
                 .perform(typeText(testIncorrectPass), closeSoftKeyboard());
-        onView(withId(R.id.LoginBTN)).perform(click());
-        onView(withId(R.id.password_login)).check(matches(hasErrorText("Password must be at least 8 characters")));
+        onView(withId(R.id.create_button)).perform(click());
+        onView(withId(R.id.password)).check(matches(hasErrorText("Password should be greater than 8 characters")));
     }
 
 
-//    Tests if the user enters an email with valid format
+    //    Tests if the user enters an email with valid format
     @Test
     public void testSetup() throws IOException {
-        onView(withId(R.id.email_login)).perform(replaceText("username"));
-        onView(withId(R.id.password_login)).perform(replaceText("password"));
-        onView(withId(R.id.LoginBTN)).perform(click());
+        onView(withId(R.id.RegisterBTN)).perform(click());
+        onView(withId(R.id.email)).perform(replaceText("username"));
+        onView(withId(R.id.password)).perform(replaceText("password"));
+        onView(withId(R.id.create_button)).perform(click());
     }
 
-//    Tests if the user successfully login
+    //    Tests if the user successfully login
     @Test
-    public void successLogin(){
-        onView(withId(R.id.email_login)).perform(replaceText(testEmail));
-        onView(withId(R.id.password_login)).perform(replaceText(testPassword));
-        onView(withId(R.id.LoginBTN)).perform(click());
+    public void successSignUp(){
+        onView(withId(R.id.RegisterBTN)).perform(click());
+        onView(withId(R.id.email)).perform(replaceText(testEmail));
+        onView(withId(R.id.password)).perform(replaceText(testPassword));
+        onView(withId(R.id.conPassword)).perform(replaceText(testPassword));
+        onView(withId(R.id.create_button)).perform(click());
         SystemClock.sleep(5000);
         intended(hasComponent(MainActivity.class.getName()));
 
+
     }
 
-//    Tests if the user failed to login
+    //    Tests if the user failed to login
     @Test
     public void failedLogin(){
-        onView(withId(R.id.email_login)).perform(replaceText(testEmail));
-        onView(withId(R.id.password_login)).perform(replaceText("wrongPass"));
-        onView(withId(R.id.LoginBTN)).perform(click());
+        onView(withId(R.id.RegisterBTN)).perform(click());
+        onView(withId(R.id.email)).perform(replaceText(testEmail));
+        onView(withId(R.id.password)).perform(replaceText("wrongPass"));
+        onView(withId(R.id.create_button)).perform(click());
         onView(hasErrorText("Login Failed"));
 
     }
+
 }
 
 
