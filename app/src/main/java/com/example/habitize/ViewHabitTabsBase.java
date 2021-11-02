@@ -23,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ViewHabitTabsBase extends AppCompatActivity {
@@ -36,6 +37,8 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     private CollectionReference userCol;
     private DocumentReference docRef;
     private ArrayList<Habit> passedHabits;
+    private Button deleteButton;
+    private int passedIndex;
     private boolean editable;
     String[] titles = {"INFO","IMAGE","RECORDS"};
 
@@ -44,8 +47,8 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         setContentView(R.layout.activity_view_habit_tabs);
         pager = findViewById(R.id.viewPager);
         editButton = findViewById(R.id.edit_habit_tabs);
+        deleteButton = findViewById(R.id.delete_button_tabs);
         editable = false;
-
         passedUser = (String)getIntent().getExtras().getSerializable("User"); // we get passed a habit
         passedHabit = (Habit)getIntent().getExtras().getSerializable("habit"); // a user
         passedHabits = new ArrayList<>(); // we will get the latest list from the database
@@ -116,6 +119,19 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
             }
         });
+        // ask user to confirm delete
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                passedHabits.remove(passedIndex); // remove the habit at the position we are on
+                // hash the list and replace the one at the database
+                HashMap<String,Object> dataMap = new HashMap<String,Object>();
+                dataMap.put("habits",passedHabits);
+                docRef.set(dataMap);
+                finish();
+
+            }
+        });
     }
 
 
@@ -135,6 +151,9 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                 case 1:
                     // on creation, our passed habit fills in the fragment's information fields
                     returningFragment = new ViewHabitImageFragment();
+                    break;
+                case 2:
+                    returningFragment = new ViewRecordsFragment();
                     break;
                 default:
                     // on creation, our passed habit fills in the fragment's information fields
