@@ -174,6 +174,9 @@ public class SignUp extends AppCompatActivity {
                                                 intent.putExtras(userBundle);
                                                 startActivity(intent); // start the activity with the passed user
 
+                                            }else{
+                                                username.setError("This User Name already have been taken!. Please choose another username");
+                                                return;
                                             }
                                         }
                                     });
