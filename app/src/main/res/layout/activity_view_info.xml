@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:focusable="false"/>
+        android:focusable="true" />
 
     <EditText
         android:id="@+id/habitDescription"
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textIsSelectable="false"
-        android:focusable="false"/>
+        android:focusable="true"/>
 
     <EditText
         android:id="@+id/startDate"
@@ -47,7 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textIsSelectable="false"
-        android:focusable="false"/>
+        android:focusable="true"/>
 
     <Button
         android:id="@+id/wednesday"
@@ -184,7 +184,7 @@
         android:clickable="false"/>
 
     <Button
-        android:id="@+id/createHabit"
+        android:id="@+id/editHabit"
         android:layout_width="96dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
@@ -236,16 +236,6 @@
         app:layout_constraintStart_toEndOf="@+id/addImage"
         app:layout_constraintTop_toTopOf="parent"
         android:clickable="false"/>
-
-    <Switch
-        android:id="@+id/editable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="10dp"
-        android:text="editable"
-        app:layout_constraintBottom_toTopOf="@+id/editHabit"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

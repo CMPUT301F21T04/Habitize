@@ -40,7 +40,7 @@ public class ViewHabitActivity extends Activity {
     //edit habits init
     private Button editHabit;
     private EditText startDate;
-    private ToggleButton editable;
+    //private ToggleButton editable;
 
 
     @Override
@@ -62,6 +62,7 @@ public class ViewHabitActivity extends Activity {
         // setting texts
         habitName.setText(passedHabit.getName());
         habitDescription.setText(passedHabit.getDescription());
+        editHabit = findViewById(R.id.editHabit);
 
         // setting listener
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -84,16 +85,26 @@ public class ViewHabitActivity extends Activity {
                 passedHabits = new ArrayList<>(); // reset the list
                 ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
                 for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
-                    Map<String,String> habitFields = (Map<String, String>) mappedList.get(i); // map to all the fields
+                    Map<String,Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
                     // retrieves all the habit information and adds it to the habitList
-                    String name = habitFields.get("name");
-                    String description = habitFields.get("description");
-                    Habit newHabit = new Habit(name,description); // create a new habit out of this information
+                    String name = (String) habitFields.get("name");
+                    String description = (String) habitFields.get("description");
+                    String date = (String) habitFields.get("startDate");
+                    boolean mondayRec = (boolean) habitFields.get("mondayR");
+                    boolean tuesdayRec = (boolean) habitFields.get("tuesdayR");
+                    boolean wednesdayRec = (boolean) habitFields.get("wednesdayR");
+                    boolean thursdayRec = (boolean) habitFields.get("thursdayR");
+                    boolean fridayRec = (boolean) habitFields.get("fridayR");
+                    boolean saturdayRec = (boolean) habitFields.get("saturdayR");
+                    boolean sundayRec = (boolean) habitFields.get("sundayR");
+                    Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
+                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
                     passedHabits.add(newHabit); // add it to the habitList
 
                 }
             }
         });
+
         /**
         habitName.setEnabled(true);
         habitDescription.setEnabled(true);
@@ -117,12 +128,13 @@ public class ViewHabitActivity extends Activity {
             }
         });
          **/
-        habitName.setFocusable(true);
-        habitDescription.setFocusable(true);
-        startDate.setFocusable(true);
+        //System.out.println("********HABIT NAME******" + habitName);
+        //habitName.setFocusable(true);
+        //habitDescription.setFocusable(true);
+        //startDate.setFocusable(true);
 
         //edit Button
-        editHabit = findViewById(R.id.editHabit);
+
         editHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,7 +142,7 @@ public class ViewHabitActivity extends Activity {
 
                 String inputTitle = habitName.getText().toString().trim();
                 String inputDescription = habitDescription.getText().toString().trim();
-                String inputDate = startDate.getText().toString().trim();
+                //String inputDate = startDate.getText().toString().trim();
 
                 //check if empty and user left fields blank
                 if(TextUtils.isEmpty(inputTitle)){
@@ -141,9 +153,9 @@ public class ViewHabitActivity extends Activity {
                     habitDescription.setError("Enter a habit description!");
                 }
 
-                if(TextUtils.isEmpty(inputDate)){
-                    startDate.setError("Enter a habit start date!");
-                }
+                //if(TextUtils.isEmpty(inputDate)){
+                  //  startDate.setError("Enter a habit start date!");
+               // }
 
                 //make sure title is up to 20 chars
                 if (inputTitle.length() > 20){
@@ -160,14 +172,25 @@ public class ViewHabitActivity extends Activity {
                 /**
                  * creates the habit and stores in database only if validation above is correct
                  */
-                if ((!TextUtils.isEmpty(inputTitle)) && (!TextUtils.isEmpty(inputDescription)) && (!TextUtils.isEmpty(inputDate))) {
+                if ((!TextUtils.isEmpty(inputTitle)) && (!TextUtils.isEmpty(inputDescription)) ) {
                     // Create the habit
-                    Habit newHabit = new Habit(habitName.getText().toString(), habitDescription.getText().toString());
+                    //Habit newHabit = new Habit(habitName.getText().toString(), habitDescription.getText().toString());
                     // add it to the user list
-                    passedHabits.add(newHabit);
+                    //passedHabits.add(newHabit);
                     // Hash it for transportation to database
+
+                    System.out.println("BEFORE EDITING NAME*******************" + passedHabit.getName());
+                    System.out.println("BEFORE EDITING DESCRIPTION*******************" + passedHabit.getDescription());
+
+                    passedHabit.setName(inputTitle);
+                    passedHabit.setDescription(inputDescription);
+
+                    System.out.println("AFTER EDITING NAME*******************" + passedHabit.getName());
+                    System.out.println("AFTER EDITING DESCRIPTION*******************" + passedHabit.getDescription());
+
+
                     HashMap<String,Object> listMap = new HashMap<>();
-                    listMap.put("habits",passedHabits);
+                    listMap.put("habits",passedHabit);
                     // send to database and close
                     docRef.set(listMap);
                     finish();

@@ -35,7 +35,6 @@
         android:id="@+id/firstName"
         android:layout_width="209dp"
         android:layout_height="48dp"
-        android:layout_marginTop="98dp"
         android:hint="First Name"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
