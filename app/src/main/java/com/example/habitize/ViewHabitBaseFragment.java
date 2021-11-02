@@ -33,10 +33,14 @@ import java.util.List;
 import java.util.Map;
 
 // this is one of the 3 fragments that gets created when viewing a habit
-public class ViewHabitBaseFragment extends Fragment {
+public class ViewHabitBaseFragment extends Fragment   {
+
     private EditText title;
     private EditText description;
     private TextView startDate;
+    private String titleText;
+    private String descText;
+    private String startDateText;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private CheckBox Monday;
     private CheckBox Tuesday;
@@ -65,27 +69,35 @@ public class ViewHabitBaseFragment extends Fragment {
         // Required empty public constructor
     }
 
+    // filling constructor for viewing
+    public ViewHabitBaseFragment(String titleText, String descText,String startTextDate, boolean monRecurrence,
+                                 boolean tueRecurrence, boolean wedRecurrence, boolean thurRecurrence,
+                                 boolean friRecurrence, boolean satRecurrence, boolean sunRecurrence ){
+        this.titleText = titleText;
+        this.descText = descText;
+        this.startDateText = startTextDate;
+        this.MonRecurrence = monRecurrence;
+        this.TueRecurrence = tueRecurrence;
+        this.WedRecurrence = wedRecurrence;
+        this.ThurRecurrence = thurRecurrence;
+        this.FriRecurrence = friRecurrence;
+        this.SatRecurrence = satRecurrence;
+        this.SunRecurrence = sunRecurrence;
+
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        MonRecurrence = false;
-        TueRecurrence = false;
-        WedRecurrence = false;
-        ThurRecurrence = false;
-        FriRecurrence = false;
-        SatRecurrence = false;
-        SunRecurrence = false;
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_view_habit_base, container, false);
 
-
+        // connecting views
         title = root.findViewById(R.id.FragmentViewHabitTitle);
         description = root.findViewById(R.id.FragmentViewHabitDescription);
         startDate = root.findViewById(R.id.FragmentViewHabitStartDate);
-
-
         Monday = root.findViewById(R.id.FragmentViewHabitMonday);
         Tuesday = root.findViewById(R.id.FragmentViewHabitTuesday);
         Wednesday = root.findViewById(R.id.FragmentViewHabitWednesday);
@@ -94,6 +106,29 @@ public class ViewHabitBaseFragment extends Fragment {
         Saturday = root.findViewById(R.id.FragmentViewHabitSaturday);
         Sunday  = root.findViewById(R.id.FragmentViewHabitSunday);
 
+        title.setEnabled(false);
+        description.setEnabled(false);
+        startDate.setEnabled(false);
+        Monday.setEnabled(false);
+        Tuesday.setEnabled(false);
+        Wednesday.setEnabled(false);
+        Thursday.setEnabled(false);
+        Friday.setEnabled(false);
+        Saturday.setEnabled(false);
+        Sunday.setEnabled(false);
+
+
+        // setting views to values set in the constructor
+        Monday.setChecked(MonRecurrence);
+        Tuesday.setChecked(TueRecurrence);
+        Wednesday.setChecked(WedRecurrence);
+        Thursday.setChecked(ThurRecurrence);
+        Friday.setChecked(FriRecurrence);
+        Saturday.setChecked(SatRecurrence);
+        Sunday.setChecked(SunRecurrence);
+        title.setText(titleText);
+        description.setText(descText);
+        startDate.setText(startDateText);
 
         startDate.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -132,7 +167,8 @@ public class ViewHabitBaseFragment extends Fragment {
         };
 
 
-        // listeners. Rachel shortened this last time
+        // listeners. Rachel had a shortened version of this but idk how to fix it
+        // this is so unclean. I hate it.
         Monday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -213,27 +249,48 @@ public class ViewHabitBaseFragment extends Fragment {
 
 
 
-
-
-
-        // adding listeners
-
-
-
-
-
-
         return root;
     }
 
 
+    public void setEditable(){
+        Monday.setEnabled(true);
+        Tuesday.setEnabled(true);
+        Wednesday.setEnabled(true);
+        Thursday.setEnabled(true);
+        Friday.setEnabled(true);
+        Saturday.setEnabled(true);
+        Sunday.setEnabled(true);
+
+        title.setEnabled(true);
+        description.setEnabled(true);
+        startDate.setEnabled(true);
+    }
+    public void setNotEditable(){
+        Monday.setEnabled(false);
+        Tuesday.setEnabled(false);
+        Wednesday.setEnabled(false);
+        Thursday.setEnabled(false);
+        Friday.setEnabled(false);
+        Saturday.setEnabled(false);
+        Sunday.setEnabled(false);
+
+        title.setEnabled(false);
+        description.setEnabled(false);
+        startDate.setEnabled(false);
+
+    }
+
+
+
+
     public String getTitle(){
-        return title.getText().toString();
+        return titleText;
     }
     public String getDescription(){
-        return description.getText().toString();
+        return descText;
     }
-    public String getDate(){ return startDate.getText().toString();}
+    public String getDate(){ return startDateText;}
     public boolean getMon(){
         return MonRecurrence;
     }
@@ -256,42 +313,45 @@ public class ViewHabitBaseFragment extends Fragment {
         return SunRecurrence;
     }
     // setters for fields
-    public void setMon(boolean mon){
+    public ViewHabitBaseFragment setMon(boolean mon){
         this.MonRecurrence = mon;
-        Monday.setChecked(this.MonRecurrence);
+        return this;
     }
-    public void setTue(boolean tue){
+    public ViewHabitBaseFragment setTue(boolean tue){
         this.TueRecurrence = tue;
-        Tuesday.setChecked(tue);
+        return this;
     }
-    public void setWed(boolean wed){
+    public ViewHabitBaseFragment setWed(boolean wed){
         this.WedRecurrence = wed;
-        Wednesday.setChecked(wed);
+        return this;
     }
-    public void setThurs(boolean thurs){
+    public ViewHabitBaseFragment setThurs(boolean thurs){
         this.ThurRecurrence = thurs;
-        Thursday.setChecked(thurs);
+        return this;
     }
-    public void setFri(boolean fri){
+    public ViewHabitBaseFragment setFri(boolean fri){
         this.FriRecurrence = fri;
-        Friday.setChecked(fri);
+        return this;
     }
-    public void setSat(boolean sat){
+    public ViewHabitBaseFragment setSat(boolean sat){
         this.SatRecurrence = sat;
-        Saturday.setChecked(sat);
+        return this;
     }
-    public void setSun(boolean sun){
+    public ViewHabitBaseFragment setSun(boolean sun){
         this.SunRecurrence = sun;
-        Sunday.setChecked(sun);
+        return this;
     }
-    public void setDate(String date){
-        this.startDate.setText(date);
+    public ViewHabitBaseFragment setDate(String date){
+        startDateText = date;
+        return this;
     }
-    public void setTitle(String title){
-        this.title.setText(title);
+    public ViewHabitBaseFragment setTitle(String title){
+        titleText = title;
+        return this;
     }
-    public void setDesc(String desc){
-        this.description.setText(desc);
+    public ViewHabitBaseFragment setDesc(String desc){
+        descText = desc;
+        return this;
     }
     public void onCheckboxClicked(View view){
         boolean checked = ((CheckBox) view).isChecked();

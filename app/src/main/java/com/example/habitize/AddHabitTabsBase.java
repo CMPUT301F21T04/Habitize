@@ -53,7 +53,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
 
         passedUser = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
         passedHabits = new ArrayList<>();
-
         db = FirebaseFirestore.getInstance(); // document references
         userCol = db.collection("Users");
         docRef = userCol.document(passedUser);
@@ -168,6 +167,8 @@ public class AddHabitTabsBase extends AppCompatActivity {
 
 
     }
+
+
 
     class addAdapter extends FragmentStateAdapter{
 
