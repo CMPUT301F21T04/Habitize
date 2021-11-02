@@ -41,6 +41,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
     private CollectionReference userCol;
     private DocumentReference docRef;
     private List<Habit> passedHabits;
+    String[] titles = {"Info","Image"};
 
 
     @Override
@@ -93,8 +94,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
         new TabLayoutMediator(tabLayout, pager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText("Tab");
-                tab.setIcon(R.drawable.ic_baseline_check_24);
+                tab.setText(titles[position]);
             }
         }).attach();
 
@@ -182,8 +182,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
             switch(position){
                 case 1: returningFragment = new AddHabitImageFragment();
                     break;
-                case 2: returningFragment = new AddHabitLocationFragment();
-                    break;
                 default:
                     returningFragment = new AddHabitBaseFragment();
             }
@@ -192,7 +190,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 2;
         }
     }
 }
