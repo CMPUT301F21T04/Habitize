@@ -1,7 +1,6 @@
 package com.example.habitize;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -35,13 +34,10 @@ public class AddHabitActivity extends AppCompatActivity {
 
     private EditText title;
     private EditText description;
-
-
     private EditText Title;
     private EditText Description;
     private TextView startDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-
     private CheckBox Monday;
     private CheckBox Tuesday;
     private CheckBox Wednesday;
@@ -49,41 +45,35 @@ public class AddHabitActivity extends AppCompatActivity {
     private CheckBox Friday;
     private CheckBox Saturday;
     private CheckBox Sunday;
-
     private Button createHabit;
-
-    private String MonRecurrence;
-    private String TueRecurrence;
-    private String WedRecurrence;
-    private String ThurRecurrence;
-    private String FriRecurrence;
-    private String SatRecurrence;
-    private String SunRecurrence;
-
+    private boolean MonRecurrence;
+    private boolean TueRecurrence;
+    private boolean WedRecurrence;
+    private boolean ThurRecurrence;
+    private boolean FriRecurrence;
+    private boolean SatRecurrence;
+    private boolean SunRecurrence;
     private Switch geolocation;
     private Switch Geolocation;
-
     private Button imageBtn;
     private Button locationBtn;
-
     private FirebaseFirestore db;
     private CollectionReference userCol;
     private DocumentReference docRef;
-    private String passedEmail;
+    private String passedUser;
     private List<Habit> passedHabits;
-
     private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_info);
-        passedEmail = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
 
-        imageBtn = findViewById(R.id.addImage);
-        locationBtn = findViewById(R.id.addLocation);
 
-        createHabit = findViewById(R.id.create_habit);
+        passedUser = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
+
+
+        createHabit = findViewById(R.id.create_habit_tabs);
         title = findViewById(R.id.habitTitle);
         description = findViewById(R.id.habitDescription);
         startDate = findViewById(R.id.startDate);
@@ -94,12 +84,9 @@ public class AddHabitActivity extends AppCompatActivity {
         Friday = findViewById(R.id.friday);
         Saturday = findViewById(R.id.saturday);
         Sunday = findViewById(R.id.sunday);
-
         Title = findViewById((R.id.habitTitle));
         Description = findViewById((R.id.habitDescription));
-        db = FirebaseFirestore.getInstance();
-        userCol = db.collection("userHabits");
-        docRef = userCol.document(passedEmail);
+
 
         /*
          * TO DO: public or private, test cases
@@ -112,18 +99,18 @@ public class AddHabitActivity extends AppCompatActivity {
                 passedHabits = new ArrayList<>(); // reset the list
                 ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
                 for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
-                    Map<String,String> habitFields = (Map<String, String>) mappedList.get(i); // map to all the fields
+                    Map<String,Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
                     // retrieves all the habit information and adds it to the habitList
-                    String name = habitFields.get("name");
-                    String description = habitFields.get("description");
-                    String date = habitFields.get("date");
-                    String mondayRec = habitFields.get("mondayRec");
-                    String tuesdayRec = habitFields.get("tuesdayRec");
-                    String wednesdayRec = habitFields.get("wednesdayRec");
-                    String thursdayRec = habitFields.get("thursdayRec");
-                    String fridayRec = habitFields.get("fridayRec");
-                    String saturdayRec = habitFields.get("saturdayRec");
-                    String sundayRec = habitFields.get("sundayRec");
+                    String name = (String) habitFields.get("name");
+                    String description = (String) habitFields.get("description");
+                    String date = (String) habitFields.get("startDate");
+                    boolean mondayRec = (boolean) habitFields.get("mondayR");
+                    boolean tuesdayRec = (boolean) habitFields.get("tuesdayR");
+                    boolean wednesdayRec = (boolean) habitFields.get("wednesdayR");
+                    boolean thursdayRec = (boolean) habitFields.get("thursdayR");
+                    boolean fridayRec = (boolean) habitFields.get("fridayR");
+                    boolean saturdayRec = (boolean) habitFields.get("saturdayR");
+                    boolean sundayRec = (boolean) habitFields.get("sundayR");
 
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
                             thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
@@ -219,26 +206,15 @@ public class AddHabitActivity extends AppCompatActivity {
                     HashMap<String,Object> listMap = new HashMap<>();
                     listMap.put("habits",passedHabits);
                     // send to database and close
-                    docRef.set(listMap);
+                    docRef.update(listMap);
                     finish();
                 }
             }
         });
 
-        imageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AddHabitImage.class));             // redo intent handling
-            }
-        });
-
-        locationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AddHabitLocation.class));          // redo intent handling
-            }
-        });
     }
+
+
 
     //Checkbox Implementation below to set up recurrence days of the week
     public void onCheckboxClicked(View view){
@@ -249,58 +225,58 @@ public class AddHabitActivity extends AppCompatActivity {
         switch (view.getId()){
             case R.id.monday:
                 if(checked){
-                    MonRecurrence = "yes";
+                    MonRecurrence = true;
                 }
                 else {
-                    MonRecurrence = "no";
+                    MonRecurrence = false;
                 }
                 break;
             case R.id.tuesday:
                 if(checked){
-                    TueRecurrence = "yes";
+                    TueRecurrence = true;
                 }
                 else {
-                    TueRecurrence = "no";
+                    TueRecurrence = false;
                 }
                 break;
             case R.id.wednesday:
                 if(checked){
-                    WedRecurrence = "yes";
+                    WedRecurrence = true;
                 }
                 else {
-                    WedRecurrence = "no";
+                    WedRecurrence = false;
                 }
                 break;
             case R.id.thursday:
                 if(checked){
-                    ThurRecurrence = "yes";
+                    ThurRecurrence = true;
                 }
                 else{
-                    ThurRecurrence = "no";
+                    ThurRecurrence = false;
                 }
                 break;
-            case R.id.friday:
+            case R.id.fragmentFriday:
                 if(checked){
-                    FriRecurrence = "yes";
+                    FriRecurrence = true;
                 }
                 else {
-                    FriRecurrence = "no";
+                    FriRecurrence = false;
                 }
                 break;
             case R.id.saturday:
                 if(checked){
-                    SatRecurrence = "yes";
+                    SatRecurrence = true;
                 }
                 else {
-                    SatRecurrence = "no";
+                    SatRecurrence = false;
                 }
                 break;
             case R.id.sunday:
                 if(checked){
-                    SunRecurrence = "yes";
+                    SunRecurrence = true;
                 }
                 else {
-                    SunRecurrence = "no";
+                    SunRecurrence = false;
                 }
                 break;
         }

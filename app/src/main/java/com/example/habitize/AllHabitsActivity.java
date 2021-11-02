@@ -33,7 +33,7 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
     private DocumentReference docRef;
     private CollectionReference colRef;
     private FirebaseFirestore db;
-    private String passedEmail;
+    private String passedUser;
     protected void onCreate(Bundle savedInstanceState) {
 
 
@@ -41,10 +41,10 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
         // retrieving passed list to populate listview
-        passedEmail = (String)getIntent().getExtras().getSerializable("user");
+        passedUser = (String)getIntent().getExtras().getSerializable("user");
         db = FirebaseFirestore.getInstance();
-        colRef = db.collection("userHabits");
-        docRef = colRef.document(passedEmail);
+        colRef = db.collection("Users");
+        docRef = colRef.document(passedUser);
         dataList = new ArrayList<>(); // reset the list
 
         list = findViewById(R.id.habit_list);
@@ -59,18 +59,18 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
                 ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
                 habitAdapter.clear();
                 for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
-                    Map<String,String> habitFields = (Map<String, String>) mappedList.get(i); // map to all the fields
+                    Map<String,Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
                     // retrieves all the habit information and adds it to the habitList
-                    String name = habitFields.get("name");
-                    String description = habitFields.get("description");
-                    String date = habitFields.get("date");
-                    String mondayRec = habitFields.get("mondayRec");
-                    String tuesdayRec = habitFields.get("tuesdayRec");
-                    String wednesdayRec = habitFields.get("wednesdayRec");
-                    String thursdayRec = habitFields.get("thursdayRec");
-                    String fridayRec = habitFields.get("fridayRec");
-                    String saturdayRec = habitFields.get("saturdayRec");
-                    String sundayRec = habitFields.get("sundayRec");
+                    String name = (String)habitFields.get("name");
+                    String description = (String)habitFields.get("description");
+                    String date = (String)habitFields.get("startDate");
+                    boolean mondayRec = (boolean) habitFields.get("mondayR");
+                    boolean tuesdayRec = (boolean) habitFields.get("tuesdayR");
+                    boolean wednesdayRec = (boolean) habitFields.get("wednesdayR");
+                    boolean thursdayRec = (boolean) habitFields.get("thursdayR");
+                    boolean fridayRec = (boolean) habitFields.get("fridayR");
+                    boolean saturdayRec = (boolean) habitFields.get("saturdayR");
+                    boolean sundayRec = (boolean) habitFields.get("sundayR");
 
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
                             thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
@@ -92,7 +92,7 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
         habitBundle.putSerializable("index",position);
         habitBundle.putSerializable("habits",dataList);
-        habitBundle.putSerializable("user",passedEmail);
+        habitBundle.putSerializable("user",passedUser);
         intent.putExtras(habitBundle);
         startActivity(intent);
     }

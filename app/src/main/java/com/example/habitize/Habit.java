@@ -8,13 +8,13 @@ public class Habit implements Serializable {
     private String description;
     private String comments;
     private String startDate;
-    private String mondayR;
-    private String tuesdayR;
-    private String wednesdayR;
-    private String thursdayR;
-    private String fridayR;
-    private String saturdayR;
-    private String sundayR;
+    private boolean mondayR;
+    private boolean tuesdayR;
+    private boolean wednesdayR;
+    private boolean thursdayR;
+    private boolean fridayR;
+    private boolean saturdayR;
+    private boolean sundayR;
 
 //    private photos?
 //    private location
@@ -26,8 +26,8 @@ public class Habit implements Serializable {
 
     public Habit(){};
 
-    public Habit(String name, String description, String startDate, String mondayR, String tuesdayR,
-                 String wednesdayR, String thursdayR, String fridayR, String saturdayR, String sundayR){
+    public Habit(String name, String description, String startDate, boolean mondayR, boolean tuesdayR,
+                 boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR){
         this.name = name;
         this.description = description;
         this.startDate = startDate;
@@ -64,59 +64,59 @@ public class Habit implements Serializable {
         this.startDate = startDate;
     }
 
-    public String getMondayR() {
+    public boolean getMondayR() {
         return mondayR;
     }
 
-    public void setMondayR(String mondayR) {
+    public void setMondayR(boolean mondayR) {
         this.mondayR = mondayR;
     }
 
-    public String getTuesdayR() {
+    public boolean getTuesdayR() {
         return tuesdayR;
     }
 
-    public void setTuesdayR(String tuesdayR) {
+    public void setTuesdayR(boolean tuesdayR) {
         this.tuesdayR = tuesdayR;
     }
 
-    public String getWednesdayR() {
+    public boolean getWednesdayR() {
         return wednesdayR;
     }
 
-    public void setWednesdayR(String wednesdayR) {
+    public void setWednesdayR(boolean wednesdayR) {
         this.wednesdayR = wednesdayR;
     }
 
-    public String getThursdayR() {
+    public boolean getThursdayR() {
         return thursdayR;
     }
 
-    public void setThursdayR(String thursdayR) {
+    public void setThursdayR(boolean thursdayR) {
         this.thursdayR = thursdayR;
     }
 
-    public String getFridayR() {
+    public boolean getFridayR() {
         return fridayR;
     }
 
-    public void setFridayR(String fridayR) {
+    public void setFridayR(boolean fridayR) {
         this.fridayR = fridayR;
     }
 
-    public String getSaturdayR() {
+    public boolean getSaturdayR() {
         return saturdayR;
     }
 
-    public void setSaturdayR(String saturdayR) {
+    public void setSaturdayR(boolean saturdayR) {
         this.saturdayR = saturdayR;
     }
 
-    public String getSundayR() {
+    public boolean getSundayR() {
         return sundayR;
     }
 
-    public void setSundayR(String sundayR) {
+    public void setSundayR(boolean sundayR) {
         this.sundayR = sundayR;
     }
 
