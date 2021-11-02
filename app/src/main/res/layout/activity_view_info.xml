@@ -184,7 +184,7 @@
         android:clickable="false"/>
 
     <Button
-        android:id="@+id/createHabit"
+        android:id="@+id/editHabit"
         android:layout_width="96dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"

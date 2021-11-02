@@ -62,6 +62,7 @@ public class ViewHabitActivity extends Activity {
         // setting texts
         habitName.setText(passedHabit.getName());
         habitDescription.setText(passedHabit.getDescription());
+        editHabit = findViewById(R.id.editHabit);
 
         // setting listener
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -84,11 +85,20 @@ public class ViewHabitActivity extends Activity {
                 passedHabits = new ArrayList<>(); // reset the list
                 ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
                 for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
-                    Map<String,String> habitFields = (Map<String, String>) mappedList.get(i); // map to all the fields
+                    Map<String,Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
                     // retrieves all the habit information and adds it to the habitList
-                    String name = habitFields.get("name");
-                    String description = habitFields.get("description");
-                    Habit newHabit = new Habit(name,description); // create a new habit out of this information
+                    String name = (String) habitFields.get("name");
+                    String description = (String) habitFields.get("description");
+                    String date = (String) habitFields.get("startDate");
+                    boolean mondayRec = (boolean) habitFields.get("mondayR");
+                    boolean tuesdayRec = (boolean) habitFields.get("tuesdayR");
+                    boolean wednesdayRec = (boolean) habitFields.get("wednesdayR");
+                    boolean thursdayRec = (boolean) habitFields.get("thursdayR");
+                    boolean fridayRec = (boolean) habitFields.get("fridayR");
+                    boolean saturdayRec = (boolean) habitFields.get("saturdayR");
+                    boolean sundayRec = (boolean) habitFields.get("sundayR");
+                    Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
+                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
                     passedHabits.add(newHabit); // add it to the habitList
 
                 }
@@ -124,7 +134,7 @@ public class ViewHabitActivity extends Activity {
         //startDate.setFocusable(true);
 
         //edit Button
-        editHabit = findViewById(R.id.editHabit);
+
         editHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
