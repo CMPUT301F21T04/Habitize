@@ -92,7 +92,6 @@ public class AddHabitActivity extends AppCompatActivity {
         userCol = db.collection("Users");
         docRef = userCol.document(passedUser);
 
-
         /*
          * TO DO: public or private, test cases
          */

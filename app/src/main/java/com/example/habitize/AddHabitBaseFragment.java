@@ -1,32 +1,41 @@
 package com.example.habitize;
 
 import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 
 public class AddHabitBaseFragment extends Fragment {
     private EditText title;
     private EditText description;
-    private EditText Title;
-    private EditText Description;
     private TextView startDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private CheckBox Monday;
@@ -48,9 +57,7 @@ public class AddHabitBaseFragment extends Fragment {
     private Switch Geolocation;
     private Button imageBtn;
     private Button locationBtn;
-    private FirebaseFirestore db;
-    private CollectionReference userCol;
-    private DocumentReference docRef;
+
     private String passedEmail;
     private List<Habit> passedHabits;
     private static final String TAG = "MainActivity";
@@ -76,13 +83,10 @@ public class AddHabitBaseFragment extends Fragment {
 
 
         createHabit = root.findViewById(R.id.create_habit_tabs);
-        title = root.findViewById(R.id.habitTitle);
-        description = root.findViewById(R.id.habitDescription);
-        startDate = root.findViewById(R.id.startDate);
-        Title = root.findViewById((R.id.habitTitle));
-        Description = root.findViewById((R.id.habitDescription));
-        db = FirebaseFirestore.getInstance();
-        userCol = db.collection("Users");
+        title = root.findViewById(R.id.fragmentHabitTitle);
+        description = root.findViewById(R.id.fragmentHabitDescription);
+        startDate = root.findViewById(R.id.fragmentStartDate);
+
 
         Monday = root.findViewById(R.id.fragmentMonday);
         Tuesday = root.findViewById(R.id.fragmentMonday);
@@ -91,6 +95,45 @@ public class AddHabitBaseFragment extends Fragment {
         Friday = root.findViewById(R.id.fragmentFriday);
         Saturday = root.findViewById(R.id.fragmentSaturday);
         Sunday  = root.findViewById(R.id.fragmentSunday);
+
+
+
+        startDate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        getContext(),
+                        android.R.style.Theme_DeviceDefault,
+                        mDateSetListener,
+                        year, month, day);
+
+                //set a minimum date the user can select (cannot choose past dates to start on)
+                dialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+                //change color of date picker background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.LTGRAY));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                //must add one more month to be able to get the desired month
+                month = month + 1;
+                //formats the date according to mm/dd/yyyy
+                Log.d(TAG, "onDateSet: mm/dd/yyyy: " + month + "/" + day + "/" + year);
+
+                String date = month + "/" + day + "/" + year;
+                //updates the textBox
+                startDate.setText(date);
+            }
+        };
+
 
         // listeners. Rachel shortened this last time
         Monday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -191,7 +234,7 @@ public class AddHabitBaseFragment extends Fragment {
         return title.getText().toString();
     }
     public String getDescription(){
-        return Description.getText().toString();
+        return description.getText().toString();
     }
     public String getDate(){ return startDate.getText().toString();}
     public boolean getMon(){
