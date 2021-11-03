@@ -28,15 +28,14 @@ public class DatabaseManager {
     DatabaseManager(){
     }
 
-    // get all habits and return them
-    public ArrayList<Habit> getAllHabits(String user){
-        ArrayList<Habit> arrayList = new ArrayList<>();
+    // get all habits and put them into a list. Then notify the habitAdapter
+    public void getAllHabits(String user,ArrayList<Habit> recievingList,CustomAdapter habitAdapter){
 
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
-                arrayList.clear();
+                recievingList.clear();
                 for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
                     Map<String,Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
                     // retrieves all the habit information and adds it to the habitList
@@ -52,15 +51,14 @@ public class DatabaseManager {
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
                             thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
-                    arrayList.add(newHabit); // add it to the habitList
+                    recievingList.add(newHabit); // add it to the habitList
                 }
+                habitAdapter.notifyDataSetChanged();
             }
         });
 
 
 
-
-        return arrayList;
     }
 
 
