@@ -94,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
         allHabits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,AllHabitsActivity.class);
+                // passing list down to populate listView
+                Bundle userBundle = new Bundle();
+                userBundle.putSerializable("list",habitList);
+                userBundle.putSerializable("user",passedEmail);
+                intent.putExtras(userBundle);
+                startActivity(intent);
 
 
 
@@ -102,13 +109,7 @@ public class MainActivity extends AppCompatActivity {
         todaysHabits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,AllHabitsActivity.class);
-                // passing list down to populate listView
-                Bundle userBundle = new Bundle();
-                userBundle.putSerializable("list",habitList);
-                userBundle.putSerializable("user",passedEmail);
-                intent.putExtras(userBundle);
-                startActivity(intent);
+
 
             }
         });
