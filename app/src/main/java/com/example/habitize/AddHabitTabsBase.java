@@ -63,7 +63,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
 
 
         // pager holds fragments, madapter is the adapter needed for it
-        addAdapter mAdapter = new addAdapter(this);
+        mAdapter = new addAdapter(this);
         pager.setOffscreenPageLimit(8); // forcing pager to create fragments
         pager.setAdapter(mAdapter);
         tabLayout = findViewById(R.id.AddHabitTabs);
@@ -77,8 +77,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 // This block loads the fragments and gets our necessary fields for checking
                 AddHabitBaseFragment addFrag = (AddHabitBaseFragment)getSupportFragmentManager().findFragmentByTag("f0");
                 AddHabitImageFragment addImage = (AddHabitImageFragment)getSupportFragmentManager().findFragmentByTag("f1");
@@ -120,8 +118,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
                     Toast.makeText(AddHabitTabsBase.this,"Enter a habit title",Toast.LENGTH_LONG).show();
 
                 }
-
-
                 //creates the habit and stores in database only if validation above is correct
                 if (!(title == "") && (!(description == "")) &&
                         (!(startDate == ""))) {
@@ -131,11 +127,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
                             thurRec, friRec, satRec, sunRec);
                     // add it to the user list
                     passedHabits.add(newHabit);
-                    // Hash it for transportation to database
-                    HashMap<String, Object> listMap = new HashMap<>();
-                    listMap.put("habits", passedHabits);
-                    // send to database and close
-                    docRef.update(listMap);
+                    DatabaseManager.updateHabits(passedUser,passedHabits);
                     finish();
                 }
 

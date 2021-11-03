@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseManager {
@@ -86,7 +87,12 @@ public class DatabaseManager {
         });
     }
 
+    public static void updateHabits(String user, ArrayList<Habit> updatedHabits){
+        HashMap<String,Object> listMap = new HashMap<>();
+        listMap.put("habits",updatedHabits);
+        db.collection("Users").document(user).update(listMap);
 
+    }
 
     // will implement later to get the habits corresponding to TODAY'S DATE
     public ArrayList<Habit> getTodaysHabits(String user){
@@ -94,8 +100,10 @@ public class DatabaseManager {
     }
 
 
-    public String findUser(String user){
-        return new String();
+    // returns the user's habits if the user is found.
+    // returns null if user does not exist
+    public ArrayList<Habit> findUserHabits(String user){
+        return new ArrayList<>();
     }
 
 

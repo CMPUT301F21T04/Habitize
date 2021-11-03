@@ -101,9 +101,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
             public void onClick(View view) {
                 passedHabits.remove(passedIndex); // remove the habit at the position we are on
                 // hash the list and replace the one at the database
-                HashMap<String,Object> dataMap = new HashMap<String,Object>();
-                dataMap.put("habits",passedHabits);
-                docRef.set(dataMap);
+                DatabaseManager.updateHabits(passedUser,passedHabits);
                 finish();
 
             }
