@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AddHabitBaseFragment"
+    >
+
+
+    <EditText
+        android:id="@+id/FragmentViewHabitTitle"
+        android:layout_width="296dp"
+        android:layout_height="48dp"
+        android:gravity="center_horizontal"
+        android:hint="Enter Your Title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.058"
+        />
+
+    <EditText
+        android:id="@+id/FragmentViewHabitDescription"
+        android:layout_width="295dp"
+        android:layout_height="181dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/with_border"
+        android:gravity="center_horizontal"
+        android:hint="Enter Habit Description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitTitle"
+        app:layout_constraintVertical_bias="0.071"
+        />
+
+    <TextView
+        android:id="@+id/FragmentViewHabitStartDate"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="57dp"
+        android:gravity="center_horizontal"
+        android:hint="Click here to select a start date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitDescription"
+        app:layout_constraintVertical_bias="0.13"
+        />
+
+    <Switch
+        android:id="@+id/FragmentViewHabitGeolocation"
+        android:layout_width="187dp"
+        android:layout_height="92dp"
+        android:layout_marginBottom="56dp"
+        android:text="Enable Geolocation"
+        android:textColorHighlight="#8C9EFF"
+        android:textColorLink="#8C9EFF"
+        android:thumbTint="#6200EE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.197"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitSaturday"
+        app:layout_constraintVertical_bias="1.0"
+        />
+
+    <CheckBox
+        android:id="@+id/FragmentViewHabitMonday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:orientation="horizontal"
+        android:text="M"
+        app:layout_constraintBaseline_toBaselineOf="@+id/FragmentViewHabitTuesday"
+        app:layout_constraintEnd_toStartOf="@+id/FragmentViewHabitTuesday"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <CheckBox
+        android:id="@+id/FragmentViewHabitThursday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Th"
+        app:layout_constraintEnd_toStartOf="@+id/FragmentViewHabitFriday"
+        app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitWednesday"
+        app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitStartDate"
+        />
+
+    <CheckBox
+        android:id="@+id/FragmentViewHabitWednesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="W"
+        app:layout_constraintBaseline_toBaselineOf="@+id/FragmentViewHabitThursday"
+        app:layout_constraintEnd_toStartOf="@+id/FragmentViewHabitThursday"
+        app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitTuesday"
+        />
+
+    <CheckBox
+        android:id="@+id/FragmentViewHabitFriday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="F"
+        app:layout_constraintBaseline_toBaselineOf="@+id/FragmentViewHabitThursday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitThursday"
+        />
+
+    <CheckBox
+        android:id="@+id/FragmentViewHabitTuesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="T"
+        app:layout_constraintEnd_toStartOf="@+id/FragmentViewHabitWednesday"
+        app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitMonday"
+        app:layout_constraintTop_toTopOf="@+id/FragmentViewHabitWednesday"
+        />
+
+    <CheckBox
+        android:id="@+id/FragmentViewHabitSaturday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="152dp"
+        android:text="S"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitTuesday"
+        />
+
+    <CheckBox
+        android:id="@+id/FragmentViewHabitSunday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Su"
+        app:layout_constraintBaseline_toBaselineOf="@+id/FragmentViewHabitSaturday"
+        app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitSaturday"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

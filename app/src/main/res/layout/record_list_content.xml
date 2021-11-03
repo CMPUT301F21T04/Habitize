@@ -9,7 +9,7 @@
     >
 
     <Button
-        android:id="@+id/viewHabit"
+        android:id="@+id/viewRecord"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="122dp"
         android:layout_height="49dp"
@@ -24,7 +24,7 @@
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
-        android:id="@+id/habitImage"
+        android:id="@+id/recordImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,38 +33,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/list_item_outline"
-/>
+        />
 
     <TextView
-        android:id="@+id/habitName"
+        android:id="@+id/recordDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:text="HabitName"
+        android:text="RecordDate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.554"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.122"
-  />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/completeHabit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:src="@drawable/ic_baseline_check_24"
-        app:backgroundTint="@color/purple_500"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.945"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck"
-
-
-   />
+        app:layout_constraintVertical_bias="0.122" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
