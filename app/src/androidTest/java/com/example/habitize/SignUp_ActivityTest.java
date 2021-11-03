@@ -43,9 +43,9 @@ public class SignUp_ActivityTest {
     String testPassword;
     String testConPassword;
     String testIncorrectPass;
+
     @Rule
     public ActivityScenarioRule<Login_Activity> activityRule = new ActivityScenarioRule<Login_Activity>(Login_Activity.class);
-
 
     @Before
     public void initValidate(){
