@@ -54,7 +54,7 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
 
         // getting the habits from database and updating the view with them.
 
-        new DatabaseManager().getAllHabits(passedUser,dataList,habitAdapter);
+        DatabaseManager.getAllHabits(passedUser,dataList,habitAdapter);
 
     }
 

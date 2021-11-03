@@ -29,7 +29,7 @@ public class DatabaseManager {
     }
 
     // get all habits and put them into a list. Then notify the habitAdapter
-    public void getAllHabits(String user,ArrayList<Habit> recievingList,CustomAdapter habitAdapter){
+    public static void getAllHabits(String user,ArrayList<Habit> recievingList,CustomAdapter habitAdapter){
 
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -58,7 +58,7 @@ public class DatabaseManager {
         });
     }
     // get all the habits and put into a list, but don't update a habitAdapter
-    public void getAllHabits(String user,ArrayList<Habit> recievingList){
+    public static void getAllHabits(String user,ArrayList<Habit> recievingList){
 
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override

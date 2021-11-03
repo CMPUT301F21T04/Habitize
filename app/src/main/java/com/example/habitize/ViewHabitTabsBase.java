@@ -59,7 +59,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         docRef = userCol.document(passedUser);
 
         // pulling the most recent habits
-        new DatabaseManager().getAllHabits(passedUser,passedHabits);
+        DatabaseManager.getAllHabits(passedUser,passedHabits);
 
         // pager holds fragments, madapter is the adapter needed for it
         ViewAdapter mAdapter = new ViewAdapter(this);

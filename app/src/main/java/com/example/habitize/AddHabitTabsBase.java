@@ -40,7 +40,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference userCol;
     private DocumentReference docRef;
-    private List<Habit> passedHabits;
+    private ArrayList<Habit> passedHabits;
     private addAdapter mAdapter;
     String[] titles = {"Info","Image"};
 
@@ -59,31 +59,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
         docRef = userCol.document(passedUser);
 
         //We pull the current habit list, modify it, and send it back (only if we create the habit)
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                passedHabits.clear(); // reset the list
-                ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
-                for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
-                    Map<String,Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
-                    // retrieves all the habit information and adds it to the habitList
-                    String name = (String) habitFields.get("name");
-                    String description = (String) habitFields.get("description");
-                    String date = (String) habitFields.get("startDate");
-                    boolean mondayRec = (boolean) habitFields.get("mondayR");
-                    boolean tuesdayRec = (boolean) habitFields.get("tuesdayR");
-                    boolean wednesdayRec = (boolean) habitFields.get("wednesdayR");
-                    boolean thursdayRec = (boolean) habitFields.get("thursdayR");
-                    boolean fridayRec = (boolean) habitFields.get("fridayR");
-                    boolean saturdayRec = (boolean) habitFields.get("saturdayR");
-                    boolean sundayRec = (boolean) habitFields.get("sundayR");
-
-                    Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
-                    passedHabits.add(newHabit); // add it to the habitList
-                }
-            }
-        });
+        DatabaseManager.getAllHabits(passedUser,passedHabits);
 
 
         // pager holds fragments, madapter is the adapter needed for it
