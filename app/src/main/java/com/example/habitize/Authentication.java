@@ -33,7 +33,7 @@ public class Authentication {
     private static CollectionReference userHabits;
     private static CollectionReference followers;
     private static CollectionReference following;
-    //public static String SignUpMSG ="You have made an account successfully!";
+    public static String SignUpMSG ="You have made an account successfully!";
 
 
     // we initialize the firestore ONCE. Many objects but all will refer to the same instance
