@@ -106,8 +106,12 @@ public class MainActivity extends AppCompatActivity {
         todaysHabits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                Intent intent = new Intent(MainActivity.this, TodaysHabitsActivity.class);
+                Bundle userBundle = new Bundle();
+                userBundle.putSerializable("list", habitList);
+                userBundle.putSerializable("user", passedEmail);
+                intent.putExtras(userBundle);
+                startActivity(intent);
             }
         });
         followReq.setOnClickListener(new View.OnClickListener() {

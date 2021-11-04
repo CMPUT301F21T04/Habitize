@@ -12,8 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+
 
 public class TodaysHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener {
 
@@ -40,8 +39,9 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
         habitAdapter = new CustomAdapter(this, dataList);
         listView.setAdapter(habitAdapter);
 
-        DatabaseManager.getAllHabits(userAcct, dataList, habitAdapter);
+        DatabaseManager.getTodaysHabits(userAcct, dataList, habitAdapter);
     }
+
 
     @Override
     public void viewHabitPressed(int position) {
@@ -55,13 +55,6 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
         startActivity(intent);
     }
 
-    //get the day of the week for user
-    public void DayOfWeek(){
-        simpleDateFormat = new SimpleDateFormat("EEEE");
-        Date d = new Date();
-        String dayOfTheWeek = simpleDateFormat.format(d);
-        //System.out.println("Day of week is!!!!! " + dayOfTheWeek);
-    }
 
 //    public void
 //    //compare true with day of week

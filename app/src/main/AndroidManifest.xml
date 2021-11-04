@@ -59,6 +59,8 @@
         <activity
             android:name=".AddHabitActivity"
             android:parentActivityName=".MainActivity" />
+        <activity android:name=".TodaysHabitsActivity"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
