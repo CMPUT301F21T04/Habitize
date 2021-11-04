@@ -35,6 +35,7 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
     private CollectionReference colRef;
     private FirebaseFirestore db;
     private String passedUser;
+
     protected void onCreate(Bundle savedInstanceState) {
 
 
@@ -50,10 +51,10 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
 
         list = findViewById(R.id.habit_list);
         habitAdapter = new CustomAdapter(this,dataList);
+        //update what is shown in the listView
         list.setAdapter(habitAdapter);
 
         // getting the habits from database and updating the view with them.
-
         DatabaseManager.getAllHabits(passedUser,dataList,habitAdapter);
 
     }
@@ -70,6 +71,5 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         intent.putExtras(habitBundle);
         startActivity(intent);
     }
-
 
 }

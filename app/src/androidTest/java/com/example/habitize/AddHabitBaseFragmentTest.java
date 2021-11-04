@@ -1,6 +1,6 @@
 package com.example.habitize;
 
-import static androidx.test.espresso.Espresso.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
@@ -35,7 +35,6 @@ public class AddHabitBaseFragmentTest {
 
     @Rule
     public ActivityScenarioRule<AddHabitTabsBase> activityRule = new ActivityScenarioRule<AddHabitTabsBase>(AddHabitTabsBase.class);
-//    needs to be fragment_add_habit_base but doesnt have create?
 
     @Before
     public void initValidate() {
@@ -61,9 +60,9 @@ public class AddHabitBaseFragmentTest {
     //Make sure title not empty
     @Test
     public void emptyTitleTest() {
-        onView(withId(R.id.habitTitle)).perform(typeText(""), closeSoftKeyboard());
+        onView(withId(R.id.fragmentHabitTitle)).perform(typeText(""), (ViewAction) closeSoftKeyboard());
         onView(withId(R.id.create_habit_tabs)).perform(click());
-        onView(withId(R.id.habitTitle)).check(matches(hasErrorText("Enter a habit title")));
+        onView(withId(R.id.fragmentHabitTitle)).check(matches(hasErrorText("Enter a habit title")));
     }
 
     //Make sure description not empty

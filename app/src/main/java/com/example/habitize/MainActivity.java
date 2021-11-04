@@ -101,9 +101,6 @@ public class MainActivity extends AppCompatActivity {
                 userBundle.putSerializable("user",passedEmail);
                 intent.putExtras(userBundle);
                 startActivity(intent);
-
-
-
             }
         });
         todaysHabits.setOnClickListener(new View.OnClickListener() {
