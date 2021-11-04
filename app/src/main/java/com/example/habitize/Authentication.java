@@ -149,4 +149,28 @@ public class Authentication {
 
     return SignUpMSG;
     }
+
+
+    public static void SignInUser(String email,String password){
+        FirebaseAuth Authenticator;
+        Authenticator = FirebaseAuth.getInstance();
+        Authenticator.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                // Determine if the login is successful or not
+//                      // If successful, display a success message and redirect user to MainActivity
+//                if (task.isSuccessful()) {
+//
+//
+//
+//
+//                    //progressBar.setVisibility(View.GONE);
+//                } else {
+//                    //Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                    //progressBar.setVisibility(View.GONE);
+//                }
+            }
+        });
+
+    }
 }
