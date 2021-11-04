@@ -45,7 +45,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
     private ArrayList<Habit> passedHabits;
     private addAdapter mAdapter;
     String[] titles = {"Info","Image"};
-//    private SimpleDateFormat simpleDateFormat;
+
 
 
     @Override
@@ -95,10 +95,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
                 boolean satRec = addFrag.getSat();
                 boolean sunRec = addFrag.getSun();
 
-//                simpleDateFormat = new SimpleDateFormat("EEEE");
-//                Date d = new Date();
-//                String dayOfTheWeek = simpleDateFormat.format(d);
-//                System.out.println("Day of week is!!!!! " + dayOfTheWeek);
 
                 // TODO: this is not finished yet. need to check more fields
                 //check if empty and user left fields blank
