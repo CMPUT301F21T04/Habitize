@@ -44,10 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar3;
     private TextView textView2;
     private Toolbar toolBar;
-    private String passedEmail;
-    private CollectionReference progress;
-    private CollectionReference userHabits;
-    private DocumentReference user;
+
     private StructuredQuery.FieldReference fieldReference;
     public ArrayList<Habit> habitList;
     private int progressTrack = 0; //starting at 0 (max 100)
@@ -65,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         followReq = (Button) findViewById(R.id.followReq);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
 
-        passedEmail = (String)getIntent().getExtras().getSerializable("User"); // retrieving the user
 
 
        // updateProgress();
@@ -83,10 +79,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,AddHabitTabsBase.class);
-                Bundle userBundle = new Bundle();
-                userBundle.putSerializable("User",passedEmail);
-                userBundle.putSerializable("list",habitList);
-                intent.putExtras(userBundle);
+
                 startActivity(intent);
 
             }

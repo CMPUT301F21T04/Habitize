@@ -52,11 +52,8 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         passedUser = (String)getIntent().getExtras().getSerializable("User"); // we get passed a habit
         passedHabit = (Habit)getIntent().getExtras().getSerializable("habit"); // a user
         passedHabits = new ArrayList<>(); // we will get the latest list from the database
+        passedIndex = (int)getIntent().getExtras().getSerializable("index");
 
-        // If we choose to modify our habit, we will modify the entire list and push it into the database
-        db = FirebaseFirestore.getInstance(); // document references
-        userCol = db.collection("Users");
-        docRef = userCol.document(passedUser);
 
         // pulling the most recent habits
         DatabaseManager.getAllHabits(passedHabits);

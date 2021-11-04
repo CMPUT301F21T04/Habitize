@@ -144,11 +144,7 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
 
     @Override
     public void loginUser() {
-        String userName = ""; // reove dependencies on this later
         Intent intent = new Intent(Login_Activity.this,MainActivity.class);
-        Bundle userBundle = new Bundle();
-        userBundle.putSerializable("User",userName);
-        intent.putExtras(userBundle);
         startActivity(intent);
 
     }

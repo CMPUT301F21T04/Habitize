@@ -53,10 +53,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
         createButton = findViewById(R.id.create_habit_tabs);
 
         passedHabits = new ArrayList<>();
-        db = FirebaseFirestore.getInstance(); // document references
-        userCol = db.collection("Users");
-        docRef = userCol.document(passedUser);
-
         //We pull the current habit list, modify it, and send it back (only if we create the habit)
         DatabaseManager.getAllHabits(passedHabits);
 

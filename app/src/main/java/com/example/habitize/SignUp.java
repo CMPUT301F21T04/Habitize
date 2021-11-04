@@ -124,6 +124,8 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
 
     @Override
     public void loginUser() {
+        Intent intent = new Intent(SignUp.this,MainActivity.class);
+        startActivity(intent);
 
     }
 }
