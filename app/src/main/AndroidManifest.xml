@@ -25,15 +25,6 @@
         <activity
             android:name=".FollowingActivity"
             android:exported="false" />
-        <activity
-            android:name=".MyNavigationService"
-            android:exported="false" />
-        <activity android:name=".ViewHabitTabsBase"/>
-
-        <service
-            android:name=".MyNavigationService"
-            android:exported="false"
-            android:foregroundServiceType="location" />
 
         <activity
             android:name=".AddHabitImage"

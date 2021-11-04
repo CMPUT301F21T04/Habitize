@@ -49,8 +49,6 @@ public class DatabaseManager {
     }
 
 
-
-
     // get all habits and put them into a list. Then notify the habitAdapter
     public static void getAllHabits(String user,ArrayList<Habit> recievingList,CustomAdapter habitAdapter){
 
@@ -145,35 +143,24 @@ public class DatabaseManager {
         return new ArrayList<>();
     }
 
-//    public static boolean DayOfWeek(String dayOfWeekGiven){
-//        simpleDateFormat = new SimpleDateFormat("EEEE");
-//        Date d = new Date();
-//        //gives the day of the week of the user (if today is actually Monday it will say Monday)
-//        String dayOfTheWeek = simpleDateFormat.format(d);
-//        if (dayOfTheWeek.equals(dayOfWeekGiven)){
-////            System.out.println("Dayoftheweek is~~~~~~ " + dayOfTheWeek);
-////            System.out.println("daysofweekGIVEN is~~~~~~~" + dayOfWeekGiven);
-//            return true;
-//        }
-////        System.out.println("Dayoftheweek is~~~~~~ " + dayOfTheWeek);
-////        System.out.println("daysofweekGIVEN is~~~~~~~" + dayOfWeekGiven);
-//        return false;
-//    }
-
-
-    // get all habits and put them into a list. Then notify the habitAdapter
-    public static void getTodaysHabits(String user,ArrayList<Habit> recievingList,CustomAdapter habitAdapter){
+    //gets user's day of the week
+    public static boolean DayOfWeek(String dayOfWeekGiven){
         simpleDateFormat = new SimpleDateFormat("EEEE");
         Date d = new Date();
         //gives the day of the week of the user (if today is actually Monday it will say Monday)
         String dayOfTheWeek = simpleDateFormat.format(d);
+        if (dayOfTheWeek.equals(dayOfWeekGiven)){
+            return true;
+        }
+        return false;
+    }
 
-//        if(dayOfTheWeek.equals("")){
-//            System.out.println("YESYESYESYESYEYSEYSEEYYESYEYSEYSYE");
-//        }
-//        else{
-//            System.out.println("NONONONONONONONONONONONONOOOOOOOO");
-//        }
+    // get all habits and put them into a list. Then notify the habitAdapter
+    public static void getTodaysHabits(String user,ArrayList<Habit> recievingList,CustomAdapter habitAdapter){
+//        simpleDateFormat = new SimpleDateFormat("EEEE");
+//        Date d = new Date();
+//        //gives the day of the week of the user (if today is actually Monday it will say Monday)
+//        String dayOfTheWeek = simpleDateFormat.format(d);
 
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -197,25 +184,25 @@ public class DatabaseManager {
                             thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
 
                     //recievingList.add(newHabit);
-                    if ((mondayRec = true) && (dayOfTheWeek.equals("Monday"))){
+                    if ((mondayRec = true) && (DayOfWeek("Monday"))){
                         recievingList.add(newHabit); // add it to the habitList
                     }
-                    if ((tuesdayRec = true) && (dayOfTheWeek.equals("Tuesday"))){
+                    if ((tuesdayRec = true) && (DayOfWeek("Tuesday"))){
                         recievingList.add(newHabit);
                     }
-                    if ((wednesdayRec = true) && (dayOfTheWeek.equals("Wednesday"))){
+                    if ((wednesdayRec = true) && (DayOfWeek("Wednesday"))){
                         recievingList.add(newHabit);
                     }
-                    if ((thursdayRec = true) && (dayOfTheWeek.equals("Thursday"))){
+                    if ((thursdayRec = true) && (DayOfWeek("Thursday"))){
                         recievingList.add(newHabit);
                     }
-                    if ((fridayRec = true) && (dayOfTheWeek.equals("Friday"))){
+                    if ((fridayRec = true) && (DayOfWeek("Friday"))){
                         recievingList.add(newHabit);
                     }
-                    if ((saturdayRec = true) && (dayOfTheWeek.equals("Saturday"))){
+                    if ((saturdayRec = true) && (DayOfWeek("Saturday"))){
                         recievingList.add(newHabit);
                     }
-                    if ((sundayRec = true) && (dayOfTheWeek.equals("Sunday"))){
+                    if ((sundayRec = true) && (DayOfWeek("Sunday"))){
                         recievingList.add(newHabit);
                     }
 

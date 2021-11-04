@@ -30,11 +30,13 @@ android {
     buildFeatures {
         viewBinding true
     }
+
 }
 
 dependencies {
 
     implementation 'androidx.test.espresso:espresso-intents:3.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.4.0'
     implementation 'com.google.firebase:firebase-database:20.0.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
