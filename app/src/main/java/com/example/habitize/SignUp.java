@@ -1,5 +1,6 @@
 package com.example.habitize;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -113,81 +114,29 @@ public class SignUp extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
                 // TODO: the startActivity here might mess with NAVCONTROLLER
-                fAuth.createUserWithEmailAndPassword(inputEmail, inputPassword)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
+                String errMSG;
+                ////Call Authentication class and pass all user input in createUserWithAllInfo///
+                errMSG = Authentication.createUserWithAllInfo( inputEmail,  inputPassword,  user, first, last);
 
-                                // first check if there is no account already made.
-                                // TODO: Note, we should FIRST check for existence of user. And only then register them in the system
-                                if (task.isSuccessful()) {
-                                    // checking if the user already exists.
-                                    users.document(user).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            if(!documentSnapshot.exists()){
-                                                Toast.makeText(SignUp.this, "You have made an account successfully!",
-                                                        Toast.LENGTH_LONG).show();
-                                                // we created an account. Lets set up the user stuff
-                                                // TODO: Put legit values here later. Just filling the constructor because I
-                                                // need it to work
-                                                HashMap<String,Object> userNameField = new HashMap<>();
-                                                HashMap<String,Object> nameField = new HashMap<>();
-                                                HashMap<String,Object> lastNameField = new HashMap<>();
-                                                HashMap<String,Object> emailField = new HashMap<>();
-                                                HashMap<String, Object> pointField = new HashMap<>();
-                                                HashMap<String, Object> progressField = new HashMap<>();
-                                                userNameField.put("userName",user);
-                                                nameField.put("firstName",first);
-                                                lastNameField.put("lastName",last);
-                                                emailField.put("email",inputEmail);
-                                                pointField.put("points", 0L);
-                                                progressField.put("progress",0L);
-                                                // adding Data to User collection
-                                                users.document(user).set(userNameField);
-                                                users.document(user).update(nameField);
-                                                users.document(user).update(lastNameField);
-                                                users.document(user).update(emailField);
-                                                users.document(user).update(pointField);
-                                                users.document(user).update(progressField);
-                                                // adding Data to UsersHabits collection
-                                                HashMap<String,Object> habits = new HashMap<>();
-                                                habits.put("habits",new ArrayList<Habit>());
-                                                users.document(user).update(habits);
-                                                // adding Data to followers Collection
-                                                HashMap<String,Object> followList = new HashMap<>();
-                                                followList.put("followers",new ArrayList<String>());
-                                                users.document(user).update(followList);
-                                                // adding Data to following Collection
-                                                HashMap<String,Object> followingList = new HashMap<>();
-                                                followingList.put("following",new ArrayList<String>());
-                                                users.document(user).update(followingList);
-
-                                                HashMap<String,String> emailMap = new HashMap<>();
-                                                emailMap.put("user",user);
-                                                db.collection("EmailToUser").document(inputEmail).set(emailMap);
-
-                                                Intent intent = new Intent(SignUp.this, MainActivity.class);
-                                                // we do it with intents so we can pass down arguments.
-                                                Bundle userBundle = new Bundle();
-                                                userBundle.putSerializable("User", user); // sending user identifier down
-                                                intent.putExtras(userBundle);
-                                                startActivity(intent); // start the activity with the passed user
-
-                                            }
-                                        }
-                                    });
+//                if (SignUpMSG.equals("You have made an account successfully!")) {
+//                    Intent intent = new Intent(SignUp.this, MainActivity.class);
+//                    // we do it with intents so we can pass down arguments.
+//                    Bundle userBundle = new Bundle();
+//                    userBundle.putSerializable("User", user); // sending user identifier down
+//                    intent.putExtras(userBundle);
+//                    startActivity(intent); // start the activity with the passed user
+//                }
+                Intent intent = new Intent(SignUp.this, MainActivity.class);
+                // we do it with intents so we can pass down arguments.
+                Bundle userBundle = new Bundle();
+                userBundle.putSerializable("User", user); // sending user identifier down
+                intent.putExtras(userBundle);
+                startActivity(intent); // start the activity with the passed user
+                String test = "Nicccce";
 
 
+                Toast.makeText(SignUp.this, errMSG, Toast.LENGTH_LONG).show();
 
-
-                                } else {
-                                    Toast.makeText(SignUp.this, "Something Wrong!" + task.getException().getMessage(),
-                                            Toast.LENGTH_LONG).show();
-
-                                }
-                            }
-                        });
             }
         });
 

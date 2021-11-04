@@ -93,35 +93,51 @@ public class Login_Activity extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
                 // User Authentication
-                Authenticator.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                Authentication.SignInUser(email,password);
+                db.collection("EmailToUser").document(email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        // Determine if the login is successful or not
-//                      // If successful, display a success message and redirect user to MainActivity
-                        if (task.isSuccessful()) {
-
-                            db.collection("EmailToUser").document(email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                    String userName = (String)documentSnapshot.get("user");
-                                    // Login is successful, user exists. We pass the user down into main to later retrieve data
-                                    Intent intent = new Intent(Login_Activity.this,MainActivity.class);
-                                    Bundle userBundle = new Bundle();
-                                    userBundle.putSerializable("User",userName);
-                                    intent.putExtras(userBundle);
-                                    startActivity(intent);
-                                }
-                            });
-
-
-                            progressBar.setVisibility(View.GONE);
-                        } else {
-                            Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                        }
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        //Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        String userName = (String)documentSnapshot.get("user");
+                        // Login is successful, user exists. We pass the user down into main to later retrieve data
+                        Intent intent = new Intent(Login_Activity.this,MainActivity.class);
+                        Bundle userBundle = new Bundle();
+                        userBundle.putSerializable("User",userName);
+                        intent.putExtras(userBundle);
+                        startActivity(intent);
                     }
                 });
+                //String userName = (String)documentSnapshot.get("user");
+
+//                Authenticator.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        // Determine if the login is successful or not
+////                      // If successful, display a success message and redirect user to MainActivity
+//                        if (task.isSuccessful()) {
+//
+//                            db.collection("EmailToUser").document(email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                                @Override
+//                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                                    //Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+//                                    String userName = (String)documentSnapshot.get("user");
+//                                    // Login is successful, user exists. We pass the user down into main to later retrieve data
+//                                    Intent intent = new Intent(Login_Activity.this,MainActivity.class);
+//                                    Bundle userBundle = new Bundle();
+//                                    userBundle.putSerializable("User",userName);
+//                                    intent.putExtras(userBundle);
+//                                    startActivity(intent);
+//                                }
+//                            });
+//
+//
+//                            //progressBar.setVisibility(View.GONE);
+//                        } else {
+//                            //Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                            //progressBar.setVisibility(View.GONE);
+//                        }
+//                    }
+//                });
             }
         });
         register_Button.setOnClickListener(new View.OnClickListener() {
