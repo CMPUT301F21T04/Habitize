@@ -83,7 +83,7 @@ public class AddHabitBaseFragmentTest {
     }
 
     //Make sure habit title is less than 20 chars
-    
+
     //Make sure habit description is less than 30 chars
 
     //Make sure check box selection works
