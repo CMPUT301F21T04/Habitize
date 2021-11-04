@@ -119,7 +119,7 @@ public class SignUp extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                 // first check if there is no account already made.
-
+                                // TODO: Note, we should FIRST check for existence of user. And only then register them in the system
                                 if (task.isSuccessful()) {
                                     // checking if the user already exists.
                                     users.document(user).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
