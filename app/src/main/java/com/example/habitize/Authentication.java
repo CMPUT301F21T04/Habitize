@@ -68,7 +68,7 @@ public class Authentication{
                     DatabaseManager.createUserDocumentAndLogin();
                 }
                 else{
-
+                    System.out.println("Somethingwrong");
                 }
 
             }

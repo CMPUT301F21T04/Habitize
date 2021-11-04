@@ -48,6 +48,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         EditText conPassword = findViewById(R.id.conPassword);
         EditText email = findViewById(R.id.email);
         ProgressBar progressBar = findViewById(R.id.progressBar2);
+        DatabaseManager.setRegistrationListener(this);
 
         db = FirebaseFirestore.getInstance(); // init db
         users = db.collection("Users"); // reference to users collection. check if a user exists here
@@ -55,9 +56,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         followers = db.collection("followers");
         following = db.collection("following");
 
-        //Getting fireBase Authentication
-        FirebaseAuth fAuth;
-        fAuth = FirebaseAuth.getInstance();
+
         progressBar.setVisibility(View.GONE);
 
         // disabling so i stop getting merked
@@ -85,6 +84,9 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
                 String first = firstName.getText().toString().trim();
                 String last = lastName.getText().toString().trim();
                 String user = username.getText().toString().trim();
+
+
+
 
                 //Showing Error on the input box when the input is incorrect
                 if (TextUtils.isEmpty(inputEmail)) {
@@ -115,6 +117,8 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
                 progressBar.setVisibility(View.VISIBLE);
                 // TODO: the startActivity here might mess with NAVCONTROLLER
                 // call authentication here
+                DatabaseManager.setInfoForRegistration(user,inputEmail,first,last,inputConPass);
+                DatabaseManager.checkUsernameAndRegister();
 
 
             }
