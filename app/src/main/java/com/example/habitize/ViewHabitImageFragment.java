@@ -21,6 +21,9 @@ public class ViewHabitImageFragment extends Fragment {
     private Uri imageUri;
     public ViewHabitImageFragment(){
     }
+    public ViewHabitImageFragment(Uri image){
+        this.imageUri = image;
+    }
 
 
     // get image from fragment to send to the database
@@ -29,15 +32,18 @@ public class ViewHabitImageFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+
+
         View root = inflater.inflate(R.layout.fragment_view_habit_image, container, false);
         imageView = root.findViewById(R.id.FragmentViewHabitNewImage);
         addImageBtn = root.findViewById(R.id.FragmentViewHabitNewImageBtn);
+        addImageBtn.setEnabled(false);
+
 
         addImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +57,15 @@ public class ViewHabitImageFragment extends Fragment {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
+
+    public void setEditable(){
+        addImageBtn.setEnabled(true);
+    }
+    public void setNotEditable(){
+        addImageBtn.setEnabled(false);
+    }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

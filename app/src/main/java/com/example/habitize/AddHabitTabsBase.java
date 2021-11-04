@@ -40,7 +40,8 @@ public class AddHabitTabsBase extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference userCol;
     private DocumentReference docRef;
-    private List<Habit> passedHabits;
+    private ArrayList<Habit> passedHabits;
+    private addAdapter mAdapter;
     String[] titles = {"Info","Image"};
 
 
@@ -53,41 +54,16 @@ public class AddHabitTabsBase extends AppCompatActivity {
 
         passedUser = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
         passedHabits = new ArrayList<>();
-
         db = FirebaseFirestore.getInstance(); // document references
         userCol = db.collection("Users");
         docRef = userCol.document(passedUser);
 
         //We pull the current habit list, modify it, and send it back (only if we create the habit)
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                passedHabits.clear(); // reset the list
-                ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
-                for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
-                    Map<String,Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
-                    // retrieves all the habit information and adds it to the habitList
-                    String name = (String) habitFields.get("name");
-                    String description = (String) habitFields.get("description");
-                    String date = (String) habitFields.get("startDate");
-                    boolean mondayRec = (boolean) habitFields.get("mondayR");
-                    boolean tuesdayRec = (boolean) habitFields.get("tuesdayR");
-                    boolean wednesdayRec = (boolean) habitFields.get("wednesdayR");
-                    boolean thursdayRec = (boolean) habitFields.get("thursdayR");
-                    boolean fridayRec = (boolean) habitFields.get("fridayR");
-                    boolean saturdayRec = (boolean) habitFields.get("saturdayR");
-                    boolean sundayRec = (boolean) habitFields.get("sundayR");
-
-                    Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
-                    passedHabits.add(newHabit); // add it to the habitList
-                }
-            }
-        });
+        DatabaseManager.getAllHabits(passedUser,passedHabits);
 
 
         // pager holds fragments, madapter is the adapter needed for it
-        addAdapter mAdapter = new addAdapter(this);
+        mAdapter = new addAdapter(this);
         pager.setOffscreenPageLimit(8); // forcing pager to create fragments
         pager.setAdapter(mAdapter);
         tabLayout = findViewById(R.id.AddHabitTabs);
@@ -101,8 +77,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 // This block loads the fragments and gets our necessary fields for checking
                 AddHabitBaseFragment addFrag = (AddHabitBaseFragment)getSupportFragmentManager().findFragmentByTag("f0");
                 AddHabitImageFragment addImage = (AddHabitImageFragment)getSupportFragmentManager().findFragmentByTag("f1");
@@ -144,8 +118,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
                     Toast.makeText(AddHabitTabsBase.this,"Enter a habit title",Toast.LENGTH_LONG).show();
 
                 }
-
-
                 //creates the habit and stores in database only if validation above is correct
                 if (!(title == "") && (!(description == "")) &&
                         (!(startDate == ""))) {
@@ -155,11 +127,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
                             thurRec, friRec, satRec, sunRec);
                     // add it to the user list
                     passedHabits.add(newHabit);
-                    // Hash it for transportation to database
-                    HashMap<String, Object> listMap = new HashMap<>();
-                    listMap.put("habits", passedHabits);
-                    // send to database and close
-                    docRef.update(listMap);
+                    DatabaseManager.updateHabits(passedUser,passedHabits);
                     finish();
                 }
 
@@ -168,6 +136,8 @@ public class AddHabitTabsBase extends AppCompatActivity {
 
 
     }
+
+
 
     class addAdapter extends FragmentStateAdapter{
 
