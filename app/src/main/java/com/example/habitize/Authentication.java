@@ -72,7 +72,7 @@ public class Authentication {
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                                     if(!documentSnapshot.exists()){
-                                        String SignUpMSG = "You have made an account successfully!";
+                                        SignUpMSG = "You have made an account successfully!";
 
                                         //Toast.makeText(SignUp.class, "You have made an account successfully!", Toast.LENGTH_LONG).show();
 
@@ -151,7 +151,7 @@ public class Authentication {
     }
 
 
-    public static void SignInUser(String email,String password){
+    public static String SignInUser(String email,String password){
         FirebaseAuth Authenticator;
         Authenticator = FirebaseAuth.getInstance();
         Authenticator.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -159,16 +159,24 @@ public class Authentication {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 // Determine if the login is successful or not
 //                      // If successful, display a success message and redirect user to MainActivity
-//                if (task.isSuccessful()) {
-//
-//
-//
-//
-//                    //progressBar.setVisibility(View.GONE);
-//                } else {
-//                    //Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-//                    //progressBar.setVisibility(View.GONE);
-//                }
+                if (task.isSuccessful()) {
+
+                    db.collection("EmailToUser").document(email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            //Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            String userName = (String)documentSnapshot.get("user");
+                            // Login is successful, user exists. We pass the user down into main to later retrieve data
+
+                        }
+                    });
+
+
+                    //progressBar.setVisibility(View.GONE);
+                } else {
+                    //Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    //progressBar.setVisibility(View.GONE);
+                }
             }
         });
 
