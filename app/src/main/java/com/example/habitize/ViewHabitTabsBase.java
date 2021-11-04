@@ -59,7 +59,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         docRef = userCol.document(passedUser);
 
         // pulling the most recent habits
-        DatabaseManager.getAllHabits(passedUser,passedHabits);
+        DatabaseManager.getAllHabits(passedHabits);
 
         // pager holds fragments, madapter is the adapter needed for it
         ViewAdapter mAdapter = new ViewAdapter(this);
@@ -101,7 +101,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
             public void onClick(View view) {
                 passedHabits.remove(passedIndex); // remove the habit at the position we are on
                 // hash the list and replace the one at the database
-                DatabaseManager.updateHabits(passedUser,passedHabits);
+                DatabaseManager.updateHabits(passedHabits);
                 finish();
 
             }

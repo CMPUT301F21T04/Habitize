@@ -96,14 +96,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,AllHabitsActivity.class);
                 // passing list down to populate listView
-                Bundle userBundle = new Bundle();
-                userBundle.putSerializable("list",habitList);
-                userBundle.putSerializable("user",passedEmail);
-                intent.putExtras(userBundle);
                 startActivity(intent);
-
-
-
             }
         });
         todaysHabits.setOnClickListener(new View.OnClickListener() {

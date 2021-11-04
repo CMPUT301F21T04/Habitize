@@ -26,7 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SignUp extends AppCompatActivity {
+public class SignUp extends AppCompatActivity implements DatabaseManager.onRegistrationLoginListener {
     //Initializing variables
     private FirebaseFirestore db;
     private CollectionReference users;
@@ -114,31 +114,16 @@ public class SignUp extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
                 // TODO: the startActivity here might mess with NAVCONTROLLER
-                String errMSG;
-                ////Call Authentication class and pass all user input in createUserWithAllInfo///
-                errMSG = Authentication.createUserWithAllInfo( inputEmail,  inputPassword,  user, first, last);
+                // call authentication here
 
-//                if (SignUpMSG.equals("You have made an account successfully!")) {
-//                    Intent intent = new Intent(SignUp.this, MainActivity.class);
-//                    // we do it with intents so we can pass down arguments.
-//                    Bundle userBundle = new Bundle();
-//                    userBundle.putSerializable("User", user); // sending user identifier down
-//                    intent.putExtras(userBundle);
-//                    startActivity(intent); // start the activity with the passed user
-//                }
-                Intent intent = new Intent(SignUp.this, MainActivity.class);
-                // we do it with intents so we can pass down arguments.
-                Bundle userBundle = new Bundle();
-                userBundle.putSerializable("User", user); // sending user identifier down
-                intent.putExtras(userBundle);
-                startActivity(intent); // start the activity with the passed user
-                String test = "Nicccce";
-
-
-                Toast.makeText(SignUp.this, errMSG, Toast.LENGTH_LONG).show();
 
             }
         });
+
+    }
+
+    @Override
+    public void loginUser() {
 
     }
 }
