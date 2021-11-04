@@ -110,6 +110,7 @@ public class DatabaseManager {
     }
 
 
+
     // TODO: FInish writing this method
     public static void checkUserNameExistence(String user){
         db.collection("User").document(user).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
