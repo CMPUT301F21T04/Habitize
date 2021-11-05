@@ -60,7 +60,6 @@ public class AddHabitBaseFragmentTest {
     //Make sure title not empty
     @Test
     public void emptyTitleTest() {
-
         onView(withId(R.id.fragmentHabitTitle)).perform(typeText(testTitle), (ViewAction) closeSoftKeyboard());
         onView(withId(R.id.create_habit_tabs)).perform(click());
         onView(withId(R.id.fragmentHabitTitle)).check(matches(hasErrorText("Enter a habit title")));
