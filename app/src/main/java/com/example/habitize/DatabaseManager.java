@@ -188,9 +188,7 @@ public class DatabaseManager {
         db.collection("Users").document(user).update(progressField);
         // adding Data to UsersHabits collection
         HashMap<String,Object> habits = new HashMap<>();
-        ArrayList<Habit> habitList = new ArrayList<>();
-
-        habits.put("habits",habitList);
+        habits.put("habits",new ArrayList<Habit>());
         db.collection("Users").document(user).update(habits);
         // adding Data to followers Collection
         HashMap<String,Object> followList = new HashMap<>();
