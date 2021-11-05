@@ -31,8 +31,7 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
     private List<Habit> habits;
     private Context context;
 
-    // TODO: Add more fields here. Image..etc
-
+    //
     public CustomAdapter(Context context, List<Habit> habits){
         super(context,0,habits);
         this.habits = habits;

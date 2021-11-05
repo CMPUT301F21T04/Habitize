@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -236,9 +237,14 @@ public class DatabaseManager {
         });
     }
 
+
+    /*
+    Checks if
+    @param friendsList, the list of strings we want to populate with the usernames of our friends
+    @param adapter, the adapter we want to notify of changes
+     */
     public static void getFriends(ArrayList<String> friendsList,ArrayAdapter adapter){
-        ArrayList<String> temp1 = new ArrayList<>();
-        ArrayList<String> temp2 = new ArrayList<>();
+
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -263,15 +269,12 @@ public class DatabaseManager {
     }
 
 
-
-
-
-
-
-    private void fillRecordList(ArrayList<Record> receivingList,Map<String,Object> mappedData){
-
-    }
-    // get all habits and put them into a list. Then notify the habitAdapter
+    /*
+    Recieves data from firebase and populates a recievinglist. then notifies a habitadapter.
+    used to populate lists
+    @param recievingList, the list we want to recieve into
+    @param habitAdatper, the habitadapter we want to notify of changes
+     */
     public static void getAllHabits(ArrayList<Habit> recievingList, CustomAdapter habitAdapter) {
         //
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -302,7 +305,11 @@ public class DatabaseManager {
         });
     }
 
-    // get all the habits and put into a list, but don't update a habitAdapter
+
+    /*
+    @param recievingList, the list we want to to put all of our habits into. This function differs to the previous
+    one as it does not assume there is an adapter waiting to be notified.
+     */
     public static void getAllHabits(ArrayList<Habit> recievingList) {
 
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -332,22 +339,23 @@ public class DatabaseManager {
         });
     }
 
-    public static void createUserWithCredentialsAndLogin(){
-
-    }
-
-
+    /*
+    This function pushes an updated habitlist to firebase for the current user
+    @param updatedHabits, the new list of habits we want to push to firebase
+     */
     public static void updateHabits(ArrayList<Habit> updatedHabits) {
         HashMap<String, Object> listMap = new HashMap<>();
         listMap.put("habits", updatedHabits);
         db.collection("Users").document(user).update(listMap);
     }
 
-    public static void updateHabitsAtDay(String user, ArrayList<Habit> updatedHabits, String day) {
-
-    }
-
-
+    /*
+    This function will Get all the habits from the user in firebase, and only add the ones
+    that have their recurrence value on today's date set to true
+    @param recievinglist, the list we will update
+    @param habitadapter, the adapter we will notify about changes
+    @param posInFirebase, the position of the habit in firebase. allows for proper deletion and editin
+     */
     public static void getTodaysHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
                                        posInFirebase){
 
