@@ -258,6 +258,7 @@ public class AddHabitBaseFragment extends Fragment {
     public boolean getSun(){
         return SunRecurrence;
     }
+
     public void onCheckboxClicked(View view){
         boolean checked = ((CheckBox) view).isChecked();
 

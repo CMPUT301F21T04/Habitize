@@ -19,6 +19,7 @@ public class AddHabitImageFragment extends Fragment {
     private Button addImageBtn;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
+
     public AddHabitImageFragment(){
     }
 

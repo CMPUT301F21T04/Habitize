@@ -52,19 +52,5 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
     }
 
 
-//    public void
-//    //compare true with day of week
-//    //add to data list
-//
-
-//    if(it is monday today){
-//        display all monday habits
-//    }
-    //if current day == monday
-    //then display mondays habits
-
-    //so on and so on
-
-
 
 }

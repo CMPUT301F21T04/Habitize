@@ -312,6 +312,7 @@ public class ViewHabitBaseFragment extends Fragment   {
     public boolean getSun(){
         return SunRecurrence;
     }
+
     // setters for fields
     public ViewHabitBaseFragment setMon(boolean mon){
         this.MonRecurrence = mon;
