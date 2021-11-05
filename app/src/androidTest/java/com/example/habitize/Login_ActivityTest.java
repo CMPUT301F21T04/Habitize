@@ -103,6 +103,7 @@ public class Login_ActivityTest {
         onView(withId(R.id.password_login)).perform(replaceText("wrongPass"));
         onView(withId(R.id.LoginBTN)).perform(click());
         onView(hasErrorText("Login Failed"));
+        
 
     }
 }
