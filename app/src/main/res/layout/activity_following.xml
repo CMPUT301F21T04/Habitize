@@ -20,15 +20,37 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <TextView
-            android:id="@+id/textView"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/purple_500"
-            android:gravity="center"
-            android:text="FOLLOWING"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="307dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="88dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/searchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="17dp"
+                android:background="@color/purple_500"
+                android:backgroundTint="#6C00F8"
+                android:clickable="true"
+                app:backgroundTint="#6B00F5"
+                app:srcCompat="@android:drawable/ic_menu_search" />
+
+        </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -37,11 +59,11 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="377dp"
         android:layout_height="129dp"
-        android:layout_marginTop="16dp"
+        android:layout_below="@+id/my_toolbar"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:text="FOLLOW REQUESTS"
-        android:textSize="20sp"
-        android:layout_below="@+id/my_toolbar"/>
+        android:textSize="20sp" />
 
     <ListView
         android:id="@+id/listOfExistingFollowers"
@@ -51,5 +73,7 @@
         android:layout_marginTop="16dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+
 
 </RelativeLayout>

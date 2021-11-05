@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -20,6 +21,7 @@ public class FollowingActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     private ListView listView;
     private Button followRequestsButton;
+    private FloatingActionButton searchButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,7 @@ public class FollowingActivity extends AppCompatActivity {
         List<String> existingFollowersDataList = new ArrayList<>();
         listView = findViewById(R.id.listOfExistingFollowers);
         followRequestsButton = findViewById(R.id.followingReq);
+        searchButton = findViewById(R.id.searchButton);
 
         //Query every document in the collectionReference to obtain each existing "userName" field.
         //Append the existingFollowersDataList with new "userName" string values.
@@ -58,9 +61,21 @@ public class FollowingActivity extends AppCompatActivity {
                 openFollowRequestsActivity();
             }
         });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSearchResultsActivity();
+            }
+        });
     }
     public void openFollowRequestsActivity() {
         Intent intent = new Intent(this, FollowRequests.class);
+        startActivity(intent);
+    }
+
+    public void openSearchResultsActivity() {
+        Intent intent = new Intent(this, SearchResults.class);
         startActivity(intent);
     }
 }
