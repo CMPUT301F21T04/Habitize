@@ -26,7 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +45,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
     private ArrayList<Habit> passedHabits;
     private addAdapter mAdapter;
     String[] titles = {"Info","Image"};
+
 
 
     @Override
@@ -86,7 +89,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
                 boolean friRec = addFrag.getFri();
                 boolean satRec = addFrag.getSat();
                 boolean sunRec = addFrag.getSun();
-
 
 
                 // TODO: this is not finished yet. need to check more fields
