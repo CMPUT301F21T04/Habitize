@@ -129,7 +129,7 @@ public class MapsActivity extends AppCompatActivity
         });
 
         // Construct a PlacesClient
-        Places.initialize(getApplicationContext(), BuildConfig.MAPS_API_KEY);
+        Places.initialize(getApplicationContext(), "@string/google_maps_key");
         placesClient = Places.createClient(this);
 
         // Construct a FusedLocationProviderClient.
