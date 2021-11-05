@@ -51,7 +51,7 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
 
     /**
      * Will instantiate the UI view of the activity screen.
-     * @param savedInstanceState to be used for Bundle where fragment is re-contructed from a previous state
+     * @param savedInstanceState to be used for Bundle where fragment is re-constructed from a previous state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +73,9 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
         inflater = this.getLayoutInflater();
 
 
-        /**
-         *  Listener for the login button. When clicked and passed authentication,
-         *  then redirect to the main screen of the app.
-         */
+
+        //  Listener for the login button. When clicked and passed authentication,
+        // then redirect to the main screen of the app.
         login_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,18 +106,18 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
             }
         });
 
-        /**
-         * Listener for the register button. When user clicked the register button,
-         * redirect user to register screen*/
+
+        // Listener for the register button. When user clicked the register button,
+        // redirect user to register screen.
         register_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),SignUp.class));
             }
         });
-        /**
-         * Listener for the forgot password button. When user clicked the register button,
-         * redirect user to forgot password screen*/
+
+        // Listener for the forgot password button. When user clicked the register button,
+        //redirect user to forgot password screen.
         forgot_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

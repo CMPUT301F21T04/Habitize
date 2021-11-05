@@ -14,6 +14,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * FollowRequests gets launched when user clicks followRequestsButton on FollowingActivity.
+ * Populates activity_follow_requests.xml UI with data retrieved from firestore.
+ * Calls the CustomListOfFollowRequests adapter to render requested follower usernames
+ * as custom list items.
+ * */
 public class FollowRequests extends AppCompatActivity {
     private CustomListOfFollowRequests CustomListOfRequestedFollowersAdapter;
     private ArrayList<String> followers;

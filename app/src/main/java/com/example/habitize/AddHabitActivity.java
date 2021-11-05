@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class AddHabitActivity extends AppCompatActivity {
-
+    //variables to work with
     private EditText title;
     private EditText description;
     private EditText Title;
@@ -65,14 +65,16 @@ public class AddHabitActivity extends AppCompatActivity {
     private List<Habit> passedHabits;
     private static final String TAG = "MainActivity";
 
+    /**
+     * Initialize activity
+     * @param savedInstanceState the previous instance generated
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_info);
 
-
-
-
+        //find the views
         createHabit = findViewById(R.id.create_habit_tabs);
         title = findViewById(R.id.habitTitle);
         description = findViewById(R.id.habitDescription);
@@ -87,14 +89,10 @@ public class AddHabitActivity extends AppCompatActivity {
         Title = findViewById((R.id.habitTitle));
         Description = findViewById((R.id.habitDescription));
 
-
+        //for firebase
         db = FirebaseFirestore.getInstance();
         userCol = db.collection("Users");
         docRef = userCol.document(passedUser);
-
-        /*
-         * TO DO: public or private, test cases
-         */
 
         //We pull the current habit list, modify it, and send it back (only if we create the habit)
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -116,6 +114,7 @@ public class AddHabitActivity extends AppCompatActivity {
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
 
+                    //initiates habit with all the new info
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
                             thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),new UUID(20,10).toString()); // create a new habit out of this information
                     passedHabits.add(newHabit); // add it to the habitList
@@ -127,11 +126,13 @@ public class AddHabitActivity extends AppCompatActivity {
         startDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                //get instance will get the current time zone and locale of the user's system
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+                //sets up the dialog box for datePicker
                 DatePickerDialog dialog = new DatePickerDialog(
                     AddHabitActivity.this,
                     android.R.style.Theme_DeviceDefault,
@@ -171,15 +172,17 @@ public class AddHabitActivity extends AppCompatActivity {
                 String inputDescription = description.getText().toString().trim();
                 String inputDate = startDate.getText().toString().trim();
 
-                //check if empty and user left fields blank
+                //check if title empty
                 if(TextUtils.isEmpty(inputTitle)){
                     title.setError("Enter a habit title!");
                 }
 
+                //check if description is empty
                 if(TextUtils.isEmpty(inputDescription)){
                     description.setError("Enter a habit description!");
                 }
 
+                //check if date is empty
                 if(TextUtils.isEmpty(inputDate)){
                     startDate.setError("Enter a habit start date!");
                 }
@@ -219,8 +222,11 @@ public class AddHabitActivity extends AppCompatActivity {
     }
 
 
-
-    //Checkbox Implementation below to set up recurrence days of the week
+    /**
+     * Check which checkbox was clicked, if clicked, it will set the recurrence to true. If
+     *     un-clicked, the recurrence will be false (habit does not occur on day).
+     * @param view of checkboxes
+     */
     public void onCheckboxClicked(View view){
         boolean checked = ((CheckBox) view).isChecked();
 
