@@ -95,9 +95,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                             //baseFrag.setNotEditable();
                             //imgFrag.setNotEditable();
                             //editable = false;
-
                             //}
-
                             Uri img = imgFrag.getImage();
                             String title = baseFrag.getTitle();
                             String description = baseFrag.getDescription();
@@ -114,12 +112,11 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
                             Habit newHabit = new Habit(title, description,
                                     startDate, monRec, tueRec, wedRec,
-                                    thurRec, friRec, satRec, sunRec,new ArrayList<Record>());
+                                    thurRec, friRec, satRec, sunRec,new ArrayList<Record>(),passedHabit.getRecordAddress());
                             // add it to the user list
                             passedHabits.add(newHabit);
                             DatabaseManager.updateHabits(passedHabits);
                             finish();
-
                         }
                     });
                     // The toggle is enabled

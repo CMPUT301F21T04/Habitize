@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
         todaysHabits = findViewById(R.id.todaysHabits);
         followReq = (Button) findViewById(R.id.followReq);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
-        ArrayList<String> friendsList = new ArrayList<>();
-        DatabaseManager.getFriends("RachelR",friendsList);
 
        // updateProgress();
 

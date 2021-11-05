@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class DatabaseManager {
     // db is shared across all instances of the manager
@@ -108,6 +109,25 @@ public class DatabaseManager {
         });
     }
 
+
+    public static void getRecord(String UUID){
+        db.collection("Records").document(UUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                // get the mapped data of records
+                ArrayList<Record> mappedData = (ArrayList<Record>) documentSnapshot.get("records");
+            }
+        });
+    }
+
+    public static void updateRecord(String UUID,ArrayList<Record> updatedRecords){
+        HashMap<String,Object> mappedData = new HashMap<>(); // hash the record
+        mappedData.put("records",updatedRecords); // put it in the record space
+        db.collection("Records").document(UUID).update(mappedData); // store it in the record collection
+
+    }
+
+
     // this runs third. We create the user document and launch the mainactivity to login.
     public static void createUserDocumentAndLogin(){
         HashMap<String,Object> userNameField = new HashMap<>();
@@ -144,6 +164,8 @@ public class DatabaseManager {
         //TESTING
 
 
+
+
         habits.put("habits",habitList);
         db.collection("Users").document(user).update(habits);
         // adding Data to followers Collection
@@ -157,6 +179,8 @@ public class DatabaseManager {
         HashMap<String,String> emailMap = new HashMap<>();
         emailMap.put("user",user);
         db.collection("EmailToUser").document(inputEmail).set(emailMap);
+
+
 
         registrationListener.loginUser();// log the user in. signup will implement this
 
@@ -190,9 +214,10 @@ public class DatabaseManager {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 ArrayList<String> followerList = (ArrayList<String>) value.get("followers");
                 retrievingList.clear();
-                for(int i = 0; i < retrievingList.size(); i++){
+                for(int i = 0; i < followerList.size(); i++){
                     retrievingList.add(followerList.get(i));
                 }
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -211,21 +236,24 @@ public class DatabaseManager {
         });
     }
 
-    public static void getFriends(String searchedUser,ArrayList<String> friendsList){
+    public static void getFriends(ArrayList<String> friendsList,ArrayAdapter adapter){
         ArrayList<String> temp1 = new ArrayList<>();
         ArrayList<String> temp2 = new ArrayList<>();
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                friendsList.clear();
                 ArrayList<String> followerList = (ArrayList<String>) value.get("following");
                 for(int i = 0; i < followerList.size(); i++){
+                    String potentialFriend = followerList.get(i);
                     // see if i am followed by my followers
-                        db.collection("Users").document(followerList.get(i)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        db.collection("Users").document(potentialFriend).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             ArrayList<String> myFollowersFollowing = (ArrayList<String>) documentSnapshot.get("following");
                             if(myFollowersFollowing.contains(user)){
-                                friendsList.add((String)documentSnapshot.get("userName"));
+                                friendsList.add(potentialFriend);
+                                adapter.notifyDataSetChanged();
                             }
                         }
                     });
@@ -233,6 +261,7 @@ public class DatabaseManager {
             }
         });
     }
+
 
 
 
@@ -263,8 +292,9 @@ public class DatabaseManager {
                     boolean fridayRec = (boolean) habitFields.get("fridayR");
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
+                    String UUID = (String)habitFields.get("recordAddress");
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>()); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),UUID); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
                 }
                 habitAdapter.notifyDataSetChanged();
@@ -293,8 +323,9 @@ public class DatabaseManager {
                     boolean fridayRec = (boolean) habitFields.get("fridayR");
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
+                    String identifier = (String) habitFields.get("recordAddress");
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>()); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
                 }
             }
@@ -316,14 +347,7 @@ public class DatabaseManager {
 
     }
 
-    public static boolean userExists() {
-        return true;
-    }
 
-    // pulls the habits in the list labelled to the weekday.
-    // user is the current user. recievingList is the list we want to pull into. habitAdapter is the adapter we want to
-    // notify when we fill it
-    // the authenticator class will become the listener and be forced to implement procedure
     public static void getTodaysHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
                                        posInFirebase){
 
@@ -331,14 +355,6 @@ public class DatabaseManager {
         Date d = new Date();
         //gives the day of the week of the user (if today is actually Monday it will say Monday)
         String dayOfTheWeek = simpleDateFormat.format(d);
-
-//        if(dayOfTheWeek.equals("")){
-//            System.out.println("YESYESYESYESYEYSEYSEEYYESYEYSEYSYE");
-//        }
-//        else{
-//            System.out.println("NONONONONONONONONONONONONOOOOOOOO");
-//        }
-
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -359,8 +375,9 @@ public class DatabaseManager {
                     boolean fridayRec = (boolean) habitFields.get("fridayR");
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
+                    String identifier = (String) habitFields.get("recordAddress");
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<Record>()); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<Record>(),identifier); // create a new habit out of this information
 
                     //recievingList.add(newHabit);
                     if ((mondayRec == true) && (dayOfTheWeek.equals("Monday"))){
@@ -398,11 +415,7 @@ public class DatabaseManager {
         });
     }
 
-    // returns the user's habits if the user is found.
-    // returns null if user does not exist
-    public ArrayList<Habit> findUserHabits(String user) {
-        return new ArrayList<>();
-    }
+
 
     // setting listeners
     public static void setRegistrationListener(Context context){

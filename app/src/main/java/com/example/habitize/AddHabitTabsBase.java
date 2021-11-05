@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class AddHabitTabsBase extends AppCompatActivity {
     private ViewPager2 pager;
@@ -121,7 +122,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
                     // Create the habit
                     Habit newHabit = new Habit(title, description,
                             startDate, monRec, tueRec, wedRec,
-                            thurRec, friRec, satRec, sunRec,new ArrayList<>());
+                            thurRec, friRec, satRec, sunRec,new ArrayList<>(),new UUID(20,10).randomUUID().toString());
                     // add it to the user list
                     passedHabits.add(newHabit);
                     DatabaseManager.updateHabits(passedHabits);

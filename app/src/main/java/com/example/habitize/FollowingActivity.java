@@ -20,6 +20,8 @@ public class FollowingActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     private ListView listView;
     private Button followRequestsButton;
+    private ArrayList<String> friendList;
+    private CustomListOfExistingFollowers mAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,23 +36,14 @@ public class FollowingActivity extends AppCompatActivity {
         List<String> existingFollowersDataList = new ArrayList<>();
         listView = findViewById(R.id.listOfExistingFollowers);
         followRequestsButton = findViewById(R.id.followingReq);
-
+        friendList = new ArrayList<>();
+        mAdapter = new CustomListOfExistingFollowers(this,friendList);
+        listView.setAdapter(mAdapter);
         //Query every document in the collectionReference to obtain each existing "userName" field.
         //Append the existingFollowersDataList with new "userName" string values.
         //Pass the existingFollowersDataList into CustomListOfExistingFollowersAdapter.
         //Set adapter & render each list item in the custom layout file: "listOfExistingFollowers".
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        existingFollowersDataList.add(document.getString("userName"));
-                        CustomListOfExistingFollowersAdapter = new CustomListOfExistingFollowers(FollowingActivity.this, existingFollowersDataList);
-                        listView.setAdapter(CustomListOfExistingFollowersAdapter);
-                    }
-                }
-            }
-        });
+        DatabaseManager.getFriends(friendList,mAdapter);
 
         followRequestsButton.setOnClickListener(new View.OnClickListener() {
             @Override
