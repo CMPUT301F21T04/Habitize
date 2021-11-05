@@ -5,25 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="458b0535-d890-4c42-a91e-34c49ffd9b41" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/androidTest/java/com/example/habitize/AddHabitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/androidTest/java/com/example/habitize/AddHabitTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/AddHabitActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/AddHabitActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/AddHabitBaseFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/AddHabitBaseFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/AddHabitImage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/AddHabitImageFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/AddHabitImageFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/DatabaseManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/TodaysHabitsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/TodaysHabitsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitBaseFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitBaseFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitImageFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitImageFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitTabsBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/habitize/ViewHabitTabsBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_add_habit_image.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_add_habit_info.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_add_habit_base.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_add_habit_base.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_view_habit_base.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_view_habit_base.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
