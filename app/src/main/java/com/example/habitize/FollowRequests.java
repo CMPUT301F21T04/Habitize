@@ -16,9 +16,8 @@ import java.util.List;
 
 public class FollowRequests extends AppCompatActivity {
     private CustomListOfFollowRequests CustomListOfRequestedFollowersAdapter;
-    FirebaseFirestore fStore;
-    FirebaseAuth fAuth;
-    String currentUser;
+    private ArrayList<String> followers;
+
     private ListView listView;
 
     @Override
@@ -32,30 +31,14 @@ public class FollowRequests extends AppCompatActivity {
         //Set collectionReference to "followers".
         //Initialize followRequestsDataList to append follower userNames to as strings.
         //Assign XML List View to local variable listView.
-        fStore = FirebaseFirestore.getInstance();
-        fAuth = FirebaseAuth.getInstance();
-        currentUser = fAuth.getCurrentUser().getEmail();
-        CollectionReference collectionReference = fStore.collection("followers");
-        List<String> followRequestsDataList = new ArrayList<>();
+        followers = new ArrayList<>();
+        CustomListOfRequestedFollowersAdapter = new CustomListOfFollowRequests(this,followers);
         listView = findViewById(R.id.listOfFollowRequests);
-
+        listView.setAdapter(CustomListOfRequestedFollowersAdapter);
+        DatabaseManager.getFollowers(followers, CustomListOfRequestedFollowersAdapter);
         //Get the currentUser's document from the followers collection.
         //If the document exists, create a list for the requestedToFollowMe array of users.
         //Pass the list into CustomListOfRequestedFollowersAdapter.
         //Set adapter & render each list item in the custom layout file: "listOfFollowRequests".
-        collectionReference.document(currentUser).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()){
-                        ArrayList<String> list = (ArrayList<String>) document.get("requestedToFollowMe");
-                        CustomListOfRequestedFollowersAdapter = new CustomListOfFollowRequests(FollowRequests.this, list);
-                        listView.setAdapter(CustomListOfRequestedFollowersAdapter);
-                    }
-                }
-            }
-        });
     }
-
 }

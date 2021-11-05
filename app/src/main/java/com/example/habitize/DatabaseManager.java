@@ -1,6 +1,7 @@
 package com.example.habitize;
 
 import android.content.Context;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.Nullable;
 
@@ -13,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -76,8 +78,6 @@ public class DatabaseManager {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 user = (String) documentSnapshot.get("user"); // we set the appropriate user source in database
                 loginListener.loginUser(); // user data is set. Open main activity with signed in user
-
-
             }
         });
 
@@ -161,19 +161,82 @@ public class DatabaseManager {
         registrationListener.loginUser();// log the user in. signup will implement this
 
     }
-
+    // will perform a seach and return users matching the query
     public static void getMatchingUsers(String searchQuery, ArrayList<String> users){
-        Query query = db.collection("Users").whereEqualTo("userName",searchQuery);
+        //
+        Query query = db.collection("Users").whereGreaterThanOrEqualTo("userName",searchQuery)
+                .whereLessThanOrEqualTo("userName",searchQuery + "\uf8ff");
 
         query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
+                for(int i = 0; i < documents.size(); i++){
+                    users.add((String)documents.get(i).get("userName")); // fills a list with all of the users
+                }
             }
         });
+    }
 
+
+    public static void sendFollow(String user){
 
     }
+
+    // puts loggin in users current followers into retrievingList, updates the adapter
+    public static void getFollowers(ArrayList<String> retrievingList, ArrayAdapter adapter){
+        db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                ArrayList<String> followerList = (ArrayList<String>) value.get("followers");
+                retrievingList.clear();
+                for(int i = 0; i < retrievingList.size(); i++){
+                    retrievingList.add(followerList.get(i));
+                }
+            }
+        });
+    }
+    // we can get followers and following. If We are following a user and they are following us.
+    // we can view their habits.
+    public static void getFollowing(ArrayList<String> retrievingList, ArrayAdapter adapter){
+        db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                ArrayList<String> followerList = (ArrayList<String>) value.get("following");
+                retrievingList.clear();
+                for(int i = 0; i < retrievingList.size(); i++){
+                    retrievingList.add(followerList.get(i));
+                }
+            }
+        });
+    }
+
+    public static void getFriends(String searchedUser,ArrayList<String> friendsList){
+        ArrayList<String> temp1 = new ArrayList<>();
+        ArrayList<String> temp2 = new ArrayList<>();
+        db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                ArrayList<String> followerList = (ArrayList<String>) value.get("following");
+                for(int i = 0; i < followerList.size(); i++){
+                    // see if i am followed by my followers
+                        db.collection("Users").document(followerList.get(i)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            ArrayList<String> myFollowersFollowing = (ArrayList<String>) documentSnapshot.get("following");
+                            if(myFollowersFollowing.contains(user)){
+                                friendsList.add((String)documentSnapshot.get("userName"));
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
+
+
 
 
     private void fillRecordList(ArrayList<Record> receivingList,Map<String,Object> mappedData){
@@ -261,7 +324,8 @@ public class DatabaseManager {
     // user is the current user. recievingList is the list we want to pull into. habitAdapter is the adapter we want to
     // notify when we fill it
     // the authenticator class will become the listener and be forced to implement procedure
-    public static void getTodaysHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter){
+    public static void getTodaysHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
+                                       posInFirebase){
 
         simpleDateFormat = new SimpleDateFormat("EEEE");
         Date d = new Date();
@@ -280,6 +344,8 @@ public class DatabaseManager {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
                 recievingList.clear();
+                posInFirebase.clear();
+
                 for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
                     Map<String,Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
                     // retrieves all the habit information and adds it to the habitList
@@ -299,24 +365,31 @@ public class DatabaseManager {
                     //recievingList.add(newHabit);
                     if ((mondayRec == true) && (dayOfTheWeek.equals("Monday"))){
                         recievingList.add(newHabit); // add it to the habitList
+                        posInFirebase.add(i);
                     }
                     if ((tuesdayRec == true) && (dayOfTheWeek.equals("Tuesday"))){
                         recievingList.add(newHabit);
+                        posInFirebase.add(i);
                     }
                     if ((wednesdayRec == true) && (dayOfTheWeek.equals("Wednesday"))){
                         recievingList.add(newHabit);
+                        posInFirebase.add(i);
                     }
                     if ((thursdayRec == true) && (dayOfTheWeek.equals("Thursday"))){
                         recievingList.add(newHabit);
+                        posInFirebase.add(i);
                     }
                     if ((fridayRec == true) && (dayOfTheWeek.equals("Friday"))){
                         recievingList.add(newHabit);
+                        posInFirebase.add(i);
                     }
                     if ((saturdayRec == true) && (dayOfTheWeek.equals("Saturday"))){
                         recievingList.add(newHabit);
+                        posInFirebase.add(i);
                     }
                     if ((sundayRec == true) && (dayOfTheWeek.equals("Sunday"))){
                         recievingList.add(newHabit);
+                        posInFirebase.add(i);
                     }
 
                 }

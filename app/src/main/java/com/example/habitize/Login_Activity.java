@@ -70,6 +70,8 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
         resetPass_alert = new AlertDialog.Builder(this);
         inflater = this.getLayoutInflater();
 
+
+
         login_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

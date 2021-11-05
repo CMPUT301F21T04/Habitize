@@ -111,7 +111,6 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                             boolean sunRec = baseFrag.getSun();
                             passedHabits.remove(passedIndex); // remove the habit at the position we are on
                             // hash the list and replace the one at the database
-                            DatabaseManager.updateHabits(passedHabits);
 
                             Habit newHabit = new Habit(title, description,
                                     startDate, monRec, tueRec, wedRec,
