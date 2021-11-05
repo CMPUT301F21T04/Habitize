@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.widget.ListView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -15,6 +17,8 @@ import java.util.List;
 public class FollowRequests extends AppCompatActivity {
     private CustomListOfFollowRequests CustomListOfRequestedFollowersAdapter;
     FirebaseFirestore fStore;
+    FirebaseAuth fAuth;
+    String currentUser;
     private ListView listView;
 
     @Override
@@ -23,11 +27,15 @@ public class FollowRequests extends AppCompatActivity {
         setContentView(R.layout.activity_follow_requests);
 
         //Initialize Firestore database and assign to fStore.
-        //Set collectionReference to "Users" until "FollowerRequests" collection is implemented.
+        //Initialize Firestore auth and assign to fAuth.
+        //Obtain currentUser which is the logged-in application user's unique email address.
+        //Set collectionReference to "followers".
         //Initialize followRequestsDataList to append follower userNames to as strings.
         //Assign XML List View to local variable listView.
         fStore = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = fStore.collection("Users");
+        fAuth = FirebaseAuth.getInstance();
+        currentUser = fAuth.getCurrentUser().getEmail();
+        CollectionReference collectionReference = fStore.collection("followers");
         List<String> followRequestsDataList = new ArrayList<>();
         listView = findViewById(R.id.listOfFollowRequests);
 
@@ -35,13 +43,14 @@ public class FollowRequests extends AppCompatActivity {
         //Append the followRequestsDataList with new "userName" string values.
         //Pass the followRequestsDataList into CustomListOfRequestedFollowersAdapter.
         //Set adapter & render each list item in the custom layout file: "listOfFollowRequests".
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        collectionReference.document(currentUser).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        followRequestsDataList.add(document.getString("userName"));
-                        CustomListOfRequestedFollowersAdapter = new CustomListOfFollowRequests(FollowRequests.this, followRequestsDataList);
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()){
+                        ArrayList<String> list = (ArrayList<String>) document.get("requestedToFollowMe");
+                        CustomListOfRequestedFollowersAdapter = new CustomListOfFollowRequests(FollowRequests.this, list);
                         listView.setAdapter(CustomListOfRequestedFollowersAdapter);
                     }
                 }
