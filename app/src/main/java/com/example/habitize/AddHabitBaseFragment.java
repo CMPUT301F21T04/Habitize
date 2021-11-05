@@ -225,11 +225,11 @@ public class AddHabitBaseFragment extends Fragment {
 
 
 
-        
+
         return root;
     }
 
-
+    //Getter methods for add habit variables
     public String getTitle(){
         return title.getText().toString();
     }
@@ -258,6 +258,9 @@ public class AddHabitBaseFragment extends Fragment {
     public boolean getSun(){
         return SunRecurrence;
     }
+
+
+
     public void onCheckboxClicked(View view){
         boolean checked = ((CheckBox) view).isChecked();
 
@@ -323,3 +326,5 @@ public class AddHabitBaseFragment extends Fragment {
         }
     }
 }
+
+
