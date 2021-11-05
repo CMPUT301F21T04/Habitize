@@ -18,27 +18,40 @@ public class AddHabitImage extends AppCompatActivity {
     Uri imageUri;
 
 
+    /**
+     * Initialize activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_image);
 
+        //find views
         imageView = findViewById(R.id.new_image);
         addImageBtn = findViewById(R.id.new_image_btn);
 
+        //create a listener to check if add image button was clicked
         addImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery();
+                openGallery(); //opens user's photo album
             }
         });
     }
 
+    //opens gallery in another screen
     private void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -48,5 +61,4 @@ public class AddHabitImage extends AppCompatActivity {
         }
     }
 
-    // Not yet setup for firebase!!!!
 }
