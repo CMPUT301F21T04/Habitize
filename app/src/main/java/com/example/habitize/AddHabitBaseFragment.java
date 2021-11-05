@@ -34,6 +34,7 @@ import java.util.Map;
 
 
 public class AddHabitBaseFragment extends Fragment {
+    //variables to be worked with
     private EditText title;
     private EditText description;
     private TextView startDate;
@@ -62,15 +63,26 @@ public class AddHabitBaseFragment extends Fragment {
     private List<Habit> passedHabits;
     private static final String TAG = "MainActivity";
 
+    /*
+     * Required empty public constructor
+     */
     public AddHabitBaseFragment() {
-        // Required empty public constructor
+
     }
 
-
+    /**
+     * Will instantiate the UI view of the create habit screen
+     * @param inflater inflates tge views in the fragment
+     * @param container for parent view that the fragment's UI should be attached to
+     * @param savedInstanceState to be used for Bundle where fragment is re-constructed from a
+     *                              previous state
+     * @return returns the View of a the create habit screen fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //set all day of the week occurrences to false so we can change later
         MonRecurrence = false;
         TueRecurrence = false;
         WedRecurrence = false;
@@ -78,16 +90,15 @@ public class AddHabitBaseFragment extends Fragment {
         FriRecurrence = false;
         SatRecurrence = false;
         SunRecurrence = false;
-        // Inflate the layout for this fragment
+
+        //Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_add_habit_base, container, false);
 
-
+        //find the views for each id
         createHabit = root.findViewById(R.id.create_habit_tabs);
         title = root.findViewById(R.id.fragmentHabitTitle);
         description = root.findViewById(R.id.fragmentHabitDescription);
         startDate = root.findViewById(R.id.fragmentStartDate);
-
-
         Monday = root.findViewById(R.id.fragmentMonday);
         Tuesday = root.findViewById(R.id.fragmentMonday);
         Wednesday = root.findViewById(R.id.fragmentWednesday);
@@ -97,15 +108,19 @@ public class AddHabitBaseFragment extends Fragment {
         Sunday  = root.findViewById(R.id.fragmentSunday);
 
 
-
+        /*
+         * Listener for choosing a date to start a habit. Will use a datePicker to do this below
+         */
         startDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                //get instance will get the current time zone and locale of the user's system
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+                //sets up the dialog box for datePicker
                 DatePickerDialog dialog = new DatePickerDialog(
                         getContext(),
                         android.R.style.Theme_DeviceDefault,
@@ -120,6 +135,9 @@ public class AddHabitBaseFragment extends Fragment {
             }
         });
 
+        /*
+         * This listener will set up the format of the date picker and update the text view
+         */
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -134,8 +152,9 @@ public class AddHabitBaseFragment extends Fragment {
             }
         };
 
-
-        // listeners. Rachel shortened this last time
+        /*
+         * All day of the week checkbox listeners below
+         */
         Monday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -214,58 +233,96 @@ public class AddHabitBaseFragment extends Fragment {
             }
         });
 
-
-
-
-
-
-        // adding listeners
-
-
-
-
-
-
         return root;
     }
 
-    //Getter methods for add habit variables
+
+    /**
+     * getter for habit's title
+     * @return habit's title as a string
+     */
     public String getTitle(){
         return title.getText().toString();
     }
+
+    /**
+     * getter for habit's description
+     * @return habit's description as a string
+     */
     public String getDescription(){
         return description.getText().toString();
     }
+
+    /**
+     * Getter for Habit's start date
+     * @return habits start as a string
+     */
     public String getDate(){ return startDate.getText().toString();}
+
+    /**
+     * Getter for seeing if Monday Recurrence was checked
+     * @return Monday's checkbox status as true or false
+     */
     public boolean getMon(){
         return MonRecurrence;
     }
+
+    /**
+     * Getter for seeing if Tuesday Recurrence was checked
+     * @return Tuesday's checkbox status as true or false
+     */
     public boolean getTue(){
         return TueRecurrence;
     }
+
+    /**
+     * Getter for seeing if Wednesday Recurrence was checked
+     * @return Wednesday's checkbox status as true or false
+     */
     public boolean getWed(){
         return WedRecurrence;
     }
+
+    /**
+     * Getter for seeing if Thursday Recurrence was checked
+     * @return Thursday's checkbox status as true or false
+     */
     public boolean getThur(){
         return ThurRecurrence;
     }
+
+    /**
+     * Getter for seeing if Friday Recurrence was checked
+     * @return Friday's checkbox status as true or false
+     */
     public boolean getFri(){
         return FriRecurrence;
     }
+
+    /**
+     * Getter for seeing if Saturday Recurrence was checked
+     * @return Saturday's checkbox status as true or false
+     */
     public boolean getSat(){
         return SatRecurrence;
     }
+
+    /**
+     * Getter for seeing if Sunday Recurrence was checked
+     * @return Sunday's checkbox status as true or false
+     */
     public boolean getSun(){
         return SunRecurrence;
     }
 
-
-
+    /**
+     * Check which checkbox was clicked, if clicked, it will set the recurrence to true. If
+     * un-clicked, the recurrence will be false (habit does not occur on day).
+     * @param view of checkbox
+     */
     public void onCheckboxClicked(View view){
         boolean checked = ((CheckBox) view).isChecked();
 
-        //Check which checkbox was clicked, if clicked, it will set the recurrence to yes. If
-        //un-clicked, the recurrence will say no (habit does not occur on day).
         switch (view.getId()){
             case R.id.monday:
                 if(checked){
