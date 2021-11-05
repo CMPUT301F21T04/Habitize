@@ -20,6 +20,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
         <activity
+            android:name=".MapsActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddHabitTabsBase"
             android:exported="true" />
         <activity
@@ -31,9 +34,6 @@
 
         <activity
             android:name=".AddHabitImage"
-            android:exported="false" />
-        <activity
-            android:name=".AddHabitLocation"
             android:exported="false" />
         <activity android:name=".ViewHabitActivity" />
         <activity android:name=".ViewHabitTabsBase" />

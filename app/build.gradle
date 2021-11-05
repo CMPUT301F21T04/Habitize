@@ -37,6 +37,7 @@ android {
 dependencies {
 
     implementation 'androidx.test.espresso:espresso-intents:3.4.0'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
     androidTestImplementation ('androidx.test.espresso:espresso-contrib:3.4.0'){
             exclude module: 'protobuf-lite'
     }
@@ -44,6 +45,9 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
+    implementation 'com.google.android.libraries.places:places:2.5.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
     //androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.3.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.0.1'
@@ -63,6 +67,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.android.material:material:1.5.0-alpha05'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation 'com.google.android.gms:play-services-maps:18.0.0'
 
 
 

@@ -17,10 +17,6 @@ public class Habit implements Serializable {
     private boolean saturdayR;
     private boolean sundayR;
     private ArrayList<Record> recordList;
-
-
-//    private photos?
-//    private location
     private Integer completion; //If the habit was completed today = 1, if not = 0
     private int totalComplete; // total number of times the habit was checked
     private int totalMissed; //total number of times habit was not checked
