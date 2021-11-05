@@ -1,7 +1,9 @@
 package com.example.habitize;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 public class Habit implements Serializable {
     private String name;
@@ -15,19 +17,19 @@ public class Habit implements Serializable {
     private boolean fridayR;
     private boolean saturdayR;
     private boolean sundayR;
-
-//    private photos?
-//    private location
+    private ArrayList<Record> recordList;
     private Integer completion; //If the habit was completed today = 1, if not = 0
     private int totalComplete; // total number of times the habit was checked
     private int totalMissed; //total number of times habit was not checked
+    private String identifier;
 
     // TODO: Add image + public vs private function
 
     public Habit(){};
 
     public Habit(String name, String description, String startDate, boolean mondayR, boolean tuesdayR,
-                 boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR){
+                 boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR,ArrayList<Record> passedList
+    ,String identifier){
         this.name = name;
         this.description = description;
         this.startDate = startDate;
@@ -38,6 +40,13 @@ public class Habit implements Serializable {
         this.fridayR = fridayR;
         this.saturdayR = saturdayR;
         this.sundayR = sundayR;
+        this.recordList = passedList;
+        //
+        this.identifier = identifier;
+    }
+
+    public String getRecordAddress(){
+        return identifier; // we create an address for the UUID
     }
 
     public String getName(){

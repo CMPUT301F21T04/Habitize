@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,17 +23,21 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
         public void viewHabitPressed(int position);
 
     }
-    private habitViewListener listener;
+    public interface habitCheckListener{
+        public void recordEvent(int position);
+    }
+    private habitViewListener viewListener;
+    private habitCheckListener checkListener;
     private List<Habit> habits;
     private Context context;
 
-    // TODO: Add more fields here. Image..etc
-
+    //
     public CustomAdapter(Context context, List<Habit> habits){
         super(context,0,habits);
         this.habits = habits;
         this.context = context;
-        this.listener = (habitViewListener) context;
+        this.viewListener = (habitViewListener) context;
+        this.checkListener = (habitCheckListener) context;
     }
     @NonNull
     @Override
@@ -50,11 +56,17 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
             @Override
             public void onClick(View view) {
                 // we view the habit at the position
-                listener.viewHabitPressed(position);
+                viewListener.viewHabitPressed(position);
             }
         });
 
-
+        FloatingActionButton completeButton = view.findViewById(R.id.completeHabit);
+        completeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkListener.recordEvent(position);
+            }
+        });
 
         return view;
 

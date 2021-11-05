@@ -23,26 +23,16 @@ public class ViewRecordsFragment extends Fragment {
     private RecordAdapter recordAdapter;
 
     public ViewRecordsFragment(){
-
     }
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-
         View root = inflater.inflate(R.layout.fragment_view_records,container,false);
+        // no method for filling yet
         records = new ArrayList<>();
-        records.add(new Record("2002-02-01","yo"));
-        records.add(new Record("2002-02-01","yo"));
-        records.add(new Record("2002-02-01","yo"));
-        records.add(new Record("2002-02-01","yo"));
-        records.add(new Record("2002-02-01","yo"));
-        records.add(new Record("2002-02-01","yo"));
-
-
         list = root.findViewById(R.id.record_list);
         recordAdapter = new RecordAdapter(getActivity(),R.layout.record_list_content,records);
         list.setAdapter(recordAdapter);
-
         return root;
 
     }

@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class AddHabitActivity extends AppCompatActivity {
 
@@ -70,7 +71,6 @@ public class AddHabitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_habit_info);
 
 
-        passedUser = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
 
 
         createHabit = findViewById(R.id.create_habit_tabs);
@@ -117,7 +117,7 @@ public class AddHabitActivity extends AppCompatActivity {
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
 
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),new UUID(20,10).toString()); // create a new habit out of this information
                     passedHabits.add(newHabit); // add it to the habitList
                 }
             }
@@ -203,7 +203,7 @@ public class AddHabitActivity extends AppCompatActivity {
                     // Create the habit
                     Habit newHabit = new Habit(Title.getText().toString(), Description.getText().toString(),
                             startDate.getText().toString(), MonRecurrence, TueRecurrence, WedRecurrence,
-                            ThurRecurrence, FriRecurrence, SatRecurrence, SunRecurrence);
+                            ThurRecurrence, FriRecurrence, SatRecurrence, SunRecurrence,new ArrayList<>(),new UUID(20,10).toString());
                     // add it to the user list
                     passedHabits.add(newHabit);
                     // Hash it for transportation to database
