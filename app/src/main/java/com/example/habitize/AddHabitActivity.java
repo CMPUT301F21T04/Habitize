@@ -116,7 +116,7 @@ public class AddHabitActivity extends AppCompatActivity {
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
 
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>()); // create a new habit out of this information
                     passedHabits.add(newHabit); // add it to the habitList
                 }
             }
@@ -202,7 +202,7 @@ public class AddHabitActivity extends AppCompatActivity {
                     // Create the habit
                     Habit newHabit = new Habit(Title.getText().toString(), Description.getText().toString(),
                             startDate.getText().toString(), MonRecurrence, TueRecurrence, WedRecurrence,
-                            ThurRecurrence, FriRecurrence, SatRecurrence, SunRecurrence);
+                            ThurRecurrence, FriRecurrence, SatRecurrence, SunRecurrence,new ArrayList<>());
                     // add it to the user list
                     passedHabits.add(newHabit);
                     // Hash it for transportation to database

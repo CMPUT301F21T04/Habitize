@@ -98,7 +98,7 @@ public class ViewHabitActivity extends Activity {
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>()); // create a new habit out of this information
                     passedHabits.add(newHabit); // add it to the habitList
 
                 }
