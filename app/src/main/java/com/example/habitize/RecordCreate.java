@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -28,6 +29,7 @@ import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 
+
 public class RecordCreate extends DialogFragment implements CustomAdapter.habitCheckListener {
     // Ui components
     private Button RecordLocBTN, RecordImgBTN;
@@ -41,6 +43,11 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         // Required empty public constructor
     }
 
+    /**
+     * This method starts the activity
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +67,7 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         imageViewer = view.findViewById(R.id.recordImg);
 
 
+        // Listener for the location button. When the button is clicked, redirect user to the maps activity.
         RecordLocBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,12 +77,15 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
             }
         });
 
+
+        // Listener for the image button. When the button is clicked, redirect user to the openGallery method
         RecordImgBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openGallery();
             }
         });
+
 
         // Create the dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -92,14 +103,25 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
 
     @Override
     public void recordEvent(int position) {
-
+        // will handle which habit to append the record to.
     }
+
+    /**
+     * This method opens the user's gallery to be able to pick an image to the app.
+     */
     private void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
-
+    /**
+     * This method receives the result in the openGallery method. The result is the image
+     * picked by the user from their files.
+     * @param requestCode is an int to help identify if the intent came back.
+     * @param resultCode is an int to help identify which method is called. In this case,
+     *                   we want to have resultCode equal to PICK_IMAGE.
+     * @param data is the intent that is passed through startActivityForResult
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -112,6 +134,10 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         }
     }
 
+    /**
+     * This method takes the uploaded image from the storage and handles it here.
+     * Extract the info from the imageView and convert it to a bitmap.
+     */
     private void uploadImg() {
         // get the data from an ImageView as bytes
         // create a storage reference from our app
@@ -120,7 +146,5 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         Bitmap bitmap = ((BitmapDrawable) imageViewer.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-
-        // connect to habit
     }
 }

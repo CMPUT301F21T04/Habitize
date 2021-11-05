@@ -47,7 +47,7 @@ public class AddHabitImage extends AppCompatActivity {
     }
 
     /**
-     * This method recieves the result in the openGallery method. The result is the image
+     * This method receives the result in the openGallery method. The result is the image
      * picked by the user from their files.
      * @param requestCode is an int to help identify if the intent came back.
      * @param resultCode is an int to help identify which method is called. In this case,
