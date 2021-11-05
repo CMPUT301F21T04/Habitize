@@ -1,15 +1,17 @@
 package com.example.habitize;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -17,20 +19,16 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ViewHabitTabsBase extends AppCompatActivity {
     private ViewPager2 pager;
     private TabLayout tabLayout;
 
-    private Button editButton;
+    private Button ConfirmEdit;
+    private Switch AllowEdit;
     private String passedUser;
     private Habit passedHabit; // habit to view
     private FirebaseFirestore db;
@@ -46,7 +44,8 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_habit_tabs);
         pager = findViewById(R.id.viewPager);
-        editButton = findViewById(R.id.edit_habit_tabs);
+        ConfirmEdit = findViewById(R.id.ConfirmEdit);
+        AllowEdit = findViewById(R.id.AllowEditing);
         deleteButton = findViewById(R.id.delete_button_tabs);
         editable = false;
         passedUser = (String)getIntent().getExtras().getSerializable("User"); // we get passed a habit
@@ -72,26 +71,68 @@ public class ViewHabitTabsBase extends AppCompatActivity {
             }
         }).attach();
 
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // update the list here.
+        AllowEdit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ViewHabitBaseFragment baseFrag = (ViewHabitBaseFragment) getSupportFragmentManager().findFragmentByTag("f0");
                 ViewHabitImageFragment imgFrag = (ViewHabitImageFragment) getSupportFragmentManager().findFragmentByTag("f1");
-                if(!editable) {
+
+
+                if (isChecked) {
                     imgFrag.setEditable();
                     baseFrag.setEditable();
-                    editable = true;
-                }
-                else{
+
+                    ConfirmEdit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // update the list here.
+                            //ViewHabitBaseFragment baseFrag = (ViewHabitBaseFragment) getSupportFragmentManager().findFragmentByTag("f0");
+                            //ViewHabitImageFragment imgFrag = (ViewHabitImageFragment) getSupportFragmentManager().findFragmentByTag("f1");
+                            //if(!editable) {
+
+                            //editable = true;
+                            //}
+                            //else{
+                            //baseFrag.setNotEditable();
+                            //imgFrag.setNotEditable();
+                            //editable = false;
+
+                            //}
+
+                            Uri img = imgFrag.getImage();
+                            String title = baseFrag.getTitle();
+                            String description = baseFrag.getDescription();
+                            String startDate = baseFrag.getDate();
+                            boolean monRec = baseFrag.getMon();
+                            boolean tueRec = baseFrag.getTue();
+                            boolean wedRec = baseFrag.getWed();
+                            boolean thurRec = baseFrag.getThur();
+                            boolean friRec = baseFrag.getFri();
+                            boolean satRec = baseFrag.getSat();
+                            boolean sunRec = baseFrag.getSun();
+                            passedHabits.remove(passedIndex); // remove the habit at the position we are on
+                            // hash the list and replace the one at the database
+                            DatabaseManager.updateHabits(passedHabits);
+
+                            Habit newHabit = new Habit(title, description,
+                                    startDate, monRec, tueRec, wedRec,
+                                    thurRec, friRec, satRec, sunRec);
+                            // add it to the user list
+                            passedHabits.add(newHabit);
+                            DatabaseManager.updateHabits(passedHabits);
+                            finish();
+
+                        }
+                    });
+                    // The toggle is enabled
+                } else {
+                    // The toggle is disabled
                     baseFrag.setNotEditable();
                     imgFrag.setNotEditable();
-                    editable = false;
-
+                    //editable = false;
                 }
-
             }
         });
+
         // ask user to confirm delete
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,3 +183,5 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     }
 
 }
+
+
