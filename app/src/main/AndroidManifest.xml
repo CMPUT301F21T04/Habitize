@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habitize">
         <activity
+            android:name=".CustomListOfFollowRequests"
+            android:exported="false" />
+        <activity
             android:name=".FollowRequests"
             android:exported="false" />
         <activity

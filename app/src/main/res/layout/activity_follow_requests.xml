@@ -22,7 +22,7 @@
         tools:layout_editor_absoluteY="-6dp" />
 
     <ListView
-        android:id="@+id/listOfExistingFollowers"
+        android:id="@+id/listOfFollowRequests"
         android:layout_width="278dp"
         android:layout_height="663dp"
         app:layout_constraintBottom_toBottomOf="parent"
