@@ -39,9 +39,9 @@ public class FollowRequests extends AppCompatActivity {
         List<String> followRequestsDataList = new ArrayList<>();
         listView = findViewById(R.id.listOfFollowRequests);
 
-        //Query every document in the collectionReference to obtain each existing "userName" field.
-        //Append the followRequestsDataList with new "userName" string values.
-        //Pass the followRequestsDataList into CustomListOfRequestedFollowersAdapter.
+        //Get the currentUser's document from the followers collection.
+        //If the document exists, create a list for the requestedToFollowMe array of users.
+        //Pass the list into CustomListOfRequestedFollowersAdapter.
         //Set adapter & render each list item in the custom layout file: "listOfFollowRequests".
         collectionReference.document(currentUser).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
