@@ -43,15 +43,10 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
     AlertDialog.Builder resetPass_alert;
     LayoutInflater inflater;
     FirebaseAuth Authenticator;
-    private FirebaseFirestore db; // our database
-    private CollectionReference UsersCol;
-    private DocumentReference userRef;
 
-    private DocumentSnapshot userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         // UI components
@@ -63,7 +58,6 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         DatabaseManager.setLoginContext(this);
-
         // Access to Firebase
 
         // Create a Pop up dialog when user forgot password
