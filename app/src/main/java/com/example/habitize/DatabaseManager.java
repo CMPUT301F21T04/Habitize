@@ -10,12 +10,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DatabaseManager {
@@ -128,7 +131,20 @@ public class DatabaseManager {
         db.collection("Users").document(user).update(progressField);
         // adding Data to UsersHabits collection
         HashMap<String,Object> habits = new HashMap<>();
-        habits.put("habits",new ArrayList<Habit>());
+        ArrayList<Habit> habitList = new ArrayList<>();
+        //TESTING
+        /*
+        ArrayList<Habit> habitList = new ArrayList<>();
+        ArrayList<Record> recordList = new ArrayList<>();
+        recordList.add(new Record("NOV 4 2021","DESCRIPTION"));
+        Habit testHabit = new Habit("test","test2","test3",false,false,false,false,false,true,true,
+                recordList);
+        habitList.add(testHabit);
+        */
+        //TESTING
+
+
+        habits.put("habits",habitList);
         db.collection("Users").document(user).update(habits);
         // adding Data to followers Collection
         HashMap<String,Object> followList = new HashMap<>();
@@ -146,8 +162,23 @@ public class DatabaseManager {
 
     }
 
+    public static void getMatchingUsers(String searchQuery, ArrayList<String> users){
+        Query query = db.collection("Users").whereEqualTo("userName",searchQuery);
+
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
+            }
+        });
 
 
+    }
+
+
+    private void fillRecordList(ArrayList<Record> receivingList,Map<String,Object> mappedData){
+
+    }
     // get all habits and put them into a list. Then notify the habitAdapter
     public static void getAllHabits(ArrayList<Habit> recievingList, CustomAdapter habitAdapter) {
         //
