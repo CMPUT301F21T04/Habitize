@@ -4,8 +4,7 @@
     android:layout_width="377dp"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/existingFollowerName"
@@ -19,7 +18,8 @@
         android:layout_marginBottom="12dp"
         android:clickable="true"
         android:gravity="center_vertical"
-        android:text="Person Name" />
+        android:text="Person Name"
+        android:textSize="20sp" />
 
 
 
