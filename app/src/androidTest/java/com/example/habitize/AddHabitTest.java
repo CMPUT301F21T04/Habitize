@@ -10,6 +10,9 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+
+import static org.hamcrest.CoreMatchers.allOf;
 
 import android.os.SystemClock;
 
@@ -97,9 +100,13 @@ public class AddHabitTest {
     public void IncompleteInputs(){
         onView(withId(R.id.addHabit)).perform(click());
         SystemClock.sleep(1000);
-        onView(withId(R.id.habitTitle)).perform(replaceText(testTitle));
+        onView(withId(R.id.habitDescription)).perform(replaceText(testDesc));
+
+        //onView(allOf(withId(R.id.habitTitle), withText("Click here to select a start date!"))).perform(replaceText(testTitle);
+
+        onView(withId(R.id.startDate)).perform(click());
         onView(withId(R.id.create_habit_tabs)).perform(click());
-        SystemClock.sleep(5000);
+        SystemClock.sleep(8000);
         intended(hasComponent(AddHabitTabsBase.class.getName()));
     }
 
@@ -107,11 +114,6 @@ public class AddHabitTest {
     public void tearDown() {
         Intents.release();
     }
-
-
-
-
-
 
 }
 
