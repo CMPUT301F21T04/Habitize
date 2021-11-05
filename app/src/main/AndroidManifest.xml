@@ -33,6 +33,7 @@
             android:name=".AddHabitLocation"
             android:exported="false" />
         <activity android:name=".ViewHabitActivity" />
+        <activity android:name=".ViewHabitTabsBase" />
         <activity
             android:name=".Login_Activity"
             android:exported="true" >
