@@ -40,8 +40,13 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     private boolean editable;
     String[] titles = {"INFO","IMAGE","RECORDS"};
 
+    /**
+     *
+     * @param savedInstanceState the previous instance generated
+     */
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        //Connecting view habits variables to xml files
         setContentView(R.layout.activity_view_habit_tabs);
         pager = findViewById(R.id.viewPager);
         ConfirmEdit = findViewById(R.id.ConfirmEdit);
@@ -70,6 +75,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                 tab.setText(titles[position]);
             }
         }).attach();
+
         //edit toggle button which
         AllowEdit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -114,7 +120,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                     // The toggle is disabled
                     baseFrag.setNotEditable();
                     imgFrag.setNotEditable();
-                    
+
                 }
             }
         });
@@ -135,6 +141,8 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
     // class for managing the views in the pager. Tells the pager where to get the fragments on
     // navigation.
+
+
     class ViewAdapter extends FragmentStateAdapter{
 
         public ViewAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -161,6 +169,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
             }
             return returningFragment; }
 
+        
 
         @Override
         public int getItemCount() {
