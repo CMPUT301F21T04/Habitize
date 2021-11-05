@@ -70,7 +70,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                 tab.setText(titles[position]);
             }
         }).attach();
-
+        //edit toggle button which
         AllowEdit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ViewHabitBaseFragment baseFrag = (ViewHabitBaseFragment) getSupportFragmentManager().findFragmentByTag("f0");
@@ -78,24 +78,14 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
 
                 if (isChecked) {
+                    //make input boxes editable
                     imgFrag.setEditable();
                     baseFrag.setEditable();
-
+                    //confirm button to to update new data in database
                     ConfirmEdit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            // update the list here.
-                            //ViewHabitBaseFragment baseFrag = (ViewHabitBaseFragment) getSupportFragmentManager().findFragmentByTag("f0");
-                            //ViewHabitImageFragment imgFrag = (ViewHabitImageFragment) getSupportFragmentManager().findFragmentByTag("f1");
-                            //if(!editable) {
-
-                            //editable = true;
-                            //}
-                            //else{
-                            //baseFrag.setNotEditable();
-                            //imgFrag.setNotEditable();
-                            //editable = false;
-                            //}
+                            //Init updated  Habit variables
                             Uri img = imgFrag.getImage();
                             String title = baseFrag.getTitle();
                             String description = baseFrag.getDescription();
@@ -119,12 +109,12 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                             finish();
                         }
                     });
-                    // The toggle is enabled
+                    // The toggle is disabled
                 } else {
                     // The toggle is disabled
                     baseFrag.setNotEditable();
                     imgFrag.setNotEditable();
-                    //editable = false;
+                    
                 }
             }
         });
