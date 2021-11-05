@@ -41,7 +41,6 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
-        // retrieving passed list to populate listview
 
         dataList = new ArrayList<>(); // reset the list
 
@@ -50,13 +49,13 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         list.setAdapter(habitAdapter);
 
         // getting the habits from database and updating the view with them.
-
         DatabaseManager.getAllHabits(dataList,habitAdapter);
 
     }
 
 
     @Override
+    // view the habit that we clicked on.
     public void viewHabitPressed(int position) {
         Intent intent = new Intent(AllHabitsActivity.this,ViewHabitTabsBase.class);
         Bundle habitBundle = new Bundle();
@@ -70,6 +69,7 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
 
 
     @Override
+    // open the recording fragment
     public void recordEvent(int position) {
         Intent intent = new Intent(AllHabitsActivity.this,RecordCreate.class);
         Bundle habitBundle = new Bundle();

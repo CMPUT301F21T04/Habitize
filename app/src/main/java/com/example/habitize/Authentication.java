@@ -28,8 +28,6 @@ import java.util.Map;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Authentication{
-    // db is shared across all instances of the manager
-
     public static String SignUpMSG ="You have made an account successfully!";
     private static FirebaseAuth fAuth;
 
@@ -47,9 +45,7 @@ public class Authentication{
 
 
 
-    // does nothing
     Authentication(){
-
     }
 
     // this runs after DatabaseManager.checkUsernameAndRegister(). Checks the validity of the email

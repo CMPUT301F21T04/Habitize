@@ -39,10 +39,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
     private TabLayout tabLayout;
 
     private Button createButton;
-    private String passedUser;
-    private FirebaseFirestore db;
-    private CollectionReference userCol;
-    private DocumentReference docRef;
     private ArrayList<Habit> passedHabits;
     private addAdapter mAdapter;
     String[] titles = {"Info","Image"};
@@ -92,7 +88,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
                 boolean sunRec = addFrag.getSun();
 
 
-                // TODO: this is not finished yet. need to check more fields
                 //check if empty and user left fields blank
                 if(title == ""){
                     Toast.makeText(AddHabitTabsBase.this,"Enter a habit title",Toast.LENGTH_LONG).show();
@@ -136,7 +131,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
     }
 
 
-
+    //fragmentadapter for swiping through views
     class addAdapter extends FragmentStateAdapter{
 
         public addAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -145,6 +140,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
 
         @NonNull
         @Override
+        // creating fragments at specific positions in the viewpager
         public Fragment createFragment(int position) {
             Fragment returningFragment;
             switch(position){
