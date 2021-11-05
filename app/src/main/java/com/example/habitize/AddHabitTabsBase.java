@@ -26,23 +26,23 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class AddHabitTabsBase extends AppCompatActivity {
     private ViewPager2 pager;
     private TabLayout tabLayout;
 
     private Button createButton;
-    private String passedUser;
-    private FirebaseFirestore db;
-    private CollectionReference userCol;
-    private DocumentReference docRef;
-    private List<Habit> passedHabits;
+    private ArrayList<Habit> passedHabits;
     private addAdapter mAdapter;
     String[] titles = {"Info","Image"};
+
 
 
     @Override
@@ -52,42 +52,13 @@ public class AddHabitTabsBase extends AppCompatActivity {
         pager = findViewById(R.id.viewPager);
         createButton = findViewById(R.id.create_habit_tabs);
 
-        passedUser = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
         passedHabits = new ArrayList<>();
-        db = FirebaseFirestore.getInstance(); // document references
-        userCol = db.collection("Users");
-        docRef = userCol.document(passedUser);
-
         //We pull the current habit list, modify it, and send it back (only if we create the habit)
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                passedHabits.clear(); // reset the list
-                ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
-                for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
-                    Map<String,Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
-                    // retrieves all the habit information and adds it to the habitList
-                    String name = (String) habitFields.get("name");
-                    String description = (String) habitFields.get("description");
-                    String date = (String) habitFields.get("startDate");
-                    boolean mondayRec = (boolean) habitFields.get("mondayR");
-                    boolean tuesdayRec = (boolean) habitFields.get("tuesdayR");
-                    boolean wednesdayRec = (boolean) habitFields.get("wednesdayR");
-                    boolean thursdayRec = (boolean) habitFields.get("thursdayR");
-                    boolean fridayRec = (boolean) habitFields.get("fridayR");
-                    boolean saturdayRec = (boolean) habitFields.get("saturdayR");
-                    boolean sundayRec = (boolean) habitFields.get("sundayR");
-
-                    Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
-                    passedHabits.add(newHabit); // add it to the habitList
-                }
-            }
-        });
+        DatabaseManager.getAllHabits(passedHabits);
 
 
         // pager holds fragments, madapter is the adapter needed for it
-        addAdapter mAdapter = new addAdapter(this);
+        mAdapter = new addAdapter(this);
         pager.setOffscreenPageLimit(8); // forcing pager to create fragments
         pager.setAdapter(mAdapter);
         tabLayout = findViewById(R.id.AddHabitTabs);
@@ -101,8 +72,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 // This block loads the fragments and gets our necessary fields for checking
                 AddHabitBaseFragment addFrag = (AddHabitBaseFragment)getSupportFragmentManager().findFragmentByTag("f0");
                 AddHabitImageFragment addImage = (AddHabitImageFragment)getSupportFragmentManager().findFragmentByTag("f1");
@@ -119,8 +88,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
                 boolean sunRec = addFrag.getSun();
 
 
-
-                // TODO: this is not finished yet. need to check more fields
                 //check if empty and user left fields blank
                 if(title == ""){
                     Toast.makeText(AddHabitTabsBase.this,"Enter a habit title",Toast.LENGTH_LONG).show();
@@ -144,22 +111,16 @@ public class AddHabitTabsBase extends AppCompatActivity {
                     Toast.makeText(AddHabitTabsBase.this,"Enter a habit title",Toast.LENGTH_LONG).show();
 
                 }
-
-
                 //creates the habit and stores in database only if validation above is correct
                 if (!(title == "") && (!(description == "")) &&
                         (!(startDate == ""))) {
                     // Create the habit
                     Habit newHabit = new Habit(title, description,
                             startDate, monRec, tueRec, wedRec,
-                            thurRec, friRec, satRec, sunRec);
+                            thurRec, friRec, satRec, sunRec,new ArrayList<>(),new UUID(20,10).randomUUID().toString());
                     // add it to the user list
                     passedHabits.add(newHabit);
-                    // Hash it for transportation to database
-                    HashMap<String, Object> listMap = new HashMap<>();
-                    listMap.put("habits", passedHabits);
-                    // send to database and close
-                    docRef.update(listMap);
+                    DatabaseManager.updateHabits(passedHabits);
                     finish();
                 }
 
@@ -170,7 +131,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
     }
 
 
-
+    //fragmentadapter for swiping through views
     class addAdapter extends FragmentStateAdapter{
 
         public addAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -179,6 +140,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
 
         @NonNull
         @Override
+        // creating fragments at specific positions in the viewpager
         public Fragment createFragment(int position) {
             Fragment returningFragment;
             switch(position){

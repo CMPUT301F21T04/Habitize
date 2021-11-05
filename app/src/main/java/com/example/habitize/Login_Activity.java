@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Login_Activity extends AppCompatActivity {
+public class Login_Activity extends AppCompatActivity implements DatabaseManager.onLoginListener {
     EditText email_EditText, password_EditText;
     Button login_Button, register_Button, forgot_Button;
     ProgressBar progressBar;
@@ -62,13 +62,15 @@ public class Login_Activity extends AppCompatActivity {
         forgot_Button = findViewById(R.id.forgotPassBTN);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
+        DatabaseManager.setLoginContext(this);
 
         // Access to Firebase
-        Authenticator = FirebaseAuth.getInstance();
 
         // Create a Pop up dialog when user forgot password
         resetPass_alert = new AlertDialog.Builder(this);
         inflater = this.getLayoutInflater();
+
+
 
         login_Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,8 +78,13 @@ public class Login_Activity extends AppCompatActivity {
                 String email = email_EditText.getText().toString().trim();
                 String password = password_EditText.getText().toString().trim();
 
-                if (TextUtils.isEmpty(email)) {
+                if (TextUtils.isEmpty(email)){
                     email_EditText.setError("Email is Required.");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(password)){
+                    password_EditText.setError("Password is Required.");
                     return;
                 }
 
@@ -88,52 +95,24 @@ public class Login_Activity extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
                 // User Authentication
-                Authenticator.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                // Determine if the login is successful or not
-                                // // If successful, display a success message and redirect user to MainActivity
-                                if (task.isSuccessful()) {
+                DatabaseManager.setInfoForLogin(email,password);
+                DatabaseManager.setLoginListener(Login_Activity.this);
+                Authentication.authenticateAndSignIn();
 
-                                    db.collection("EmailToUser").document(email).get()
-                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                @Override
-                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                    Toast.makeText(Login_Activity.this, "Login Successful",
-                                                            Toast.LENGTH_SHORT).show();
-                                                    String userName = (String) documentSnapshot.get("user");
-                                                    // Login is successful, user exists. We pass the user down into main
-                                                    // to later retrieve data
-                                                    Intent intent = new Intent(Login_Activity.this, MainActivity.class);
-                                                    Bundle userBundle = new Bundle();
-                                                    userBundle.putSerializable("User", userName);
-                                                    intent.putExtras(userBundle);
-                                                    startActivity(intent);
-                                                }
-                                            });
-
-                                } else {
-                                    Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(),
-                                            Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.GONE);
-                                }
-                            }
-                        });
             }
         });
         register_Button.setOnClickListener(new View.OnClickListener() {
-            // when register button is clicked, redirect user to register screen
+            //when register button is clicked, redirect user to register screen
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), SignUp.class));
+                startActivity(new Intent(getApplicationContext(),SignUp.class));
             }
         });
         forgot_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // have a alertDialog
-                View v = inflater.inflate(R.layout.reset_layout, null);
+                View v = inflater.inflate(R.layout.reset_layout,null);
                 resetPass_alert.setTitle("Reset Password?")
                         .setMessage("Enter your email. A reset link will be then sent to your email.")
                         .setPositiveButton("Reset", new DialogInterface.OnClickListener() {
@@ -142,29 +121,33 @@ public class Login_Activity extends AppCompatActivity {
                                 // if the email address is valid then send the reset link
                                 EditText email_EditText = v.findViewById(R.id.email_reset);
                                 String email = email_EditText.getText().toString();
-                                if (email.isEmpty()) {
+                                if(email.isEmpty()){
                                     email_EditText.setError("Email is required.");
-                                    Toast.makeText(Login_Activity.this, "Enter an email!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Authenticator.sendPasswordResetEmail(email)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void unused) {
-                                                    Toast.makeText(Login_Activity.this, "Reset Email Sent",
-                                                            Toast.LENGTH_SHORT).show();
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(Login_Activity.this,
-                                                            "Reset Email Failed: " + e.getMessage(), Toast.LENGTH_SHORT)
-                                                            .show();
-                                                }
-                                            });
                                 }
+                                Authenticator.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(Login_Activity.this,"Reset Email Sent",Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(Login_Activity.this,"Reset Email Failed: " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
-                        }).setNegativeButton("Cancel", null).setView(v).create().show();
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .setView(v)
+                        .create().show();
             }
         });
+    }
+
+    @Override
+    public void loginUser() {
+        Intent intent = new Intent(Login_Activity.this,MainActivity.class);
+        startActivity(intent);
+
     }
 }

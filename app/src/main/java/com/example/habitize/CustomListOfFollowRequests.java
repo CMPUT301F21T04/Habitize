@@ -16,17 +16,16 @@ import com.google.firebase.firestore.EventListener;
 
 import java.util.List;
 
-public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
+public class CustomListOfFollowRequests extends ArrayAdapter<String> {
 
-    private final List<String> followers;
+    private final List<String> followersThatRequested;
     private final Context context;
 
     // TODO: Add more fields here. Image..etc
 
-
-    public CustomListOfExistingFollowers(Context context, List<String> followers){
-        super(context,0, followers);
-        this.followers = followers;
+    public CustomListOfFollowRequests(Context context, List<String> followersThatRequested){
+        super(context,0, followersThatRequested);
+        this.followersThatRequested = followersThatRequested;
         this.context = context;
     }
     @NonNull
@@ -34,14 +33,13 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.activity_custom_list_of_existing_followers,parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.activity_custom_list_of_follow_requests,parent,false);
         }
 
-        String follower = followers.get(position);
-        TextView nameField = view.findViewById(R.id.existingFollowerName);
+        String requestedFollower = followersThatRequested.get(position);
+        TextView nameField = view.findViewById(R.id.requestedFollowerName);
 
-        nameField.setText(follower);
-
+        nameField.setText(requestedFollower);
 
         return view;
 

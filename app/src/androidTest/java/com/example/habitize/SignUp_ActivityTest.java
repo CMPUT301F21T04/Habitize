@@ -43,9 +43,11 @@ public class SignUp_ActivityTest {
     String testPassword;
     String testConPassword;
     String testIncorrectPass;
+
+    // tests fail because of this error
+    //https://stackoverflow.com/questions/66338416/internal-error-in-cloud-firestore-22-1-0-when-running-instrumentation-test
     @Rule
     public ActivityScenarioRule<Login_Activity> activityRule = new ActivityScenarioRule<Login_Activity>(Login_Activity.class);
-
 
     @Before
     public void initValidate(){
@@ -127,6 +129,11 @@ public class SignUp_ActivityTest {
         onView(withId(R.id.password)).perform(replaceText("wrongPass"));
         onView(withId(R.id.create_button)).perform(click());
         onView(hasErrorText("Login Failed"));
+
+    }
+    @Test public void NotUniqeUserName(){
+        onView(withId(R.id.RegisterBTN)).perform(click());
+        onView(withId(R.id.userName)).perform(replaceText(testEmail));
 
     }
 
