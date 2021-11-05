@@ -1,9 +1,10 @@
 package com.example.habitize;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,8 +17,9 @@ import java.util.List;
 
 public class FollowingActivity extends AppCompatActivity {
     private CustomListOfExistingFollowers CustomListOfExistingFollowersAdapter;
-    private ListView listView;
     FirebaseFirestore fStore;
+    private ListView listView;
+    private Button followRequestsButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,7 @@ public class FollowingActivity extends AppCompatActivity {
         CollectionReference collectionReference = fStore.collection("Users");
         List<String> existingFollowersDataList = new ArrayList<>();
         listView = findViewById(R.id.listOfExistingFollowers);
+        followRequestsButton = findViewById(R.id.followingReq);
 
         //Query every document in the collectionReference to obtain each existing "userName" field.
         //Append the existingFollowersDataList with new "userName" string values.
@@ -49,13 +52,15 @@ public class FollowingActivity extends AppCompatActivity {
             }
         });
 
-        //TODO: implement this functionality at a later date.
-        listView.setOnLongClickListener(new View.OnLongClickListener() {
+        followRequestsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
-                return false;
+            public void onClick(View view) {
+                openFollowRequestsActivity();
             }
         });
-
+    }
+    public void openFollowRequestsActivity() {
+        Intent intent = new Intent(this, FollowRequests.class);
+        startActivity(intent);
     }
 }

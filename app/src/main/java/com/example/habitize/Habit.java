@@ -26,7 +26,7 @@ public class Habit implements Serializable {
     public Habit(){};
 
     public Habit(String name, String description, String startDate, boolean mondayR, boolean tuesdayR,
-                 boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR,ArrayList<Record> recordList){
+                 boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR,ArrayList<Record> passedList){
         this.name = name;
         this.description = description;
         this.startDate = startDate;
@@ -37,7 +37,9 @@ public class Habit implements Serializable {
         this.fridayR = fridayR;
         this.saturdayR = saturdayR;
         this.sundayR = sundayR;
-        this.recordList = recordList;
+        this.recordList = passedList;
+        //
+        System.out.println("check");
     }
 
     public String getName(){
