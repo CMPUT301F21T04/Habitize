@@ -318,7 +318,7 @@ public class AddHabitBaseFragment extends Fragment {
     /**
      * Check which checkbox was clicked, if clicked, it will set the recurrence to true. If
      * un-clicked, the recurrence will be false (habit does not occur on day).
-     * @param view of checkbox
+     * @param view of checkboxes
      */
     public void onCheckboxClicked(View view){
         boolean checked = ((CheckBox) view).isChecked();
