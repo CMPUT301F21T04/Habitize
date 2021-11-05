@@ -35,9 +35,12 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
     private CollectionReference colRef;
     private FirebaseFirestore db;
     private String passedUser;
+
+    /**
+     * Initialize activity
+     * @param savedInstanceState the previous instance generated
+     */
     protected void onCreate(Bundle savedInstanceState) {
-
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
@@ -54,25 +57,36 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
     }
 
 
+    /**
+     * view the habit that we clicked on
+     * @param position
+     */
     @Override
-    // view the habit that we clicked on.
     public void viewHabitPressed(int position) {
+        //on all habits screen
         Intent intent = new Intent(AllHabitsActivity.this,ViewHabitTabsBase.class);
         Bundle habitBundle = new Bundle();
-        habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
+        //pass down the habit at the position
+        habitBundle.putSerializable("habit",dataList.get(position));
         habitBundle.putSerializable("index",position);
         habitBundle.putSerializable("habits",dataList);
         habitBundle.putSerializable("User",passedUser);
+        //to use on another activity
         intent.putExtras(habitBundle);
         startActivity(intent);
     }
 
 
+    /**
+     * open the recording fragment
+     * @param position
+     */
     @Override
-    // open the recording fragment
     public void recordEvent(int position) {
+        //on all habits screen
         Intent intent = new Intent(AllHabitsActivity.this,RecordCreate.class);
         Bundle habitBundle = new Bundle();
+        //pass down habit
         habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
         habitBundle.putSerializable("index",position);
         habitBundle.putSerializable("habits",dataList);
