@@ -170,7 +170,7 @@ public class DatabaseManager {
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>()); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
                 }
                 habitAdapter.notifyDataSetChanged();
@@ -200,7 +200,7 @@ public class DatabaseManager {
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>()); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
                 }
             }
@@ -263,28 +263,28 @@ public class DatabaseManager {
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<Record>()); // create a new habit out of this information
 
                     //recievingList.add(newHabit);
-                    if ((mondayRec = true) && (dayOfTheWeek.equals("Monday"))){
+                    if ((mondayRec == true) && (dayOfTheWeek.equals("Monday"))){
                         recievingList.add(newHabit); // add it to the habitList
                     }
-                    if ((tuesdayRec = true) && (dayOfTheWeek.equals("Tuesday"))){
+                    if ((tuesdayRec == true) && (dayOfTheWeek.equals("Tuesday"))){
                         recievingList.add(newHabit);
                     }
-                    if ((wednesdayRec = true) && (dayOfTheWeek.equals("Wednesday"))){
+                    if ((wednesdayRec == true) && (dayOfTheWeek.equals("Wednesday"))){
                         recievingList.add(newHabit);
                     }
-                    if ((thursdayRec = true) && (dayOfTheWeek.equals("Thursday"))){
+                    if ((thursdayRec == true) && (dayOfTheWeek.equals("Thursday"))){
                         recievingList.add(newHabit);
                     }
-                    if ((fridayRec = true) && (dayOfTheWeek.equals("Friday"))){
+                    if ((fridayRec == true) && (dayOfTheWeek.equals("Friday"))){
                         recievingList.add(newHabit);
                     }
-                    if ((saturdayRec = true) && (dayOfTheWeek.equals("Saturday"))){
+                    if ((saturdayRec == true) && (dayOfTheWeek.equals("Saturday"))){
                         recievingList.add(newHabit);
                     }
-                    if ((sundayRec = true) && (dayOfTheWeek.equals("Sunday"))){
+                    if ((sundayRec == true) && (dayOfTheWeek.equals("Sunday"))){
                         recievingList.add(newHabit);
                     }
 
