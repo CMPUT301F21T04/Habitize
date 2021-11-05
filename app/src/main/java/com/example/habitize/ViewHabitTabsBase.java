@@ -115,7 +115,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
                             Habit newHabit = new Habit(title, description,
                                     startDate, monRec, tueRec, wedRec,
-                                    thurRec, friRec, satRec, sunRec);
+                                    thurRec, friRec, satRec, sunRec,new ArrayList<Record>());
                             // add it to the user list
                             passedHabits.add(newHabit);
                             DatabaseManager.updateHabits(passedHabits);
