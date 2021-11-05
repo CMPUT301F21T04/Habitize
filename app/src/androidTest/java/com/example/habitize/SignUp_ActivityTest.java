@@ -43,9 +43,9 @@ public class SignUp_ActivityTest {
     String testPassword;
     String testConPassword;
     String testIncorrectPass;
+
     @Rule
     public ActivityScenarioRule<Login_Activity> activityRule = new ActivityScenarioRule<Login_Activity>(Login_Activity.class);
-
 
     @Before
     public void initValidate(){
@@ -128,6 +128,10 @@ public class SignUp_ActivityTest {
         onView(withId(R.id.create_button)).perform(click());
         onView(hasErrorText("Login Failed"));
 
+    }
+    @Test public void NotUniqeUserName(){
+        onView(withId(R.id.RegisterBTN)).perform(click());
+        onView(withId(R.id.userName)).perform(replaceText(testEmail));
     }
 
 }

@@ -28,15 +28,6 @@
         <activity
             android:name=".FollowingActivity"
             android:exported="false" />
-        <activity
-            android:name=".MyNavigationService"
-            android:exported="false" />
-        <activity android:name=".ViewHabitTabsBase"/>
-
-        <service
-            android:name=".MyNavigationService"
-            android:exported="false"
-            android:foregroundServiceType="location" />
 
         <activity
             android:name=".AddHabitImage"
@@ -45,6 +36,7 @@
             android:name=".AddHabitLocation"
             android:exported="false" />
         <activity android:name=".ViewHabitActivity" />
+        <activity android:name=".ViewHabitTabsBase" />
         <activity
             android:name=".Login_Activity"
             android:exported="true" >
@@ -62,6 +54,8 @@
         <activity
             android:name=".AddHabitActivity"
             android:parentActivityName=".MainActivity" />
+        <activity android:name=".TodaysHabitsActivity"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

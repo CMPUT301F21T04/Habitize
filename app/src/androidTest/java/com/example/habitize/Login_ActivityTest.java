@@ -1,5 +1,4 @@
 package com.example.habitize;
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -8,27 +7,13 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
+
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.*;
-
-import android.app.Activity;
 import android.os.SystemClock;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import androidx.test.core.app.ActivityScenario;
-import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,19 +29,17 @@ public class Login_ActivityTest {
     String testEmail;
     String testPassword;
     String testIncorrectPass;
-    String testIncorrectEmail;
+
 
     @Rule
-    public ActivityScenarioRule<Login_Activity> activityRule = new ActivityScenarioRule<Login_Activity>(
-            Login_Activity.class);
+    public ActivityScenarioRule<Login_Activity> activityRule = new ActivityScenarioRule<Login_Activity>(Login_Activity.class);
 
     @Before
-    public void initValidate() {
+    public void initValidate(){
         Intents.init();
         testEmail = "shanemel@ualberta.ca";
         testPassword = "password";
         testIncorrectPass = "123";
-        testIncorrectEmail = "haha@ualberta.ca";
     }
 
     @After
@@ -64,32 +47,37 @@ public class Login_ActivityTest {
         Intents.release();
     }
 
-    // Tests if the error handling for email works
+
+//   Tests if the error handling for email works
     @Test
-    public void emptyEmail() {
-        onView(withId(R.id.email_login)).perform(typeText(""), closeSoftKeyboard());
+    public void emptyEmail(){
+        onView(withId(R.id.email_login))
+                .perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.LoginBTN)).perform(click());
         onView(withId(R.id.email_login)).check(matches(hasErrorText("Email is Required.")));
     }
-
-    // Tests if the error handling for password works
+//  Tests if the error handling for password works
     @Test
-    public void emptyPass() {
-        onView(withId(R.id.email_login)).perform(typeText(testEmail), closeSoftKeyboard());
+    public void emptyPass(){
+        onView(withId(R.id.email_login))
+                .perform(typeText(testEmail),closeSoftKeyboard());
         onView(withId(R.id.LoginBTN)).perform(click());
-        onView(withId(R.id.password_login)).check(matches(hasErrorText("Password must be at least 8 characters")));
+        onView(withId(R.id.password_login)).check(matches(hasErrorText("Password is Required.")));
     }
 
-    // Tests if the user enters a valid password (>= 8 characters)
-    @Test
-    public void lessthan8Pass() {
-        onView(withId(R.id.email_login)).perform(typeText(testEmail), closeSoftKeyboard());
-        onView(withId(R.id.password_login)).perform(typeText(testIncorrectPass), closeSoftKeyboard());
-        onView(withId(R.id.LoginBTN)).perform(click());
-        onView(withId(R.id.password_login)).check(matches(hasErrorText("Password must be at least 8 characters")));
-    }
+//  Tests if the user enters a valid password (>= 8 characters)
+//    @Test
+//    public void lessthan8Pass(){
+//        onView(withId(R.id.email_login))
+//                .perform(typeText(testEmail), closeSoftKeyboard());
+//        onView(withId(R.id.password_login))
+//                .perform(typeText(testIncorrectPass), closeSoftKeyboard());
+//        onView(withId(R.id.LoginBTN)).perform(click());
+//        onView(withId(R.id.password_login)).check(matches(hasErrorText("Password must be at least 8 characters")));
+//    }
 
-    // Tests if the user enters an email with valid format
+
+//    Tests if the user enters an email with valid format
     @Test
     public void testSetup() throws IOException {
         onView(withId(R.id.email_login)).perform(replaceText("username"));
@@ -97,9 +85,9 @@ public class Login_ActivityTest {
         onView(withId(R.id.LoginBTN)).perform(click());
     }
 
-    // Tests if the user successfully login
+//    Tests if the user successfully login
     @Test
-    public void successLogin() {
+    public void successLogin(){
         onView(withId(R.id.email_login)).perform(replaceText(testEmail));
         onView(withId(R.id.password_login)).perform(replaceText(testPassword));
         onView(withId(R.id.LoginBTN)).perform(click());
@@ -108,28 +96,16 @@ public class Login_ActivityTest {
 
     }
 
-    // Tests if the user failed to login
+//    Tests if the user failed to login
     @Test
-    public void failedLogin() {
+    public void failedLogin(){
         onView(withId(R.id.email_login)).perform(replaceText(testEmail));
         onView(withId(R.id.password_login)).perform(replaceText("wrongPass"));
         onView(withId(R.id.LoginBTN)).perform(click());
         onView(hasErrorText("Login Failed"));
 
     }
-
-    // Tests if the email is valid to send a reset link if user wants to reset their
-    // forgotten password
-    @Test
-    public void invalidEmail() {
-        onView(withId(R.id.forgotPassBTN)).perform(click());
-        onView(withText("Reset")).inRoot(isDialog()).check(matches(isDisplayed())).perform(click());
-        SystemClock.sleep(5000);
-        onView(hasErrorText("Enter an email!"));
-    }
-
-    // test if the email is invalid
-
-    // test if no email
-
 }
+
+
+
