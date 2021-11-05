@@ -54,12 +54,22 @@ public class DatabaseManager {
 
     // We need communication between the authenticator class and the activity we login from
 
+    /**
+     * takes the data from login and pass it here
+     * @param context
+     */
     public static void setLoginContext(Context context){
         loginContext = context;
     }
+
+    /**
+     * takes the data from signUp and pass it here
+     * @param context
+     */
     public static void setsignUpContext(Context context){
         signUpContext = context;
     }
+
     public static String getInputEmail(){
         return inputEmail;
     }
@@ -67,12 +77,20 @@ public class DatabaseManager {
         return inputPassword;
     }
 
-
+    /**
+     * Takes email and password and set them DataManger
+     * @param email
+     * @param password
+     */
     // this occurs when we click the login button. We initialize the username
     public static void setInfoForLogin(String email,String password){
         inputEmail = email;
         inputPassword = password;
     }
+
+    /**
+     * Takes the user data and sign them in
+     */
     public static void signInUser(){
 
         db.collection("EmailToUser").document(inputEmail).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -85,8 +103,15 @@ public class DatabaseManager {
 
     }
 
+    /**
+     *This occurs when we click the registration button. We initialize  the variables to this information
+     * @param username
+     * @param email
+     * @param firstName
+     * @param lastName
+     * @param password
+     */
 
-    // This occurs when we click the registration button. We initialize  the variables to this information
     public static void setInfoForRegistration(String username,String email,String firstName,String lastName,String password){
         user = username;
         inputEmail = email;
@@ -110,7 +135,10 @@ public class DatabaseManager {
         });
     }
 
-
+    /**
+     * get records for each user
+     * @param UUID
+     */
     public static void getRecord(String UUID){
         db.collection("Records").document(UUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -121,6 +149,11 @@ public class DatabaseManager {
         });
     }
 
+    /**
+     * Takes the new records for the user and update them
+     * @param UUID
+     * @param updatedRecords
+     */
     public static void updateRecord(String UUID,ArrayList<Record> updatedRecords){
         HashMap<String,Object> mappedData = new HashMap<>(); // hash the record
         mappedData.put("records",updatedRecords); // put it in the record space
@@ -128,8 +161,11 @@ public class DatabaseManager {
 
     }
 
+    /**
+     *
+     * Create a new user with all the data collected with their own data collections
+     */
 
-    // this runs third. We create the user document and launch the mainactivity to login.
     public static void createUserDocumentAndLogin(){
         HashMap<String,Object> userNameField = new HashMap<>();
         HashMap<String,Object> nameField = new HashMap<>();
@@ -153,19 +189,6 @@ public class DatabaseManager {
         // adding Data to UsersHabits collection
         HashMap<String,Object> habits = new HashMap<>();
         ArrayList<Habit> habitList = new ArrayList<>();
-        //TESTING
-        /*
-        ArrayList<Habit> habitList = new ArrayList<>();
-        ArrayList<Record> recordList = new ArrayList<>();
-        recordList.add(new Record("NOV 4 2021","DESCRIPTION"));
-        Habit testHabit = new Habit("test","test2","test3",false,false,false,false,false,true,true,
-                recordList);
-        habitList.add(testHabit);
-        */
-        //TESTING
-
-
-
 
         habits.put("habits",habitList);
         db.collection("Users").document(user).update(habits);
@@ -186,7 +209,13 @@ public class DatabaseManager {
         registrationListener.loginUser();// log the user in. signup will implement this
 
     }
-    // will perform a seach and return users matching the query
+
+    /**
+     * it perform a search and return users matching the query
+     * @param searchQuery
+     * @param users
+     */
+
     public static void getMatchingUsers(String searchQuery, ArrayList<String> users){
         //
         Query query = db.collection("Users").whereGreaterThanOrEqualTo("userName",searchQuery)
@@ -203,12 +232,22 @@ public class DatabaseManager {
         });
     }
 
+    /**
+     * send a follow request to the given username
+     * @param user
+     */
 
     public static void sendFollow(String user){
 
     }
 
-    // puts loggin in users current followers into retrievingList, updates the adapter
+    /**
+     * get all the followers
+     * puts loggin in users current followers into retrievingList, updates the adapter
+     * @param retrievingList
+     * @param adapter
+     */
+
     public static void getFollowers(ArrayList<String> retrievingList, ArrayAdapter adapter){
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -238,10 +277,12 @@ public class DatabaseManager {
     }
 
 
-    /*
-    Checks if
-    @param friendsList, the list of strings we want to populate with the usernames of our friends
-    @param adapter, the adapter we want to notify of changes
+
+
+    /**
+     *
+     * @param friendsList friendsList, the list of strings we want to populate with the usernames of our friends
+     * @param adapter adapter, the adapter we want to notify of changes
      */
     public static void getFriends(ArrayList<String> friendsList,ArrayAdapter adapter){
 
@@ -269,11 +310,13 @@ public class DatabaseManager {
     }
 
 
-    /*
-    Recieves data from firebase and populates a recievinglist. then notifies a habitadapter.
-    used to populate lists
-    @param recievingList, the list we want to recieve into
-    @param habitAdatper, the habitadapter we want to notify of changes
+    /**
+     * Recieves data from firebase and populates a recievinglist. then notifies a habitadapter.
+     * used to populate lists
+     * recievingList, the list we want to recieve into
+     * habitAdatper, the habitadapter we want to notify of changes
+     * @param recievingList
+     * @param habitAdapter
      */
     public static void getAllHabits(ArrayList<Habit> recievingList, CustomAdapter habitAdapter) {
         //
@@ -306,7 +349,7 @@ public class DatabaseManager {
     }
 
 
-    /*
+    /**
     @param recievingList, the list we want to to put all of our habits into. This function differs to the previous
     one as it does not assume there is an adapter waiting to be notified.
      */
@@ -339,7 +382,7 @@ public class DatabaseManager {
         });
     }
 
-    /*
+    /**
     This function pushes an updated habitlist to firebase for the current user
     @param updatedHabits, the new list of habits we want to push to firebase
      */
@@ -349,12 +392,13 @@ public class DatabaseManager {
         db.collection("Users").document(user).update(listMap);
     }
 
-    /*
-    This function will Get all the habits from the user in firebase, and only add the ones
-    that have their recurrence value on today's date set to true
-    @param recievinglist, the list we will update
-    @param habitadapter, the adapter we will notify about changes
-    @param posInFirebase, the position of the habit in firebase. allows for proper deletion and editin
+    
+    /**
+     * This function will Get all the habits from the user in firebase, and only add the ones
+     * that have their recurrence value on today's date set to true
+     * @param recievingList the list we will update
+     * @param habitAdapter the adapter we will notify about changes
+     * @param posInFirebase the position of the habit in firebase. allows for proper deletion and editin
      */
     public static void getTodaysHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
                                        posInFirebase){
