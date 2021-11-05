@@ -29,7 +29,6 @@ import java.util.Map;
 public class ViewHabitTabsBase extends AppCompatActivity {
     private ViewPager2 pager;
     private TabLayout tabLayout;
-
     private Button editButton;
     private String passedUser;
     private Habit passedHabit; // habit to view
