@@ -68,7 +68,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-// An activity that displays a map showing the place at the device's current location.
+/**
+ * An activity that displays a map showing the place at the device's current location.*/
 public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback {
 
@@ -142,7 +143,10 @@ public class MapsActivity extends AppCompatActivity
     }
 
 
-     // Saves the state of the map when the activity is paused.
+    /**
+     * This method checks if map is not null, then pass/add in the intent the last location and the last camera location
+     * @param outState
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (map != null) {
@@ -153,7 +157,9 @@ public class MapsActivity extends AppCompatActivity
     }
 
 
-    // Manipulates the map when it's available. This callback is triggered when the map is ready to be used.
+    /**
+     * Manipulates the map when it's available. This callback is triggered when the map is ready to be used.
+     */
     @Override
     public void onMapReady(GoogleMap map) {
         this.map = map;
@@ -187,24 +193,26 @@ public class MapsActivity extends AppCompatActivity
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
 
+        /**
+         * Listener for the location search button. When the button is clicked, construct the
+         * autocomplete search bar. Set the fields to specify which types of place data to
+         * return after the user has made a selection.
+         */
         locSearchBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Construct the autocomplete search bar
-                // Set the fields to specify which types of place data to
-                // return after the user has made a selection.
                 List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
                 // Start the auto complete intent
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN,placeFields).build(MapsActivity.this);
                 startActivityForResult(intent,AUTOCOMPLETE_REQUEST_CODE);
-
             }
         });
     }
 
-    // Gets the current location of the device, and positions the map's camera.
+    /**
+     * // Get the best and most recent location of the device and the camera's position, which may be null in rare cases when a location is not available.
+     */
     private void getDeviceLocation() {
-         // Get the best and most recent location of the device, which may be null in rare cases when a location is not available.
         try {
             if (locationPermissionGranted) {
                 @SuppressLint("MissingPermission")
@@ -225,6 +233,7 @@ public class MapsActivity extends AppCompatActivity
                     }
                 });
             } else {
+                // if no position is found, set a default.
                 Log.d(TAG, "Current location is null. Using defaults.");
                 createLocationRequest();
                 map.moveCamera(CameraUpdateFactory
@@ -235,19 +244,24 @@ public class MapsActivity extends AppCompatActivity
                 Log.e("Exception: %s", e.getMessage(), e);
             }
     }
+
+    /**
+     * This method takes the current location of the user and display the addressline on the screen.
+     * @param lastKnownLoc is a Location object that contains the lat and long values of the current
+     *                     position of the user.
+     */
     public void setLocation(Location lastKnownLoc){
         address = findViewById(R.id.addressView);
-
+        // find the addressline
         Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
         try {
+            // addressList just takes one value at most so it is safe to use the index 0 to get the result
             List<Address> addressList = geocoder.getFromLocation(lastKnownLoc.getLatitude(), lastKnownLoc.getLongitude(), 1);
             address.setText(addressList.get(0).getAddressLine(0).toString());
-
         } catch (IOException e) {
             e.printStackTrace();
             address.setText("Location not found. Try again. Error:"+e.getMessage());
         }
-
         return;
     }
 
@@ -261,11 +275,13 @@ public class MapsActivity extends AppCompatActivity
         }
         try {
             if (locationPermissionGranted) {
+                // if location is granted permission, make the location search button accessible
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
                 locSearchBTN.setVisibility(View.VISIBLE);
 
             } else {
+                // if location is not granted permission, prompt the user to grant it again.
                 map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
                 lastKnownLocation = null;
@@ -275,6 +291,12 @@ public class MapsActivity extends AppCompatActivity
             Log.e("Exception: %s", e.getMessage());
         }
     }
+
+    /**
+     * This method takes the new user input location from the search bar and handles it here.
+     * The inputted location will be find in the maps and get its corresponding the addressline.
+     * @param newPlace
+     */
     public void setNewLocation(Place newPlace){
         // set the new location that the user inputted to be the new location of the habit
         LatLng lat = newPlace.getLatLng();
@@ -347,6 +369,7 @@ public class MapsActivity extends AppCompatActivity
         // This method handles what will happen when the user has selected a place
 
         if (requestCode == REQUEST_CHECK_SETTINGS) {
+            // handle the result and check if the location is granted
             switch (resultCode) {
                 case Activity.RESULT_OK:    // the user accepted permission to location services
                     retryLocBTN.setVisibility(View.GONE);
@@ -370,6 +393,7 @@ public class MapsActivity extends AppCompatActivity
             });
         }
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE){
+            // handle the result for the search bar on maps
             switch (resultCode){
                 case RESULT_OK:    // success
                     // Initialize place
