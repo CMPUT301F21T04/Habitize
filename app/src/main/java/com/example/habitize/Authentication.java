@@ -1,5 +1,6 @@
 package com.example.habitize;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -26,7 +27,7 @@ import java.util.Map;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class Authentication {
+public class Authentication{
     // db is shared across all instances of the manager
     private static FirebaseFirestore db;
     private static CollectionReference users;
@@ -34,12 +35,21 @@ public class Authentication {
     private static CollectionReference followers;
     private static CollectionReference following;
     public static String SignUpMSG ="You have made an account successfully!";
+    private static FirebaseAuth fAuth;
 
 
     // we initialize the firestore ONCE. Many objects but all will refer to the same instance
     static {
         db = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+
     }
+
+
+
+
+    // if we create the user/login successfully. we Log the user in
+
 
 
 
@@ -48,6 +58,24 @@ public class Authentication {
 
     }
 
+    // this runs after DatabaseManager.checkUsernameAndRegister(). Checks the validity of the email
+    public static void checkEmailBeforeRegistering(){
+        fAuth.createUserWithEmailAndPassword(DatabaseManager.getInputEmail(),DatabaseManager.getInputPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                // email isn't taken. Continue
+                if(task.isSuccessful()){
+                    DatabaseManager.createUserDocumentAndLogin();
+                }
+                else{
+                    System.out.println("Somethingwrong");
+                }
+
+            }
+        });
+    }
+
+
     public static String createUserWithAllInfo(String inputEmail, String inputPassword, String user,String first,String last){
         db = FirebaseFirestore.getInstance(); // init db
         users = db.collection("Users"); // reference to users collection. check if a user exists here
@@ -55,8 +83,6 @@ public class Authentication {
         followers = db.collection("followers");
         following = db.collection("following");
 
-        FirebaseAuth fAuth;
-        fAuth = FirebaseAuth.getInstance();
         //SignUpMSG = "TEST";
         fAuth.createUserWithEmailAndPassword(inputEmail, inputPassword)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -66,13 +92,14 @@ public class Authentication {
                         // first check if there is no account already made.
                         //SignUpMSG = "TEST";
                         if (task.isSuccessful()) {
+                            // if no email is taken
                             // checking if the user already exists.
                             users.document(user).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                                     if(!documentSnapshot.exists()){
-                                        SignUpMSG = "You have made an account successfully!";
+                                        String SignUpMSG = "You have made an account successfully!";
 
                                         //Toast.makeText(SignUp.class, "You have made an account successfully!", Toast.LENGTH_LONG).show();
 
@@ -151,34 +178,19 @@ public class Authentication {
     }
 
 
-    public static String SignInUser(String email,String password){
-        FirebaseAuth Authenticator;
-        Authenticator = FirebaseAuth.getInstance();
-        Authenticator.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+    public static void authenticateAndSignIn(){
+        fAuth.signInWithEmailAndPassword(DatabaseManager.getInputEmail(),DatabaseManager.getInputPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                // Determine if the login is successful or not
-//                      // If successful, display a success message and redirect user to MainActivity
-                if (task.isSuccessful()) {
+                if(task.isSuccessful()){
+                    DatabaseManager.signInUser(); // the email and password are correct. Call the database to retrieve data and sign in
 
-                    db.collection("EmailToUser").document(email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            //Toast.makeText(Login_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            String userName = (String)documentSnapshot.get("user");
-                            // Login is successful, user exists. We pass the user down into main to later retrieve data
+                }
+                else{
 
-                        }
-                    });
-
-
-                    //progressBar.setVisibility(View.GONE);
-                } else {
-                    //Toast.makeText(Login_Activity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    //progressBar.setVisibility(View.GONE);
                 }
             }
         });
-
     }
+
 }

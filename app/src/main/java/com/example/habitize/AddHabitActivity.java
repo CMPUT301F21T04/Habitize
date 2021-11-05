@@ -70,7 +70,6 @@ public class AddHabitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_habit_info);
 
 
-        passedUser = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
 
 
         createHabit = findViewById(R.id.create_habit_tabs);

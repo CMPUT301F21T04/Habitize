@@ -8,24 +8,12 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
+
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.*;
-
-import android.app.Activity;
 import android.os.SystemClock;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import androidx.test.core.app.ActivityScenario;
-import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Before;
@@ -78,15 +66,15 @@ public class Login_ActivityTest {
     }
 
 //  Tests if the user enters a valid password (>= 8 characters)
-    @Test
-    public void lessthan8Pass(){
-        onView(withId(R.id.email_login))
-                .perform(typeText(testEmail), closeSoftKeyboard());
-        onView(withId(R.id.password_login))
-                .perform(typeText(testIncorrectPass), closeSoftKeyboard());
-        onView(withId(R.id.LoginBTN)).perform(click());
-        onView(withId(R.id.password_login)).check(matches(hasErrorText("Password must be at least 8 characters")));
-    }
+//    @Test
+//    public void lessthan8Pass(){
+//        onView(withId(R.id.email_login))
+//                .perform(typeText(testEmail), closeSoftKeyboard());
+//        onView(withId(R.id.password_login))
+//                .perform(typeText(testIncorrectPass), closeSoftKeyboard());
+//        onView(withId(R.id.LoginBTN)).perform(click());
+//        onView(withId(R.id.password_login)).check(matches(hasErrorText("Password must be at least 8 characters")));
+//    }
 
 
 //    Tests if the user enters an email with valid format

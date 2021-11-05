@@ -26,7 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SignUp extends AppCompatActivity {
+public class SignUp extends AppCompatActivity implements DatabaseManager.onRegistrationLoginListener {
     //Initializing variables
     private FirebaseFirestore db;
     private CollectionReference users;
@@ -48,6 +48,7 @@ public class SignUp extends AppCompatActivity {
         EditText conPassword = findViewById(R.id.conPassword);
         EditText email = findViewById(R.id.email);
         ProgressBar progressBar = findViewById(R.id.progressBar2);
+        DatabaseManager.setRegistrationListener(this);
 
         db = FirebaseFirestore.getInstance(); // init db
         users = db.collection("Users"); // reference to users collection. check if a user exists here
@@ -55,9 +56,7 @@ public class SignUp extends AppCompatActivity {
         followers = db.collection("followers");
         following = db.collection("following");
 
-        //Getting fireBase Authentication
-        FirebaseAuth fAuth;
-        fAuth = FirebaseAuth.getInstance();
+
         progressBar.setVisibility(View.GONE);
 
         // disabling so i stop getting merked
@@ -85,6 +84,9 @@ public class SignUp extends AppCompatActivity {
                 String first = firstName.getText().toString().trim();
                 String last = lastName.getText().toString().trim();
                 String user = username.getText().toString().trim();
+
+
+
 
                 //Showing Error on the input box when the input is incorrect
                 if (TextUtils.isEmpty(inputEmail)) {
@@ -114,31 +116,20 @@ public class SignUp extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
                 // TODO: the startActivity here might mess with NAVCONTROLLER
-                String errMSG;
-                ////Call Authentication class and pass all user input in createUserWithAllInfo///
-                errMSG = Authentication.createUserWithAllInfo( inputEmail,  inputPassword,  user, first, last);
+                // call authentication here
+                DatabaseManager.setInfoForRegistration(user,inputEmail,first,last,inputConPass);
+                DatabaseManager.checkUsernameAndRegister();
 
-//                if (SignUpMSG.equals("You have made an account successfully!")) {
-//                    Intent intent = new Intent(SignUp.this, MainActivity.class);
-//                    // we do it with intents so we can pass down arguments.
-//                    Bundle userBundle = new Bundle();
-//                    userBundle.putSerializable("User", user); // sending user identifier down
-//                    intent.putExtras(userBundle);
-//                    startActivity(intent); // start the activity with the passed user
-//                }
-                Intent intent = new Intent(SignUp.this, MainActivity.class);
-                // we do it with intents so we can pass down arguments.
-                Bundle userBundle = new Bundle();
-                userBundle.putSerializable("User", user); // sending user identifier down
-                intent.putExtras(userBundle);
-                startActivity(intent); // start the activity with the passed user
-                String test = "Nicccce";
-
-
-                Toast.makeText(SignUp.this, errMSG, Toast.LENGTH_LONG).show();
 
             }
         });
+
+    }
+
+    @Override
+    public void loginUser() {
+        Intent intent = new Intent(SignUp.this,MainActivity.class);
+        startActivity(intent);
 
     }
 }

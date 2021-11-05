@@ -26,7 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +47,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
     String[] titles = {"Info","Image"};
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,14 +55,9 @@ public class AddHabitTabsBase extends AppCompatActivity {
         pager = findViewById(R.id.viewPager);
         createButton = findViewById(R.id.create_habit_tabs);
 
-        passedUser = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
         passedHabits = new ArrayList<>();
-        db = FirebaseFirestore.getInstance(); // document references
-        userCol = db.collection("Users");
-        docRef = userCol.document(passedUser);
-
         //We pull the current habit list, modify it, and send it back (only if we create the habit)
-        DatabaseManager.getAllHabits(passedUser,passedHabits);
+        DatabaseManager.getAllHabits(passedHabits);
 
 
         // pager holds fragments, madapter is the adapter needed for it
@@ -91,7 +89,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
                 boolean friRec = addFrag.getFri();
                 boolean satRec = addFrag.getSat();
                 boolean sunRec = addFrag.getSun();
-
 
 
                 // TODO: this is not finished yet. need to check more fields
@@ -127,7 +124,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
                             thurRec, friRec, satRec, sunRec);
                     // add it to the user list
                     passedHabits.add(newHabit);
-                    DatabaseManager.updateHabits(passedUser,passedHabits);
+                    DatabaseManager.updateHabits(passedHabits);
                     finish();
                 }
 
