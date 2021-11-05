@@ -52,14 +52,11 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         passedUser = (String)getIntent().getExtras().getSerializable("User"); // we get passed a habit
         passedHabit = (Habit)getIntent().getExtras().getSerializable("habit"); // a user
         passedHabits = new ArrayList<>(); // we will get the latest list from the database
+        passedIndex = (int)getIntent().getExtras().getSerializable("index");
 
-        // If we choose to modify our habit, we will modify the entire list and push it into the database
-        db = FirebaseFirestore.getInstance(); // document references
-        userCol = db.collection("Users");
-        docRef = userCol.document(passedUser);
 
         // pulling the most recent habits
-        DatabaseManager.getAllHabits(passedUser,passedHabits);
+        DatabaseManager.getAllHabits(passedHabits);
 
         // pager holds fragments, madapter is the adapter needed for it
         ViewAdapter mAdapter = new ViewAdapter(this);
@@ -101,7 +98,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
             public void onClick(View view) {
                 passedHabits.remove(passedIndex); // remove the habit at the position we are on
                 // hash the list and replace the one at the database
-                DatabaseManager.updateHabits(passedUser,passedHabits);
+                DatabaseManager.updateHabits(passedHabits);
                 finish();
 
             }

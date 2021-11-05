@@ -129,6 +129,10 @@ public class SignUp_ActivityTest {
         onView(hasErrorText("Login Failed"));
 
     }
+    @Test public void NotUniqeUserName(){
+        onView(withId(R.id.RegisterBTN)).perform(click());
+        onView(withId(R.id.userName)).perform(replaceText(testEmail));
+    }
 
 }
 

@@ -66,15 +66,15 @@ public class Login_ActivityTest {
     }
 
 //  Tests if the user enters a valid password (>= 8 characters)
-    @Test
-    public void lessthan8Pass(){
-        onView(withId(R.id.email_login))
-                .perform(typeText(testEmail), closeSoftKeyboard());
-        onView(withId(R.id.password_login))
-                .perform(typeText(testIncorrectPass), closeSoftKeyboard());
-        onView(withId(R.id.LoginBTN)).perform(click());
-        onView(withId(R.id.password_login)).check(matches(hasErrorText("Password must be at least 8 characters")));
-    }
+//    @Test
+//    public void lessthan8Pass(){
+//        onView(withId(R.id.email_login))
+//                .perform(typeText(testEmail), closeSoftKeyboard());
+//        onView(withId(R.id.password_login))
+//                .perform(typeText(testIncorrectPass), closeSoftKeyboard());
+//        onView(withId(R.id.LoginBTN)).perform(click());
+//        onView(withId(R.id.password_login)).check(matches(hasErrorText("Password must be at least 8 characters")));
+//    }
 
 
 //    Tests if the user enters an email with valid format

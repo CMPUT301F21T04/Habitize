@@ -55,14 +55,9 @@ public class AddHabitTabsBase extends AppCompatActivity {
         pager = findViewById(R.id.viewPager);
         createButton = findViewById(R.id.create_habit_tabs);
 
-        passedUser = (String)getIntent().getExtras().getSerializable("User"); // retrieving passed user
         passedHabits = new ArrayList<>();
-        db = FirebaseFirestore.getInstance(); // document references
-        userCol = db.collection("Users");
-        docRef = userCol.document(passedUser);
-
         //We pull the current habit list, modify it, and send it back (only if we create the habit)
-        DatabaseManager.getAllHabits(passedUser,passedHabits);
+        DatabaseManager.getAllHabits(passedHabits);
 
 
         // pager holds fragments, madapter is the adapter needed for it
@@ -129,7 +124,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
                             thurRec, friRec, satRec, sunRec);
                     // add it to the user list
                     passedHabits.add(newHabit);
-                    DatabaseManager.updateHabits(passedUser,passedHabits);
+                    DatabaseManager.updateHabits(passedHabits);
                     finish();
                 }
 

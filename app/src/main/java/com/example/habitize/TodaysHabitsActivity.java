@@ -29,17 +29,14 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todays_habits);
 
-        userAcct = (String) getIntent().getExtras().getSerializable("user");
-        db = FirebaseFirestore.getInstance();
-        collectionReference = db.collection("Users");
-        documentReference = collectionReference.document(userAcct);
+
         dataList = new ArrayList<>();
 
         listView = findViewById(R.id.todaysHabit_list);
         habitAdapter = new CustomAdapter(this, dataList);
         listView.setAdapter(habitAdapter);
 
-        DatabaseManager.getTodaysHabits(userAcct, dataList, habitAdapter);
+        DatabaseManager.getTodaysHabits(dataList, habitAdapter);
     }
 
 
@@ -50,7 +47,6 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
         habitBundle.putSerializable("habit", dataList.get(position));
         habitBundle.putSerializable("index",position);
         habitBundle.putSerializable("habits",dataList);
-        habitBundle.putSerializable("User",userAcct);
         intent.putExtras(habitBundle);
         startActivity(intent);
     }
