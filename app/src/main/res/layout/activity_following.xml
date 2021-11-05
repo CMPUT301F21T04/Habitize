@@ -35,7 +35,7 @@
 
     <ListView
         android:id="@+id/listOfExistingFollowers"
-        android:layout_width="288dp"
+        android:layout_width="377dp"
         android:layout_height="476dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

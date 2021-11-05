@@ -46,6 +46,7 @@
         <activity android:name=".SignUp" />
         <activity android:name=".MainActivity" />
         <activity android:name=".AllHabitsActivity" />
+        <activity android:name=".FollowRequests"/>
         <activity
             android:name=".AddHabitActivity"
             android:parentActivityName=".MainActivity" />
