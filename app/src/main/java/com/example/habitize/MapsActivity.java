@@ -193,12 +193,11 @@ public class MapsActivity extends AppCompatActivity
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
 
-        /**
-         * Listener for the location search button. When the button is clicked, construct the
-         * autocomplete search bar. Set the fields to specify which types of place data to
-         * return after the user has made a selection.
-         */
-        locSearchBTN.setOnClickListener(new View.OnClickListener() {
+
+        // Listener for the location search button. When the button is clicked, construct the
+        // autocomplete search bar. Set the fields to specify which types of place data to
+        // return after the user has made a selection.
+         locSearchBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);

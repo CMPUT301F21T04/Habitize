@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
     private Integer completion = 0;
     private Integer totalHabits = 0;
 
+    /**
+     * Start the mainactivity
+     * @param savedInstanceState to be used for Bundle where fragment is re-constructed from a previous state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,17 +66,9 @@ public class MainActivity extends AppCompatActivity {
         followReq = (Button) findViewById(R.id.followReq);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
 
-       // updateProgress();
+       // Branch the activities here:
 
-
-
-
-
-        // branch to new activities here
-
-        /**
-         * When add habit button is clicked upon, it will bring you to a new activity screen
-         */
+        // When add habit button is clicked upon, it will bring you to a add activity screen
         addHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        // When allHabits habit button is clicked upon, it will bring you to a view the allhabits activity screen
         allHabits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // When todayshabit button is clicked upon, it will bring you to a today's habit activity screen
         todaysHabits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // When following habit button is clicked upon, it will bring you to a following activity screen
         followReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        // When logout habit button is clicked upon, it will bring you to a logout activity screen
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,52 +116,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
-    // get this to log out when "back" is pressed on navBar
+
+    /**
+     * get this to log out when "back" is pressed on navBar
+     */
     public void logout(){
         FirebaseAuth.getInstance().signOut();
 
     }
 
-///////////////////////////////////////////////////////////////
-//    //This function is finished until the habit class is changed
-//    public void updateProgress(){
-//        //.child("userHabits").orderByChild("userHabits").equalTo(userHabits)
-//        progress = db.collection("Users/userHabits");
-//        progress.get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot QueryDocumentSnapshots) {
-//
-//                        String habits = "";
-//                        for (QueryDocumentSnapshot documentSnapshot : QueryDocumentSnapshots){
-//                            Habit habit = documentSnapshot.toObject(Habit.class);
-//                            habit.setName(documentSnapshot.getId());
-//                            String habitName = habit.getName();
-//                            habits += " " + habitName;
-//
-//                            completion = completion + habit.getCompletion();// how many habits the user completed today
-//                            totalHabits = totalHabits + 1;// how many habits the user has
-//                        }
-//
-//                    }
-//                });
-//
-//        progressTrack = (completion/totalHabits)*100;
-//        progressBar3.setProgress(progressTrack);//updating the progress bar
-//    }
-
-
+    /**
+     * This method sends the user to a new activity screen: the following list.
+     */
     public void openFollowingPage() {
         Intent intent = new Intent(this, FollowingActivity.class);
         startActivity(intent);
     }
-
-
-
-
 
 }

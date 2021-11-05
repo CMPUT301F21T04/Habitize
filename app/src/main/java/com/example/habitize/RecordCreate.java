@@ -66,9 +66,8 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         comment = view.findViewById(R.id.recordComment);
         imageViewer = view.findViewById(R.id.recordImg);
 
-        /**
-         * Listener for the location button. When the button is clicked, redirect user to the maps activity.
-         */
+
+        // Listener for the location button. When the button is clicked, redirect user to the maps activity.
         RecordLocBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,9 +77,8 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
             }
         });
 
-        /**
-         * Listener for the image button. When the button is clicked, redirect user to the openGallery method
-         */
+
+        // Listener for the image button. When the button is clicked, redirect user to the openGallery method
         RecordImgBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
