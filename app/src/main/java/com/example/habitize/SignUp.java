@@ -125,7 +125,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         });
 
     }
-    
+
 
     @Override
     public void loginUser() {
