@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class AllHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener{
+public class AllHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener, CustomAdapter.habitCheckListener{
     private ArrayList<Habit> dataList;
     private CustomAdapter habitAdapter;
     private ListView list;
@@ -69,4 +69,15 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
     }
 
 
+    @Override
+    public void recordEvent(int position) {
+        Intent intent = new Intent(AllHabitsActivity.this,RecordCreate.class);
+        Bundle habitBundle = new Bundle();
+        habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
+        habitBundle.putSerializable("index",position);
+        habitBundle.putSerializable("habits",dataList);
+        intent.putExtras(habitBundle);
+        RecordCreate newRecord =  new RecordCreate();
+        newRecord.show(getSupportFragmentManager(),"new record");
+    }
 }

@@ -62,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
         followReq = (Button) findViewById(R.id.followReq);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
 
-
-
        // updateProgress();
 
 
@@ -79,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,AddHabitTabsBase.class);
-
                 startActivity(intent);
 
             }

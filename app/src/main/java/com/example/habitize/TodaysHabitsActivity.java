@@ -14,10 +14,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-public class TodaysHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener {
+public class TodaysHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener, CustomAdapter.habitCheckListener {
 
     private ArrayList<Habit> dataList;
     private CustomAdapter habitAdapter;
+    private ArrayList<Integer> posInFireBase;
     private ListView listView;
     private DocumentReference documentReference;
     private CollectionReference collectionReference;
@@ -31,12 +32,14 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
 
 
         dataList = new ArrayList<>();
+        posInFireBase = new ArrayList<>();
+
 
         listView = findViewById(R.id.todaysHabit_list);
         habitAdapter = new CustomAdapter(this, dataList);
         listView.setAdapter(habitAdapter);
 
-        DatabaseManager.getTodaysHabits(dataList, habitAdapter);
+        DatabaseManager.getTodaysHabits(dataList, habitAdapter,posInFireBase);
     }
 
 
@@ -45,10 +48,22 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
         Intent intent = new Intent(TodaysHabitsActivity.this, ViewHabitTabsBase.class);
         Bundle habitBundle = new Bundle();
         habitBundle.putSerializable("habit", dataList.get(position));
-        habitBundle.putSerializable("index",position);
+        habitBundle.putSerializable("index",posInFireBase.get(position));
         habitBundle.putSerializable("habits",dataList);
         intent.putExtras(habitBundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void recordEvent(int position) {
+        Intent intent = new Intent(TodaysHabitsActivity.this,RecordCreate.class);
+        Bundle habitBundle = new Bundle();
+        habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
+        habitBundle.putSerializable("index",position);
+        habitBundle.putSerializable("habits",dataList);
+        intent.putExtras(habitBundle);
+        RecordCreate newRecord =  new RecordCreate();
+        newRecord.show(getSupportFragmentManager(),"new record");
     }
 
 

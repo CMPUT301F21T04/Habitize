@@ -1,9 +1,10 @@
 package com.example.habitize;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,8 +17,11 @@ import java.util.List;
 
 public class FollowingActivity extends AppCompatActivity {
     private CustomListOfExistingFollowers CustomListOfExistingFollowersAdapter;
-    private ListView listView;
     FirebaseFirestore fStore;
+    private ListView listView;
+    private Button followRequestsButton;
+    private ArrayList<String> friendList;
+    private CustomListOfExistingFollowers mAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,31 +35,25 @@ public class FollowingActivity extends AppCompatActivity {
         CollectionReference collectionReference = fStore.collection("Users");
         List<String> existingFollowersDataList = new ArrayList<>();
         listView = findViewById(R.id.listOfExistingFollowers);
-
+        followRequestsButton = findViewById(R.id.followingReq);
+        friendList = new ArrayList<>();
+        mAdapter = new CustomListOfExistingFollowers(this,friendList);
+        listView.setAdapter(mAdapter);
         //Query every document in the collectionReference to obtain each existing "userName" field.
         //Append the existingFollowersDataList with new "userName" string values.
         //Pass the existingFollowersDataList into CustomListOfExistingFollowersAdapter.
         //Set adapter & render each list item in the custom layout file: "listOfExistingFollowers".
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        DatabaseManager.getFriends(friendList,mAdapter);
+
+        followRequestsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        existingFollowersDataList.add(document.getString("userName"));
-                        CustomListOfExistingFollowersAdapter = new CustomListOfExistingFollowers(FollowingActivity.this, existingFollowersDataList);
-                        listView.setAdapter(CustomListOfExistingFollowersAdapter);
-                    }
-                }
+            public void onClick(View view) {
+                openFollowRequestsActivity();
             }
         });
-
-        //TODO: implement this functionality at a later date.
-        listView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                return false;
-            }
-        });
-
+    }
+    public void openFollowRequestsActivity() {
+        Intent intent = new Intent(this, FollowRequests.class);
+        startActivity(intent);
     }
 }

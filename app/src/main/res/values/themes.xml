@@ -22,4 +22,5 @@
     <style name="Theme.Habitize.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Habitize.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

@@ -78,14 +78,24 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
 
                 if (isChecked) {
-                    // The toggle is enabled
                     imgFrag.setEditable();
                     baseFrag.setEditable();
 
                     ConfirmEdit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            // update the list here.
+                            //ViewHabitBaseFragment baseFrag = (ViewHabitBaseFragment) getSupportFragmentManager().findFragmentByTag("f0");
+                            //ViewHabitImageFragment imgFrag = (ViewHabitImageFragment) getSupportFragmentManager().findFragmentByTag("f1");
+                            //if(!editable) {
 
+                            //editable = true;
+                            //}
+                            //else{
+                            //baseFrag.setNotEditable();
+                            //imgFrag.setNotEditable();
+                            //editable = false;
+                            //}
                             Uri img = imgFrag.getImage();
                             String title = baseFrag.getTitle();
                             String description = baseFrag.getDescription();
@@ -99,19 +109,17 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                             boolean sunRec = baseFrag.getSun();
                             passedHabits.remove(passedIndex); // remove the habit at the position we are on
                             // hash the list and replace the one at the database
-                            DatabaseManager.updateHabits(passedHabits);
 
                             Habit newHabit = new Habit(title, description,
                                     startDate, monRec, tueRec, wedRec,
-                                    thurRec, friRec, satRec, sunRec,new ArrayList<Record>());
+                                    thurRec, friRec, satRec, sunRec,new ArrayList<Record>(),passedHabit.getRecordAddress());
                             // add it to the user list
                             passedHabits.add(newHabit);
                             DatabaseManager.updateHabits(passedHabits);
                             finish();
-
                         }
                     });
-
+                    // The toggle is enabled
                 } else {
                     // The toggle is disabled
                     baseFrag.setNotEditable();
