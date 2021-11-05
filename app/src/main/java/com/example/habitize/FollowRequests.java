@@ -1,10 +1,7 @@
 package com.example.habitize;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -14,8 +11,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 
 public class FollowRequests extends AppCompatActivity {
     private CustomListOfFollowRequests CustomListOfRequestedFollowersAdapter;
@@ -27,12 +22,19 @@ public class FollowRequests extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_requests);
 
+        //Initialize Firestore database and assign to fStore.
+        //Set collectionReference to "Users" until "FollowerRequests" collection is implemented.
+        //Initialize followRequestsDataList to append follower userNames to as strings.
+        //Assign XML List View to local variable listView.
         fStore = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = fStore.collection("Users");
         List<String> followRequestsDataList = new ArrayList<>();
         listView = findViewById(R.id.listOfFollowRequests);
 
-
+        //Query every document in the collectionReference to obtain each existing "userName" field.
+        //Append the followRequestsDataList with new "userName" string values.
+        //Pass the followRequestsDataList into CustomListOfRequestedFollowersAdapter.
+        //Set adapter & render each list item in the custom layout file: "listOfFollowRequests".
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
