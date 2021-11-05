@@ -11,12 +11,11 @@
         android:layout_width="413dp"
         android:layout_height="72dp"
         android:background="@color/purple_500"
-        android:text="FOLLOW REQUESTS"
         android:gravity="center"
+        android:text="FOLLOW REQUESTS"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="-6dp" />
