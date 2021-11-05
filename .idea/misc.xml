@@ -43,7 +43,7 @@
         <entry key="app/src/main/res/layout/fragment_add_habit_base.xml" value="0.33106884057971014" />
         <entry key="app/src/main/res/layout/fragment_add_habit_geolocation.xml" value="0.33106884057971014" />
         <entry key="app/src/main/res/layout/fragment_add_habit_image.xml" value="0.33106884057971014" />
-        <entry key="app/src/main/res/layout/fragment_view_habit_base.xml" value="0.33106884057971014" />
+        <entry key="app/src/main/res/layout/fragment_view_habit_base.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_view_habit_image.xml" value="0.33106884057971014" />
         <entry key="app/src/main/res/layout/fragment_view_records.xml" value="0.30344202898550726" />
         <entry key="app/src/main/res/layout/login_activity.xml" value="0.21002825169113126" />

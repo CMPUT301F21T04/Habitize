@@ -53,10 +53,10 @@ public class AddHabitBaseFragment extends Fragment {
     private boolean FriRecurrence;
     private boolean SatRecurrence;
     private boolean SunRecurrence;
-    private Switch geolocation;
-    private Switch Geolocation;
+    private Switch publicHabit;
+    private boolean habitToPublic;
     private Button imageBtn;
-    private Button locationBtn;
+
 
     private String passedEmail;
     private List<Habit> passedHabits;
@@ -78,15 +78,14 @@ public class AddHabitBaseFragment extends Fragment {
         FriRecurrence = false;
         SatRecurrence = false;
         SunRecurrence = false;
+
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_add_habit_base, container, false);
-
 
         createHabit = root.findViewById(R.id.create_habit_tabs);
         title = root.findViewById(R.id.fragmentHabitTitle);
         description = root.findViewById(R.id.fragmentHabitDescription);
         startDate = root.findViewById(R.id.fragmentStartDate);
-
 
         Monday = root.findViewById(R.id.fragmentMonday);
         Tuesday = root.findViewById(R.id.fragmentMonday);
@@ -96,6 +95,7 @@ public class AddHabitBaseFragment extends Fragment {
         Saturday = root.findViewById(R.id.fragmentSaturday);
         Sunday  = root.findViewById(R.id.fragmentSunday);
 
+        publicHabit = (Switch) root.findViewById(R.id.publicHabit);
 
 
         startDate.setOnClickListener(new View.OnClickListener(){
@@ -214,16 +214,21 @@ public class AddHabitBaseFragment extends Fragment {
             }
         });
 
-
+        //if switch is on, the habit will become public to all users. If not, remains private.
+        publicHabit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    habitToPublic = true;
+                } else {
+                    habitToPublic = false;
+                }
+            }
+        });
 
 
 
 
         // adding listeners
-
-
-
-
 
         
         return root;
@@ -323,4 +328,8 @@ public class AddHabitBaseFragment extends Fragment {
                 break;
         }
     }
+
+
+
+
 }

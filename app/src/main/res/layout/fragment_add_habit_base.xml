@@ -52,17 +52,16 @@
         app:layout_constraintVertical_bias="0.13" />
 
     <Switch
-        android:id="@+id/fragmentGeolocation"
-        android:layout_width="187dp"
-        android:layout_height="92dp"
+        android:id="@+id/publicHabit"
+        android:layout_width="241dp"
+        android:layout_height="88dp"
         android:layout_marginBottom="56dp"
-        android:text="Enable Geolocation"
+        android:text="Enable As A Public Habit"
         android:textColorHighlight="#8C9EFF"
         android:textColorLink="#8C9EFF"
         android:thumbTint="#6200EE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.197"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentSaturday"
         app:layout_constraintVertical_bias="1.0" />
