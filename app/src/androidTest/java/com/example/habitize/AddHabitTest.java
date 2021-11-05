@@ -10,6 +10,9 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+
+import static org.hamcrest.CoreMatchers.allOf;
 
 import android.os.SystemClock;
 
@@ -47,8 +50,8 @@ public class AddHabitTest {
     @Before
     public void initValidate(){
         Intents.init();
-        testEmail = "rasoulpo@ualberta.ca";
-        testPassword = "password";
+        testEmail = "rick0grimes301@gmail.com";
+        testPassword = "12345678";
         testTitle = "Learn French";
         testDesc = "Go on DuoLingo and practice French";
         testStartDate = "11/05/2021";
@@ -63,39 +66,67 @@ public class AddHabitTest {
 
     @Before
     public void successLoginToAddHabitTravelTest(){
-//        onView(withId(R.id.email_login)).perform(replaceText(testEmail));
-//        onView(withId(R.id.password_login)).perform(replaceText(testPassword));
-//        onView(withId(R.id.LoginBTN)).perform(click());
-//        SystemClock.sleep(5000);
-//        intended(hasComponent(MainActivity.class.getName()));
-//        onView(withId(R.id.addHabit)).perform(click());
-//        intended(hasComponent(AddHabitTabsBase.class.getName()));
-    }
-
-    //Make sure title not empty
-    @Test
-    public void emptyTitleTest() {
         onView(withId(R.id.email_login)).perform(replaceText(testEmail));
         onView(withId(R.id.password_login)).perform(replaceText(testPassword));
         onView(withId(R.id.LoginBTN)).perform(click());
-        SystemClock.sleep(200000);
-        intended(hasComponent(MainActivity.class.getName()));
-//        onView(withId(R.id.addHabit)).perform(click());
-//        intended(hasComponent(AddHabitTabsBase.class.getName()));
-//        onView(withId(R.id.fragmentHabitTitle)).perform(typeText(testTitle), (ViewAction) closeSoftKeyboard());
-//        onView(withId(R.id.create_habit_tabs)).perform(click());
-//        onView(withId(R.id.fragmentHabitTitle)).check(matches(hasErrorText("Enter a habit title")));
+        SystemClock.sleep(5000);
+
     }
+
+    //Make sure that its signed in
+    @Test
+    public void successLogin() {
+
+        intended(hasComponent(MainActivity.class.getName()));
+    }
+    //Check the add habits button if it works and if it takes you to
+    //the right activity
+    @Test
+    public void addNewHabitAcctivity(){
+        onView(withId(R.id.addHabit)).perform(click());
+        SystemClock.sleep(1000);
+        intended(hasComponent(AddHabitTabsBase.class.getName()));
+    }
+    //Check the error massage when no data added
+    @Test
+    public void EmptyInputs(){
+        onView(withId(R.id.addHabit)).perform(click());
+        SystemClock.sleep(1000);
+        onView(withId(R.id.create_habit_tabs)).perform(click());
+        intended(hasComponent(AddHabitTabsBase.class.getName()));
+    }
+    //Add title to a new habit without the rest of the data
+    @Test
+    public void IncompleteInputs(){
+        onView(withId(R.id.addHabit)).perform(click());
+        SystemClock.sleep(1000);
+        onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
+        onView(withId(R.id.create_habit_tabs)).perform(click());
+        SystemClock.sleep(3000);
+        intended(hasComponent(AddHabitTabsBase.class.getName()));
+    }
+
+    @Test
+    public void createNewHabitSuccessful(){
+        onView(withId(R.id.addHabit)).perform(click());
+        SystemClock.sleep(1000);
+        onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
+        SystemClock.sleep(1000);
+        onView(withId(R.id.fragmentHabitDescription)).perform(replaceText(testDesc));
+        onView(withId(R.id.fragmentStartDate)).perform(click());
+        onView(withText("OK")).perform(click());
+        onView(withId(R.id.create_habit_tabs)).perform(click());
+        intended(hasComponent(MainActivity.class.getName()));
+
+    }
+
+
+
 
     @After
     public void tearDown() {
         Intents.release();
     }
-
-
-
-
-
 
 }
 
