@@ -38,7 +38,7 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="257dp"
         android:layout_height="95dp"
-        android:text="FOLLOW REQUESTS"
+        android:text="FOLLOWING"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
