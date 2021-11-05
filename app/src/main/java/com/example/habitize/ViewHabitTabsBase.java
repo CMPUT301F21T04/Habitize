@@ -78,25 +78,13 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
 
                 if (isChecked) {
+                    // The toggle is enabled
                     imgFrag.setEditable();
                     baseFrag.setEditable();
 
                     ConfirmEdit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            // update the list here.
-                            //ViewHabitBaseFragment baseFrag = (ViewHabitBaseFragment) getSupportFragmentManager().findFragmentByTag("f0");
-                            //ViewHabitImageFragment imgFrag = (ViewHabitImageFragment) getSupportFragmentManager().findFragmentByTag("f1");
-                            //if(!editable) {
-
-                            //editable = true;
-                            //}
-                            //else{
-                            //baseFrag.setNotEditable();
-                            //imgFrag.setNotEditable();
-                            //editable = false;
-
-                            //}
 
                             Uri img = imgFrag.getImage();
                             String title = baseFrag.getTitle();
@@ -123,7 +111,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
                         }
                     });
-                    // The toggle is enabled
+
                 } else {
                     // The toggle is disabled
                     baseFrag.setNotEditable();
