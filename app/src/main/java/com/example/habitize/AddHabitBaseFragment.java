@@ -62,15 +62,26 @@ public class AddHabitBaseFragment extends Fragment {
     private List<Habit> passedHabits;
     private static final String TAG = "MainActivity";
 
+    /*
+     * Required empty public constructor
+     */
     public AddHabitBaseFragment() {
-        // Required empty public constructor
+
     }
 
-
+    /**
+     * Will instantiate the UI view of the create habit screen
+     * @param inflater inflates the views in the fragment
+     * @param container for parent view that the fragment's UI should be attached to
+     * @param savedInstanceState to be used for Bundle where fragment is re-constructed from
+     *                             a previous saved state
+     * @return  returns the View of the create habit screen fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //set all day of the week occurrences to false so we can change later
         MonRecurrence = false;
         TueRecurrence = false;
         WedRecurrence = false;
@@ -82,11 +93,11 @@ public class AddHabitBaseFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_add_habit_base, container, false);
 
+        //find the views for each id
         createHabit = root.findViewById(R.id.create_habit_tabs);
         title = root.findViewById(R.id.fragmentHabitTitle);
         description = root.findViewById(R.id.fragmentHabitDescription);
         startDate = root.findViewById(R.id.fragmentStartDate);
-
         Monday = root.findViewById(R.id.fragmentMonday);
         Tuesday = root.findViewById(R.id.fragmentMonday);
         Wednesday = root.findViewById(R.id.fragmentWednesday);
@@ -94,18 +105,22 @@ public class AddHabitBaseFragment extends Fragment {
         Friday = root.findViewById(R.id.fragmentFriday);
         Saturday = root.findViewById(R.id.fragmentSaturday);
         Sunday  = root.findViewById(R.id.fragmentSunday);
-
         publicHabit = (Switch) root.findViewById(R.id.publicHabit);
 
 
+        /*
+         * Listener for choosing a date to start a habit. Will use a datePicker to do this below
+         */
         startDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                //get the current time zone and locale of the user's system
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+                //make dialog box to pick date
                 DatePickerDialog dialog = new DatePickerDialog(
                         getContext(),
                         android.R.style.Theme_DeviceDefault,
@@ -120,6 +135,9 @@ public class AddHabitBaseFragment extends Fragment {
             }
         });
 
+        /*
+         * This listener will set up the format of the date picker and update the text view
+         */
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -127,15 +145,17 @@ public class AddHabitBaseFragment extends Fragment {
                 month = month + 1;
                 //formats the date according to mm/dd/yyyy
                 Log.d(TAG, "onDateSet: mm/dd/yyyy: " + month + "/" + day + "/" + year);
-
                 String date = month + "/" + day + "/" + year;
-                //updates the textBox
+
+                //updates the text view
                 startDate.setText(date);
             }
         };
 
 
-        // listeners. Rachel shortened this last time
+        /*
+         * Monday's checkbox listener
+         */
         Monday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -147,6 +167,10 @@ public class AddHabitBaseFragment extends Fragment {
                 }
             }
         });
+
+        /*
+         * Tuesday's checkbox listener
+         */
         Tuesday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -158,6 +182,10 @@ public class AddHabitBaseFragment extends Fragment {
                 }
             }
         });
+
+        /*
+         * Wednesday's checkbox listener
+         */
         Wednesday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
