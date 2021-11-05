@@ -20,7 +20,7 @@ public class AddHabitImage extends AppCompatActivity {
 
     /**
      * Initialize activity
-     * @param savedInstanceState
+     * @param savedInstanceState to be used for Bundle where fragment is re-constructed from a previous state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +47,18 @@ public class AddHabitImage extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     * This method recieves the result in the openGallery method. The result is the image
+     * picked by the user from their files.
+     * @param requestCode is an int to help identify if the intent came back.
+     * @param resultCode is an int to help identify which method is called. In this case,
+     *                   we want to have resultCode equal to PICK_IMAGE.
+     * @param data is the intent that is passed through startActivityForResult
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
+            // this part can only be executed if the user executed openGallery first
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
         }

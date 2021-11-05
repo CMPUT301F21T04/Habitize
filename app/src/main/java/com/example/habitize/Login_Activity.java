@@ -51,7 +51,7 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
 
     /**
      * Will instantiate the UI view of the activity screen.
-     * @param savedInstanceState to be used for Bundle where fragment is re-contructed from a previous state
+     * @param savedInstanceState to be used for Bundle where fragment is re-constructed from a previous state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
