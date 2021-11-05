@@ -285,32 +285,32 @@ public class ViewHabitBaseFragment extends Fragment   {
 
 
     public String getTitle(){
-        return titleText;
+        return title.getText().toString();
     }
     public String getDescription(){
-        return descText;
+        return description.getText().toString();
     }
-    public String getDate(){ return startDateText;}
+    public String getDate(){ return startDate.getText().toString();}
     public boolean getMon(){
-        return MonRecurrence;
+        return Monday.isChecked();
     }
     public boolean getTue(){
-        return TueRecurrence;
+        return Tuesday.isChecked();
     }
     public boolean getWed(){
-        return WedRecurrence;
+        return Wednesday.isChecked();
     }
     public boolean getThur(){
-        return ThurRecurrence;
+        return Thursday.isChecked();
     }
     public boolean getFri(){
-        return FriRecurrence;
+        return Friday.isChecked();
     }
     public boolean getSat(){
-        return SatRecurrence;
+        return Saturday.isChecked();
     }
     public boolean getSun(){
-        return SunRecurrence;
+        return Sunday.isChecked();
     }
     // setters for fields
     public ViewHabitBaseFragment setMon(boolean mon){
@@ -418,3 +418,5 @@ public class ViewHabitBaseFragment extends Fragment   {
         }
     }
 }
+
+

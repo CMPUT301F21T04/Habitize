@@ -23,6 +23,7 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
 
     // TODO: Add more fields here. Image..etc
 
+
     public CustomListOfExistingFollowers(Context context, List<String> followers){
         super(context,0, followers);
         this.followers = followers;

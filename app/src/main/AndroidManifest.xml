@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.habitize">
+    package="com.example.habitize" >
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,13 +15,7 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Habitize">
-        <activity
-            android:name=".CustomListOfFollowRequests"
-            android:exported="false" />
-        <activity
-            android:name=".FollowRequests"
-            android:exported="false" />
+        android:theme="@style/Theme.Habitize" >
         <activity
             android:name=".AddHabitTabsBase"
             android:exported="true" />
@@ -31,6 +25,7 @@
         <activity
             android:name=".FollowingActivity"
             android:exported="false" />
+
         <activity
             android:name=".AddHabitImage"
             android:exported="false" />
@@ -41,9 +36,7 @@
         <activity android:name=".ViewHabitTabsBase" />
         <activity
             android:name=".Login_Activity"
-            android:exported="true">
-            android:name=".SignUp"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,9 +49,8 @@
         <activity
             android:name=".AddHabitActivity"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".TodaysHabitsActivity"
-            android:parentActivityName=".MainActivity" />
+        <activity android:name=".TodaysHabitsActivity"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
