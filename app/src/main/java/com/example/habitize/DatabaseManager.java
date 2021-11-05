@@ -24,6 +24,7 @@ public class DatabaseManager {
     private static CollectionReference users;
     private static Context loginContext;
     private static Context signUpContext;
+    private static SimpleDateFormat simpleDateFormat;
 
     private static onRegistrationLoginListener registrationListener;
     private static onLoginListener loginListener;
@@ -228,8 +229,9 @@ public class DatabaseManager {
     // pulls the habits in the list labelled to the weekday.
     // user is the current user. recievingList is the list we want to pull into. habitAdapter is the adapter we want to
     // notify when we fill it
-    /*
-    public static void getTodaysHabits(String user,ArrayList<Habit> recievingList,CustomAdapter habitAdapter){
+    // the authenticator class will become the listener and be forced to implement procedure
+    public static void getTodaysHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter){
+
         simpleDateFormat = new SimpleDateFormat("EEEE");
         Date d = new Date();
         //gives the day of the week of the user (if today is actually Monday it will say Monday)
@@ -291,8 +293,6 @@ public class DatabaseManager {
             }
         });
     }
-*/
-    // the authenticator class will become the listener and be forced to implement procedure
 
     // returns the user's habits if the user is found.
     // returns null if user does not exist
