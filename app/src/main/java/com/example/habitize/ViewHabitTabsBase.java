@@ -41,7 +41,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     String[] titles = {"INFO","IMAGE","RECORDS"};
 
     /**
-     *
+     * Initialize activity
      * @param savedInstanceState the previous instance generated
      */
     protected void onCreate(Bundle savedInstanceState){
@@ -169,7 +169,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
             }
             return returningFragment; }
 
-        
+
 
         @Override
         public int getItemCount() {

@@ -34,6 +34,10 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
     private CollectionReference followers;
     private CollectionReference following;
 
+    /**
+     * Initialize activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +69,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
          * Intent(getApplicationContext(),MainActivity.class)); finish(); }
          * 
          */
-
+        //send the user to login when login button
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,12 +106,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
                     return;
                 }
 
-
-                //if (inputPassword != inputConPass) {
-                 //   conPassword.setError("The passwords are not the same!");
-                 //   return;
-                //}
-
+                //check if the password are the same
                 if (!inputPassword.equals(inputConPass)) {
                     conPassword.setError("The passwords are not the same!");
                     return;
@@ -116,8 +115,9 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
 
                 progressBar.setVisibility(View.VISIBLE);
                 // TODO: the startActivity here might mess with NAVCONTROLLER
-                // call authentication here
+                // call authentication here using data Manager
                 DatabaseManager.setInfoForRegistration(user,inputEmail,first,last,inputConPass);
+                //check the user if is already signedUp
                 DatabaseManager.checkUsernameAndRegister();
 
 
@@ -125,6 +125,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         });
 
     }
+    
 
     @Override
     public void loginUser() {
