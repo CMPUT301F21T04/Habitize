@@ -3,6 +3,7 @@ package com.example.habitize;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,11 +26,12 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
     private FirebaseFirestore db;
     private String userAcct;
     private SimpleDateFormat simpleDateFormat;
+    private ProgressBar progressBar4;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todays_habits);
-
+        progressBar4 = findViewById(R.id.progressBar4);
 
         dataList = new ArrayList<>();
         posInFireBase = new ArrayList<>();
@@ -40,6 +42,12 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
         listView.setAdapter(habitAdapter);
 
         DatabaseManager.getTodaysHabits(dataList, habitAdapter,posInFireBase);
+
+        int totalHabits = posInFireBase.size();
+
+
+        //getTodaysHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
+        //        posInFirebase)
     }
 
 

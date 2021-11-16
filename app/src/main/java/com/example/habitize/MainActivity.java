@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Button todaysHabits;
     private Button followReq;
     private Button logOut;
+    private Button updateProgress;
     private ProgressBar progressBar3;
     private TextView textView2;
     private Toolbar toolBar;
@@ -66,7 +67,10 @@ public class MainActivity extends AppCompatActivity {
         followReq = (Button) findViewById(R.id.followReq);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
 
+
        // Branch the activities here:
+
+
 
         // When add habit button is clicked upon, it will bring you to a add activity screen
         addHabit.setOnClickListener(new View.OnClickListener() {

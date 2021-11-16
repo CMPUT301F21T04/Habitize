@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     private Button deleteButton;
     private int passedIndex;
     private boolean editable;
+    private TextView streak;
     String[] titles = {"INFO","IMAGE","RECORDS"};
 
     /**
@@ -58,6 +60,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         passedHabits = new ArrayList<>(); // we will get the latest list from the database
         passedIndex = (int)getIntent().getExtras().getSerializable("index");
 
+        streak = (TextView) findViewById(R.id.streaks);
 
         // pulling the most recent habits
         DatabaseManager.getAllHabits(passedHabits);
@@ -67,6 +70,8 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         pager.setOffscreenPageLimit(8);
         pager.setAdapter(mAdapter);
         tabLayout = findViewById(R.id.ViewHabitTabs);
+
+        streak.setText("SHOW STREAKS HERE");
 
         // connects the tablayout to the pager navigation. Now they are synced on swipes
         new TabLayoutMediator(tabLayout, pager, new TabLayoutMediator.TabConfigurationStrategy() {

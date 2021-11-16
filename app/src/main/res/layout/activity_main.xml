@@ -96,17 +96,5 @@
         app:layout_constraintTop_toTopOf="@+id/my_toolbar"
         app:layout_constraintVertical_bias="0.918" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Keep up the good work!"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/my_toolbar"
-        app:layout_constraintVertical_bias="0.872" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
