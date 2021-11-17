@@ -115,8 +115,8 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                         String currentDate = formatter.format(d);
                         Record newRecord = new Record(currentDate,comment.getText().toString());
                         DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
-                       Intent intent = new Intent(getActivity(),MainActivity.class);
-                       startActivity(intent);
+                        Intent intent = new Intent(getActivity(),MainActivity.class);
+                        startActivity(intent);
                     }
                 }).create();
     }
