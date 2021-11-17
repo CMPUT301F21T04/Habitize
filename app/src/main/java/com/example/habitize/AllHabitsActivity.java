@@ -84,14 +84,13 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
     @Override
     public void recordEvent(int position) {
         //on all habits screen
-        Intent intent = new Intent(AllHabitsActivity.this,RecordCreate.class);
         Bundle habitBundle = new Bundle();
         //pass down habit
         habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
         habitBundle.putSerializable("index",position);
         habitBundle.putSerializable("habits",dataList);
-        intent.putExtras(habitBundle);
         RecordCreate newRecord =  new RecordCreate();
+        newRecord.setArguments(habitBundle);
         newRecord.show(getSupportFragmentManager(),"new record");
     }
 }

@@ -31,6 +31,9 @@ import android.widget.TextView;
 import com.google.type.LatLng;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class RecordCreate extends DialogFragment implements CustomAdapter.habitCheckListener {
@@ -58,6 +61,11 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_record_create,null);
 
+        // Access arguments
+
+
+        Habit args = (Habit) getArguments().getSerializable("habit");
+
         // Link UI components to the its respective pairs in XML
         RecordLocBTN = view.findViewById(R.id.recordLocBTN);
         RecordImgBTN = view.findViewById(R.id.recordImgBTN);
@@ -79,7 +87,6 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                 // goto MapsActivity class
                 Intent intent = new Intent(getActivity(),MapsActivity.class);
                 startActivity(intent);
-                // Access arguments
             }
         });
 
@@ -102,6 +109,12 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        Date d = new Date();
+                        String currentDate = formatter.format(d);
+                        Record newRecord = new Record(currentDate,comment.getText().toString());
+                        DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
                        Intent intent = new Intent(getActivity(),MainActivity.class);
                        startActivity(intent);
                     }
