@@ -72,20 +72,20 @@ public class AddHabitActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_habit_info);
+        setContentView(R.layout.fragment_add_habit_base);
 
         //find the views
         createHabit = findViewById(R.id.create_habit_tabs);
         title = findViewById(R.id.habitTitle);
         description = findViewById(R.id.habitDescription);
         startDate = findViewById(R.id.startDate);
-        Monday = findViewById(R.id.monday);
-        Tuesday = findViewById(R.id.tuesday);
-        Wednesday = findViewById(R.id.wednesday);
-        Thursday = findViewById(R.id.thursday);
-        Friday = findViewById(R.id.friday);
-        Saturday = findViewById(R.id.saturday);
-        Sunday = findViewById(R.id.sunday);
+//        Monday = findViewById(R.id.monday);
+//        Tuesday = findViewById(R.id.tuesday);
+//        Wednesday = findViewById(R.id.wednesday);
+//        Thursday = findViewById(R.id.thursday);
+//        Friday = findViewById(R.id.friday);
+//        Saturday = findViewById(R.id.saturday);
+//        Sunday = findViewById(R.id.sunday);
         Title = findViewById((R.id.habitTitle));
         Description = findViewById((R.id.habitDescription));
 

@@ -73,7 +73,7 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         imageViewer = view.findViewById(R.id.recordImg);
         locViewer = view.findViewById(R.id.locationView);
 
-        if (getArguments()!=null){
+        if (getArguments()!=null && getArguments().containsKey("loc")){
             double lat = getArguments().getSerializable("lat").hashCode();
             double lng = getArguments().getSerializable("lng").hashCode();
             String loc = (String) getArguments().getSerializable("loc");
@@ -109,14 +109,12 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         Date d = new Date();
                         String currentDate = formatter.format(d);
                         Record newRecord = new Record(currentDate,comment.getText().toString());
                         DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
-                        Intent intent = new Intent(getActivity(),MainActivity.class);
-                        startActivity(intent);
+
                     }
                 }).create();
     }
