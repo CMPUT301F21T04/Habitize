@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -27,6 +28,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class RecordCreate extends DialogFragment implements CustomAdapter.habitCheckListener {
     // Ui components
@@ -41,6 +46,11 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         // Required empty public constructor
     }
 
+    /**
+     * This method starts the activity
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +58,9 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_record_create,null);
 
         // Access arguments
-        if (getArguments()!=null){
-            Bundle args =getArguments();
 
-        }
+
+        Habit args = (Habit) getArguments().getSerializable("habit");
 
         // Link UI components to the its respective pairs in XML
         RecordLocBTN = view.findViewById(R.id.recordLocBTN);
@@ -60,6 +69,7 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         imageViewer = view.findViewById(R.id.recordImg);
 
 
+        // Listener for the location button. When the button is clicked, redirect user to the maps activity.
         RecordLocBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,12 +79,15 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
             }
         });
 
+
+        // Listener for the image button. When the button is clicked, redirect user to the openGallery method
         RecordImgBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openGallery();
             }
         });
+
 
         // Create the dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -85,21 +98,37 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO: how to handle adding this record to the firebase
+
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        Date d = new Date();
+                        String currentDate = formatter.format(d);
+                        Record newRecord = new Record(currentDate,comment.getText().toString());
+                        DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
                     }
                 }).create();
     }
 
     @Override
     public void recordEvent(int position) {
-
+        // will handle which habit to append the record to.
     }
+
+    /**
+     * This method opens the user's gallery to be able to pick an image to the app.
+     */
     private void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
-
+    /**
+     * This method receives the result in the openGallery method. The result is the image
+     * picked by the user from their files.
+     * @param requestCode is an int to help identify if the intent came back.
+     * @param resultCode is an int to help identify which method is called. In this case,
+     *                   we want to have resultCode equal to PICK_IMAGE.
+     * @param data is the intent that is passed through startActivityForResult
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -112,6 +141,10 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         }
     }
 
+    /**
+     * This method takes the uploaded image from the storage and handles it here.
+     * Extract the info from the imageView and convert it to a bitmap.
+     */
     private void uploadImg() {
         // get the data from an ImageView as bytes
         // create a storage reference from our app
@@ -120,7 +153,5 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         Bitmap bitmap = ((BitmapDrawable) imageViewer.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-
-        // connect to habit
     }
 }

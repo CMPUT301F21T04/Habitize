@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Login_Activity extends AppCompatActivity implements DatabaseManager.onLoginListener {
+    // variables to be worked in
     EditText email_EditText, password_EditText;
     Button login_Button, register_Button, forgot_Button;
     ProgressBar progressBar;
@@ -46,9 +47,12 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
     private FirebaseFirestore db; // our database
     private CollectionReference UsersCol;
     private DocumentReference userRef;
-
     private DocumentSnapshot userData;
 
+    /**
+     * Will instantiate the UI view of the activity screen.
+     * @param savedInstanceState to be used for Bundle where fragment is re-constructed from a previous state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
@@ -64,20 +68,20 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
         progressBar.setVisibility(View.GONE);
         DatabaseManager.setLoginContext(this);
 
-        // Access to Firebase
-
         // Create a Pop up dialog when user forgot password
         resetPass_alert = new AlertDialog.Builder(this);
         inflater = this.getLayoutInflater();
 
 
 
+        //  Listener for the login button. When clicked and passed authentication,
+        // then redirect to the main screen of the app.
         login_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = email_EditText.getText().toString().trim();
                 String password = password_EditText.getText().toString().trim();
-
+                // Error handlers to make sure the required fields are filled.
                 if (TextUtils.isEmpty(email)){
                     email_EditText.setError("Email is Required.");
                     return;
@@ -101,13 +105,19 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
 
             }
         });
+
+
+        // Listener for the register button. When user clicked the register button,
+        // redirect user to register screen.
         register_Button.setOnClickListener(new View.OnClickListener() {
-            //when register button is clicked, redirect user to register screen
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),SignUp.class));
             }
         });
+
+        // Listener for the forgot password button. When user clicked the register button,
+        //redirect user to forgot password screen.
         forgot_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,10 +154,12 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
         });
     }
 
+    /**
+     * This method will be called to transition from the login screen to the main screen.
+     */
     @Override
     public void loginUser() {
         Intent intent = new Intent(Login_Activity.this,MainActivity.class);
         startActivity(intent);
-
     }
 }

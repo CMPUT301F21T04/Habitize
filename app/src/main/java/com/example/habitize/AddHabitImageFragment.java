@@ -20,17 +20,29 @@ public class AddHabitImageFragment extends Fragment {
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
 
+    /*
+     * Empty required constructor
+     */
     public AddHabitImageFragment(){
     }
 
 
-    // get image from fragment to send to the database
+    /*
+     * get image from fragment to send to the database
+     */
     public Uri getImage(){
         return this.imageUri;
     }
 
 
-
+    /**
+     * Will instantiate the UI view of the create habit screen
+     * @param inflater inflates tge views in the fragment
+     * @param container for parent view that the fragment's UI should be attached to
+     * @param savedInstanceState to be used for Bundle where fragment is re-constructed from a
+     *                                    previous state
+     * @return returns the View of a the create habit screen fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,11 +60,21 @@ public class AddHabitImageFragment extends Fragment {
         });
         return root;
     }
+
+    /*
+     * opens gallery in another screen
+     */
     private void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

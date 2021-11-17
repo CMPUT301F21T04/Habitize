@@ -40,8 +40,13 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     private boolean editable;
     String[] titles = {"INFO","IMAGE","RECORDS"};
 
+    /**
+     * Initialize activity
+     * @param savedInstanceState the previous instance generated
+     */
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        //Connecting view habits variables to xml files
         setContentView(R.layout.activity_view_habit_tabs);
         pager = findViewById(R.id.viewPager);
         ConfirmEdit = findViewById(R.id.ConfirmEdit);
@@ -71,6 +76,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
             }
         }).attach();
 
+        //edit toggle button which
         AllowEdit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ViewHabitBaseFragment baseFrag = (ViewHabitBaseFragment) getSupportFragmentManager().findFragmentByTag("f0");
@@ -78,24 +84,14 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
 
                 if (isChecked) {
+                    //make input boxes editable
                     imgFrag.setEditable();
                     baseFrag.setEditable();
-
+                    //confirm button to to update new data in database
                     ConfirmEdit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            // update the list here.
-                            //ViewHabitBaseFragment baseFrag = (ViewHabitBaseFragment) getSupportFragmentManager().findFragmentByTag("f0");
-                            //ViewHabitImageFragment imgFrag = (ViewHabitImageFragment) getSupportFragmentManager().findFragmentByTag("f1");
-                            //if(!editable) {
-
-                            //editable = true;
-                            //}
-                            //else{
-                            //baseFrag.setNotEditable();
-                            //imgFrag.setNotEditable();
-                            //editable = false;
-                            //}
+                            //Init updated  Habit variables
                             Uri img = imgFrag.getImage();
                             String title = baseFrag.getTitle();
                             String description = baseFrag.getDescription();
@@ -119,12 +115,12 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                             finish();
                         }
                     });
-                    // The toggle is enabled
+                    // The toggle is disabled
                 } else {
                     // The toggle is disabled
                     baseFrag.setNotEditable();
                     imgFrag.setNotEditable();
-                    //editable = false;
+
                 }
             }
         });
@@ -145,6 +141,8 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
     // class for managing the views in the pager. Tells the pager where to get the fragments on
     // navigation.
+
+
     class ViewAdapter extends FragmentStateAdapter{
 
         public ViewAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -161,7 +159,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                     returningFragment = new ViewHabitImageFragment();
                     break;
                 case 2:
-                    returningFragment = new ViewRecordsFragment();
+                    returningFragment = new ViewRecordsFragment(passedHabit);
                     break;
                 default:
                     // on creation, our passed habit fills in the fragment's information fields
@@ -170,6 +168,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                             passedHabit.getFridayR(),passedHabit.getSaturdayR(),passedHabit.getSundayR());
             }
             return returningFragment; }
+
 
 
         @Override

@@ -48,7 +48,10 @@ public class Authentication{
     Authentication(){
     }
 
-    // this runs after DatabaseManager.checkUsernameAndRegister(). Checks the validity of the email
+    /**
+     * this runs after DatabaseManager.checkUsernameAndRegister(). Checks the validity of the email
+     */
+
     public static void checkEmailBeforeRegistering(){
         fAuth.createUserWithEmailAndPassword(DatabaseManager.getInputEmail(),DatabaseManager.getInputPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -66,8 +69,9 @@ public class Authentication{
     }
 
 
-
-
+    /**
+     * This function takes users and log them in
+     */
     public static void authenticateAndSignIn(){
         fAuth.signInWithEmailAndPassword(DatabaseManager.getInputEmail(),DatabaseManager.getInputPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

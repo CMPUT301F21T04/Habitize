@@ -9,13 +9,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-
 import java.util.List;
 
+/**
+ * Will populate usernames of existing followers to existingFollowerName TextView
+ * inside of activity_custom_list_of_existing_followers.xml UI.
+ * */
 public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
 
     private final List<String> followers;
@@ -24,11 +23,25 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
     // TODO: Add more fields here. Image..etc
 
 
+    /**
+     * Initializes list of existing follower usernames and context variables.
+     * @param context the context to which the followers will be populated.
+     * @param followers is the list of existing follower usernames as Strings.
+     * */
     public CustomListOfExistingFollowers(Context context, List<String> followers){
         super(context,0, followers);
         this.followers = followers;
         this.context = context;
     }
+
+    /**
+     * Sets existing follower usernames as the name field for existing followers
+     * inside of custom list.
+     * @param position the integer value of a particular existing follower username
+     * inside of followers list.
+     * @param convertView If possible this is the old view to reuse.
+     * @param parent parent of the View to be added.
+     * */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
