@@ -159,7 +159,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                     returningFragment = new ViewHabitImageFragment();
                     break;
                 case 2:
-                    returningFragment = new ViewRecordsFragment();
+                    returningFragment = new ViewRecordsFragment(passedHabit);
                     break;
                 default:
                     // on creation, our passed habit fills in the fragment's information fields

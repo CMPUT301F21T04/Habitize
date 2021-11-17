@@ -8,11 +8,13 @@ import androidx.annotation.Nullable;
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
@@ -138,28 +140,86 @@ public class DatabaseManager {
     /**
      * get records for each user
      * @param UUID
+     * @param adapter
      */
-    public static void getRecord(String UUID){
-        db.collection("Records").document(UUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+        public static void getRecord(String UUID, ArrayList<Record> recievingList, RecordAdapter adapter){
+        db.collection("Users").document(user).collection("Records").document(UUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                recievingList.clear();
                 // get the mapped data of records
-                ArrayList<Record> mappedData = (ArrayList<Record>) documentSnapshot.get("records");
+                ArrayList<Record> mappedRecords = (ArrayList<Record>) value.get("records");
+                // retrieving all records
+                for (int i = 0; i < mappedRecords.size(); i++) {
+                    Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
+                    String date = (String) hashedRecord.get("date");
+                    String description = (String) hashedRecord.get("description");
+                    recievingList.add(new Record(date, description));
+                }
+                adapter.notifyDataSetChanged();
             }
         });
     }
 
+
     /**
      * Takes the new records for the user and update them
-     * @param UUID
-     * @param updatedRecords
+     * @param UUID a user has a habit record collection. This is the reference for the specific habit
+     * @param newRecord
+     * there are three cases here. 1 it is our first time making a record so we make a collection and a document
+     * 2. it is our first time making a record for that habit so we create a document
+     * 3. we are adding a new record so we need to pull and update.
      */
-    public static void updateRecord(String UUID,ArrayList<Record> updatedRecords){
-        HashMap<String,Object> mappedData = new HashMap<>(); // hash the record
-        mappedData.put("records",updatedRecords); // put it in the record space
-        db.collection("Records").document(UUID).update(mappedData); // store it in the record collection
+    public static void updateRecord(String UUID,Record newRecord){
+        db.collection("Users").document(user).collection("Records").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(queryDocumentSnapshots.size() == 0){
+                    // no such collection exists. We just create one. since this must be our first time calling this
+                    ArrayList<Record> records = new ArrayList<>();
+                    records.add(newRecord);
+                    HashMap<String,Object> mappedData = new HashMap<>(); // hash the record
+                    mappedData.put("records",records); // put it in the record space
+                    db.collection("Users").document(user).collection("Records").document(UUID).set(mappedData);
+                }
+                else{
+                    // this collection exists, we must check whether the document exists now.
 
+                    db.collection("Users").document(user).collection("Records").document(UUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            // we get the the document at the UUID
+                            if (documentSnapshot.exists()) {
+                                ArrayList<Record> mappedRecords = (ArrayList<Record>) documentSnapshot.get("records");
+                                ArrayList<Record> updatedRecords = new ArrayList<>();
+                                // retrieving all records
+                                for (int i = 0; i < mappedRecords.size(); i++) {
+                                    Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
+                                    String date = (String) hashedRecord.get("date");
+                                    String description = (String) hashedRecord.get("description");
+                                    updatedRecords.add(new Record(date, description));
+                                }
+                                updatedRecords.add(newRecord);
+                                HashMap<String, Object> mappedDate = new HashMap<>();
+                                mappedDate.put("records", updatedRecords);
+                                db.collection("Users").document(user).collection("Records").document(UUID).set(mappedDate);
+                            }
+                            else{
+                                ArrayList<Record> records = new ArrayList<>();
+                                records.add(newRecord);
+                                HashMap<String,Object> mappedData = new HashMap<>(); // hash the record
+                                mappedData.put("records",records); // put it in the record space
+                                db.collection("Users").document(user).collection("Records").document(UUID).set(mappedData);
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
+
+
 
     /**
      *
@@ -200,7 +260,13 @@ public class DatabaseManager {
         db.collection("Users").document(user).update(followingList);
         HashMap<String,String> emailMap = new HashMap<>();
         emailMap.put("user",user);
+
+        HashMap<String,Object> recordList = new HashMap<>();
+        recordList.put("Records",new ArrayList<>());
+
         db.collection("EmailToUser").document(inputEmail).set(emailMap);
+
+
 
 
 

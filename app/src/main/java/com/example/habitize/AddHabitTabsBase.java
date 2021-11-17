@@ -129,7 +129,6 @@ public class AddHabitTabsBase extends AppCompatActivity {
                     DatabaseManager.updateHabits(passedHabits);
                     finish();
                 }
-
             }
         });
 

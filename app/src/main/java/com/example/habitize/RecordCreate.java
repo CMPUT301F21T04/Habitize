@@ -28,6 +28,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class RecordCreate extends DialogFragment implements CustomAdapter.habitCheckListener {
@@ -55,10 +58,9 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_record_create,null);
 
         // Access arguments
-        if (getArguments()!=null){
-            Bundle args =getArguments();
 
-        }
+
+        Habit args = (Habit) getArguments().getSerializable("habit");
 
         // Link UI components to the its respective pairs in XML
         RecordLocBTN = view.findViewById(R.id.recordLocBTN);
@@ -96,7 +98,12 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO: how to handle adding this record to the firebase
+
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        Date d = new Date();
+                        String currentDate = formatter.format(d);
+                        Record newRecord = new Record(currentDate,comment.getText().toString());
+                        DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
                     }
                 }).create();
     }
