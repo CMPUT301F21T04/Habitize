@@ -140,13 +140,16 @@ public class DatabaseManager {
     /**
      * get records for each user
      * @param UUID
+     * @param adapter
      */
-    public static void getRecord(String UUID,ArrayList<Record> recievingList){
-        db.collection("Records").document(UUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+        public static void getRecord(String UUID, ArrayList<Record> recievingList, RecordAdapter adapter){
+        db.collection("Users").document(user).collection("Records").document(UUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                recievingList.clear();
                 // get the mapped data of records
-                ArrayList<Record> mappedRecords = (ArrayList<Record>) documentSnapshot.get("records");
+                ArrayList<Record> mappedRecords = (ArrayList<Record>) value.get("records");
                 // retrieving all records
                 for (int i = 0; i < mappedRecords.size(); i++) {
                     Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
@@ -154,8 +157,7 @@ public class DatabaseManager {
                     String description = (String) hashedRecord.get("description");
                     recievingList.add(new Record(date, description));
                 }
-
-
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -213,7 +215,6 @@ public class DatabaseManager {
                         }
                     });
                 }
-
             }
         });
     }
