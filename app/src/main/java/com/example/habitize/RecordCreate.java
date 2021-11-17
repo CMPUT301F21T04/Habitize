@@ -26,6 +26,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.type.LatLng;
 
 import java.io.ByteArrayOutputStream;
 
@@ -35,6 +38,7 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
     private Button RecordLocBTN, RecordImgBTN;
     private EditText comment;
     private ImageView imageViewer;
+    private TextView locViewer;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
     private String imgPath ="";
@@ -54,18 +58,19 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_record_create,null);
 
-        // Access arguments
-        if (getArguments()!=null){
-            Bundle args =getArguments();
-
-        }
-
         // Link UI components to the its respective pairs in XML
         RecordLocBTN = view.findViewById(R.id.recordLocBTN);
         RecordImgBTN = view.findViewById(R.id.recordImgBTN);
         comment = view.findViewById(R.id.recordComment);
         imageViewer = view.findViewById(R.id.recordImg);
+        locViewer = view.findViewById(R.id.locationView);
 
+        if (getArguments()!=null){
+            double lat = getArguments().getSerializable("lat").hashCode();
+            double lng = getArguments().getSerializable("lng").hashCode();
+            String loc = (String) getArguments().getSerializable("loc");
+            locViewer.setText(loc);
+        }
 
         // Listener for the location button. When the button is clicked, redirect user to the maps activity.
         RecordLocBTN.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +79,7 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                 // goto MapsActivity class
                 Intent intent = new Intent(getActivity(),MapsActivity.class);
                 startActivity(intent);
+                // Access arguments
             }
         });
 
@@ -96,7 +102,8 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO: how to handle adding this record to the firebase
+                       Intent intent = new Intent(getActivity(),MainActivity.class);
+                       startActivity(intent);
                     }
                 }).create();
     }

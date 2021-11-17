@@ -35,6 +35,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.common.api.Status;
@@ -66,6 +67,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -98,7 +100,7 @@ public class MapsActivity extends AppCompatActivity
 
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
-    private Location lastKnownLocation;
+    Location lastKnownLocation;
 
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
@@ -128,7 +130,14 @@ public class MapsActivity extends AppCompatActivity
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Bundle info = new Bundle();
+                info.putSerializable("lat", lastKnownLocation.getLatitude());
+                info.putSerializable("lng", lastKnownLocation.getLongitude());
+                String loc = address.getText().toString();
+                info.putSerializable("loc",loc);
+                RecordCreate args = new RecordCreate();
+                args.setArguments(info);
+                args.show(getSupportFragmentManager(),"added location");
             }
         });
 
@@ -291,7 +300,7 @@ public class MapsActivity extends AppCompatActivity
         map.clear(); // remove all previous markers
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(lat);
-        markerOptions.title("Current position");
+        markerOptions.title("Desired position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
         currMarked = map.addMarker(markerOptions);
         if (newPlace != null) {
@@ -303,6 +312,7 @@ public class MapsActivity extends AppCompatActivity
         temp.setLatitude(lat.latitude);
         temp.setLongitude(lat.longitude);
         setLocation(temp);
+        lastKnownLocation = temp;
 
 
     }
