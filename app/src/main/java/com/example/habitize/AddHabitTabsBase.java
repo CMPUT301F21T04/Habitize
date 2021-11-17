@@ -127,6 +127,9 @@ public class AddHabitTabsBase extends AppCompatActivity {
                     // add it to the user list
                     passedHabits.add(newHabit);
                     DatabaseManager.updateHabits(passedHabits);
+                    Record record = new Record("10/02/03","nyo");
+                    DatabaseManager.updateRecord(newHabit.getRecordAddress(),record);
+
                     finish();
                 }
 
