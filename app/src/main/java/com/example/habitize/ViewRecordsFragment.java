@@ -21,6 +21,7 @@ public class ViewRecordsFragment extends Fragment {
     private String user;
     private ListView list;
     private RecordAdapter recordAdapter;
+    private Habit passedHabit;
 
     public ViewRecordsFragment(){
     }

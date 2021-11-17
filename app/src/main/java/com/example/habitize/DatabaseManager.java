@@ -170,11 +170,10 @@ public class DatabaseManager {
      * 3. we are adding a new record so we need to pull and update.
      */
     public static void updateRecord(String UUID,Record newRecord){
-        db.collection("Users").document(user).collection("Records").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("Users").document(user).collection("Records").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            // we first look the collection up to see if it was created before
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(value.size() == 0){
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(queryDocumentSnapshots.size() == 0){
                     // no such collection exists. We just create one. since this must be our first time calling this
                     ArrayList<Record> records = new ArrayList<>();
                     records.add(newRecord);
@@ -184,7 +183,7 @@ public class DatabaseManager {
                 }
                 else{
                     // this collection exists, we must check whether the document exists now.
-                    db.collection("Users").document(user).collection("Records").document(UUID);
+
                     db.collection("Users").document(user).collection("Records").document(UUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -214,6 +213,7 @@ public class DatabaseManager {
                         }
                     });
                 }
+
             }
         });
     }
