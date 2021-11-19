@@ -41,6 +41,8 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
     private String imgPath ="";
+    private byte[] byteArr;
+
 
     public RecordCreate() {
         // Required empty public constructor
@@ -67,6 +69,7 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         RecordImgBTN = view.findViewById(R.id.recordImgBTN);
         comment = view.findViewById(R.id.recordComment);
         imageViewer = view.findViewById(R.id.recordImg);
+        byteArr = null; // set it to null. We will sometimes upload null images.
 
 
         // Listener for the location button. When the button is clicked, redirect user to the maps activity.
@@ -88,7 +91,6 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
             }
         });
 
-
         // Create the dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -99,10 +101,19 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+
+                        imageViewer.setDrawingCacheEnabled(true);
+                        imageViewer.buildDrawingCache();
+                        Bitmap bitmap = ((BitmapDrawable) imageViewer.getDrawable()).getBitmap();
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        byteArr = baos.toByteArray();
+
+
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         Date d = new Date();
                         String currentDate = formatter.format(d);
-                        Record newRecord = new Record(currentDate,comment.getText().toString());
+                        Record newRecord = new Record(currentDate,comment.getText().toString(),null );
                         DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
                     }
                 }).create();
@@ -136,7 +147,6 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
             if (requestCode==PICK_IMAGE) {
                 imageUri = data.getData();
                 imageViewer.setImageURI(imageUri);
-                uploadImg();
             }
         }
     }
@@ -148,10 +158,12 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
     private void uploadImg() {
         // get the data from an ImageView as bytes
         // create a storage reference from our app
+        // byteArr is what will actually be stored at the end.
         imageViewer.setDrawingCacheEnabled(true);
         imageViewer.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) imageViewer.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byteArr = baos.toByteArray();
     }
 }

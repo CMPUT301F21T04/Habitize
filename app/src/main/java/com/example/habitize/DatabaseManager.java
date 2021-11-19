@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,6 +35,7 @@ public class DatabaseManager {
     private static Context loginContext;
     private static Context signUpContext;
     private static SimpleDateFormat simpleDateFormat;
+    private static final FirebaseDatabase fbdb;
 
     private static onRegistrationLoginListener registrationListener;
     private static onLoginListener loginListener;
@@ -50,6 +52,7 @@ public class DatabaseManager {
     // we initialize the firestore ONCE. Many objects but all will refer to the same instance
     static {
         db = FirebaseFirestore.getInstance();
+        fbdb = FirebaseDatabase.getInstance();
         users = db.collection("Users");
     }
 
@@ -151,11 +154,13 @@ public class DatabaseManager {
                 // get the mapped data of records
                 ArrayList<Record> mappedRecords = (ArrayList<Record>) value.get("records");
                 // retrieving all records
-                for (int i = 0; i < mappedRecords.size(); i++) {
-                    Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
-                    String date = (String) hashedRecord.get("date");
-                    String description = (String) hashedRecord.get("description");
-                    recievingList.add(new Record(date, description));
+                if(mappedRecords != null) {
+                    for (int i = 0; i < mappedRecords.size(); i++) {
+                        Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
+                        String date = (String) hashedRecord.get("date");
+                        String description = (String) hashedRecord.get("description");
+                        recievingList.add(new Record(date, description, null));
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -198,7 +203,7 @@ public class DatabaseManager {
                                     Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
                                     String date = (String) hashedRecord.get("date");
                                     String description = (String) hashedRecord.get("description");
-                                    updatedRecords.add(new Record(date, description));
+                                    updatedRecords.add(new Record(date, description,null));
                                 }
                                 updatedRecords.add(newRecord);
                                 HashMap<String, Object> mappedDate = new HashMap<>();
