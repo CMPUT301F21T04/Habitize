@@ -26,6 +26,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.type.LatLng;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
@@ -38,11 +41,10 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
     private Button RecordLocBTN, RecordImgBTN;
     private EditText comment;
     private ImageView imageViewer;
+    private TextView locViewer;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
     private String imgPath ="";
-    private byte[] byteArr;
-
 
     public RecordCreate() {
         // Required empty public constructor
@@ -69,8 +71,14 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         RecordImgBTN = view.findViewById(R.id.recordImgBTN);
         comment = view.findViewById(R.id.recordComment);
         imageViewer = view.findViewById(R.id.recordImg);
-        byteArr = null; // set it to null. We will sometimes upload null images.
+        locViewer = view.findViewById(R.id.locationView);
 
+        if (getArguments()!=null && getArguments().containsKey("loc")){
+            double lat = getArguments().getSerializable("lat").hashCode();
+            double lng = getArguments().getSerializable("lng").hashCode();
+            String loc = (String) getArguments().getSerializable("loc");
+            locViewer.setText(loc);
+        }
 
         // Listener for the location button. When the button is clicked, redirect user to the maps activity.
         RecordLocBTN.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +99,7 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
             }
         });
 
+
         // Create the dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -100,19 +109,10 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-
-                        imageViewer.setDrawingCacheEnabled(true);
-                        imageViewer.buildDrawingCache();
-                        Bitmap bitmap = ((BitmapDrawable) imageViewer.getDrawable()).getBitmap();
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                        byteArr = baos.toByteArray();
-
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         Date d = new Date();
                         String currentDate = formatter.format(d);
-                        Record newRecord = new Record(currentDate,comment.getText().toString(),null );
+                        Record newRecord = new Record(currentDate,comment.getText().toString(),null);
                         DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
                     }
                 }).create();
@@ -146,6 +146,7 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
             if (requestCode==PICK_IMAGE) {
                 imageUri = data.getData();
                 imageViewer.setImageURI(imageUri);
+                uploadImg();
             }
         }
     }
@@ -157,12 +158,10 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
     private void uploadImg() {
         // get the data from an ImageView as bytes
         // create a storage reference from our app
-        // byteArr is what will actually be stored at the end.
         imageViewer.setDrawingCacheEnabled(true);
         imageViewer.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) imageViewer.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byteArr = baos.toByteArray();
     }
 }

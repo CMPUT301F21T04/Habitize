@@ -35,6 +35,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.common.api.Status;
@@ -48,9 +49,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -64,6 +67,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -79,6 +83,7 @@ public class MapsActivity extends AppCompatActivity
     TextView address;
     Button retryLocBTN, locSearchBTN, back;
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
+    Marker currMarked;
 
     // The entry point to the Places API.
     private PlacesClient placesClient;
@@ -95,7 +100,7 @@ public class MapsActivity extends AppCompatActivity
 
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
-    private Location lastKnownLocation;
+    Location lastKnownLocation;
 
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
@@ -125,12 +130,19 @@ public class MapsActivity extends AppCompatActivity
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Bundle info = new Bundle();
+                info.putSerializable("lat", lastKnownLocation.getLatitude());
+                info.putSerializable("lng", lastKnownLocation.getLongitude());
+                String loc = address.getText().toString();
+                info.putSerializable("loc",loc);
+                RecordCreate args = new RecordCreate();
+                args.setArguments(info);
+                args.show(getSupportFragmentManager(),"added location");
             }
         });
 
         // Construct a PlacesClient
-        Places.initialize(getApplicationContext(), "@string/google_maps_key");
+        Places.initialize(getApplicationContext(), "AIzaSyBYB0fEQjiorItqGhF8RyD9GVV_z7qOF5c");
         placesClient = Places.createClient(this);
 
         // Construct a FusedLocationProviderClient.
@@ -163,26 +175,6 @@ public class MapsActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap map) {
         this.map = map;
-
-        // Use a custom info window adapter to handle multiple lines of text in the
-        // info window contents.
-        this.map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
-            @Override
-            // Return null here, so that getInfoContents() is called next.
-            public View getInfoWindow(Marker arg0) {
-                return null;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
-                // Inflate the search stuff later
-                View infoWindow = getLayoutInflater().inflate(R.layout.activity_maps, (FrameLayout) findViewById(R.id.map), false);
-
-                return infoWindow;
-            }
-        });
-
 
         // Prompt the user for permission.
         createLocationRequest();
@@ -227,6 +219,12 @@ public class MapsActivity extends AppCompatActivity
                                         new LatLng(lastKnownLocation.getLatitude(),
                                                 lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                             }
+                            MarkerOptions markerOptions = new MarkerOptions();
+                            markerOptions.position(new LatLng(lastKnownLocation.getLatitude(),
+                                    lastKnownLocation.getLongitude()));
+                            markerOptions.title("Current position");
+                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                            currMarked = map.addMarker(markerOptions);
                             setLocation(lastKnownLocation);
                         }
                     }
@@ -299,6 +297,12 @@ public class MapsActivity extends AppCompatActivity
     public void setNewLocation(Place newPlace){
         // set the new location that the user inputted to be the new location of the habit
         LatLng lat = newPlace.getLatLng();
+        map.clear(); // remove all previous markers
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(lat);
+        markerOptions.title("Desired position");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        currMarked = map.addMarker(markerOptions);
         if (newPlace != null) {
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(lat.latitude,
@@ -308,6 +312,8 @@ public class MapsActivity extends AppCompatActivity
         temp.setLatitude(lat.latitude);
         temp.setLongitude(lat.longitude);
         setLocation(temp);
+        lastKnownLocation = temp;
+
 
     }
 
@@ -397,7 +403,7 @@ public class MapsActivity extends AppCompatActivity
                 case RESULT_OK:    // success
                     // Initialize place
                     Place place = Autocomplete.getPlaceFromIntent(data);
-                    Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + ", " + place.getLatLng());
+                    Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + ", " + place.getLatLng());  // check if it shows
                     setNewLocation(place);
                     break;
                 case AutocompleteActivity.RESULT_ERROR: // errro
