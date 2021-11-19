@@ -15,6 +15,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * FollowingActivity gets launched from button on MainActivity.
+ * Retrieves data from firestore to populate activity_following.xml with existing follower usernames.
+ * Listens for clicks on the followRequestsButton which is the entry point for FollowRequests.
+ * Calls the CustomListOfExistingFollowers adapter to render existing follower usernames
+ * as custom list items.
+ * */
 public class FollowingActivity extends AppCompatActivity {
     private CustomListOfExistingFollowers CustomListOfExistingFollowersAdapter;
     FirebaseFirestore fStore;
@@ -39,10 +46,7 @@ public class FollowingActivity extends AppCompatActivity {
         friendList = new ArrayList<>();
         mAdapter = new CustomListOfExistingFollowers(this,friendList);
         listView.setAdapter(mAdapter);
-        //Query every document in the collectionReference to obtain each existing "userName" field.
-        //Append the existingFollowersDataList with new "userName" string values.
-        //Pass the existingFollowersDataList into CustomListOfExistingFollowersAdapter.
-        //Set adapter & render each list item in the custom layout file: "listOfExistingFollowers".
+
         DatabaseManager.getFriends(friendList,mAdapter);
 
         followRequestsButton.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +56,10 @@ public class FollowingActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Opens up FollowRequests activity when followRequestsButton is clicked by the user.
+     * */
     public void openFollowRequestsActivity() {
         Intent intent = new Intent(this, FollowRequests.class);
         startActivity(intent);

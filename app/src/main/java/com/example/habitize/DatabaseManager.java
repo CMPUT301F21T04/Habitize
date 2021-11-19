@@ -5,13 +5,17 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
@@ -31,6 +35,7 @@ public class DatabaseManager {
     private static Context loginContext;
     private static Context signUpContext;
     private static SimpleDateFormat simpleDateFormat;
+    private static final FirebaseDatabase fbdb;
 
     private static onRegistrationLoginListener registrationListener;
     private static onLoginListener loginListener;
@@ -47,18 +52,29 @@ public class DatabaseManager {
     // we initialize the firestore ONCE. Many objects but all will refer to the same instance
     static {
         db = FirebaseFirestore.getInstance();
+        fbdb = FirebaseDatabase.getInstance();
         users = db.collection("Users");
     }
 
 
     // We need communication between the authenticator class and the activity we login from
 
+    /**
+     * takes the data from login and pass it here
+     * @param context
+     */
     public static void setLoginContext(Context context){
         loginContext = context;
     }
+
+    /**
+     * takes the data from signUp and pass it here
+     * @param context
+     */
     public static void setsignUpContext(Context context){
         signUpContext = context;
     }
+
     public static String getInputEmail(){
         return inputEmail;
     }
@@ -66,12 +82,20 @@ public class DatabaseManager {
         return inputPassword;
     }
 
-
+    /**
+     * Takes email and password and set them DataManger
+     * @param email
+     * @param password
+     */
     // this occurs when we click the login button. We initialize the username
     public static void setInfoForLogin(String email,String password){
         inputEmail = email;
         inputPassword = password;
     }
+
+    /**
+     * Takes the user data and sign them in
+     */
     public static void signInUser(){
 
         db.collection("EmailToUser").document(inputEmail).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -84,8 +108,15 @@ public class DatabaseManager {
 
     }
 
+    /**
+     *This occurs when we click the registration button. We initialize  the variables to this information
+     * @param username
+     * @param email
+     * @param firstName
+     * @param lastName
+     * @param password
+     */
 
-    // This occurs when we click the registration button. We initialize  the variables to this information
     public static void setInfoForRegistration(String username,String email,String firstName,String lastName,String password){
         user = username;
         inputEmail = email;
@@ -109,26 +140,97 @@ public class DatabaseManager {
         });
     }
 
+    /**
+     * get records for each user
+     * @param UUID
+     * @param adapter
+     */
 
-    public static void getRecord(String UUID){
-        db.collection("Records").document(UUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        public static void getRecord(String UUID, ArrayList<Record> recievingList, RecordAdapter adapter){
+        db.collection("Users").document(user).collection("Records").document(UUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                recievingList.clear();
                 // get the mapped data of records
-                ArrayList<Record> mappedData = (ArrayList<Record>) documentSnapshot.get("records");
+                ArrayList<Record> mappedRecords = (ArrayList<Record>) value.get("records");
+                // retrieving all records
+                if(mappedRecords != null) {
+                    for (int i = 0; i < mappedRecords.size(); i++) {
+                        Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
+                        String date = (String) hashedRecord.get("date");
+                        String description = (String) hashedRecord.get("description");
+                        recievingList.add(new Record(date, description, null));
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
         });
     }
 
-    public static void updateRecord(String UUID,ArrayList<Record> updatedRecords){
-        HashMap<String,Object> mappedData = new HashMap<>(); // hash the record
-        mappedData.put("records",updatedRecords); // put it in the record space
-        db.collection("Records").document(UUID).update(mappedData); // store it in the record collection
 
+    /**
+     * Takes the new records for the user and update them
+     * @param UUID a user has a habit record collection. This is the reference for the specific habit
+     * @param newRecord
+     * there are three cases here. 1 it is our first time making a record so we make a collection and a document
+     * 2. it is our first time making a record for that habit so we create a document
+     * 3. we are adding a new record so we need to pull and update.
+     */
+    public static void updateRecord(String UUID,Record newRecord){
+        db.collection("Users").document(user).collection("Records").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(queryDocumentSnapshots.size() == 0){
+                    // no such collection exists. We just create one. since this must be our first time calling this
+                    ArrayList<Record> records = new ArrayList<>();
+                    records.add(newRecord);
+                    HashMap<String,Object> mappedData = new HashMap<>(); // hash the record
+                    mappedData.put("records",records); // put it in the record space
+                    db.collection("Users").document(user).collection("Records").document(UUID).set(mappedData);
+                }
+                else{
+                    // this collection exists, we must check whether the document exists now.
+
+                    db.collection("Users").document(user).collection("Records").document(UUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            // we get the the document at the UUID
+                            if (documentSnapshot.exists()) {
+                                ArrayList<Record> mappedRecords = (ArrayList<Record>) documentSnapshot.get("records");
+                                ArrayList<Record> updatedRecords = new ArrayList<>();
+                                // retrieving all records
+                                for (int i = 0; i < mappedRecords.size(); i++) {
+                                    Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
+                                    String date = (String) hashedRecord.get("date");
+                                    String description = (String) hashedRecord.get("description");
+                                    updatedRecords.add(new Record(date, description,null));
+                                }
+                                updatedRecords.add(newRecord);
+                                HashMap<String, Object> mappedDate = new HashMap<>();
+                                mappedDate.put("records", updatedRecords);
+                                db.collection("Users").document(user).collection("Records").document(UUID).set(mappedDate);
+                            }
+                            else{
+                                ArrayList<Record> records = new ArrayList<>();
+                                records.add(newRecord);
+                                HashMap<String,Object> mappedData = new HashMap<>(); // hash the record
+                                mappedData.put("records",records); // put it in the record space
+                                db.collection("Users").document(user).collection("Records").document(UUID).set(mappedData);
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
 
-    // this runs third. We create the user document and launch the mainactivity to login.
+
+    /**
+     *
+     * Create a new user with all the data collected with their own data collections
+     */
+
     public static void createUserDocumentAndLogin(){
         HashMap<String,Object> userNameField = new HashMap<>();
         HashMap<String,Object> nameField = new HashMap<>();
@@ -151,22 +253,7 @@ public class DatabaseManager {
         db.collection("Users").document(user).update(progressField);
         // adding Data to UsersHabits collection
         HashMap<String,Object> habits = new HashMap<>();
-        ArrayList<Habit> habitList = new ArrayList<>();
-        //TESTING
-        /*
-        ArrayList<Habit> habitList = new ArrayList<>();
-        ArrayList<Record> recordList = new ArrayList<>();
-        recordList.add(new Record("NOV 4 2021","DESCRIPTION"));
-        Habit testHabit = new Habit("test","test2","test3",false,false,false,false,false,true,true,
-                recordList);
-        habitList.add(testHabit);
-        */
-        //TESTING
-
-
-
-
-        habits.put("habits",habitList);
+        habits.put("habits",new ArrayList<Habit>());
         db.collection("Users").document(user).update(habits);
         // adding Data to followers Collection
         HashMap<String,Object> followList = new HashMap<>();
@@ -178,14 +265,26 @@ public class DatabaseManager {
         db.collection("Users").document(user).update(followingList);
         HashMap<String,String> emailMap = new HashMap<>();
         emailMap.put("user",user);
+
+        HashMap<String,Object> recordList = new HashMap<>();
+        recordList.put("Records",new ArrayList<>());
+
         db.collection("EmailToUser").document(inputEmail).set(emailMap);
+
+
 
 
 
         registrationListener.loginUser();// log the user in. signup will implement this
 
     }
-    // will perform a seach and return users matching the query
+
+    /**
+     * it perform a search and return users matching the query
+     * @param searchQuery
+     * @param users
+     */
+
     public static void getMatchingUsers(String searchQuery, ArrayList<String> users){
         //
         Query query = db.collection("Users").whereGreaterThanOrEqualTo("userName",searchQuery)
@@ -202,12 +301,22 @@ public class DatabaseManager {
         });
     }
 
+    /**
+     * send a follow request to the given username
+     * @param user
+     */
 
     public static void sendFollow(String user){
 
     }
 
-    // puts loggin in users current followers into retrievingList, updates the adapter
+    /**
+     * get all the followers
+     * puts loggin in users current followers into retrievingList, updates the adapter
+     * @param retrievingList
+     * @param adapter
+     */
+
     public static void getFollowers(ArrayList<String> retrievingList, ArrayAdapter adapter){
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -236,9 +345,16 @@ public class DatabaseManager {
         });
     }
 
+
+
+
+    /**
+     *
+     * @param friendsList friendsList, the list of strings we want to populate with the usernames of our friends
+     * @param adapter adapter, the adapter we want to notify of changes
+     */
     public static void getFriends(ArrayList<String> friendsList,ArrayAdapter adapter){
-        ArrayList<String> temp1 = new ArrayList<>();
-        ArrayList<String> temp2 = new ArrayList<>();
+
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -263,15 +379,14 @@ public class DatabaseManager {
     }
 
 
-
-
-
-
-
-    private void fillRecordList(ArrayList<Record> receivingList,Map<String,Object> mappedData){
-
-    }
-    // get all habits and put them into a list. Then notify the habitAdapter
+    /**
+     * Recieves data from firebase and populates a recievinglist. then notifies a habitadapter.
+     * used to populate lists
+     * recievingList, the list we want to recieve into
+     * habitAdatper, the habitadapter we want to notify of changes
+     * @param recievingList
+     * @param habitAdapter
+     */
     public static void getAllHabits(ArrayList<Habit> recievingList, CustomAdapter habitAdapter) {
         //
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -302,7 +417,11 @@ public class DatabaseManager {
         });
     }
 
-    // get all the habits and put into a list, but don't update a habitAdapter
+
+    /**
+    @param recievingList, the list we want to to put all of our habits into. This function differs to the previous
+    one as it does not assume there is an adapter waiting to be notified.
+     */
     public static void getAllHabits(ArrayList<Habit> recievingList) {
 
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -332,22 +451,24 @@ public class DatabaseManager {
         });
     }
 
-    public static void createUserWithCredentialsAndLogin(){
-
-    }
-
-
+    /**
+    This function pushes an updated habitlist to firebase for the current user
+    @param updatedHabits, the new list of habits we want to push to firebase
+     */
     public static void updateHabits(ArrayList<Habit> updatedHabits) {
         HashMap<String, Object> listMap = new HashMap<>();
         listMap.put("habits", updatedHabits);
         db.collection("Users").document(user).update(listMap);
     }
 
-    public static void updateHabitsAtDay(String user, ArrayList<Habit> updatedHabits, String day) {
-
-    }
-
-
+    
+    /**
+     * This function will Get all the habits from the user in firebase, and only add the ones
+     * that have their recurrence value on today's date set to true
+     * @param recievingList the list we will update
+     * @param habitAdapter the adapter we will notify about changes
+     * @param posInFirebase the position of the habit in firebase. allows for proper deletion and editin
+     */
     public static void getTodaysHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
                                        posInFirebase){
 
@@ -436,8 +557,6 @@ public class DatabaseManager {
     interface onLoginListener{
         void loginUser();
     }
-
-
 
 
 }

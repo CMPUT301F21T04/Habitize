@@ -28,8 +28,6 @@ import java.util.Map;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Authentication{
-    // db is shared across all instances of the manager
-
     public static String SignUpMSG ="You have made an account successfully!";
     private static FirebaseAuth fAuth;
 
@@ -47,12 +45,13 @@ public class Authentication{
 
 
 
-    // does nothing
     Authentication(){
-
     }
 
-    // this runs after DatabaseManager.checkUsernameAndRegister(). Checks the validity of the email
+    /**
+     * this runs after DatabaseManager.checkUsernameAndRegister(). Checks the validity of the email
+     */
+
     public static void checkEmailBeforeRegistering(){
         fAuth.createUserWithEmailAndPassword(DatabaseManager.getInputEmail(),DatabaseManager.getInputPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -70,8 +69,9 @@ public class Authentication{
     }
 
 
-
-
+    /**
+     * This function takes users and log them in
+     */
     public static void authenticateAndSignIn(){
         fAuth.signInWithEmailAndPassword(DatabaseManager.getInputEmail(),DatabaseManager.getInputPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

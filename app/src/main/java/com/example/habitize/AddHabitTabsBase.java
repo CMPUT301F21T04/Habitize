@@ -37,18 +37,16 @@ import java.util.UUID;
 public class AddHabitTabsBase extends AppCompatActivity {
     private ViewPager2 pager;
     private TabLayout tabLayout;
-
     private Button createButton;
-    private String passedUser;
-    private FirebaseFirestore db;
-    private CollectionReference userCol;
-    private DocumentReference docRef;
     private ArrayList<Habit> passedHabits;
     private addAdapter mAdapter;
     String[] titles = {"Info","Image"};
 
 
-
+    /**
+     * Initialize activity
+     * @param savedInstanceState the previous instance generated
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,16 +54,18 @@ public class AddHabitTabsBase extends AppCompatActivity {
         pager = findViewById(R.id.viewPager);
         createButton = findViewById(R.id.create_habit_tabs);
 
+        //to store habits
         passedHabits = new ArrayList<>();
         //We pull the current habit list, modify it, and send it back (only if we create the habit)
         DatabaseManager.getAllHabits(passedHabits);
-
 
         // pager holds fragments, madapter is the adapter needed for it
         mAdapter = new addAdapter(this);
         pager.setOffscreenPageLimit(8); // forcing pager to create fragments
         pager.setAdapter(mAdapter);
         tabLayout = findViewById(R.id.AddHabitTabs);
+
+        //to make tabs to switch between
         new TabLayoutMediator(tabLayout, pager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -73,6 +73,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
             }
         }).attach();
 
+        //listener for create button handles possible user errors and creates habit after clicked
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,17 +92,17 @@ public class AddHabitTabsBase extends AppCompatActivity {
                 boolean satRec = addFrag.getSat();
                 boolean sunRec = addFrag.getSun();
 
-
-                // TODO: this is not finished yet. need to check more fields
-                //check if empty and user left fields blank
+                //check if title empty
                 if(title == ""){
                     Toast.makeText(AddHabitTabsBase.this,"Enter a habit title",Toast.LENGTH_LONG).show();
                 }
 
+                //check if description empty
                 if(description == ""){
                     Toast.makeText(AddHabitTabsBase.this,"Enter a habit description",Toast.LENGTH_LONG).show();
                 }
 
+                //check if start date of habit is empty
                 if(startDate == ""){
                     Toast.makeText(AddHabitTabsBase.this,"Enter a habit start date",Toast.LENGTH_LONG).show();
                 }
@@ -128,21 +129,28 @@ public class AddHabitTabsBase extends AppCompatActivity {
                     DatabaseManager.updateHabits(passedHabits);
                     finish();
                 }
-
             }
         });
-
 
     }
 
 
-
+    //adapter to make fragments
     class addAdapter extends FragmentStateAdapter{
 
+        /**
+         * makes adapter to create fragments
+         * @param fragmentActivity
+         */
         public addAdapter(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
         }
 
+        /**
+         * creating fragments at specific positions in the viewpager
+         * @param position is the screen that the habit is going to go
+         * @return returns the fragment depending on which screen was clicked on
+         */
         @NonNull
         @Override
         public Fragment createFragment(int position) {
@@ -155,7 +163,10 @@ public class AddHabitTabsBase extends AppCompatActivity {
             }
             return returningFragment; }
 
-
+        /**
+         * gets the item count
+         * @return number 2
+         */
         @Override
         public int getItemCount() {
             return 2;

@@ -19,11 +19,10 @@ public class ViewHabitImageFragment extends Fragment {
     private Button addImageBtn;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
+
     public ViewHabitImageFragment(){
     }
-    public ViewHabitImageFragment(Uri image){
-        this.imageUri = image;
-    }
+
 
 
     // get image from fragment to send to the database

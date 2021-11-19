@@ -134,6 +134,7 @@ public class SignUp_ActivityTest {
     @Test public void NotUniqeUserName(){
         onView(withId(R.id.RegisterBTN)).perform(click());
         onView(withId(R.id.userName)).perform(replaceText(testEmail));
+
     }
 
 }
