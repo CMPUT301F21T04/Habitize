@@ -109,7 +109,6 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                         byteArr = baos.toByteArray();
 
-
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         Date d = new Date();
                         String currentDate = formatter.format(d);
