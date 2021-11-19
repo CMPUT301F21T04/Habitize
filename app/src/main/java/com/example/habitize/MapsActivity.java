@@ -403,7 +403,7 @@ public class MapsActivity extends AppCompatActivity
                 case RESULT_OK:    // success
                     // Initialize place
                     Place place = Autocomplete.getPlaceFromIntent(data);
-                    Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + ", " + place.getLatLng());
+                    Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + ", " + place.getLatLng());  // check if it shows
                     setNewLocation(place);
                     break;
                 case AutocompleteActivity.RESULT_ERROR: // errro

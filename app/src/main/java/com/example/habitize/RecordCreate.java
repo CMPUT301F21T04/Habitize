@@ -112,9 +112,8 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         Date d = new Date();
                         String currentDate = formatter.format(d);
-                        Record newRecord = new Record(currentDate,comment.getText().toString());
+                        Record newRecord = new Record(currentDate,comment.getText().toString(),null);
                         DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
-
                     }
                 }).create();
     }
