@@ -47,10 +47,6 @@
         <activity
             android:name=".FollowingActivity"
             android:exported="false" />
-        <activity
-            android:name=".AddHabitImage"
-            android:exported="false" />
-        <activity android:name=".ViewHabitActivity" />
         <activity android:name=".ViewHabitTabsBase" />
         <activity
             android:name=".Login_Activity"
@@ -64,9 +60,6 @@
         <activity android:name=".SignUp" />
         <activity android:name=".MainActivity" />
         <activity android:name=".AllHabitsActivity" />
-        <activity
-            android:name=".AddHabitActivity"
-            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".TodaysHabitsActivity"
             android:parentActivityName=".MainActivity" />
