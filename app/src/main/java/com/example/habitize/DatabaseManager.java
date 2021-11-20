@@ -539,7 +539,7 @@ public class DatabaseManager {
      * that have their recurrence value on today's date set to true
      * @param recievingList the list we will update
      * @param habitAdapter the adapter we will notify about changes
-     * @param posInFirebase the position of the habit in firebase. allows for proper deletion and editin
+     * @param posInFirebase the position of the habit in firebase. allows for proper deletion and editing
      */
     public static void getTodaysHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
                                        posInFirebase){
@@ -610,10 +610,18 @@ public class DatabaseManager {
         });
     }
 
-    public static void getPublicHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
-            posInFirebase){
 
-        db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+    /**
+     * will allow user to get the habits of another user they want to follow or are following
+     * @param recievingList the list we will update
+     * @param habitAdapter the adapter we will notify about changes
+     * @param posInFirebase the position of the habit in firebase
+     * @param followingUser the user they want to see
+     */
+    public static void getPublicHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
+            posInFirebase, String followingUser){
+
+        db.collection("Users").document(followingUser).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");

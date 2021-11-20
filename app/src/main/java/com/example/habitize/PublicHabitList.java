@@ -25,6 +25,7 @@ public class PublicHabitList extends AppCompatActivity implements CustomAdapter.
     private FirebaseFirestore db;
     private String userAcct;
     private SimpleDateFormat simpleDateFormat;
+    private String userNameToFollow;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class PublicHabitList extends AppCompatActivity implements CustomAdapter.
         habitAdapter = new CustomAdapter(this, dataList);
         listView.setAdapter(habitAdapter);
 
-        DatabaseManager.getPublicHabits(dataList, habitAdapter,posInFireBase);
+        DatabaseManager.getPublicHabits(dataList, habitAdapter,posInFireBase, userNameToFollow);
     }
 
     @Override
