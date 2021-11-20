@@ -21,10 +21,8 @@ public class ViewRecordsFragment extends Fragment {
     private String user;
     private ListView list;
     private RecordAdapter recordAdapter;
-    private Habit habit;
 
-    public ViewRecordsFragment(Habit habit){
-        this.habit = habit;
+    public ViewRecordsFragment(){
     }
 
 
@@ -35,7 +33,6 @@ public class ViewRecordsFragment extends Fragment {
         list = root.findViewById(R.id.record_list);
         recordAdapter = new RecordAdapter(getActivity(),R.layout.record_list_content,records);
         list.setAdapter(recordAdapter);
-        DatabaseManager.getRecord(habit.getRecordAddress(),records,recordAdapter);
         return root;
 
     }

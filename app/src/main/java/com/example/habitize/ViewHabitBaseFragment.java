@@ -312,7 +312,6 @@ public class ViewHabitBaseFragment extends Fragment   {
     public boolean getSun(){
         return Sunday.isChecked();
     }
-
     // setters for fields
     public ViewHabitBaseFragment setMon(boolean mon){
         this.MonRecurrence = mon;

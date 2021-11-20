@@ -1,22 +1,15 @@
 package com.example.habitize;
 
-import java.util.UUID;
-
 public class Record {
     private String date;
     private String description;
-    private byte[] byteArr; // the image is stored here
-    private String recordIdentifier;
     // also, image here
     // also, location of the recorded habit here
 
 
-    public Record(String date,String description, byte[] byteArr,String recordIdentifier){
+    public Record(String date,String description){
         this.date = date;
         this.description = description;
-        this.byteArr = byteArr;
-        this.recordIdentifier = recordIdentifier;
-
     }
 
     public String getDate() {
@@ -25,20 +18,12 @@ public class Record {
     public String getDescription(){
         return description;
     }
-    public String getRecordIdentifier(){return this.recordIdentifier;}
-    public void setRecordIdentifier(String identifier){
-        this.recordIdentifier = identifier;
-    }
-    public byte[] getByteArr(){return byteArr;}
 
     public void setDate(String date){
         this.date = date;
     }
     public void setDescription(String description){
         this.description = description;
-    }
-    public void setByteArr(byte[] byteArr){
-        this.byteArr = byteArr;
     }
 
 
