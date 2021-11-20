@@ -34,6 +34,7 @@ import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 
 public class RecordCreate extends DialogFragment implements CustomAdapter.habitCheckListener {
@@ -112,7 +113,7 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         Date d = new Date();
                         String currentDate = formatter.format(d);
-                        Record newRecord = new Record(currentDate,comment.getText().toString(),null);
+                        Record newRecord = new Record(currentDate,comment.getText().toString(),null,new UUID(20,10).randomUUID().toString());
                         DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
                     }
                 }).create();
