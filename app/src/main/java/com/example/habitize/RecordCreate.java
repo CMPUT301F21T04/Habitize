@@ -137,6 +137,16 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                         passedHabits.get(index).incrementStreak();
                         DatabaseManager.updateHabits(passedHabits);
 
+                        imageViewer.setDrawingCacheEnabled(true);
+                        imageViewer.buildDrawingCache();
+                        Bitmap bitmap = ((BitmapDrawable) imageViewer.getDrawable()).getBitmap();
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        byte[] data = baos.toByteArray();
+                        if(data != null){
+                            DatabaseManager.storeImage(data,newRecord.getRecordIdentifier());
+                        }
+
                     }
                 }).create();
     }

@@ -1,11 +1,16 @@
 package com.example.habitize;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -17,6 +22,10 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
@@ -31,12 +40,13 @@ import java.util.UUID;
 public class DatabaseManager {
     // db is shared across all instances of the manager
     private static final FirebaseFirestore db;
-    private static final FirebaseDatabase fbdb;
+    private static final FirebaseStorage dbs;
 
     private static CollectionReference users;
     private static Context loginContext;
     private static Context signUpContext;
     private static SimpleDateFormat simpleDateFormat;
+    private static StorageReference storageRef;
 
     private static onRegistrationLoginListener registrationListener;
     private static onLoginListener loginListener;
@@ -53,7 +63,8 @@ public class DatabaseManager {
     // we initialize the firestore ONCE. Many objects but all will refer to the same instance
     static {
         db = FirebaseFirestore.getInstance();
-        fbdb = FirebaseDatabase.getInstance();
+        dbs = FirebaseStorage.getInstance();
+        storageRef = dbs.getReference().child("images");
         users = db.collection("Users");
     }
 
@@ -83,13 +94,44 @@ public class DatabaseManager {
         return inputPassword;
     }
 
-    // store an image at the identifier
+    // store an image at the given identifier
     public static void storeImage(byte[] image, String imageIdentifier){
+        StorageReference imageRef = storageRef.child(imageIdentifier);
+        UploadTask uploadTask = imageRef.putBytes(image);
 
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
     }
     // retrieve an image from the identifier
-    public static byte[] getImage(String imageIdentifier){
-        return null;
+    public static void getAndSetImage(String imageIdentifier, ImageView destination){
+        long ONE_MEGABYTE = 1024*1024;
+        StorageReference imageRef = storageRef.child(imageIdentifier);
+        imageRef.getBytes(ONE_MEGABYTE)
+                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        if(bytes != null) {
+                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            destination.setImageBitmap(bmp);
+                        }
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
     }
 
     /**
