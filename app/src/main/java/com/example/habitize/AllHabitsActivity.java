@@ -7,7 +7,9 @@ import android.database.DatabaseErrorHandler;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +37,12 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
     private CollectionReference colRef;
     private FirebaseFirestore db;
     private String passedUser;
+    private Switch reorder;
+    
+
+
+
+
 
     /**
      * Initialize activity
@@ -44,7 +52,8 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
-
+        reorder = findViewById(R.id.ReOrder);
+        
         dataList = new ArrayList<>(); // reset the list
 
         list = findViewById(R.id.habit_list);
@@ -54,7 +63,73 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         // getting the habits from database and updating the view with them.
         DatabaseManager.getAllHabits(dataList,habitAdapter);
 
+
+        reorder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    for(int i=0; i < habitAdapter.getCount(); i++){
+
+                        View view = list.getChildAt(i);
+                        Button UP = view.findViewById(R.id.HabitUp);
+                        Button DOWN = view.findViewById(R.id.HabitDown);
+                        FloatingActionButton check = view.findViewById(R.id.completeHabit);
+                        check.setVisibility(View.GONE);
+                        DOWN.setVisibility(View.VISIBLE);
+                        UP.setVisibility(View.VISIBLE);
+
+                        int finalI = i;
+                        int finalJ = habitAdapter.getCount()-1 ;
+                        UP.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if ( finalI != 0) {
+
+                                    Habit tempUP1 = dataList.get(finalI);
+                                    Habit tempUP2 = dataList.get(finalI-1);
+                                    dataList.set(finalI - 1, tempUP1);
+                                    dataList.set(finalI, tempUP2);
+                                    DatabaseManager.updateHabits(dataList);
+                                    habitAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        });
+
+                        DOWN.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if ( finalI != finalJ) {
+                                    Habit tempDown1 = dataList.get(finalI);
+                                    Habit tempDown2 = dataList.get(finalI+1);
+                                    dataList.set(finalI +1, tempDown1);
+                                    dataList.set(finalI, tempDown2);
+                                    DatabaseManager.updateHabits(dataList);
+                                    habitAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        });
+
+
+                    }
+                    habitAdapter.notifyDataSetChanged();
+                } else {
+                    for(int i=0; i < habitAdapter.getCount(); i++) {
+                        View view = list.getChildAt(i);
+                        Button UP = view.findViewById(R.id.HabitUp);
+                        Button DOWN = view.findViewById(R.id.HabitDown);
+                        FloatingActionButton check = view.findViewById(R.id.completeHabit);
+                        check.setVisibility(View.VISIBLE);
+                        DOWN.setVisibility(View.GONE);
+                        UP.setVisibility(View.GONE);
+                    }
+                }
+
+            }
+        });
+
     }
+
+
 
 
     /**

@@ -19,6 +19,8 @@ import java.util.List;
 
 public class CustomAdapter extends ArrayAdapter<Habit>{
 
+
+
     public interface habitViewListener{
         /**
          * knows which habit was pressed on in the listview
@@ -42,7 +44,8 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
     private habitCheckListener checkListener;
     private List<Habit> habits;
     private Context context;
-
+    private Button UP;
+    private Button DOWN;
     /**
      * constructor to initialize CustomAdapter
      * @param context context for customAdapter
@@ -55,6 +58,8 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
         this.viewListener = (habitViewListener) context;
         this.checkListener = (habitCheckListener) context;
     }
+
+
 
     /**
      * gets View of list
@@ -77,6 +82,10 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
         // Setting our custom list items
         nameField.setText(habit.getName());
         Button viewButton = view.findViewById(R.id.viewHabit);
+
+
+        UP = view.findViewById(R.id.HabitUp);
+        DOWN = view.findViewById(R.id.HabitDown);
 
         //when click view button
         viewButton.setOnClickListener(new View.OnClickListener() {
@@ -101,4 +110,16 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
 
     }
 
+
+    /*
+    public void visabliity(boolean checked){
+        if (checked) {
+            DOWN.setVisibility(View.VISIBLE);
+            UP.setVisibility(View.VISIBLE);
+        } else {
+            DOWN.setVisibility(View.INVISIBLE);
+            UP.setVisibility(View.INVISIBLE);
+        }
+
+    }*/
 }
