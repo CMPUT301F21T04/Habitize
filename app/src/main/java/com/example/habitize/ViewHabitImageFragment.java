@@ -19,16 +19,14 @@ public class ViewHabitImageFragment extends Fragment {
     private Button addImageBtn;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
+    private String imageAddr;
 
-    public ViewHabitImageFragment(){
+    public ViewHabitImageFragment(String imageAddr){
+        this.imageAddr = imageAddr;
     }
 
 
 
-    // get image from fragment to send to the database
-    public Uri getImage(){
-        return this.imageUri;
-    }
 
 
     @Override
@@ -50,6 +48,9 @@ public class ViewHabitImageFragment extends Fragment {
                 openGallery();
             }
         });
+
+
+        DatabaseManager.getAndSetImage(imageAddr,imageView);
         return root;
     }
     private void openGallery() {
@@ -64,6 +65,10 @@ public class ViewHabitImageFragment extends Fragment {
         addImageBtn.setEnabled(false);
     }
 
+    // get image from fragment to send to the database
+    public ImageView getImageView(){
+        return this.imageView;
+    }
 
 
     @Override
