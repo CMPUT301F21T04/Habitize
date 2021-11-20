@@ -13,7 +13,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -62,9 +65,21 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_record_create,null);
 
+        ActivityResultLauncher<Intent> forActivityResult = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode()!= RESULT_CANCELED) {
+                            Intent data = result.getData();
+                            imageUri = data.getData();
+                            imageViewer.setImageURI(imageUri);
+                            uploadImg();
+                        }
+                    }
+                }
+        );
+
         // Access arguments
-
-
         Habit args = (Habit) getArguments().getSerializable("habit");
         ArrayList<Habit> passedHabits = (ArrayList<Habit>)getArguments().getSerializable("habits");
         int index = (int)getArguments().getSerializable("index");
@@ -97,7 +112,8 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         RecordImgBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery();
+                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                forActivityResult.launch(gallery);
             }
         });
 
@@ -129,33 +145,6 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         // will handle which habit to append the record to.
     }
 
-    /**
-     * This method opens the user's gallery to be able to pick an image to the app.
-     */
-    private void openGallery() {
-        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, PICK_IMAGE);
-    }
-
-    /**
-     * This method receives the result in the openGallery method. The result is the image
-     * picked by the user from their files.
-     * @param requestCode is an int to help identify if the intent came back.
-     * @param resultCode is an int to help identify which method is called. In this case,
-     *                   we want to have resultCode equal to PICK_IMAGE.
-     * @param data is the intent that is passed through startActivityForResult
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode!= RESULT_CANCELED) {
-            if (requestCode==PICK_IMAGE) {
-                imageUri = data.getData();
-                imageViewer.setImageURI(imageUri);
-                uploadImg();
-            }
-        }
-    }
 
     /**
      * This method takes the uploaded image from the storage and handles it here.
