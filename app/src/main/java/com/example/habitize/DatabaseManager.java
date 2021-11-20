@@ -399,7 +399,20 @@ public class DatabaseManager {
             }
         });
     }
-
+    public static void requestFollow(String searchedUser){
+        db.collection("Users").document(searchedUser).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                ArrayList<String> followerList = (ArrayList<String>) documentSnapshot.get("followers");
+                if(!followerList.contains(user)){
+                    followerList.add(user);
+                }
+                HashMap<String,Object> hashedData = new HashMap<>();
+                hashedData.put("followers",followerList);
+                db.collection("Users").document(searchedUser).update(hashedData);
+            }
+        });
+    }
 
 
 

@@ -92,7 +92,6 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             //Init updated  Habit variables
-                            Uri img = imgFrag.getImage();
                             String title = baseFrag.getTitle();
                             String description = baseFrag.getDescription();
                             String startDate = baseFrag.getDate();
