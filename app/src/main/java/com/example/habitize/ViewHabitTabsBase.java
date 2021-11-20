@@ -76,12 +76,11 @@ public class ViewHabitTabsBase extends AppCompatActivity {
             }
         }).attach();
 
+        ViewHabitBaseFragment baseFrag = (ViewHabitBaseFragment) getSupportFragmentManager().findFragmentByTag("f0");
+        ViewHabitImageFragment imgFrag = (ViewHabitImageFragment) getSupportFragmentManager().findFragmentByTag("f1");
         //edit toggle button which
         AllowEdit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                ViewHabitBaseFragment baseFrag = (ViewHabitBaseFragment) getSupportFragmentManager().findFragmentByTag("f0");
-                ViewHabitImageFragment imgFrag = (ViewHabitImageFragment) getSupportFragmentManager().findFragmentByTag("f1");
-
 
                 if (isChecked) {
                     //make input boxes editable
@@ -155,7 +154,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
             switch(position){
                 case 1:
                     // on creation, our passed habit fills in the fragment's information fields
-                    returningFragment = new ViewHabitImageFragment();
+                    returningFragment = new ViewHabitImageFragment(passedHabit.getRecordAddress());
                     break;
                 case 2:
                     returningFragment = new ViewRecordsFragment(passedHabit);

@@ -3,6 +3,8 @@ package com.example.habitize;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,6 +16,8 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
+import java.io.ByteArrayOutputStream;
+
 public class AddHabitImageFragment extends Fragment {
     private ImageView imageView;
     private Button addImageBtn;
@@ -21,7 +25,7 @@ public class AddHabitImageFragment extends Fragment {
     private Uri imageUri;
 
     /*
-     * Empty required constructor
+     * Empty required c onstructor
      */
     public AddHabitImageFragment(){
     }
@@ -30,8 +34,14 @@ public class AddHabitImageFragment extends Fragment {
     /*
      * get image from fragment to send to the database
      */
-    public Uri getImage(){
-        return this.imageUri;
+    public byte[] getImageBytes(){
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+        return data;
     }
 
 
