@@ -72,7 +72,6 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                             Intent data = result.getData();
                             imageUri = data.getData();
                             imageViewer.setImageURI(imageUri);
-                            uploadImg();
                         }
                     }
                 }

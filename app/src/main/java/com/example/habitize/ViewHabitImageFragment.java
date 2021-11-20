@@ -1,5 +1,6 @@
 package com.example.habitize;
 
+import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
@@ -12,6 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
 public class ViewHabitImageFragment extends Fragment {
@@ -34,7 +39,18 @@ public class ViewHabitImageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        ActivityResultLauncher<Intent> forActivityResult = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode()!= RESULT_CANCELED) {
+                            Intent data = result.getData();
+                            imageUri = data.getData();
+                            imageView.setImageURI(imageUri);
+                        }
+                    }
+                }
+        );
 
 
 
@@ -47,14 +63,11 @@ public class ViewHabitImageFragment extends Fragment {
         addImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery();
+                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                forActivityResult.launch(gallery);
             }
         });
         return root;
-    }
-    private void openGallery() {
-        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, PICK_IMAGE);
     }
 
     public void setEditable(){
@@ -63,17 +76,5 @@ public class ViewHabitImageFragment extends Fragment {
     public void setNotEditable(){
         addImageBtn.setEnabled(false);
     }
-
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
-            imageUri = data.getData();
-            imageView.setImageURI(imageUri);
-        }
-    }
-
 
 }
