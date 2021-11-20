@@ -38,6 +38,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 
 public class RecordCreate extends DialogFragment implements CustomAdapter.habitCheckListener {
@@ -130,7 +131,7 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         Date d = new Date();
                         String currentDate = formatter.format(d);
-                        Record newRecord = new Record(currentDate,comment.getText().toString(),null);
+                        Record newRecord = new Record(currentDate,comment.getText().toString(),null,new UUID(20,10).randomUUID().toString());
                         DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
                         // retrieve the habit, increment its streak and update the database.
                         passedHabits.get(index).incrementStreak();
