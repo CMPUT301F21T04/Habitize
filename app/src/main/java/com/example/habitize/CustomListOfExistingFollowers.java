@@ -63,8 +63,8 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
     }
 
 
-    public void usersPublicHabits(View view) {
-        Intent intent = new Intent(this, PublicHabitList.class);
-    }
+//    public void usersPublicHabits(View view) {
+//        Intent intent = new Intent(this, PublicHabitList.class);
+//    }
 
 }
