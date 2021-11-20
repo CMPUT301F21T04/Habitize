@@ -33,6 +33,7 @@ import com.google.type.LatLng;
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -65,7 +66,8 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
 
 
         Habit args = (Habit) getArguments().getSerializable("habit");
-
+        ArrayList<Habit> passedHabits = (ArrayList<Habit>)getArguments().getSerializable("habits");
+        int index = (int)getArguments().getSerializable("index");
         // Link UI components to the its respective pairs in XML
         RecordLocBTN = view.findViewById(R.id.recordLocBTN);
         RecordImgBTN = view.findViewById(R.id.recordImgBTN);
@@ -114,6 +116,10 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                         String currentDate = formatter.format(d);
                         Record newRecord = new Record(currentDate,comment.getText().toString(),null);
                         DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
+                        // retrieve the habit, increment its streak and update the database.
+                        passedHabits.get(index).incrementStreak();
+                        DatabaseManager.updateHabits(passedHabits);
+
                     }
                 }).create();
     }
