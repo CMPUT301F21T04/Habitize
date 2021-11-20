@@ -22,6 +22,8 @@ public class SearchResults extends AppCompatActivity {
         searchResultsDataList.add("Shane");
         searchResultsDataList.add("Stan");
 
+        
+
         CustomListOfSearch = new CustomListOfSearchResults(SearchResults.this, searchResultsDataList);
         listView.setAdapter(CustomListOfSearch);
     }
