@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,10 +36,8 @@ public class RecordAdapter extends ArrayAdapter<Record> {
         // retrieve habit
         Record record = records.get(position);
         TextView dateField = view.findViewById(R.id.recordDate);
-        ImageView recordImage = view.findViewById(R.id.recordImage);
         // Setting our custom list items
         dateField.setText(record.getDate());
-        DatabaseManager.getAndSetImage(record.getRecordIdentifier(),recordImage);
 
 
 

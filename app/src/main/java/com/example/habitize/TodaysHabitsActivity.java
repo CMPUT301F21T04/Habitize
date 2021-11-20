@@ -56,14 +56,29 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
 
     @Override
     public void recordEvent(int position) {
+        Intent intent = new Intent(TodaysHabitsActivity.this,RecordCreate.class);
         Bundle habitBundle = new Bundle();
         habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
         habitBundle.putSerializable("index",position);
         habitBundle.putSerializable("habits",dataList);
+        intent.putExtras(habitBundle);
         RecordCreate newRecord =  new RecordCreate();
-        newRecord.setArguments(habitBundle);
         newRecord.show(getSupportFragmentManager(),"new record");
     }
+
+
+//    public void
+//    //compare true with day of week
+//    //add to data list
+//
+
+//    if(it is monday today){
+//        display all monday habits
+//    }
+    //if current day == monday
+    //then display mondays habits
+
+    //so on and so on
 
 
 

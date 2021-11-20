@@ -1,76 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="413dp"
+        android:layout_height="72dp"
         android:background="@color/purple_500"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:text="FOLLOWING"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/editTextTextPersonName"
-                android:layout_width="307dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="88dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/searchButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="17dp"
-                android:background="@color/purple_500"
-                android:backgroundTint="#6C00F8"
-                android:clickable="true"
-                app:backgroundTint="#6B00F5"
-                app:srcCompat="@android:drawable/ic_menu_search" />
-
-        </RelativeLayout>
-
-    </androidx.appcompat.widget.Toolbar>
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="-6dp" />
 
     <Button
         android:id="@+id/followingReq"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="377dp"
+        android:layout_width="288dp"
         android:layout_height="129dp"
-        android:layout_below="@+id/my_toolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="488dp"
         android:text="FOLLOW REQUESTS"
-        android:textSize="20sp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
         android:id="@+id/listOfExistingFollowers"
-        android:layout_width="377dp"
-        android:layout_height="533dp"
-        android:layout_below="@+id/followingReq"
-        android:layout_marginTop="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_width="288dp"
+        android:layout_height="476dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/followingReq" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

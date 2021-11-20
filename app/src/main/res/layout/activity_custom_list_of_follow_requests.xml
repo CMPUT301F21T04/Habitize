@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:layout_height="80dp"
-    android:layout_width="377dp"
+    android:layout_width="288dp"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/requestedFollowerName"
-        android:layout_width="203dp"
+        android:layout_width="114dp"
         android:layout_height="56dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -18,41 +19,38 @@
         android:layout_marginBottom="12dp"
         android:clickable="true"
         android:gravity="center_vertical"
-        android:text="Person Name"
-        android:textSize="20sp" />
+        android:text="Person Name" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/acceptFollowRequestButton"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_gravity="center"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="12dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="12dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="15dp"
-        android:layout_toLeftOf="@+id/deleteFollowRequestButton"
         android:layout_toEndOf="@+id/requestedFollowerName"
+        android:layout_toRightOf="@+id/requestedFollowerName"
         android:src="@drawable/ic_baseline_check_24"
         app:backgroundTint="@color/purple_500"
         app:fabCustomSize="60dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/deleteFollowRequestButton"
-        android:layout_width="55dp"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentEnd="true"
         android:layout_gravity="center"
         android:layout_marginStart="87dp"
-        android:layout_marginLeft="31dp"
+        android:layout_marginLeft="87dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="12dp"
         android:layout_toEndOf="@+id/requestedFollowerName"
-        android:layout_toRightOf="@+id/acceptFollowRequestButton"
+        android:layout_toRightOf="@+id/requestedFollowerName"
         android:src="@android:drawable/ic_delete"
         app:backgroundTint="@color/purple_500"
         app:fabCustomSize="60dp" />

@@ -80,6 +80,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
                 // This block loads the fragments and gets our necessary fields for checking
                 AddHabitBaseFragment addFrag = (AddHabitBaseFragment)getSupportFragmentManager().findFragmentByTag("f0");
                 AddHabitImageFragment addImage = (AddHabitImageFragment)getSupportFragmentManager().findFragmentByTag("f1");
+                Uri img = addImage.getImage();
                 String title = addFrag.getTitle();
                 String description = addFrag.getDescription();
                 String startDate = addFrag.getDate();
@@ -122,14 +123,13 @@ public class AddHabitTabsBase extends AppCompatActivity {
                     // Create the habit
                     Habit newHabit = new Habit(title, description,
                             startDate, monRec, tueRec, wedRec,
-                            thurRec, friRec, satRec, sunRec,new ArrayList<>(),new UUID(20,10).randomUUID().toString()
-                    ,true);
+                            thurRec, friRec, satRec, sunRec,new ArrayList<>(),new UUID(20,10).randomUUID().toString());
                     // add it to the user list
                     passedHabits.add(newHabit);
                     DatabaseManager.updateHabits(passedHabits);
-                    DatabaseManager.storeImage(addImage.getImageBytes(),newHabit.getRecordAddress());
                     finish();
                 }
+
             }
         });
 
