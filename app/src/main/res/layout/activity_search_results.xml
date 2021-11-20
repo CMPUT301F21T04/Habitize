@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:background="@color/purple_500"
             android:gravity="center"
-            android:text="FOLLOW REQUESTS"
+            android:text="SEARCH RESULTS"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -33,7 +33,7 @@
 
 
     <ListView
-        android:id="@+id/listOfFollowRequests"
+        android:id="@+id/listOfSearchResults"
         android:layout_width="377dp"
         android:layout_height="match_parent"
         android:layout_below="@+id/my_toolbar"

@@ -45,11 +45,14 @@
         <entry key="app/src/main/res/layout/activity_my_navigation_service.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/activity_view_info.xml" value="0.25" />
         <entry key="app/src/main/res/layout/all_habits.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/custom_info_contents.xml" value="0.30512820512820515" />
         <entry key="app/src/main/res/layout/fragment_add_habit_base.xml" value="0.276232203688115" />
         <entry key="app/src/main/res/layout/fragment_add_habit_geolocation.xml" value="0.259375" />
+        <entry key="app/src/main/res/layout/fragment_record_create.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_view_habit_base.xml" value="0.16753372086162455" />
         <entry key="app/src/main/res/layout/list_content.xml" value="0.335" />
         <entry key="app/src/main/res/layout/login_activity.xml" value="0.21002825169113126" />
+        <entry key="app/src/main/res/layout/record_list_content.xml" value="0.16822916666666668" />
         <entry key="app/src/main/res/layout/reset_layout.xml" value="0.15833333333333333" />
         <entry key="app/src/main/res/layout/signup_activity.xml" value="0.31458966565349544" />
         <entry key="app/src/main/res/layout/todays_habits.xml" value="0.3098958333333333" />

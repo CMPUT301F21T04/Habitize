@@ -37,7 +37,9 @@ import com.google.type.LatLng;
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 
 public class RecordCreate extends DialogFragment implements CustomAdapter.habitCheckListener {
@@ -80,7 +82,8 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
 
         // Access arguments
         Habit args = (Habit) getArguments().getSerializable("habit");
-
+        ArrayList<Habit> passedHabits = (ArrayList<Habit>)getArguments().getSerializable("habits");
+        int index = (int)getArguments().getSerializable("index");
         // Link UI components to the its respective pairs in XML
         RecordLocBTN = view.findViewById(R.id.recordLocBTN);
         RecordImgBTN = view.findViewById(R.id.recordImgBTN);
@@ -133,8 +136,22 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         Date d = new Date();
                         String currentDate = formatter.format(d);
-                        Record newRecord = new Record(currentDate,comment.getText().toString(),null);
+                        Record newRecord = new Record(currentDate,comment.getText().toString(),null,new UUID(20,10).randomUUID().toString());
                         DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
+                        // retrieve the habit, increment its streak and update the database.
+                        passedHabits.get(index).incrementStreak();
+                        DatabaseManager.updateHabits(passedHabits);
+
+                        imageViewer.setDrawingCacheEnabled(true);
+                        imageViewer.buildDrawingCache();
+                        Bitmap bitmap = ((BitmapDrawable) imageViewer.getDrawable()).getBitmap();
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        byte[] data = baos.toByteArray();
+                        if(data != null){
+                            DatabaseManager.storeImage(data,newRecord.getRecordIdentifier());
+                        }
+
                     }
                 }).create();
     }

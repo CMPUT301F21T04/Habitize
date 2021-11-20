@@ -1,11 +1,16 @@
 package com.example.habitize;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -17,6 +22,10 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
@@ -31,11 +40,13 @@ import java.util.UUID;
 public class DatabaseManager {
     // db is shared across all instances of the manager
     private static final FirebaseFirestore db;
+    private static final FirebaseStorage dbs;
+
     private static CollectionReference users;
     private static Context loginContext;
     private static Context signUpContext;
     private static SimpleDateFormat simpleDateFormat;
-    private static final FirebaseDatabase fbdb;
+    private static StorageReference storageRef;
 
     private static onRegistrationLoginListener registrationListener;
     private static onLoginListener loginListener;
@@ -52,7 +63,8 @@ public class DatabaseManager {
     // we initialize the firestore ONCE. Many objects but all will refer to the same instance
     static {
         db = FirebaseFirestore.getInstance();
-        fbdb = FirebaseDatabase.getInstance();
+        dbs = FirebaseStorage.getInstance();
+        storageRef = dbs.getReference().child("images");
         users = db.collection("Users");
     }
 
@@ -80,6 +92,46 @@ public class DatabaseManager {
     }
     public static String getInputPassword(){
         return inputPassword;
+    }
+
+    // store an image at the given identifier
+    public static void storeImage(byte[] image, String imageIdentifier){
+        StorageReference imageRef = storageRef.child(imageIdentifier);
+        UploadTask uploadTask = imageRef.putBytes(image);
+
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+    // retrieve an image from the identifier
+    public static void getAndSetImage(String imageIdentifier, ImageView destination){
+        long ONE_MEGABYTE = 1024*1024;
+        StorageReference imageRef = storageRef.child(imageIdentifier);
+        imageRef.getBytes(ONE_MEGABYTE)
+                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        if(bytes != null) {
+                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            destination.setImageBitmap(bmp);
+                        }
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
     }
 
     /**
@@ -159,7 +211,8 @@ public class DatabaseManager {
                         Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
                         String date = (String) hashedRecord.get("date");
                         String description = (String) hashedRecord.get("description");
-                        recievingList.add(new Record(date, description, null));
+                        String identifier = (String) hashedRecord.get("recordIdentifier");
+                        recievingList.add(new Record(date, description, null,identifier));
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -203,7 +256,8 @@ public class DatabaseManager {
                                     Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
                                     String date = (String) hashedRecord.get("date");
                                     String description = (String) hashedRecord.get("description");
-                                    updatedRecords.add(new Record(date, description,null));
+                                    String identifier = (String) hashedRecord.get("recordIdentifier");
+                                    updatedRecords.add(new Record(date, description,null,identifier));
                                 }
                                 updatedRecords.add(newRecord);
                                 HashMap<String, Object> mappedDate = new HashMap<>();
@@ -285,7 +339,7 @@ public class DatabaseManager {
      * @param users
      */
 
-    public static void getMatchingUsers(String searchQuery, ArrayList<String> users){
+    public static void getMatchingUsers(String searchQuery, ArrayList<String> users, CustomListOfSearchResults adapter){
         //
         Query query = db.collection("Users").whereGreaterThanOrEqualTo("userName",searchQuery)
                 .whereLessThanOrEqualTo("userName",searchQuery + "\uf8ff");
@@ -297,6 +351,7 @@ public class DatabaseManager {
                 for(int i = 0; i < documents.size(); i++){
                     users.add((String)documents.get(i).get("userName")); // fills a list with all of the users
                 }
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -344,7 +399,20 @@ public class DatabaseManager {
             }
         });
     }
-
+    public static void requestFollow(String searchedUser){
+        db.collection("Users").document(searchedUser).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                ArrayList<String> followerList = (ArrayList<String>) documentSnapshot.get("followers");
+                if(!followerList.contains(user)){
+                    followerList.add(user);
+                }
+                HashMap<String,Object> hashedData = new HashMap<>();
+                hashedData.put("followers",followerList);
+                db.collection("Users").document(searchedUser).update(hashedData);
+            }
+        });
+    }
 
 
 
@@ -408,8 +476,11 @@ public class DatabaseManager {
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     String UUID = (String)habitFields.get("recordAddress");
+                    Long streak = (Long)habitFields.get("streak");
+                    boolean visibility = (boolean) habitFields.get("visibility");
+
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),UUID); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),UUID,streak,visibility); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
                 }
                 habitAdapter.notifyDataSetChanged();
@@ -443,8 +514,9 @@ public class DatabaseManager {
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     String identifier = (String) habitFields.get("recordAddress");
+                    boolean visibility = (boolean) habitFields.get("visibility");
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier,visibility); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
                 }
             }
@@ -497,8 +569,10 @@ public class DatabaseManager {
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     String identifier = (String) habitFields.get("recordAddress");
+                    Long streak = (Long) habitFields.get("streak");
+                    boolean visibility = (boolean) habitFields.get("visibility");
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<Record>(),identifier); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<Record>(),identifier,visibility); // create a new habit out of this information
 
                     //recievingList.add(newHabit);
                     if ((mondayRec == true) && (dayOfTheWeek.equals("Monday"))){
