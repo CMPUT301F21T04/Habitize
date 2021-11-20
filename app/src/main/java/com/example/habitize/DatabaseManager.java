@@ -285,7 +285,7 @@ public class DatabaseManager {
      * @param users
      */
 
-    public static void getMatchingUsers(String searchQuery, ArrayList<String> users){
+    public static void getMatchingUsers(String searchQuery, ArrayList<String> users, CustomListOfSearchResults adapter){
         //
         Query query = db.collection("Users").whereGreaterThanOrEqualTo("userName",searchQuery)
                 .whereLessThanOrEqualTo("userName",searchQuery + "\uf8ff");
@@ -297,6 +297,7 @@ public class DatabaseManager {
                 for(int i = 0; i < documents.size(); i++){
                     users.add((String)documents.get(i).get("userName")); // fills a list with all of the users
                 }
+                adapter.notifyDataSetChanged();
             }
         });
     }

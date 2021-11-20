@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomListOfSearchResults extends ArrayAdapter<String> {
@@ -15,7 +17,7 @@ public class CustomListOfSearchResults extends ArrayAdapter<String> {
     private final List<String> users;
     private final Context context;
 
-    public CustomListOfSearchResults(Context context, List<String> users){
+    public CustomListOfSearchResults(Context context, ArrayList<String> users){
         super(context,0, users);
         this.users = users;
         this.context = context;

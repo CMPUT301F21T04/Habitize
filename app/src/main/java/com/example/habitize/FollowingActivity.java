@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,9 +20,12 @@ import java.util.List;
 public class FollowingActivity extends AppCompatActivity {
     private CustomListOfExistingFollowers CustomListOfExistingFollowersAdapter;
     FirebaseFirestore fStore;
+    public static final String USER_INPUT_SEARCH = "com.example.habitize.USER_INPUT_SEARCH";
     private ListView listView;
     private Button followRequestsButton;
     private FloatingActionButton searchButton;
+    private EditText userSearchInputEditText;
+    private String userSearchInput;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,7 @@ public class FollowingActivity extends AppCompatActivity {
         listView = findViewById(R.id.listOfExistingFollowers);
         followRequestsButton = findViewById(R.id.followingReq);
         searchButton = findViewById(R.id.searchButton);
+        userSearchInputEditText = findViewById(R.id.editTextTextPersonName);
 
         //Query every document in the collectionReference to obtain each existing "userName" field.
         //Append the existingFollowersDataList with new "userName" string values.
@@ -65,6 +70,7 @@ public class FollowingActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                userSearchInput = userSearchInputEditText.getText().toString();
                 openSearchResultsActivity();
             }
         });
@@ -76,6 +82,7 @@ public class FollowingActivity extends AppCompatActivity {
 
     public void openSearchResultsActivity() {
         Intent intent = new Intent(this, SearchResults.class);
+        intent.putExtra(USER_INPUT_SEARCH, userSearchInput);
         startActivity(intent);
     }
 }

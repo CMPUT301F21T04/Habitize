@@ -2,7 +2,9 @@ package com.example.habitize;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -17,14 +19,18 @@ public class SearchResults extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
         listView = findViewById(R.id.listOfSearchResults);
-        List<String> searchResultsDataList = new ArrayList<>();
-        searchResultsDataList.add("Kamillah");
-        searchResultsDataList.add("Shane");
-        searchResultsDataList.add("Stan");
+        ArrayList<String> searchResultsDataList = new ArrayList<>();
 
-        
+        Intent intent = getIntent();
+        String userSearchQuery = intent.getStringExtra(FollowingActivity.USER_INPUT_SEARCH);
+        System.out.println("USER INPUT FOR SEARCH : " + userSearchQuery);
+
+        System.out.println("DATA IN SEARCH RESULTS LIST : " + searchResultsDataList);
+
 
         CustomListOfSearch = new CustomListOfSearchResults(SearchResults.this, searchResultsDataList);
         listView.setAdapter(CustomListOfSearch);
+        DatabaseManager.getMatchingUsers(userSearchQuery, searchResultsDataList,CustomListOfSearch);
+
     }
 }
