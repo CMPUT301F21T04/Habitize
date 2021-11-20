@@ -1,6 +1,7 @@
 package com.example.habitize;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
 
     private final List<String> followers;
     private final Context context;
+    TextView tv;
 
     // TODO: Add more fields here. Image..etc
 
@@ -58,7 +60,11 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
 
         return view;
 
+    }
 
+
+    public void usersPublicHabits(View view) {
+        Intent intent = new Intent(this, PublicHabitList.class);
     }
 
 }

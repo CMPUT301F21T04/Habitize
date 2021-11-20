@@ -19,6 +19,7 @@
         android:clickable="true"
         android:gravity="center_vertical"
         android:text="Person Name"
+        android:onClick="usersPublicHabits"
         android:textSize="20sp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

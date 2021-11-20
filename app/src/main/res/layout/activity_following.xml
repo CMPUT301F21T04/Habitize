@@ -69,8 +69,8 @@
         android:layout_width="377dp"
         android:layout_height="533dp"
         android:layout_below="@+id/followingReq"
-        android:layout_marginTop="16dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
 
 </RelativeLayout>
