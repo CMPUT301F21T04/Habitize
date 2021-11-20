@@ -2,11 +2,13 @@ package com.example.habitize;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -82,6 +84,8 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
         // Setting our custom list items
         nameField.setText(habit.getName());
         Button viewButton = view.findViewById(R.id.viewHabit);
+        ImageView imageView = view.findViewById(R.id.habitImage);
+        DatabaseManager.getAndSetImage(habit.getRecordAddress(),imageView);
 
 
         UP = view.findViewById(R.id.HabitUp);
