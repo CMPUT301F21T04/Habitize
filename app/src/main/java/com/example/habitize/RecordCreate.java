@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.type.LatLng;
 
@@ -115,6 +116,7 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         });
 
 
+
         // Create the dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -124,6 +126,10 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if (comment.getText().toString().isEmpty()){
+                            comment.setError("Text is required! Please input comment.");
+                            Toast.makeText(getContext(),"Text is required! Please input comment.",Toast.LENGTH_SHORT);
+                        }   // location and photos are optional
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         Date d = new Date();
                         String currentDate = formatter.format(d);
