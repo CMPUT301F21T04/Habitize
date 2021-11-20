@@ -477,8 +477,10 @@ public class DatabaseManager {
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     String UUID = (String)habitFields.get("recordAddress");
                     Long streak = (Long)habitFields.get("streak");
+                    boolean visibility = (boolean) habitFields.get("visibility");
+
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),UUID,streak); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),UUID,streak,visibility); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
                 }
                 habitAdapter.notifyDataSetChanged();
@@ -512,8 +514,9 @@ public class DatabaseManager {
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     String identifier = (String) habitFields.get("recordAddress");
+                    boolean visibility = (boolean) habitFields.get("visibility");
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier,visibility); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
                 }
             }
@@ -567,8 +570,9 @@ public class DatabaseManager {
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     String identifier = (String) habitFields.get("recordAddress");
                     Long streak = (Long) habitFields.get("streak");
+                    boolean visibility = (boolean) habitFields.get("visibility");
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<Record>(),identifier,streak); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<Record>(),identifier,visibility); // create a new habit out of this information
 
                     //recievingList.add(newHabit);
                     if ((mondayRec == true) && (dayOfTheWeek.equals("Monday"))){

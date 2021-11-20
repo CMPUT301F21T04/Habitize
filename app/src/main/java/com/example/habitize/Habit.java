@@ -17,6 +17,7 @@ public class Habit implements Serializable {
     private boolean fridayR;
     private boolean saturdayR;
     private boolean sundayR;
+    private boolean visible;
     private ArrayList<Record> recordList;
     private Integer completion; //If the habit was completed today = 1, if not = 0
     private Long streak;
@@ -30,7 +31,7 @@ public class Habit implements Serializable {
 
     public Habit(String name, String description, String startDate, boolean mondayR, boolean tuesdayR,
                  boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR,ArrayList<Record> passedList
-    ,String identifier){
+    ,String identifier,boolean visible){
         this.name = name;
         this.description = description;
         this.startDate = startDate;
@@ -45,10 +46,11 @@ public class Habit implements Serializable {
         //
         this.identifier = identifier;
         this.streak = 0L;
+        this.visible = visible;
     }
     public Habit(String name, String description, String startDate, boolean mondayR, boolean tuesdayR,
                  boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR,ArrayList<Record> passedList
-            ,String identifier,Long streak){
+            ,String identifier,Long streak,boolean visible){
         this.name = name;
         this.description = description;
         this.startDate = startDate;
@@ -63,8 +65,14 @@ public class Habit implements Serializable {
         //
         this.identifier = identifier;
         this.streak = streak;
+        this.visible = visible;
     }
 
+
+
+    public void setVisible(){this.visible = true;}
+    public void setInvisible(){this.visible = false;}
+    public boolean getVisibility(){return this.visible;}
     public void incrementStreak(){
         this.streak++;
     }

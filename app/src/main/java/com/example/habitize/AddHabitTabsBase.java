@@ -123,7 +123,8 @@ public class AddHabitTabsBase extends AppCompatActivity {
                     // Create the habit
                     Habit newHabit = new Habit(title, description,
                             startDate, monRec, tueRec, wedRec,
-                            thurRec, friRec, satRec, sunRec,new ArrayList<>(),new UUID(20,10).randomUUID().toString());
+                            thurRec, friRec, satRec, sunRec,new ArrayList<>(),new UUID(20,10).randomUUID().toString()
+                    ,true);
                     // add it to the user list
                     passedHabits.add(newHabit);
                     DatabaseManager.updateHabits(passedHabits);
