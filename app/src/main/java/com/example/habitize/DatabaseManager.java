@@ -31,11 +31,12 @@ import java.util.UUID;
 public class DatabaseManager {
     // db is shared across all instances of the manager
     private static final FirebaseFirestore db;
+    private static final FirebaseDatabase fbdb;
+
     private static CollectionReference users;
     private static Context loginContext;
     private static Context signUpContext;
     private static SimpleDateFormat simpleDateFormat;
-    private static final FirebaseDatabase fbdb;
 
     private static onRegistrationLoginListener registrationListener;
     private static onLoginListener loginListener;
@@ -80,6 +81,15 @@ public class DatabaseManager {
     }
     public static String getInputPassword(){
         return inputPassword;
+    }
+
+    // store an image at the identifier
+    public static void storeImage(byte[] image, String imageIdentifier){
+
+    }
+    // retrieve an image from the identifier
+    public static byte[] getImage(String imageIdentifier){
+        return null;
     }
 
     /**
