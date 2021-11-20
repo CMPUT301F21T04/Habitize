@@ -19,6 +19,7 @@ public class Habit implements Serializable {
     private boolean sundayR;
     private ArrayList<Record> recordList;
     private Integer completion; //If the habit was completed today = 1, if not = 0
+    private Long streak;
     private int totalComplete; // total number of times the habit was checked
     private int totalMissed; //total number of times habit was not checked
     private String identifier;
@@ -43,6 +44,36 @@ public class Habit implements Serializable {
         this.recordList = passedList;
         //
         this.identifier = identifier;
+        this.streak = 0L;
+    }
+    public Habit(String name, String description, String startDate, boolean mondayR, boolean tuesdayR,
+                 boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR,ArrayList<Record> passedList
+            ,String identifier,Long streak){
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.mondayR = mondayR;
+        this.tuesdayR = tuesdayR;
+        this.wednesdayR = wednesdayR;
+        this.thursdayR = thursdayR;
+        this.fridayR = fridayR;
+        this.saturdayR = saturdayR;
+        this.sundayR = sundayR;
+        this.recordList = passedList;
+        //
+        this.identifier = identifier;
+        this.streak = streak;
+    }
+
+    public void incrementStreak(){
+        this.streak++;
+    }
+    public void resetStreak(){
+        this.streak = 0L;
+    }
+
+    public Long getStreak(){
+        return this.streak;
     }
 
     public String getRecordAddress(){
