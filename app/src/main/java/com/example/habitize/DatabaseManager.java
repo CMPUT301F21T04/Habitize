@@ -232,7 +232,7 @@ public class DatabaseManager {
                 }
             });
         }
-        
+
          */
     public static void getRecord(String UUID, ArrayList<Record> recievingList, RecordAdapter adapter){
         db.collection("Users").document(user).collection("Records").document(UUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -511,7 +511,6 @@ public class DatabaseManager {
      * @param habitAdapter
      */
     public static void getAllHabits(ArrayList<Habit> recievingList, CustomAdapter habitAdapter) {
-        //
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -596,7 +595,6 @@ public class DatabaseManager {
      */
     public static void getTodaysHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
                                        posInFirebase){
-
         simpleDateFormat = new SimpleDateFormat("EEEE");
         Date d = new Date();
         //gives the day of the week of the user (if today is actually Monday it will say Monday)
