@@ -34,8 +34,9 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        reorderT = findViewById(R.id.ReOrderToday);
         setContentView(R.layout.all_habits);
+        reorderT = findViewById(R.id.ReOrderToday);
+
 
 
         dataList = new ArrayList<>();

@@ -39,13 +39,18 @@ public class AddHabitImageFragment extends Fragment {
      * get image from fragment to send to the database
      */
     public byte[] getImageBytes(){
-        imageView.setDrawingCacheEnabled(true);
-        imageView.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 65, baos);
-        byte[] data = baos.toByteArray();
-        return data;
+        if(!(imageView.getDrawable() == null)){
+            return null;
+        }
+        else{
+            imageView.setDrawingCacheEnabled(true);
+            imageView.buildDrawingCache();
+            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 65, baos);
+            byte[] data = baos.toByteArray();
+            return data;
+        }
     }
 
 
@@ -73,7 +78,6 @@ public class AddHabitImageFragment extends Fragment {
                 openGallery();
             }
         });
-
 
 
 
