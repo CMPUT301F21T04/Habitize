@@ -44,10 +44,11 @@ public class RecordAdapter extends ArrayAdapter<Record> {
         Record record = records.get(position);
         TextView dateField = view.findViewById(R.id.recordDate);
         ImageView recordImage = view.findViewById(R.id.recordImage);
-        Button viewRecord = view.findViewById(R.id.viewRecord);
 
 
-        viewRecord.setOnClickListener(new View.OnClickListener() {
+
+
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 viewer.viewRecord(position);
