@@ -39,7 +39,7 @@ public class AddHabitImageFragment extends Fragment {
         imageView.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 65, baos);
         byte[] data = baos.toByteArray();
         return data;
     }

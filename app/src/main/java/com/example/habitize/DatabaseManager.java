@@ -114,24 +114,31 @@ public class DatabaseManager {
     }
     // retrieve an image from the identifier
     public static void getAndSetImage(String imageIdentifier, ImageView destination){
-        long ONE_MEGABYTE = 1024*1024;
-        StorageReference imageRef = storageRef.child(imageIdentifier);
-        imageRef.getBytes(ONE_MEGABYTE)
-                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        if(bytes != null) {
-                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                            destination.setImageBitmap(bmp);
-                        }
+        db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                long TEN_MEGABYTES = 1024*1024*10;
+                StorageReference imageRef = storageRef.child(imageIdentifier);
+                imageRef.getBytes(TEN_MEGABYTES)
+                        .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                if(bytes != null) {
+                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    destination.setImageBitmap(bmp);
+                                }
 
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
                     }
                 });
+
+            }
+        });
+
     }
 
     /**

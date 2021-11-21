@@ -52,6 +52,7 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
         habitBundle.putSerializable("habits",dataList);
         intent.putExtras(habitBundle);
         startActivity(intent);
+        finish();
     }
 
     @Override

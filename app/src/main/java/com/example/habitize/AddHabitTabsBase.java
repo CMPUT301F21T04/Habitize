@@ -112,8 +112,8 @@ public class AddHabitTabsBase extends AppCompatActivity {
                     ,true);
                     // add it to the user list
                     passedHabits.add(newHabit);
-                    DatabaseManager.updateHabits(passedHabits);
                     DatabaseManager.storeImage(addImage.getImageBytes(),newHabit.getRecordAddress());
+                    DatabaseManager.updateHabits(passedHabits);
                     finish();
                 }
             }

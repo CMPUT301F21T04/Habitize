@@ -109,6 +109,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                                     thurRec, friRec, satRec, sunRec,new ArrayList<Record>(),passedHabit.getRecordAddress(),true);
                             // add it to the user list
                             passedHabits.add(newHabit);
+                            DatabaseManager.storeImage(imgFrag.getImageBytes(),newHabit.getRecordAddress());
                             DatabaseManager.updateHabits(passedHabits);
                             finish();
                         }

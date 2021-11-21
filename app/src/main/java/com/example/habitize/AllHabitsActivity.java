@@ -149,6 +149,7 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         //to use on another activity
         intent.putExtras(habitBundle);
         startActivity(intent);
+        finish();
     }
 
 
