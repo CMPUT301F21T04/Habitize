@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,11 +24,18 @@ public class AddHabitImageFragment extends Fragment {
     private Button addImageBtn;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
+    private byte[] data;
+    private boolean viewing = false;
 
     /*
      * Empty required c onstructor
      */
     public AddHabitImageFragment(){
+        this.data = null;
+    }
+    public AddHabitImageFragment(byte[] byteArr){
+        this.data = data;
+        this.viewing = true;
     }
 
 
@@ -43,6 +51,7 @@ public class AddHabitImageFragment extends Fragment {
         byte[] data = baos.toByteArray();
         return data;
     }
+
 
 
     /**
@@ -68,6 +77,16 @@ public class AddHabitImageFragment extends Fragment {
                 openGallery();
             }
         });
+
+
+        // if we passed data down
+        if(this.viewing != false){
+            if(this.data != null){
+                Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+                imageView.setImageBitmap(bmp);
+            }
+            addImageBtn.setVisibility(View.INVISIBLE);
+        }
         return root;
     }
 

@@ -106,6 +106,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     AutocompleteSupportFragment autocompleteFragment;
     private static int AUTOCOMPLETE_REQUEST_CODE = 2;
     private TouchableWrapper mTouchWrapper;
+    private boolean viewing = false;
+    private Button deleteButton;
 
 
     public interface scrollDisabler{
@@ -115,6 +117,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public MapFragment() {
     }
+
+
 
     public Double getLat(){
         return lastKnownLocation.getLatitude();
@@ -127,16 +131,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         View view = inflater.inflate(R.layout.activity_maps,container,false);
         // Retrieve location and camera position from saved instance state.
-        if (savedInstanceState != null) {
-            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+        if (getArguments() != null) {
+            double lon = (Double)getArguments().getSerializable("lon");
+            double lat = (Double)getArguments().getSerializable("lat");
+            lastKnownLocation = new Location("");
+            lastKnownLocation.setLatitude(lat);
+            lastKnownLocation.setLongitude(lon);
+            viewing = true;
         }
+
+
         this.activity = (AppCompatActivity) view.getContext();
         scrollController = (scrollDisabler) activity;
         locSearchBTN = view.findViewById(R.id.initSearchBTN);
         address = view.findViewById(R.id.addressView);
+        deleteButton = view.findViewById(R.id.deleteButton);
 
-
+        if(viewing == true){
+            locSearchBTN.setVisibility(View.GONE);
+        }
 
         Places.initialize(activity, "AIzaSyBYB0fEQjiorItqGhF8RyD9GVV_z7qOF5c");
         placesClient = Places.createClient(this.activity);
@@ -151,13 +164,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         return view;
 
-    }
-    public void onSaveInstanceState(Bundle outState) {
-        if (map != null) {
-            outState.putParcelable(KEY_CAMERA_POSITION, map.getCameraPosition());
-            outState.putParcelable(KEY_LOCATION, lastKnownLocation);
-        }
-        super.onSaveInstanceState(outState);
     }
 
     public void enableMapScroll(){
@@ -186,40 +192,38 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap map) {
 
-
         this.map = map;
-
         mUISettings = map.getUiSettings();
+        if(!viewing) {
+            // Prompt the user for permission.
+            createLocationRequest();
+
+            // Turn on the My Location layer and the related control on the map.
+            updateLocationUI();
+
+            // Get the current location of the device and set the position of the map.
+            getDeviceLocation();
+
+            // if we are moving the camera we dont want to scroll the tabs
+
+            // Listener for the location search button. When the button is clicked, construct the
+            // autocomplete search bar. Set the fields to specify which types of place data to
+            // return after the user has made a selection.
+            locSearchBTN.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                    // Start the auto complete intent
+                    Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, placeFields).build(activity);
+                    startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+                }
+            });
+        }
+        else{
+            setLastKnownLocation();
+        }
         disableMapScroll();
-        // if we are moving the camera we dont want to scroll the tabs
 
-
-
-
-
-
-        // Prompt the user for permission.
-        createLocationRequest();
-
-        // Turn on the My Location layer and the related control on the map.
-        updateLocationUI();
-
-        // Get the current location of the device and set the position of the map.
-        getDeviceLocation();
-
-
-        // Listener for the location search button. When the button is clicked, construct the
-        // autocomplete search bar. Set the fields to specify which types of place data to
-        // return after the user has made a selection.
-        locSearchBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
-                // Start the auto complete intent
-                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN,placeFields).build(activity);
-                startActivityForResult(intent,AUTOCOMPLETE_REQUEST_CODE);
-            }
-        });
     }
     private void getDeviceLocation() {
         try {
@@ -329,8 +333,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         temp.setLongitude(lat.longitude);
         setLocation(temp);
         lastKnownLocation = temp;
-
-
+    }
+    public void setLastKnownLocation(){
+        map.clear();
+        MarkerOptions markerOptions = new MarkerOptions();
+        LatLng latLng = new LatLng(this.lastKnownLocation.getLatitude(),this.lastKnownLocation.getLongitude());
+        markerOptions.position(latLng);
+        markerOptions.title("Desired position");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        currMarked = map.addMarker(markerOptions);
+        setLocation(lastKnownLocation);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,DEFAULT_ZOOM));
     }
 
     /** If the user opened the app for the first time, a permission request is displayed

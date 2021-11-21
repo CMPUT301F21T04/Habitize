@@ -51,6 +51,8 @@
             android:name=".CustomListOfExistingFollowers"
             android:exported="false" />
         <activity android:name=".FollowRequests"/>
+        <activity android:name=".ViewRecordBase"
+            android:parentActivityName=".ViewHabitTabsBase"/>
         <activity
             android:name=".FollowingActivity"
             android:exported="false" />
@@ -69,6 +71,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".AllHabitsActivity" />
         <activity android:name=".CreateRecordBase"
+            android:exported="true"
             android:parentActivityName=".AllHabitsActivity"/>
         <activity
             android:name=".TodaysHabitsActivity"

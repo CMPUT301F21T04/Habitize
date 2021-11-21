@@ -1,8 +1,9 @@
 package com.example.habitize;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Record {
+public class Record implements Serializable {
     private String date;
     private String description;
     private byte[] byteArr; // the image is stored here

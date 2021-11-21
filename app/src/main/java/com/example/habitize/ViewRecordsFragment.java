@@ -1,5 +1,6 @@
 package com.example.habitize;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,25 +16,30 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class ViewRecordsFragment extends Fragment {
+public class ViewRecordsFragment extends Fragment implements RecordAdapter.recordViewer{
 
     private ArrayList<Record> records;
     private String user;
     private ListView list;
     private RecordAdapter recordAdapter;
     private Habit habit;
+    private ArrayList<Habit> habits;
+    View root;
 
-    public ViewRecordsFragment(Habit habit){
+    public ViewRecordsFragment(Habit habit,ArrayList<Habit> habits){
         this.habit = habit;
+        this.habits = habits;
     }
+
+    public ViewRecordsFragment(){}
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View root = inflater.inflate(R.layout.fragment_view_records,container,false);
+        root = inflater.inflate(R.layout.fragment_view_records,container,false);
         // no method for filling yet
         records = new ArrayList<>();
         list = root.findViewById(R.id.record_list);
-        recordAdapter = new RecordAdapter(getActivity(),R.layout.record_list_content,records);
+        recordAdapter = new RecordAdapter(this,R.layout.record_list_content,records);
         list.setAdapter(recordAdapter);
         DatabaseManager.getRecord(habit.getRecordAddress(),records,recordAdapter);
         return root;
@@ -41,9 +47,14 @@ public class ViewRecordsFragment extends Fragment {
     }
 
 
-
-
-
-
-
+    @Override
+    public void viewRecord(int position) {
+        Bundle habitBundle = new Bundle();
+        habitBundle.putSerializable("habit",habit); // pass down the habit at the position
+        habitBundle.putSerializable("habits",habits);
+        habitBundle.putSerializable("record",records.get(position));
+        Intent intent = new Intent(getContext(),ViewRecordBase.class);
+        intent.putExtras(habitBundle);
+        startActivity(intent);
+    }
 }

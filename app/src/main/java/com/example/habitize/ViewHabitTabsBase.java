@@ -1,5 +1,6 @@
 package com.example.habitize;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -51,10 +52,11 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         AllowEdit = findViewById(R.id.AllowEditing);
         deleteButton = findViewById(R.id.delete_button_tabs);
         editable = false;
-        passedUser = (String)getIntent().getExtras().getSerializable("User"); // we get passed a habit
         passedHabit = (Habit)getIntent().getExtras().getSerializable("habit"); // a user
         passedHabits = new ArrayList<>(); // we will get the latest list from the database
         passedIndex = (int)getIntent().getExtras().getSerializable("index");
+
+
 
 
         // pulling the most recent habits
@@ -157,7 +159,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                     returningFragment = new ViewHabitImageFragment(passedHabit.getRecordAddress());
                     break;
                 case 2:
-                    returningFragment = new ViewRecordsFragment(passedHabit);
+                    returningFragment = new ViewRecordsFragment(passedHabit,passedHabits);
                     break;
                 default:
                     // on creation, our passed habit fills in the fragment's information fields

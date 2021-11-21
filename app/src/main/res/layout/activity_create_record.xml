@@ -6,6 +6,20 @@
     android:layout_height="match_parent">
 
 
+    <Button
+        android:id="@+id/deleteRecord"
+        android:layout_width="96dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:background="#00000000"
+        android:text="DELETE"
+        android:textColor="#6200EE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"/>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/recordTabs"
         android:layout_width="409dp"

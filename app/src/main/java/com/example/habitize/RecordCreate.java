@@ -50,6 +50,7 @@ public class RecordCreate extends Fragment{
 
     private Button RecordLocBTN, RecordImgBTN;
     private EditText comment;
+    private String commentText;
     private ImageView imageViewer;
     private TextView locViewer;
     private static final int PICK_IMAGE = 100;
@@ -58,7 +59,11 @@ public class RecordCreate extends Fragment{
     private String imgPath ="";
 
     public RecordCreate() {
+        this.commentText = null;
         // Required empty public constructor
+    }
+    public RecordCreate(String comment) {
+        this.commentText = comment;
     }
 
     /**
@@ -67,6 +72,7 @@ public class RecordCreate extends Fragment{
      * @return
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 
         View view = inflater.inflate(R.layout.fragment_record_create,container,false);
 
@@ -96,7 +102,10 @@ public class RecordCreate extends Fragment{
         // Link UI components to the its respective pairs in XML
 
         comment = view.findViewById(R.id.recordComment);
-
+        if(commentText != null){
+            comment.setText(commentText);
+            comment.setEnabled(false);
+        }
 
 
 

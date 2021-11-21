@@ -28,6 +28,7 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
     private Habit passedHabit;
     private ArrayList<Habit> passedHabits;
     private int index;
+    private Record passedRecord;
     String[] titles = {"Info","Image","Location"};
 
 
@@ -39,9 +40,10 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
         pager = findViewById(R.id.recordPager);
         tabLayout = findViewById(R.id.recordTabs);
 
+
         passedHabits = (ArrayList<Habit>) getIntent().getSerializableExtra("habits");
         passedHabit = (Habit) getIntent().getSerializableExtra("habit");
-        index = (int) getIntent().getSerializableExtra("index");
+        passedRecord = (Record) getIntent().getSerializableExtra("record");
 
 
 
@@ -77,7 +79,7 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
 
                 Record newRecord = new Record(currentDate,comment,null,id,lat,lon);
                 DatabaseManager.updateRecord(passedHabit.getRecordAddress(),newRecord);
-                passedHabits.get(index).incrementStreak();
+                passedHabit.incrementStreak();
                 DatabaseManager.updateHabits(passedHabits);
 
                 if(recordImg != null){
