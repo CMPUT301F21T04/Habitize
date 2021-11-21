@@ -37,6 +37,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     private Button deleteButton;
     private int passedIndex;
     private boolean editable;
+    private ArrayList<Record> recordList;
     String[] titles = {"INFO","IMAGE","RECORDS"};
 
     /**
@@ -58,7 +59,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
 
 
-
+        recordList = new ArrayList<>();
         // pulling the most recent habits
         DatabaseManager.getAllHabits(passedHabits);
 
@@ -111,7 +112,6 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                             passedHabits.add(newHabit);
                             DatabaseManager.storeImage(imgFrag.getImageBytes(),newHabit.getRecordAddress());
                             DatabaseManager.updateHabits(passedHabits);
-                            getParent().finish();
                             finish();
                         }
                     });
@@ -154,12 +154,15 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         public Fragment createFragment(int position) {
             Fragment returningFragment;
             switch(position){
-                case 1:
+                case 1: // TODO: This must be reorganized
                     // on creation, our passed habit fills in the fragment's information fields
                     returningFragment = new ViewHabitImageFragment(passedHabit.getRecordAddress());
                     break;
                 case 2:
                     returningFragment = new ViewRecordsFragment(passedHabit,passedHabits);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("records",recordList);
+                    returningFragment.setArguments(bundle);
                     break;
                 default:
                     // on creation, our passed habit fills in the fragment's information fields

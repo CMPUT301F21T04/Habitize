@@ -92,15 +92,18 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
                     returningFragment = new RecordCreate(passedRecord.getDescription());
                     break;
                 case 1:
-                    returningFragment = new AddHabitImageFragment(passedRecord.getByteArr());
+                    returningFragment = new AddHabitImageFragment();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putSerializable("image",passedRecord.getByteArr());
+                    returningFragment.setArguments(bundle1);
                     break;
                 case 2:
                     // setting up the location
                     returningFragment = new MapFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("lon",passedRecord.getLon());
-                    bundle.putSerializable("lat",passedRecord.getLat());
-                    returningFragment.setArguments(bundle);
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putSerializable("lon",passedRecord.getLon());
+                    bundle2.putSerializable("lat",passedRecord.getLat());
+                    returningFragment.setArguments(bundle2);
                     break;
             }
             return returningFragment;

@@ -31,11 +31,7 @@ public class AddHabitImageFragment extends Fragment {
      * Empty required c onstructor
      */
     public AddHabitImageFragment(){
-        this.data = null;
-    }
-    public AddHabitImageFragment(byte[] byteArr){
-        this.data = data;
-        this.viewing = true;
+
     }
 
 
@@ -79,14 +75,17 @@ public class AddHabitImageFragment extends Fragment {
         });
 
 
-        // if we passed data down
-        if(this.viewing != false){
-            if(this.data != null){
+
+
+        if(getArguments() != null){
+            this.data = (byte[])getArguments().getSerializable("image");
+            if(data != null){
                 Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
                 imageView.setImageBitmap(bmp);
             }
             addImageBtn.setVisibility(View.INVISIBLE);
         }
+
         return root;
     }
 
