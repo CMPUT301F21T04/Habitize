@@ -7,7 +7,7 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_toolbar"
+        android:id="@+id/my_toolbar1"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/purple_500"
@@ -63,7 +63,7 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="377dp"
         android:layout_height="129dp"
-        android:layout_below="@+id/my_toolbar"
+        android:layout_below="@+id/my_toolbar1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="FOLLOW REQUESTS"
