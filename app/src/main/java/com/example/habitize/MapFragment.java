@@ -1,21 +1,10 @@
-// Copyright 2020 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package com.example.habitize;
+import static android.app.Activity.RESULT_OK;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -25,7 +14,11 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.DragEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -36,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.common.api.Status;
@@ -47,8 +41,10 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -72,21 +68,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * An activity that displays a map showing the place at the device's current location.*/
-public class MapsActivity extends AppCompatActivity
-        implements OnMapReadyCallback {
-
+public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap map;
     private CameraPosition cameraPosition;
     TextView address;
     Button retryLocBTN, locSearchBTN, back;
+    private Context thisContext;
+
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     Marker currMarked;
-
+    private SupportMapFragment mapFragment;
     // The entry point to the Places API.
     private PlacesClient placesClient;
+    private AppCompatActivity activity;
+    private UiSettings mUISettings;
 
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -105,62 +101,88 @@ public class MapsActivity extends AppCompatActivity
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
-
+    private scrollDisabler scrollController;
     // Keys for autocompletefragment and global variable
     AutocompleteSupportFragment autocompleteFragment;
     private static int AUTOCOMPLETE_REQUEST_CODE = 2;
+    private TouchableWrapper mTouchWrapper;
+    private boolean viewing = false;
+    private Button deleteButton;
 
-    @SuppressLint("MissingPermission")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        // Retrieve location and camera position from saved instance state.
-        if (savedInstanceState != null) {
-            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
-        }
+    public interface scrollDisabler{
+        void disableScroll();
+        void enableScroll();
+    }
 
-        // Retrieve the content view that renders the map.
-        setContentView(R.layout.activity_maps);
-
-        // Initialize button
-        locSearchBTN = findViewById(R.id.initSearchBTN);
-        /*
-        back = findViewById(R.id.backBTN);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-         */
-
-        // Construct a PlacesClient
-        Places.initialize(getApplicationContext(), "AIzaSyBYB0fEQjiorItqGhF8RyD9GVV_z7qOF5c");
-        placesClient = Places.createClient(this);
-
-        // Construct a FusedLocationProviderClient.
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        // Build the map.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+    public MapFragment() {
     }
 
 
-    /**
-     * This method checks if map is not null, then pass/add in the intent the last location and the last camera location
-     * @param outState
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        if (map != null) {
-            outState.putParcelable(KEY_CAMERA_POSITION, map.getCameraPosition());
-            outState.putParcelable(KEY_LOCATION, lastKnownLocation);
+
+    public Double getLat(){
+        return lastKnownLocation.getLatitude();
+    }
+    public Double getLon(){
+        return lastKnownLocation.getLongitude();
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.activity_maps,container,false);
+        // Retrieve location and camera position from saved instance state.
+        if (getArguments() != null) {
+            double lon = (Double)getArguments().getSerializable("lon");
+            double lat = (Double)getArguments().getSerializable("lat");
+            lastKnownLocation = new Location("");
+            lastKnownLocation.setLatitude(lat);
+            lastKnownLocation.setLongitude(lon);
+            viewing = true;
         }
-        super.onSaveInstanceState(outState);
+
+
+        this.activity = (AppCompatActivity) view.getContext();
+        scrollController = (scrollDisabler) activity;
+        locSearchBTN = view.findViewById(R.id.initSearchBTN);
+        address = view.findViewById(R.id.addressView);
+        deleteButton = view.findViewById(R.id.deleteButton);
+
+        if(viewing == true){
+            locSearchBTN.setVisibility(View.GONE);
+        }
+
+        Places.initialize(activity, "AIzaSyBYB0fEQjiorItqGhF8RyD9GVV_z7qOF5c");
+        placesClient = Places.createClient(this.activity);
+
+        // Construct a FusedLocationProviderClient.
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.activity);
+
+        // Build the map.
+        mapFragment = (SupportMapFragment) this.getChildFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync( this);
+
+        return view;
+
+    }
+
+    public void enableMapScroll(){
+        mUISettings.setAllGesturesEnabled(true);
+        map.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
+            @Override
+            public void onCameraMoveStarted(int i) {
+                scrollController.disableScroll();
+            }
+        });
+        map.setOnCameraIdleListener(new OnCameraIdleListener() {
+            @Override
+            public void onCameraIdle() {
+                scrollController.enableScroll();
+            }
+        });
+    }
+    public void disableMapScroll(){
+        mUISettings.setAllGesturesEnabled(false);
     }
 
 
@@ -169,41 +191,46 @@ public class MapsActivity extends AppCompatActivity
      */
     @Override
     public void onMapReady(GoogleMap map) {
+
         this.map = map;
+        mUISettings = map.getUiSettings();
+        if(!viewing) {
+            // Prompt the user for permission.
+            createLocationRequest();
 
-        // Prompt the user for permission.
-        createLocationRequest();
+            // Turn on the My Location layer and the related control on the map.
+            updateLocationUI();
 
-        // Turn on the My Location layer and the related control on the map.
-        updateLocationUI();
+            // Get the current location of the device and set the position of the map.
+            getDeviceLocation();
 
-        // Get the current location of the device and set the position of the map.
-        getDeviceLocation();
+            // if we are moving the camera we dont want to scroll the tabs
 
+            // Listener for the location search button. When the button is clicked, construct the
+            // autocomplete search bar. Set the fields to specify which types of place data to
+            // return after the user has made a selection.
+            locSearchBTN.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                    // Start the auto complete intent
+                    Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, placeFields).build(activity);
+                    startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+                }
+            });
+        }
+        else{
+            setLastKnownLocation();
+        }
+        disableMapScroll();
 
-        // Listener for the location search button. When the button is clicked, construct the
-        // autocomplete search bar. Set the fields to specify which types of place data to
-        // return after the user has made a selection.
-         locSearchBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
-                // Start the auto complete intent
-                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN,placeFields).build(MapsActivity.this);
-                startActivityForResult(intent,AUTOCOMPLETE_REQUEST_CODE);
-            }
-        });
     }
-
-    /**
-     * // Get the best and most recent location of the device and the camera's position, which may be null in rare cases when a location is not available.
-     */
     private void getDeviceLocation() {
         try {
             if (locationPermissionGranted) {
                 @SuppressLint("MissingPermission")
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                locationResult.addOnCompleteListener(this.activity, new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
@@ -231,21 +258,19 @@ public class MapsActivity extends AppCompatActivity
                 map.moveCamera(CameraUpdateFactory
                         .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
                 map.getUiSettings().setMyLocationButtonEnabled(false);
-                }
-            } catch(SecurityException e){
-                Log.e("Exception: %s", e.getMessage(), e);
             }
+        } catch(SecurityException e){
+            Log.e("Exception: %s", e.getMessage(), e);
+        }
     }
-
     /**
      * This method takes the current location of the user and display the addressline on the screen.
      * @param lastKnownLoc is a Location object that contains the lat and long values of the current
      *                     position of the user.
      */
     public void setLocation(Location lastKnownLoc){
-        address = findViewById(R.id.addressView);
         // find the addressline
-        Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
+        Geocoder geocoder = new Geocoder(this.activity, Locale.getDefault());
         try {
             // addressList just takes one value at most so it is safe to use the index 0 to get the result
             List<Address> addressList = geocoder.getFromLocation(lastKnownLoc.getLatitude(), lastKnownLoc.getLongitude(), 1);
@@ -308,8 +333,17 @@ public class MapsActivity extends AppCompatActivity
         temp.setLongitude(lat.longitude);
         setLocation(temp);
         lastKnownLocation = temp;
-
-
+    }
+    public void setLastKnownLocation(){
+        map.clear();
+        MarkerOptions markerOptions = new MarkerOptions();
+        LatLng latLng = new LatLng(this.lastKnownLocation.getLatitude(),this.lastKnownLocation.getLongitude());
+        markerOptions.position(latLng);
+        markerOptions.title("Desired position");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        currMarked = map.addMarker(markerOptions);
+        setLocation(lastKnownLocation);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,DEFAULT_ZOOM));
     }
 
     /** If the user opened the app for the first time, a permission request is displayed
@@ -324,22 +358,22 @@ public class MapsActivity extends AppCompatActivity
                 .addLocationRequest(locationRequest);
 
         // Check whether the current location settings are satisfied
-        SettingsClient client = LocationServices.getSettingsClient(this);
-        if (ContextCompat.checkSelfPermission(MapsActivity.this,
+        SettingsClient client = LocationServices.getSettingsClient(activity);
+        if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                locationPermissionGranted = true;
-                getDeviceLocation();}
+            locationPermissionGranted = true;
+            getDeviceLocation();}
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
 
 
         // Handles the result of the request for location permissions
-        task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+        task.addOnSuccessListener(activity, new OnSuccessListener<LocationSettingsResponse>() {
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                 // All location settings are satisfied. The client can initialize
                 // location requests here.
                 locationPermissionGranted = true;
-                ActivityCompat.requestPermissions(MapsActivity.this,
+                ActivityCompat.requestPermissions(activity,
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
                 updateLocationUI();
@@ -347,7 +381,7 @@ public class MapsActivity extends AppCompatActivity
             }
         });
 
-        task.addOnFailureListener(this, e -> {
+        task.addOnFailureListener(activity, e -> {
             if (e instanceof ResolvableApiException) {
                 // Location settings are not satisfied, but this can be fixed
                 // by showing the user a dialog.
@@ -355,7 +389,7 @@ public class MapsActivity extends AppCompatActivity
                     // Show the dialog by calling startResolutionForResult(),
                     // and check the result in onActivityResult().
                     ResolvableApiException resolvable = (ResolvableApiException) e;
-                    resolvable.startResolutionForResult(MapsActivity.this,
+                    resolvable.startResolutionForResult(activity,
                             REQUEST_CHECK_SETTINGS);
                 } catch (IntentSender.SendIntentException sendEx) {
                     // Ignore the error.
@@ -371,16 +405,13 @@ public class MapsActivity extends AppCompatActivity
         if (requestCode == REQUEST_CHECK_SETTINGS) {
             // handle the result and check if the location is granted
             switch (resultCode) {
-                case Activity.RESULT_OK:    // the user accepted permission to location services
+                case RESULT_OK:    // the user accepted permission to location services
                     retryLocBTN.setVisibility(View.GONE);
                     updateLocationUI();
                     locationPermissionGranted = true;
                     break;
                 case Activity.RESULT_CANCELED:  // the user denied permission to location services
-                    Toast.makeText(MapsActivity.this, "Location Services is required to access current location", Toast.LENGTH_SHORT).show();
                     // create a retry button for the user to accept the permissions
-                    address = findViewById(R.id.addressView);
-                    retryLocBTN = findViewById(R.id.retryLocationBTN);
                     address.setText("Location cannot be found. Please turn on Location Services Permission");
                     retryLocBTN.setVisibility(View.VISIBLE);
                     break;
@@ -402,7 +433,6 @@ public class MapsActivity extends AppCompatActivity
                     setNewLocation(place);
                     break;
                 case AutocompleteActivity.RESULT_ERROR: // errro
-                    Toast.makeText(this,"An error has occured.",Toast.LENGTH_SHORT);
                     Status status = Autocomplete.getStatusFromIntent(data);
                     Log.i(TAG, status.getStatusMessage());
                     break;
@@ -413,4 +443,25 @@ public class MapsActivity extends AppCompatActivity
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
+    public class TouchableWrapper extends FrameLayout {
+        public TouchableWrapper(Context context) {
+            super(context);
+        }
+
+        @Override
+        public boolean dispatchTouchEvent(MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    System.out.println("MAP TOUCHED");
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    System.out.println("MAP LET GO");
+                    return false;
+            }
+            return super.dispatchTouchEvent(event);
+        }
+    }
+
 }

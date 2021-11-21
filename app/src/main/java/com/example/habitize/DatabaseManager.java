@@ -113,25 +113,33 @@ public class DatabaseManager {
                 });
     }
     // retrieve an image from the identifier
+    // right now this has to be called every time we refresh the images. WORKAROUND: just add the byte maps
+    // to a list stored. The list will be initialized ONCE when we log in, and then we will add to it during runtime
     public static void getAndSetImage(String imageIdentifier, ImageView destination){
-        long ONE_MEGABYTE = 1024*1024;
-        StorageReference imageRef = storageRef.child(imageIdentifier);
-        imageRef.getBytes(ONE_MEGABYTE)
-                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        if(bytes != null) {
-                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                            destination.setImageBitmap(bmp);
-                        }
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+        db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                long TEN_MEGABYTES = 1024*1024*10;
+                StorageReference imageRef = storageRef.child(imageIdentifier);
+                imageRef.getBytes(TEN_MEGABYTES)
+                        .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                if(bytes != null) {
+                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    destination.setImageBitmap(bmp);
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
                     }
                 });
+
+            }
+        });
+
     }
 
     /**
@@ -197,8 +205,36 @@ public class DatabaseManager {
      * @param UUID
      * @param adapter
      */
-
+        /*
         public static void getRecord(String UUID, ArrayList<Record> recievingList, RecordAdapter adapter){
+            db.collection("Users").document(user).collection("Records").document(UUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                    recievingList.clear();
+                    // get the mapped data of records
+                    ArrayList<Record> mappedRecords = (ArrayList<Record>) value.get("records");
+                    // retrieving all records
+                    if(mappedRecords != null) {
+                        for (int i = 0; i < mappedRecords.size(); i++) {
+                            Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
+                            String date = (String) hashedRecord.get("date");
+                            String description = (String) hashedRecord.get("description");
+                            String identifier = (String) hashedRecord.get("recordIdentifier");
+                            Double lat = (Double) hashedRecord.get("lat");
+                            Double lon = (Double) hashedRecord.get("lon");
+
+
+
+                            recievingList.add(new Record(date, description, null,identifier,lat,lon));
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
+        
+         */
+    public static void getRecord(String UUID, ArrayList<Record> recievingList, RecordAdapter adapter){
         db.collection("Users").document(user).collection("Records").document(UUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -208,18 +244,43 @@ public class DatabaseManager {
                 // retrieving all records
                 if(mappedRecords != null) {
                     for (int i = 0; i < mappedRecords.size(); i++) {
+
                         Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
                         String date = (String) hashedRecord.get("date");
                         String description = (String) hashedRecord.get("description");
                         String identifier = (String) hashedRecord.get("recordIdentifier");
-                        recievingList.add(new Record(date, description, null,identifier));
+                        Double lat = (Double) hashedRecord.get("lat");
+                        Double lon = (Double) hashedRecord.get("lon");
+
+                        db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                long TEN_MEGABYTES = 1024*1024*10;
+                                StorageReference imageRef = storageRef.child(identifier);
+                                imageRef.getBytes(TEN_MEGABYTES)
+                                        .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                            @Override
+                                            public void onSuccess(byte[] bytes) {
+                                                if(bytes != null) {
+                                                    recievingList.add(new Record(date, description, bytes,identifier,lat,lon));
+                                                    adapter.notifyDataSetChanged();
+                                                }
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
+
+                            }
+                        });
                     }
                 }
                 adapter.notifyDataSetChanged();
             }
         });
     }
-
 
     /**
      * Takes the new records for the user and update them
@@ -257,7 +318,9 @@ public class DatabaseManager {
                                     String date = (String) hashedRecord.get("date");
                                     String description = (String) hashedRecord.get("description");
                                     String identifier = (String) hashedRecord.get("recordIdentifier");
-                                    updatedRecords.add(new Record(date, description,null,identifier));
+                                    Double lat = (Double) hashedRecord.get("lat");
+                                    Double lon = (Double) hashedRecord.get("lon");
+                                    updatedRecords.add(new Record(date, description,null,identifier,lat,lon));
                                 }
                                 updatedRecords.add(newRecord);
                                 HashMap<String, Object> mappedDate = new HashMap<>();
@@ -319,16 +382,9 @@ public class DatabaseManager {
         db.collection("Users").document(user).update(followingList);
         HashMap<String,String> emailMap = new HashMap<>();
         emailMap.put("user",user);
-
         HashMap<String,Object> recordList = new HashMap<>();
         recordList.put("Records",new ArrayList<>());
-
         db.collection("EmailToUser").document(inputEmail).set(emailMap);
-
-
-
-
-
         registrationListener.loginUser();// log the user in. signup will implement this
 
     }
@@ -422,7 +478,6 @@ public class DatabaseManager {
      * @param adapter adapter, the adapter we want to notify of changes
      */
     public static void getFriends(ArrayList<String> friendsList,ArrayAdapter adapter){
-
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -478,7 +533,6 @@ public class DatabaseManager {
                     String UUID = (String)habitFields.get("recordAddress");
                     Long streak = (Long)habitFields.get("streak");
                     boolean visibility = (boolean) habitFields.get("visibility");
-
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
                             thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),UUID,streak,visibility); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
@@ -494,7 +548,6 @@ public class DatabaseManager {
     one as it does not assume there is an adapter waiting to be notified.
      */
     public static void getAllHabits(ArrayList<Habit> recievingList) {
-
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -554,7 +607,6 @@ public class DatabaseManager {
                 ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
                 recievingList.clear();
                 posInFirebase.clear();
-
                 for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
                     Map<String,Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
                     // retrieves all the habit information and adds it to the habitList
@@ -572,7 +624,7 @@ public class DatabaseManager {
                     Long streak = (Long) habitFields.get("streak");
                     boolean visibility = (boolean) habitFields.get("visibility");
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<Record>(),identifier,visibility); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier,streak,visibility); // create a new habit out of this information
 
                     //recievingList.add(newHabit);
                     if ((mondayRec == true) && (dayOfTheWeek.equals("Monday"))){
