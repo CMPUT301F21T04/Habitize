@@ -1,12 +1,10 @@
 package com.example.habitize;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +46,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //Connecting view habits variables to xml files
         setContentView(R.layout.activity_view_habit_tabs);
-        pager = findViewById(R.id.viewPager);
+        pager = findViewById(R.id.recordPager);
         ConfirmEdit = findViewById(R.id.ConfirmEdit);
         AllowEdit = findViewById(R.id.AllowEditing);
         deleteButton = findViewById(R.id.delete_button_tabs);
@@ -66,7 +64,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         ViewAdapter mAdapter = new ViewAdapter(this);
         pager.setOffscreenPageLimit(8);
         pager.setAdapter(mAdapter);
-        tabLayout = findViewById(R.id.ViewHabitTabs);
+        tabLayout = findViewById(R.id.recordTabs);
 
         // connects the tablayout to the pager navigation. Now they are synced on swipes
         new TabLayoutMediator(tabLayout, pager, new TabLayoutMediator.TabConfigurationStrategy() {
@@ -172,7 +170,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 2;
         }
     }
 

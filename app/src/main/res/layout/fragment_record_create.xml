@@ -7,80 +7,27 @@
     tools:context=".RecordCreate">
 
 
-    <ImageView
-        android:id="@+id/recordImg"
-        android:layout_width="349dp"
-        android:layout_height="201dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
-
-    <Button
-        android:id="@+id/recordLocBTN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:text="Add Location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationView" />
-
     <EditText
         android:id="@+id/recordComment"
         android:layout_width="275dp"
         android:layout_height="148dp"
-        android:layout_marginTop="328dp"
+        android:layout_marginTop="92dp"
         android:hint="Add a comment."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/recordImgBTN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
-        android:text="Add Image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recordImg" />
 
     <TextView
         android:id="@+id/newRecComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
-        android:layout_marginTop="296dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="278dp"
         android:text="Comment:"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/locationView"
-        android:layout_width="187dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="66dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.656"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recordComment" />
-
-    <TextView
-        android:id="@+id/locationConst"
-        android:layout_width="85dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="66dp"
-        android:layout_marginEnd="10dp"
-        android:text="Location:"
-        app:layout_constraintEnd_toStartOf="@+id/locationView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recordComment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

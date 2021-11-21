@@ -28,6 +28,7 @@
             android:name=".SearchResults"
             android:exported="false" />
 
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -66,6 +67,7 @@
         <activity android:name=".SignUp" />
         <activity android:name=".MainActivity" />
         <activity android:name=".AllHabitsActivity" />
+        <activity android:name=".CreateRecordBase" />
         <activity
             android:name=".TodaysHabitsActivity"
             android:parentActivityName=".MainActivity" />

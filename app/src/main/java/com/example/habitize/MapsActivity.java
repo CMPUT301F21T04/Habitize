@@ -130,14 +130,7 @@ public class MapsActivity extends AppCompatActivity
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle info = new Bundle();
-                info.putSerializable("lat", lastKnownLocation.getLatitude());
-                info.putSerializable("lng", lastKnownLocation.getLongitude());
-                String loc = address.getText().toString();
-                info.putSerializable("loc",loc);
-                RecordCreate args = new RecordCreate();
-                args.setArguments(info);
-                args.show(getSupportFragmentManager(),"added location");
+                finish();
             }
         });
 

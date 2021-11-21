@@ -113,6 +113,8 @@ public class DatabaseManager {
                 });
     }
     // retrieve an image from the identifier
+    // right now this has to be called every time we refresh the images. WORKAROUND: just add the byte maps
+    // to a list stored. The list will be initialized ONCE when we log in, and then we will add to it during runtime
     public static void getAndSetImage(String imageIdentifier, ImageView destination){
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -127,7 +129,6 @@ public class DatabaseManager {
                                     Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                                     destination.setImageBitmap(bmp);
                                 }
-
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -326,16 +327,9 @@ public class DatabaseManager {
         db.collection("Users").document(user).update(followingList);
         HashMap<String,String> emailMap = new HashMap<>();
         emailMap.put("user",user);
-
         HashMap<String,Object> recordList = new HashMap<>();
         recordList.put("Records",new ArrayList<>());
-
         db.collection("EmailToUser").document(inputEmail).set(emailMap);
-
-
-
-
-
         registrationListener.loginUser();// log the user in. signup will implement this
 
     }
@@ -429,7 +423,6 @@ public class DatabaseManager {
      * @param adapter adapter, the adapter we want to notify of changes
      */
     public static void getFriends(ArrayList<String> friendsList,ArrayAdapter adapter){
-
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -485,7 +478,6 @@ public class DatabaseManager {
                     String UUID = (String)habitFields.get("recordAddress");
                     Long streak = (Long)habitFields.get("streak");
                     boolean visibility = (boolean) habitFields.get("visibility");
-
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
                             thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),UUID,streak,visibility); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
@@ -501,7 +493,6 @@ public class DatabaseManager {
     one as it does not assume there is an adapter waiting to be notified.
      */
     public static void getAllHabits(ArrayList<Habit> recievingList) {
-
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {

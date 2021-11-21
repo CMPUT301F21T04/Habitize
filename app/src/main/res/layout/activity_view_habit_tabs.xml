@@ -32,18 +32,18 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
+        android:id="@+id/recordPager"
         android:layout_width="match_parent"
         android:layout_height="564dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ViewHabitTabs"
+        app:layout_constraintTop_toBottomOf="@id/recordTabs"
         app:layout_constraintVertical_bias="0.117" />
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/ViewHabitTabs"
+        android:id="@+id/recordTabs"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,6 +75,6 @@
         android:text="Allow Editing"
         app:layout_constraintBottom_toTopOf="@+id/ConfirmEdit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+        app:layout_constraintTop_toBottomOf="@+id/recordPager" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

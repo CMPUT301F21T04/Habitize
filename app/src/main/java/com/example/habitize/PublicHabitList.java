@@ -56,6 +56,7 @@ public class PublicHabitList extends AppCompatActivity implements CustomAdapter.
 
     @Override
     public void recordEvent(int position) {
+        /*
         Bundle habitBundle = new Bundle();
         habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
         habitBundle.putSerializable("index",position);
@@ -63,6 +64,8 @@ public class PublicHabitList extends AppCompatActivity implements CustomAdapter.
         RecordCreate newRecord =  new RecordCreate();
         newRecord.setArguments(habitBundle);
         newRecord.show(getSupportFragmentManager(),"new record");
+
+         */
     }
 
 

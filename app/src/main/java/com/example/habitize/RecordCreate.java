@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -41,14 +42,19 @@ import java.util.Date;
 import java.util.UUID;
 
 
-public class RecordCreate extends DialogFragment implements CustomAdapter.habitCheckListener {
+public class RecordCreate extends Fragment{
     // Ui components
+
+
+
+
     private Button RecordLocBTN, RecordImgBTN;
     private EditText comment;
     private ImageView imageViewer;
     private TextView locViewer;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
+    private Location lastLocation;
     private String imgPath ="";
 
     public RecordCreate() {
@@ -60,12 +66,11 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
      * @param savedInstanceState
      * @return
      */
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_record_create,null);
+        View view = inflater.inflate(R.layout.fragment_record_create,container,false);
 
+        /*
         ActivityResultLauncher<Intent> forActivityResult = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -79,36 +84,23 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                     }
                 }
         );
-
+         */
         // Access arguments
-        Habit args = (Habit) getArguments().getSerializable("habit");
-        ArrayList<Habit> passedHabits = (ArrayList<Habit>)getArguments().getSerializable("habits");
-        int index = (int)getArguments().getSerializable("index");
+
+
+
+
+
+
+
         // Link UI components to the its respective pairs in XML
-        RecordLocBTN = view.findViewById(R.id.recordLocBTN);
-        RecordImgBTN = view.findViewById(R.id.recordImgBTN);
+
         comment = view.findViewById(R.id.recordComment);
-        imageViewer = view.findViewById(R.id.recordImg);
-        locViewer = view.findViewById(R.id.locationView);
-
-        if (getArguments()!=null && getArguments().containsKey("loc")){
-            double lat = getArguments().getSerializable("lat").hashCode();
-            double lng = getArguments().getSerializable("lng").hashCode();
-            String loc = (String) getArguments().getSerializable("loc");
-            locViewer.setText(loc);
-        }
-
-        // Listener for the location button. When the button is clicked, redirect user to the maps activity.
-        RecordLocBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // goto MapsActivity class
-                Intent intent = new Intent(getActivity(),MapsActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
+
+
+        /*
         // Listener for the image button. When the button is clicked, redirect user to the openGallery method
         RecordImgBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +110,9 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
             }
         });
 
+         */
 
+/*
         // Create the dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -149,11 +143,8 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
 
                     }
                 }).create();
-    }
-
-    @Override
-    public void recordEvent(int position) {
-        // will handle which habit to append the record to.
+                */
+        return view;
     }
 
 
@@ -170,4 +161,6 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
     }
+
+
 }

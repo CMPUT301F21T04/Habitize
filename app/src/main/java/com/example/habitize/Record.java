@@ -7,6 +7,8 @@ public class Record {
     private String description;
     private byte[] byteArr; // the image is stored here
     private String recordIdentifier;
+    private long lat;
+    private long lon;
     // also, image here
     // also, location of the recorded habit here
 
