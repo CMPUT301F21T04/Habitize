@@ -54,7 +54,8 @@
         <activity
             android:name=".FollowingActivity"
             android:exported="false" />
-        <activity android:name=".ViewHabitTabsBase" />
+        <activity android:name=".ViewHabitTabsBase"
+            android:parentActivityName=".AllHabitsActivity"/>
         <activity
             android:name=".Login_Activity"
             android:exported="true" >
@@ -67,7 +68,8 @@
         <activity android:name=".SignUp" />
         <activity android:name=".MainActivity" />
         <activity android:name=".AllHabitsActivity" />
-        <activity android:name=".CreateRecordBase" />
+        <activity android:name=".CreateRecordBase"
+            android:parentActivityName=".AllHabitsActivity"/>
         <activity
             android:name=".TodaysHabitsActivity"
             android:parentActivityName=".MainActivity" />

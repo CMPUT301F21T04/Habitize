@@ -152,14 +152,8 @@ public class RecordCreate extends Fragment{
      * This method takes the uploaded image from the storage and handles it here.
      * Extract the info from the imageView and convert it to a bitmap.
      */
-    private void uploadImg() {
-        // get the data from an ImageView as bytes
-        // create a storage reference from our app
-        imageViewer.setDrawingCacheEnabled(true);
-        imageViewer.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable) imageViewer.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+    public String getComment(){
+        return comment.getText().toString();
     }
 
 

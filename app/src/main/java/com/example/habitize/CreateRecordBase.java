@@ -15,11 +15,19 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
+
 public class CreateRecordBase extends AppCompatActivity implements MapFragment.scrollDisabler {
     private ViewPager2 pager;
     private TabLayout tabLayout;
     private Button createButton;
     private AddRecordAdapter mAdapter;
+    private Habit passedHabit;
+    private ArrayList<Habit> passedHabits;
+    private int index;
     String[] titles = {"Info","Image","Location"};
 
 
@@ -30,6 +38,10 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
         createButton = findViewById(R.id.createRecord);
         pager = findViewById(R.id.recordPager);
         tabLayout = findViewById(R.id.recordTabs);
+
+        passedHabits = (ArrayList<Habit>) getIntent().getSerializableExtra("habits");
+        passedHabit = (Habit) getIntent().getSerializableExtra("habit");
+        index = (int) getIntent().getSerializableExtra("index");
 
 
 
@@ -49,6 +61,28 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                RecordCreate recordCreateFrag = (RecordCreate) getSupportFragmentManager().findFragmentByTag("f0");
+                AddHabitImageFragment imgFrag = (AddHabitImageFragment) getSupportFragmentManager().findFragmentByTag("f1");
+                MapFragment mapFrag = (MapFragment) getSupportFragmentManager().findFragmentByTag("f2");
+
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                Date d = new Date();
+                String currentDate = formatter.format(d);
+
+                String comment = recordCreateFrag.getComment();
+                byte[] recordImg = imgFrag.getImageBytes();
+                Double lon = mapFrag.getLon();
+                Double lat = mapFrag.getLat();
+                String id = new UUID(20,10).randomUUID().toString();
+
+                Record newRecord = new Record(currentDate,comment,null,id,lat,lon);
+                DatabaseManager.updateRecord(passedHabit.getRecordAddress(),newRecord);
+                passedHabits.get(index).incrementStreak();
+                DatabaseManager.updateHabits(passedHabits);
+
+                if(recordImg != null){
+                    DatabaseManager.storeImage(recordImg,newRecord.getRecordIdentifier());
+                }
                 finish();
             }
         });

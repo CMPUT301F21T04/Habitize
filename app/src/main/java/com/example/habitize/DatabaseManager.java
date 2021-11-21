@@ -220,7 +220,9 @@ public class DatabaseManager {
                         String date = (String) hashedRecord.get("date");
                         String description = (String) hashedRecord.get("description");
                         String identifier = (String) hashedRecord.get("recordIdentifier");
-                        recievingList.add(new Record(date, description, null,identifier));
+                        Double lat = (Double) hashedRecord.get("lat");
+                        Double lon = (Double) hashedRecord.get("lon");
+                        recievingList.add(new Record(date, description, null,identifier,lat,lon));
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -265,7 +267,9 @@ public class DatabaseManager {
                                     String date = (String) hashedRecord.get("date");
                                     String description = (String) hashedRecord.get("description");
                                     String identifier = (String) hashedRecord.get("recordIdentifier");
-                                    updatedRecords.add(new Record(date, description,null,identifier));
+                                    Double lat = (Double) hashedRecord.get("lat");
+                                    Double lon = (Double) hashedRecord.get("lon");
+                                    updatedRecords.add(new Record(date, description,null,identifier,lat,lon));
                                 }
                                 updatedRecords.add(newRecord);
                                 HashMap<String, Object> mappedDate = new HashMap<>();

@@ -109,6 +109,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                             passedHabits.add(newHabit);
                             DatabaseManager.storeImage(imgFrag.getImageBytes(),newHabit.getRecordAddress());
                             DatabaseManager.updateHabits(passedHabits);
+                            getParent().finish();
                             finish();
                         }
                     });

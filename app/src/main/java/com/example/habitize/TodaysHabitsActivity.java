@@ -52,7 +52,6 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
         habitBundle.putSerializable("habits",dataList);
         intent.putExtras(habitBundle);
         startActivity(intent);
-        finish();
     }
 
     @Override
@@ -61,12 +60,6 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
         habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
         habitBundle.putSerializable("index",position);
         habitBundle.putSerializable("habits",dataList);
-        /*
-        RecordCreate newRecord =  new RecordCreate();
-        newRecord.setArguments(habitBundle);
-        newRecord.show(getSupportFragmentManager(),"new record");
-         */
-
 
         Intent intent = new Intent(this,CreateRecordBase.class);
 
