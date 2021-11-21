@@ -3,35 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AddHabitTabsBase">
+    android:layout_height="match_parent">
 
 
     <Button
-        android:id="@+id/create_habit_tabs"
+        android:id="@+id/deleteRecord"
         android:layout_width="96dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="#00000000"
-        android:text="CREATE"
+        android:text="DELETE"
         android:textColor="#6200EE"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/recordPager"
-        android:layout_width="match_parent"
-        android:layout_height="564dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/AddHabitTabs"
-        app:layout_constraintVertical_bias="0.294" />
+        android:visibility="invisible"/>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/AddHabitTabs"
+        android:id="@+id/recordTabs"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,9 +38,31 @@
             android:layout_height="wrap_content"
             android:text="Tuesday" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wednesday" />
+
     </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/recordPager"
+        android:layout_width="413dp"
+        android:layout_height="596dp"
+        android:layout_marginBottom="72dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recordTabs"
+        app:layout_constraintVertical_bias="0.117" />
+
+    <Button
+        android:id="@+id/createRecord"
+        android:layout_width="96dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#00000000"
+        android:text="CREATE"
+        android:textColor="#6200EE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

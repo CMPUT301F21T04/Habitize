@@ -43,7 +43,6 @@ public class Habit implements Serializable {
         this.saturdayR = saturdayR;
         this.sundayR = sundayR;
         this.recordList = passedList;
-        //
         this.identifier = identifier;
         this.streak = 0L;
         this.visible = visible;
@@ -62,13 +61,10 @@ public class Habit implements Serializable {
         this.saturdayR = saturdayR;
         this.sundayR = sundayR;
         this.recordList = passedList;
-        //
         this.identifier = identifier;
         this.streak = streak;
         this.visible = visible;
     }
-
-
 
     public void setVisible(){this.visible = true;}
     public void setInvisible(){this.visible = false;}

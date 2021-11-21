@@ -34,15 +34,15 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.todays_habits);
         reorderT = findViewById(R.id.ReOrderToday);
+        setContentView(R.layout.all_habits);
 
 
         dataList = new ArrayList<>();
         posInFireBase = new ArrayList<>();
 
 
-        listView = findViewById(R.id.todaysHabit_list);
+        listView = findViewById(R.id.habit_list);
         habitAdapter = new CustomAdapter(this, dataList);
         listView.setAdapter(habitAdapter);
 
@@ -131,9 +131,11 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
         habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
         habitBundle.putSerializable("index",position);
         habitBundle.putSerializable("habits",dataList);
-        RecordCreate newRecord =  new RecordCreate();
-        newRecord.setArguments(habitBundle);
-        newRecord.show(getSupportFragmentManager(),"new record");
+
+        Intent intent = new Intent(this,CreateRecordBase.class);
+
+        intent.putExtras(habitBundle);
+        startActivity(intent);
     }
 
 
