@@ -1,6 +1,7 @@
 package com.example.habitize;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -14,12 +15,13 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class CreateRecordBase extends AppCompatActivity {
+public class CreateRecordBase extends AppCompatActivity implements MapFragment.scrollDisabler {
     private ViewPager2 pager;
     private TabLayout tabLayout;
     private Button createButton;
     private AddRecordAdapter mAdapter;
-    String[] titles = {"Info","Image"};
+    String[] titles = {"Info","Image","Location"};
+
 
 
     protected void onCreate(Bundle savedInstanceState){
@@ -36,12 +38,13 @@ public class CreateRecordBase extends AppCompatActivity {
         pager.setAdapter(mAdapter);
         tabLayout = findViewById(R.id.recordTabs);
 
-        new TabLayoutMediator(tabLayout, pager, new TabLayoutMediator.TabConfigurationStrategy() {
+        TabLayoutMediator mediator = new TabLayoutMediator(tabLayout, pager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 tab.setText(titles[position]);
             }
-        }).attach();
+        });
+        mediator.attach();
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +53,42 @@ public class CreateRecordBase extends AppCompatActivity {
             }
         });
 
+        // the maps listens constantly. we need to turn it off and on
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                MapFragment fragment = (MapFragment) getSupportFragmentManager().findFragmentByTag("f2");
+                int pos = tab.getPosition();
+                if(pos == 2){
+                    fragment.enableMapScroll();
+                }
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                MapFragment fragment = (MapFragment) getSupportFragmentManager().findFragmentByTag("f2");
+                int pos = tab.getPosition();
+                if(pos == 2){
+                    fragment.enableMapScroll();
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void disableScroll() {
+        pager.setUserInputEnabled(false);
+
+    }
+
+    @Override
+    public void enableScroll() {
+        pager.setUserInputEnabled(true);
     }
 
 
@@ -66,13 +104,15 @@ public class CreateRecordBase extends AppCompatActivity {
                 break;
                 case 1: returningFragment = new AddHabitImageFragment();
                 break;
+                case 2: returningFragment = new MapFragment();
+                break;
             }
             return returningFragment;
         }
 
         @Override
         public int getItemCount() {
-            return 2;
+            return 3;
         }
     }
 }

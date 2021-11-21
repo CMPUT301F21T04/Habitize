@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Tuesday" />
 
+
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
@@ -45,7 +46,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="#00000000"
-        android:text="DELETE"
+        android:text="CREATE"
         android:textColor="#6200EE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

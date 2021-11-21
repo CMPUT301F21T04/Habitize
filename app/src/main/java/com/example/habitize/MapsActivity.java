@@ -126,6 +126,7 @@ public class MapsActivity extends AppCompatActivity
 
         // Initialize button
         locSearchBTN = findViewById(R.id.initSearchBTN);
+        /*
         back = findViewById(R.id.backBTN);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +134,7 @@ public class MapsActivity extends AppCompatActivity
                 finish();
             }
         });
+         */
 
         // Construct a PlacesClient
         Places.initialize(getApplicationContext(), "AIzaSyBYB0fEQjiorItqGhF8RyD9GVV_z7qOF5c");
