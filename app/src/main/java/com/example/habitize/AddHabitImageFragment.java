@@ -39,7 +39,7 @@ public class AddHabitImageFragment extends Fragment {
      * get image from fragment to send to the database
      */
     public byte[] getImageBytes(){
-        if(!(imageView.getDrawable() == null)){
+        if(imageView.getDrawable() == null){
             return null;
         }
         else{
