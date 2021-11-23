@@ -6,10 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 /**
@@ -20,6 +24,7 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
 
     private final List<String> followers;
     private final Context context;
+    private FloatingActionButton deleteFollowerButton;
     TextView tv;
 
     // TODO: Add more fields here. Image..etc
@@ -52,10 +57,17 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
             view = LayoutInflater.from(context).inflate(R.layout.activity_custom_list_of_existing_followers,parent,false);
         }
 
+
+        deleteFollowerButton = view.findViewById(R.id.deleteExistingFollowerButton);
         String follower = followers.get(position);
         TextView nameField = view.findViewById(R.id.existingFollowerName);
 
         nameField.setText(follower);
+
+        nameField.setClickable(false);
+        deleteFollowerButton.setFocusable(false);
+        deleteFollowerButton.setFocusableInTouchMode(false);
+
 
 
         return view;

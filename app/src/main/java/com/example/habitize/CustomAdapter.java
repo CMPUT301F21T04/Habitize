@@ -114,6 +114,9 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
         });
 
 
+        nameField.setFocusable(false);
+        nameField.setFocusableInTouchMode(false);
+
         completeButton.setFocusable(false);
         completeButton.setFocusableInTouchMode(false);
 
