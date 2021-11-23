@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class CustomListOfSearchResults extends ArrayAdapter<String> {
     private final List<String> users;
     private final Context context;
 
+    private FloatingActionButton sendRequest;
     public CustomListOfSearchResults(Context context, ArrayList<String> users){
         super(context,0, users);
         this.users = users;
@@ -30,12 +33,18 @@ public class CustomListOfSearchResults extends ArrayAdapter<String> {
             view = LayoutInflater.from(context).inflate(R.layout.activity_custom_list_of_search_results,parent,false);
         }
 
+
+        sendRequest = view.findViewById(R.id.sendRequestButton);
+
         String user = users.get(position);
         TextView nameField = view.findViewById(R.id.userName);
 
         nameField.setText(user);
 
 
+        nameField.setClickable(false);
+        sendRequest.setFocusable(false);
+        sendRequest.setFocusableInTouchMode(false);
         return view;
 
 

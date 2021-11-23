@@ -5,12 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 
@@ -24,6 +26,9 @@ public class CustomListOfFollowRequests extends ArrayAdapter<String> {
 
     private final List<String> followersThatRequested;
     private final Context context;
+    private Button unfollowButton;
+    private FloatingActionButton deleteFollowRequest;
+    private FloatingActionButton acceptFollowRequest;
 
     /**
      * Initializes list of requested follower usernames and context variables.
@@ -52,10 +57,27 @@ public class CustomListOfFollowRequests extends ArrayAdapter<String> {
             view = LayoutInflater.from(context).inflate(R.layout.activity_custom_list_of_follow_requests,parent,false);
         }
 
+        deleteFollowRequest = view.findViewById(R.id.deleteFollowRequestButton);
+        acceptFollowRequest = view.findViewById(R.id.acceptFollowRequestButton);
+
+
+
         String requestedFollower = followersThatRequested.get(position);
         TextView nameField = view.findViewById(R.id.requestedFollowerName);
 
         nameField.setText(requestedFollower);
+        unfollowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        nameField.setClickable(false);
+        deleteFollowRequest.setFocusable(false);
+        deleteFollowRequest.setFocusableInTouchMode(false);
+        acceptFollowRequest.setFocusable(false);
+        acceptFollowRequest.setFocusableInTouchMode(false);
 
         return view;
 
