@@ -1,12 +1,11 @@
 package com.example.habitize;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +37,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     private Button deleteButton;
     private int passedIndex;
     private boolean editable;
+    private ArrayList<Record> recordList;
     String[] titles = {"INFO","IMAGE","RECORDS"};
 
     /**
@@ -48,17 +48,18 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //Connecting view habits variables to xml files
         setContentView(R.layout.activity_view_habit_tabs);
-        pager = findViewById(R.id.viewPager);
+        pager = findViewById(R.id.recordPager);
         ConfirmEdit = findViewById(R.id.ConfirmEdit);
         AllowEdit = findViewById(R.id.AllowEditing);
         deleteButton = findViewById(R.id.delete_button_tabs);
         editable = false;
-        passedUser = (String)getIntent().getExtras().getSerializable("User"); // we get passed a habit
         passedHabit = (Habit)getIntent().getExtras().getSerializable("habit"); // a user
         passedHabits = new ArrayList<>(); // we will get the latest list from the database
         passedIndex = (int)getIntent().getExtras().getSerializable("index");
 
 
+
+        recordList = new ArrayList<>();
         // pulling the most recent habits
         DatabaseManager.getAllHabits(passedHabits);
 
@@ -66,7 +67,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         ViewAdapter mAdapter = new ViewAdapter(this);
         pager.setOffscreenPageLimit(8);
         pager.setAdapter(mAdapter);
-        tabLayout = findViewById(R.id.ViewHabitTabs);
+        tabLayout = findViewById(R.id.recordTabs);
 
         // connects the tablayout to the pager navigation. Now they are synced on swipes
         new TabLayoutMediator(tabLayout, pager, new TabLayoutMediator.TabConfigurationStrategy() {
@@ -109,6 +110,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                                     thurRec, friRec, satRec, sunRec,new ArrayList<Record>(),passedHabit.getRecordAddress(),true);
                             // add it to the user list
                             passedHabits.add(newHabit);
+                            DatabaseManager.storeImage(imgFrag.getImageBytes(),newHabit.getRecordAddress());
                             DatabaseManager.updateHabits(passedHabits);
                             finish();
                         }
@@ -152,12 +154,15 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         public Fragment createFragment(int position) {
             Fragment returningFragment;
             switch(position){
-                case 1:
+                case 1: // TODO: This must be reorganized
                     // on creation, our passed habit fills in the fragment's information fields
                     returningFragment = new ViewHabitImageFragment(passedHabit.getRecordAddress());
                     break;
                 case 2:
-                    returningFragment = new ViewRecordsFragment(passedHabit);
+                    returningFragment = new ViewRecordsFragment(passedHabit,passedHabits);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("records",recordList);
+                    returningFragment.setArguments(bundle);
                     break;
                 default:
                     // on creation, our passed habit fills in the fragment's information fields

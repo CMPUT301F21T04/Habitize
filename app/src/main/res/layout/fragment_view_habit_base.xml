@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AddHabitBaseFragment"
-    >
+    tools:context=".AddHabitBaseFragment">
 
 
     <EditText
@@ -19,8 +18,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.058"
-        />
+        app:layout_constraintVertical_bias="0.058" />
 
     <EditText
         android:id="@+id/FragmentViewHabitDescription"
@@ -35,8 +33,7 @@
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitTitle"
-        app:layout_constraintVertical_bias="0.071"
-        />
+        app:layout_constraintVertical_bias="0.071" />
 
     <TextView
         android:id="@+id/FragmentViewHabitStartDate"
@@ -52,8 +49,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitDescription"
-        app:layout_constraintVertical_bias="0.13"
-        />
+        app:layout_constraintVertical_bias="0.13" />
 
     <Switch
         android:id="@+id/view_publicHabit"
@@ -66,7 +62,7 @@
         android:thumbTint="#6200EE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.556"
+        app:layout_constraintHorizontal_bias="0.474"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitSaturday"
         app:layout_constraintVertical_bias="1.0" />
@@ -81,8 +77,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/FragmentViewHabitTuesday"
         app:layout_constraintEnd_toStartOf="@+id/FragmentViewHabitTuesday"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
         android:id="@+id/FragmentViewHabitThursday"
@@ -91,8 +86,7 @@
         android:text="Th"
         app:layout_constraintEnd_toStartOf="@+id/FragmentViewHabitFriday"
         app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitWednesday"
-        app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitStartDate"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitStartDate" />
 
     <CheckBox
         android:id="@+id/FragmentViewHabitWednesday"
@@ -101,8 +95,7 @@
         android:text="W"
         app:layout_constraintBaseline_toBaselineOf="@+id/FragmentViewHabitThursday"
         app:layout_constraintEnd_toStartOf="@+id/FragmentViewHabitThursday"
-        app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitTuesday"
-        />
+        app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitTuesday" />
 
     <CheckBox
         android:id="@+id/FragmentViewHabitFriday"
@@ -111,8 +104,7 @@
         android:text="F"
         app:layout_constraintBaseline_toBaselineOf="@+id/FragmentViewHabitThursday"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitThursday"
-        />
+        app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitThursday" />
 
     <CheckBox
         android:id="@+id/FragmentViewHabitTuesday"
@@ -121,8 +113,7 @@
         android:text="T"
         app:layout_constraintEnd_toStartOf="@+id/FragmentViewHabitWednesday"
         app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitMonday"
-        app:layout_constraintTop_toTopOf="@+id/FragmentViewHabitWednesday"
-        />
+        app:layout_constraintTop_toTopOf="@+id/FragmentViewHabitWednesday" />
 
     <CheckBox
         android:id="@+id/FragmentViewHabitSaturday"
@@ -132,8 +123,7 @@
         android:text="S"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitTuesday"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitTuesday" />
 
     <CheckBox
         android:id="@+id/FragmentViewHabitSunday"
@@ -141,8 +131,7 @@
         android:layout_height="wrap_content"
         android:text="Su"
         app:layout_constraintBaseline_toBaselineOf="@+id/FragmentViewHabitSaturday"
-        app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitSaturday"
-        />
+        app:layout_constraintStart_toEndOf="@+id/FragmentViewHabitSaturday" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

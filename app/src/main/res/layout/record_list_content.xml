@@ -5,21 +5,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@drawable/list_item_outline"
+    android:background="?attr/selectableItemBackground"
     >
-
-    <Button
-        android:id="@+id/viewRecord"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="122dp"
-        android:layout_height="49dp"
-        android:text="View"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.595"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.841" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:layout_marginTop="25dp"

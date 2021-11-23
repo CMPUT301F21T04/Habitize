@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -30,7 +31,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.type.LatLng;
 
@@ -42,18 +42,28 @@ import java.util.Date;
 import java.util.UUID;
 
 
-public class RecordCreate extends DialogFragment implements CustomAdapter.habitCheckListener {
+public class RecordCreate extends Fragment{
     // Ui components
+
+
+
+
     private Button RecordLocBTN, RecordImgBTN;
     private EditText comment;
+    private String commentText;
     private ImageView imageViewer;
     private TextView locViewer;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
+    private Location lastLocation;
     private String imgPath ="";
 
     public RecordCreate() {
+        this.commentText = null;
         // Required empty public constructor
+    }
+    public RecordCreate(String comment) {
+        this.commentText = comment;
     }
 
     /**
@@ -61,12 +71,12 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
      * @param savedInstanceState
      * @return
      */
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_record_create,null);
 
+        View view = inflater.inflate(R.layout.fragment_record_create,container,false);
+
+        /*
         ActivityResultLauncher<Intent> forActivityResult = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -75,40 +85,31 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                             Intent data = result.getData();
                             imageUri = data.getData();
                             imageViewer.setImageURI(imageUri);
+                            uploadImg();
                         }
                     }
                 }
         );
-
+         */
         // Access arguments
-        Habit args = (Habit) getArguments().getSerializable("habit");
-        ArrayList<Habit> passedHabits = (ArrayList<Habit>)getArguments().getSerializable("habits");
-        int index = (int)getArguments().getSerializable("index");
-        // Link UI components to the its respective pairs in XML
-        RecordLocBTN = view.findViewById(R.id.recordLocBTN);
-        RecordImgBTN = view.findViewById(R.id.recordImgBTN);
-        comment = view.findViewById(R.id.recordComment);
-        imageViewer = view.findViewById(R.id.recordImg);
-        locViewer = view.findViewById(R.id.locationView);
 
-        if (getArguments()!=null && getArguments().containsKey("loc")){
-            double lat = getArguments().getSerializable("lat").hashCode();
-            double lng = getArguments().getSerializable("lng").hashCode();
-            String loc = (String) getArguments().getSerializable("loc");
-            locViewer.setText(loc);
+
+
+
+
+
+
+        // Link UI components to the its respective pairs in XML
+
+        comment = view.findViewById(R.id.recordComment);
+        if(commentText != null){
+            comment.setText(commentText);
+            comment.setEnabled(false);
         }
 
-        // Listener for the location button. When the button is clicked, redirect user to the maps activity.
-        RecordLocBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // goto MapsActivity class
-                Intent intent = new Intent(getActivity(),MapsActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
+        /*
         // Listener for the image button. When the button is clicked, redirect user to the openGallery method
         RecordImgBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,8 +119,9 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
             }
         });
 
+         */
 
-
+/*
         // Create the dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -129,10 +131,6 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (comment.getText().toString().isEmpty()){
-                            comment.setError("Text is required! Please input comment.");
-                            Toast.makeText(getContext(),"Text is required! Please input comment.",Toast.LENGTH_SHORT);
-                        }   // location and photos are optional
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         Date d = new Date();
                         String currentDate = formatter.format(d);
@@ -154,11 +152,8 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
 
                     }
                 }).create();
-    }
-
-    @Override
-    public void recordEvent(int position) {
-        // will handle which habit to append the record to.
+                */
+        return view;
     }
 
 
@@ -166,13 +161,9 @@ public class RecordCreate extends DialogFragment implements CustomAdapter.habitC
      * This method takes the uploaded image from the storage and handles it here.
      * Extract the info from the imageView and convert it to a bitmap.
      */
-    private void uploadImg() {
-        // get the data from an ImageView as bytes
-        // create a storage reference from our app
-        imageViewer.setDrawingCacheEnabled(true);
-        imageViewer.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable) imageViewer.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+    public String getComment(){
+        return comment.getText().toString();
     }
+
+
 }

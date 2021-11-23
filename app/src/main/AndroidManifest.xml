@@ -28,6 +28,7 @@
             android:name=".SearchResults"
             android:exported="false" />
 
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -50,10 +51,13 @@
             android:name=".CustomListOfExistingFollowers"
             android:exported="false" />
         <activity android:name=".FollowRequests"/>
+        <activity android:name=".ViewRecordBase"
+            android:parentActivityName=".ViewHabitTabsBase"/>
         <activity
             android:name=".FollowingActivity"
             android:exported="false" />
-        <activity android:name=".ViewHabitTabsBase" />
+        <activity android:name=".ViewHabitTabsBase"
+            android:parentActivityName=".AllHabitsActivity"/>
         <activity
             android:name=".Login_Activity"
             android:exported="true" >
@@ -66,6 +70,9 @@
         <activity android:name=".SignUp" />
         <activity android:name=".MainActivity" />
         <activity android:name=".AllHabitsActivity" />
+        <activity android:name=".CreateRecordBase"
+            android:exported="true"
+            android:parentActivityName=".AllHabitsActivity"/>
         <activity
             android:name=".TodaysHabitsActivity"
             android:parentActivityName=".MainActivity" />

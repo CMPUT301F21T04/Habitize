@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,11 +24,14 @@ public class AddHabitImageFragment extends Fragment {
     private Button addImageBtn;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
+    private byte[] data;
+    private boolean viewing = false;
 
     /*
      * Empty required c onstructor
      */
     public AddHabitImageFragment(){
+
     }
 
 
@@ -35,14 +39,20 @@ public class AddHabitImageFragment extends Fragment {
      * get image from fragment to send to the database
      */
     public byte[] getImageBytes(){
-        imageView.setDrawingCacheEnabled(true);
-        imageView.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
-        return data;
+        if(!(imageView.getDrawable() == null)){
+            return null;
+        }
+        else{
+            imageView.setDrawingCacheEnabled(true);
+            imageView.buildDrawingCache();
+            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 65, baos);
+            byte[] data = baos.toByteArray();
+            return data;
+        }
     }
+
 
 
     /**
@@ -68,6 +78,18 @@ public class AddHabitImageFragment extends Fragment {
                 openGallery();
             }
         });
+
+
+
+        if(getArguments() != null){
+            this.data = (byte[])getArguments().getSerializable("image");
+            if(data != null){
+                Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+                imageView.setImageBitmap(bmp);
+            }
+            addImageBtn.setVisibility(View.INVISIBLE);
+        }
+
         return root;
     }
 
