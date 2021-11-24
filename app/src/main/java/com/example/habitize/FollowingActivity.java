@@ -67,9 +67,8 @@ public class FollowingActivity extends AppCompatActivity {
                 openSearchResultsActivity();
             }
         });
-
-
     }
+
     public void openFollowRequestsActivity() {
         Intent intent = new Intent(this, FollowRequests.class);
         startActivity(intent);

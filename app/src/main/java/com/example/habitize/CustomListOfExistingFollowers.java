@@ -12,8 +12,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +35,9 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
     private final Context context;
     private FloatingActionButton deleteFollowerButton;
     TextView tv;
+    FirebaseFirestore fStore;
+    FirebaseAuth fAuth;
+    String currentLoggedInUser;
 
     // TODO: Add more fields here. Image..etc
 
@@ -61,22 +73,45 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
         deleteFollowerButton = view.findViewById(R.id.deleteExistingFollowerButton);
         String follower = followers.get(position);
         TextView nameField = view.findViewById(R.id.existingFollowerName);
-
         nameField.setText(follower);
 
         nameField.setClickable(false);
         deleteFollowerButton.setFocusable(false);
         deleteFollowerButton.setFocusableInTouchMode(false);
 
+        fStore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        CollectionReference collectionReference = fStore.collection("Users");
+        ArrayList<String> existingFollowersDataList = new ArrayList<>();
 
+        deleteFollowerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
+
+                currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for(QueryDocumentSnapshot document : task.getResult()) {
+                                currentLoggedInUser = document.getString("email");
+                                System.out.println("followerrrrrrrrrrr" + follower);
+                                //The currentLoggedInUser contains the document where the email matched the current logged in user's email.
+                                //CODE HERE: find the followers section and remove the data for
+                            }
+                        }
+                        else {
+                            System.out.println("QUERY TO GET CURRENT USER DOCUMENT IN USERS DIDN'T WORK");
+                        }
+                    }
+                });
+
+
+
+            }
+        });
 
         return view;
 
     }
-
-
-//    public void usersPublicHabits(View view) {
-//        Intent intent = new Intent(this, PublicHabitList.class);
-//    }
-
 }
