@@ -27,6 +27,7 @@
         <activity
             android:name=".CustomListOfSearchResults"
             android:exported="false" />
+        <activity android:name=".QRActivity"/>
         <activity
             android:name=".SearchResults"
             android:exported="false" />
