@@ -5,6 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".AddHabitImage">
 
+    <Button
+        android:id="@+id/FragmentViewHabitNewCamBtn"
+        android:layout_width="194dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="184dp"
+        android:text="Take a picture"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitNewImageBtn" />
+
     <ImageView
         android:id="@+id/FragmentViewHabitNewImage"
         android:layout_width="349dp"
