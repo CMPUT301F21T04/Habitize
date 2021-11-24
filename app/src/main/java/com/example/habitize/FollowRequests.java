@@ -37,7 +37,7 @@ public class FollowRequests extends AppCompatActivity {
         //Set collectionReference to "followers".
         //Initialize followRequestsDataList to append follower userNames to as strings.
         //Assign XML List View to local variable listView.
-        followers = new ArrayList<>();
+        followers = new ArrayList<String>();
         CustomListOfRequestedFollowersAdapter = new CustomListOfFollowRequests(this,followers);
         listView = findViewById(R.id.listOfFollowRequests);
         listView.setAdapter(CustomListOfRequestedFollowersAdapter);

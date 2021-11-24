@@ -26,7 +26,6 @@ public class CustomListOfFollowRequests extends ArrayAdapter<String> {
 
     private final List<String> followersThatRequested;
     private final Context context;
-    private Button unfollowButton;
     private FloatingActionButton deleteFollowRequest;
     private FloatingActionButton acceptFollowRequest;
 
@@ -60,18 +59,10 @@ public class CustomListOfFollowRequests extends ArrayAdapter<String> {
         deleteFollowRequest = view.findViewById(R.id.deleteFollowRequestButton);
         acceptFollowRequest = view.findViewById(R.id.acceptFollowRequestButton);
 
-
-
         String requestedFollower = followersThatRequested.get(position);
         TextView nameField = view.findViewById(R.id.requestedFollowerName);
 
         nameField.setText(requestedFollower);
-        unfollowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         nameField.setClickable(false);
         deleteFollowRequest.setFocusable(false);
