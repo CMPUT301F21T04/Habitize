@@ -9,6 +9,8 @@ import android.widget.ListView;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
@@ -19,8 +21,9 @@ import java.util.ArrayList;
 
 public class AllHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener, CustomAdapter.habitCheckListener{
     private ArrayList<Habit> dataList;
-    private CustomAdapter habitAdapter;
-    private ListView list;
+    private HabitAdapter habitAdapter;
+    private RecyclerView list;
+    private LinearLayoutManager mLayoutManager;
     private DocumentReference docRef;
     private CollectionReference colRef;
     private FirebaseFirestore db;
@@ -43,15 +46,18 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         reorder = findViewById(R.id.ReOrderToday);
         
         dataList = new ArrayList<>(); // reset the list
-
+        mLayoutManager = new LinearLayoutManager(this);
         list = findViewById(R.id.habit_list);
-        habitAdapter = new CustomAdapter(this,dataList);
+        habitAdapter = new HabitAdapter(dataList,false);
         list.setAdapter(habitAdapter);
+        list.setLayoutManager(mLayoutManager);
 
         // getting the habits from database and updating the view with them.
-        DatabaseManager.getAllHabits(dataList,habitAdapter);
+        DatabaseManager.getAllHabitsRecycler(dataList,habitAdapter);
 
 
+
+        /*
         reorder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -114,6 +120,8 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
 
             }
         });
+
+         */
 
     }
 
