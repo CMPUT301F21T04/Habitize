@@ -84,11 +84,11 @@ public class CustomListOfFollowRequests extends ArrayAdapter<String> {
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
         CollectionReference collectionReference = fStore.collection("Users");
+        Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
 
         deleteFollowRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
                 currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -106,7 +106,6 @@ public class CustomListOfFollowRequests extends ArrayAdapter<String> {
         acceptFollowRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
                 currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
