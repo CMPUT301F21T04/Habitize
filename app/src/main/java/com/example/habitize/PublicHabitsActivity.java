@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-public class PublicHabitList extends AppCompatActivity implements CustomAdapter.habitViewListener, CustomAdapter.habitCheckListener {
+public class PublicHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener, CustomAdapter.habitCheckListener {
 
     private ArrayList<Habit> dataList;
     private CustomAdapter habitAdapter;
@@ -27,25 +27,31 @@ public class PublicHabitList extends AppCompatActivity implements CustomAdapter.
     private SimpleDateFormat simpleDateFormat;
     private String userNameToFollow;
 
-
+    /**
+     * creates the activity and calls DataBaseManager to display all public habits
+     * @param savedInstanceState instance that was last saved
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.public_habits);
-
+        setContentView(R.layout.activity_public_habits);
 
         dataList = new ArrayList<>();
         posInFireBase = new ArrayList<>();
 
-        listView = findViewById(R.id.userPublicHabit_list);
+        listView = findViewById(R.id.publicHabit_list);
         habitAdapter = new CustomAdapter(this, dataList);
         listView.setAdapter(habitAdapter);
+
+        Bundle b = getIntent().getExtras();
+        //sets var string to the username the user clicked on which will be passed into DataBaseManager
+        userNameToFollow = b.getString("name");
 
         DatabaseManager.getPublicHabits(dataList, habitAdapter,posInFireBase, userNameToFollow);
     }
 
     @Override
     public void viewHabitPressed(int position) {
-        Intent intent = new Intent(PublicHabitList.this, ViewHabitTabsBase.class);
+        Intent intent = new Intent(this, ViewHabitTabsBase.class);
         Bundle habitBundle = new Bundle();
         habitBundle.putSerializable("habit", dataList.get(position));
         habitBundle.putSerializable("index",posInFireBase.get(position));
@@ -56,6 +62,7 @@ public class PublicHabitList extends AppCompatActivity implements CustomAdapter.
 
     @Override
     public void recordEvent(int position) {
+        /*
         Bundle habitBundle = new Bundle();
         habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
         habitBundle.putSerializable("index",position);
@@ -63,6 +70,8 @@ public class PublicHabitList extends AppCompatActivity implements CustomAdapter.
         RecordCreate newRecord =  new RecordCreate();
         newRecord.setArguments(habitBundle);
         newRecord.show(getSupportFragmentManager(),"new record");
+
+         */
     }
 
 

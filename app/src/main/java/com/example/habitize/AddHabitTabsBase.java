@@ -7,11 +7,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -37,7 +35,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_tabs_base);
-        pager = findViewById(R.id.viewPager);
+        pager = findViewById(R.id.recordPager);
         createButton = findViewById(R.id.create_habit_tabs);
 
         //to store habits
@@ -112,8 +110,8 @@ public class AddHabitTabsBase extends AppCompatActivity {
                     ,true);
                     // add it to the user list
                     passedHabits.add(newHabit);
-                    DatabaseManager.updateHabits(passedHabits);
                     DatabaseManager.storeImage(addImage.getImageBytes(),newHabit.getRecordAddress());
+                    DatabaseManager.updateHabits(passedHabits);
                     finish();
                 }
             }

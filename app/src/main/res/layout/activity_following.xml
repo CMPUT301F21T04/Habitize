@@ -7,7 +7,7 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_toolbar"
+        android:id="@+id/my_toolbar1"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/purple_500"
@@ -31,10 +31,13 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="88dp"
+                android:layout_marginEnd="89dp"
+                android:backgroundTint="@color/white"
                 android:ems="10"
+                android:hint="Search User"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/searchButton"
@@ -43,11 +46,13 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="17dp"
-                android:background="@color/purple_500"
-                android:backgroundTint="#6C00F8"
                 android:clickable="true"
-                app:backgroundTint="#6B00F5"
-                app:srcCompat="@android:drawable/ic_menu_search" />
+                android:tint="@color/white"
+                app:backgroundTint="@color/purple_500"
+                app:borderWidth="0dp"
+                app:fabSize="normal"
+                app:srcCompat="@drawable/ic_baseline_search_24" />
+
 
         </RelativeLayout>
 
@@ -56,9 +61,9 @@
     <Button
         android:id="@+id/followingReq"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="377dp"
+        android:layout_width="fill_parent"
         android:layout_height="129dp"
-        android:layout_below="@+id/my_toolbar"
+        android:layout_below="@+id/my_toolbar1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="FOLLOW REQUESTS"
@@ -66,11 +71,16 @@
 
     <ListView
         android:id="@+id/listOfExistingFollowers"
-        android:layout_width="377dp"
+        android:layout_width="fill_parent"
         android:layout_height="533dp"
         android:layout_below="@+id/followingReq"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:choiceMode="none"
+        />
 
 </RelativeLayout>

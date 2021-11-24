@@ -2,7 +2,10 @@ package com.example.habitize;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,10 +17,13 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
+import java.io.ByteArrayOutputStream;
+
 public class ViewHabitImageFragment extends Fragment {
     private ImageView imageView;
-    private Button addImageBtn;
+    private Button addImageBtn, viewCamBtn;
     private static final int PICK_IMAGE = 100;
+    private static final int CAM_IMG = 200;
     private Uri imageUri;
     private String imageAddr;
 
@@ -26,6 +32,15 @@ public class ViewHabitImageFragment extends Fragment {
     }
 
 
+    public byte[] getImageBytes(){
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+        return data;
+    }
 
 
 
@@ -39,6 +54,7 @@ public class ViewHabitImageFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_view_habit_image, container, false);
         imageView = root.findViewById(R.id.FragmentViewHabitNewImage);
         addImageBtn = root.findViewById(R.id.FragmentViewHabitNewImageBtn);
+        viewCamBtn = root.findViewById(R.id.FragmentViewHabitNewCamBtn);
         addImageBtn.setEnabled(false);
 
 
@@ -49,6 +65,10 @@ public class ViewHabitImageFragment extends Fragment {
             }
         });
 
+        viewCamBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {openCamera();  }
+        });
 
         DatabaseManager.getAndSetImage(imageAddr,imageView);
         return root;
@@ -58,11 +78,24 @@ public class ViewHabitImageFragment extends Fragment {
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
+    private void openCamera(){
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            try {
+                startActivityForResult(takePictureIntent, CAM_IMG);
+            } catch (ActivityNotFoundException e) {
+                // display error state to the user
+            }
+        }
+
+
     public void setEditable(){
         addImageBtn.setEnabled(true);
+        viewCamBtn.setEnabled(true);
+
     }
     public void setNotEditable(){
         addImageBtn.setEnabled(false);
+        viewCamBtn.setEnabled(false);
     }
 
     // get image from fragment to send to the database
@@ -78,7 +111,13 @@ public class ViewHabitImageFragment extends Fragment {
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
         }
+        if(resultCode==RESULT_OK && requestCode == CAM_IMG){
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageView.setImageBitmap(imageBitmap);
+            }
+        }
     }
 
 
-}
+

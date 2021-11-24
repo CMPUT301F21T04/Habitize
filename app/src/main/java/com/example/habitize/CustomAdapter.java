@@ -6,6 +6,7 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -83,7 +84,6 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
         TextView nameField = view.findViewById(R.id.habitName);
         // Setting our custom list items
         nameField.setText(habit.getName());
-        Button viewButton = view.findViewById(R.id.viewHabit);
         ImageView imageView = view.findViewById(R.id.habitImage);
         DatabaseManager.getAndSetImage(habit.getRecordAddress(),imageView);
 
@@ -92,14 +92,17 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
         DOWN = view.findViewById(R.id.HabitDown);
 
         //when click view button
-        viewButton.setOnClickListener(new View.OnClickListener() {
+
+
+
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //view the habit at the position
+               // view.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.clicked_animation));
                 viewListener.viewHabitPressed(position);
+
             }
         });
-
         //when click circular floating action button
         FloatingActionButton completeButton = view.findViewById(R.id.completeHabit);
         completeButton.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +112,13 @@ public class CustomAdapter extends ArrayAdapter<Habit>{
                 checkListener.recordEvent(position);
             }
         });
+
+
+        nameField.setFocusable(false);
+        nameField.setFocusableInTouchMode(false);
+
+        completeButton.setFocusable(false);
+        completeButton.setFocusableInTouchMode(false);
 
         return view;
 

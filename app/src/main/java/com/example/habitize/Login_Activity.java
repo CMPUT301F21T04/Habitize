@@ -55,7 +55,6 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         // UI components
