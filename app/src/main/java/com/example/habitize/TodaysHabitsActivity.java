@@ -9,6 +9,8 @@ import android.widget.ListView;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
@@ -22,9 +24,10 @@ import java.util.ArrayList;
 public class TodaysHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener, CustomAdapter.habitCheckListener {
 
     private ArrayList<Habit> dataList;
-    private CustomAdapter habitAdapter;
+    private HabitAdapter habitAdapter;
     private ArrayList<Integer> posInFireBase;
-    private ListView listView;
+    private LinearLayoutManager mLayoutManager;
+    private RecyclerView listView;
     private DocumentReference documentReference;
     private CollectionReference collectionReference;
     private FirebaseFirestore db;
@@ -41,14 +44,16 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
 
         dataList = new ArrayList<>();
         posInFireBase = new ArrayList<>();
-
+        mLayoutManager = new LinearLayoutManager(this);
 
         listView = findViewById(R.id.habit_list);
-        habitAdapter = new CustomAdapter(this, dataList);
+        habitAdapter = new HabitAdapter(dataList,posInFireBase,false);
         listView.setAdapter(habitAdapter);
+        listView.setLayoutManager(mLayoutManager);
+        DatabaseManager.getTodaysHabitsRecycler(dataList, habitAdapter,posInFireBase);
 
-        DatabaseManager.getTodaysHabits(dataList, habitAdapter,posInFireBase);
 
+        /*
         reorderT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -111,6 +116,7 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
 
             }
         });
+         */
 
     }
 
@@ -132,9 +138,7 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
         habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
         habitBundle.putSerializable("index",position);
         habitBundle.putSerializable("habits",dataList);
-
         Intent intent = new Intent(this,CreateRecordBase.class);
-
         intent.putExtras(habitBundle);
         startActivity(intent);
     }

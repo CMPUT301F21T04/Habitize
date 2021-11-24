@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -545,6 +546,38 @@ public class DatabaseManager {
     }
 
 
+    public static void getAllHabitsRecycler(ArrayList<Habit> recievingList, RecyclerView.Adapter habitAdapter) {
+        db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                ArrayList<Habit> mappedList = (ArrayList<Habit>) value.get("habits");
+                recievingList.clear();
+                for (int i = 0; i < mappedList.size(); i++) { // get each item one by one
+                    Map<String, Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
+                    // retrieves all the habit information and adds it to the habitList
+                    String name = (String) habitFields.get("name");
+                    String description = (String) habitFields.get("description");
+                    String date = (String) habitFields.get("startDate");
+                    boolean mondayRec = (boolean) habitFields.get("mondayR");
+                    boolean tuesdayRec = (boolean) habitFields.get("tuesdayR");
+                    boolean wednesdayRec = (boolean) habitFields.get("wednesdayR");
+                    boolean thursdayRec = (boolean) habitFields.get("thursdayR");
+                    boolean fridayRec = (boolean) habitFields.get("fridayR");
+                    boolean saturdayRec = (boolean) habitFields.get("saturdayR");
+                    boolean sundayRec = (boolean) habitFields.get("sundayR");
+                    String UUID = (String)habitFields.get("recordAddress");
+                    Long streak = (Long)habitFields.get("streak");
+                    boolean visibility = (boolean) habitFields.get("visibility");
+                    Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),UUID,streak,visibility); // create a new habit out of this information
+                    recievingList.add(newHabit); // add it to the habitList
+                }
+                habitAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+
     /**
     @param recievingList, the list we want to to put all of our habits into. This function differs to the previous
     one as it does not assume there is an adapter waiting to be notified.
@@ -596,8 +629,74 @@ public class DatabaseManager {
      * @param habitAdapter the adapter we will notify about changes
      * @param posInFirebase the position of the habit in firebase. allows for proper deletion and editing
      */
-    public static void getTodaysHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
+    public static void getTodaysHabits(ArrayList<Habit> recievingList,ArrayAdapter habitAdapter,ArrayList<Integer>
                                        posInFirebase){
+        simpleDateFormat = new SimpleDateFormat("EEEE");
+        Date d = new Date();
+        //gives the day of the week of the user (if today is actually Monday it will say Monday)
+        String dayOfTheWeek = simpleDateFormat.format(d);
+        db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
+                recievingList.clear();
+                posInFirebase.clear();
+                for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
+                    Map<String,Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
+                    // retrieves all the habit information and adds it to the habitList
+                    String name = (String) habitFields.get("name");
+                    String description = (String) habitFields.get("description");
+                    String date = (String) habitFields.get("startDate");
+                    boolean mondayRec = (boolean) habitFields.get("mondayR");
+                    boolean tuesdayRec = (boolean) habitFields.get("tuesdayR");
+                    boolean wednesdayRec = (boolean) habitFields.get("wednesdayR");
+                    boolean thursdayRec = (boolean) habitFields.get("thursdayR");
+                    boolean fridayRec = (boolean) habitFields.get("fridayR");
+                    boolean saturdayRec = (boolean) habitFields.get("saturdayR");
+                    boolean sundayRec = (boolean) habitFields.get("sundayR");
+                    String identifier = (String) habitFields.get("recordAddress");
+                    Long streak = (Long) habitFields.get("streak");
+                    boolean visibility = (boolean) habitFields.get("visibility");
+                    Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier,streak,visibility); // create a new habit out of this information
+
+                    //recievingList.add(newHabit);
+                    if ((mondayRec == true) && (dayOfTheWeek.equals("Monday"))){
+                        recievingList.add(newHabit); // add it to the habitList
+                        posInFirebase.add(i);
+                    }
+                    if ((tuesdayRec == true) && (dayOfTheWeek.equals("Tuesday"))){
+                        recievingList.add(newHabit);
+                        posInFirebase.add(i);
+                    }
+                    if ((wednesdayRec == true) && (dayOfTheWeek.equals("Wednesday"))){
+                        recievingList.add(newHabit);
+                        posInFirebase.add(i);
+                    }
+                    if ((thursdayRec == true) && (dayOfTheWeek.equals("Thursday"))){
+                        recievingList.add(newHabit);
+                        posInFirebase.add(i);
+                    }
+                    if ((fridayRec == true) && (dayOfTheWeek.equals("Friday"))){
+                        recievingList.add(newHabit);
+                        posInFirebase.add(i);
+                    }
+                    if ((saturdayRec == true) && (dayOfTheWeek.equals("Saturday"))){
+                        recievingList.add(newHabit);
+                        posInFirebase.add(i);
+                    }
+                    if ((sundayRec == true) && (dayOfTheWeek.equals("Sunday"))){
+                        recievingList.add(newHabit);
+                        posInFirebase.add(i);
+                    }
+
+                }
+                habitAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+    public static void getTodaysHabitsRecycler(ArrayList<Habit> recievingList,RecyclerView.Adapter habitAdapter,ArrayList<Integer>
+            posInFirebase){
         simpleDateFormat = new SimpleDateFormat("EEEE");
         Date d = new Date();
         //gives the day of the week of the user (if today is actually Monday it will say Monday)
@@ -672,6 +771,45 @@ public class DatabaseManager {
      * @param followingUser the user they want to see
      */
     public static void getPublicHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
+            posInFirebase, String followingUser){
+
+        db.collection("Users").document(followingUser).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                ArrayList<Habit> mappedList =  (ArrayList<Habit>) value.get("habits");
+                recievingList.clear();
+                posInFirebase.clear();
+
+                for(int i = 0; i < mappedList.size() ; i++){ // get each item one by one
+                    Map<String,Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields
+                    // retrieves all the habit information and adds it to the habitList
+                    String name = (String) habitFields.get("name");
+                    String description = (String) habitFields.get("description");
+                    String date = (String) habitFields.get("startDate");
+                    boolean mondayRec = (boolean) habitFields.get("mondayR");
+                    boolean tuesdayRec = (boolean) habitFields.get("tuesdayR");
+                    boolean wednesdayRec = (boolean) habitFields.get("wednesdayR");
+                    boolean thursdayRec = (boolean) habitFields.get("thursdayR");
+                    boolean fridayRec = (boolean) habitFields.get("fridayR");
+                    boolean saturdayRec = (boolean) habitFields.get("saturdayR");
+                    boolean sundayRec = (boolean) habitFields.get("sundayR");
+                    String identifier = (String) habitFields.get("recordAddress");
+                    Long streak = (Long) habitFields.get("streak");
+                    boolean visibility = (boolean) habitFields.get("visibility");
+                    Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<Record>(),identifier,visibility); // create a new habit out of this information
+
+                    //if the habit is public then add to the list to display
+                    if (visibility == true){
+                        recievingList.add(newHabit);
+                        posInFirebase.add(i);
+                    }
+                }
+                habitAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+    public static void getPublicHabitsRecycler(ArrayList<Habit> recievingList,RecyclerView.Adapter habitAdapter,ArrayList<Integer>
             posInFirebase, String followingUser){
 
         db.collection("Users").document(followingUser).addSnapshotListener(new EventListener<DocumentSnapshot>() {

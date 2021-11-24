@@ -167,22 +167,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public void enableMapScroll(){
-        mUISettings.setAllGesturesEnabled(true);
-        map.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
-            @Override
-            public void onCameraMoveStarted(int i) {
-                scrollController.disableScroll();
-            }
-        });
-        map.setOnCameraIdleListener(new OnCameraIdleListener() {
-            @Override
-            public void onCameraIdle() {
-                scrollController.enableScroll();
-            }
-        });
+        if(mUISettings != null) {
+            mUISettings.setAllGesturesEnabled(true);
+            map.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
+                @Override
+                public void onCameraMoveStarted(int i) {
+                    scrollController.disableScroll();
+                }
+            });
+            map.setOnCameraIdleListener(new OnCameraIdleListener() {
+                @Override
+                public void onCameraIdle() {
+                    scrollController.enableScroll();
+                }
+            });
+        }
     }
     public void disableMapScroll(){
-        mUISettings.setAllGesturesEnabled(false);
+        if(mUISettings != null) {
+            mUISettings.setAllGesturesEnabled(false);
+        }
     }
 
 
