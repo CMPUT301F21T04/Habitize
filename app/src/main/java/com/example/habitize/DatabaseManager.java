@@ -452,9 +452,10 @@ public class DatabaseManager {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 ArrayList<String> followerList = (ArrayList<String>) value.get("following");
                 retrievingList.clear();
-                for(int i = 0; i < retrievingList.size(); i++){
+                for(int i = 0; i < followerList.size(); i++){
                     retrievingList.add(followerList.get(i));
                 }
+                adapter.notifyDataSetChanged();
             }
         });
     }
