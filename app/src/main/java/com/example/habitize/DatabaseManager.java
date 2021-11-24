@@ -96,21 +96,23 @@ public class DatabaseManager {
 
     // store an image at the given identifier
     public static void storeImage(byte[] image, String imageIdentifier){
-        StorageReference imageRef = storageRef.child(imageIdentifier);
-        UploadTask uploadTask = imageRef.putBytes(image);
+        if(image != null) {
+            StorageReference imageRef = storageRef.child(imageIdentifier);
+            UploadTask uploadTask = imageRef.putBytes(image);
 
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-                    }
-                });
+                        }
+                    });
+        }
     }
     // retrieve an image from the identifier
     // right now this has to be called every time we refresh the images. WORKAROUND: just add the byte maps
