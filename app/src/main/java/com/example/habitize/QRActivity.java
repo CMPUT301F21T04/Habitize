@@ -33,12 +33,9 @@ public class QRActivity extends AppCompatActivity {
         } catch (WriterException e) {
             e.printStackTrace();
         }
-
-
-
     }
-
-
+    // the goal is to encode the user's username as a qr code and then have someone else scan it with
+    // their phone.
     Bitmap encodeAsBitmap(String str) throws WriterException {
         BitMatrix result;
         Bitmap bitmap;
@@ -46,7 +43,6 @@ public class QRActivity extends AppCompatActivity {
         {
             result = new MultiFormatWriter().encode(str,
                     BarcodeFormat.QR_CODE, WIDTH, WIDTH, null);
-
             int w = result.getWidth();
             int h = result.getHeight();
             int[] pixels = new int[w * h];
@@ -64,7 +60,6 @@ public class QRActivity extends AppCompatActivity {
         }
         return bitmap;
     }
-
 }
 
 

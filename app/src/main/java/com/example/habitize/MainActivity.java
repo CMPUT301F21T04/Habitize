@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,10 +37,10 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
-    private Button addHabit;
-    private Button allHabits;
-    private Button todaysHabits;
-    private Button followReq;
+    private CardView addHabit;
+    private CardView allHabits;
+    private CardView todaysHabits;
+    private CardView followReq;
     private Button logOut;
     private ProgressBar progressBar3;
     private TextView textView2;
@@ -59,12 +60,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        logOut = findViewById(R.id.logout);
-        addHabit = findViewById(R.id.addHabit); // our 4 buttons
-        allHabits = findViewById(R.id.allHabits);
-        todaysHabits = findViewById(R.id.todaysHabits);
-        followReq = (Button) findViewById(R.id.followReq);
-        progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
+        logOut = findViewById(R.id.logoutmain);
+        addHabit = findViewById(R.id.addHabitCard); // our 4 buttons
+        allHabits = findViewById(R.id.allHabitCard);
+        todaysHabits = findViewById(R.id.todayHabitCard);
+        followReq =  findViewById(R.id.followingCard);
+        progressBar3 = (ProgressBar)findViewById(R.id.progressBarmain);
 
        // Branch the activities here:
 

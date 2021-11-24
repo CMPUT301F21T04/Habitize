@@ -13,8 +13,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +37,10 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
     private final Context context;
     private FloatingActionButton deleteFollowerButton;
     TextView tv;
+
+    FirebaseFirestore fStore;
+    FirebaseAuth fAuth;
+    String currentLoggedInUser;
 
     /**
      * Initializes list of existing follower usernames and context variables.
@@ -77,13 +91,31 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
         deleteFollowerButton.setFocusable(false);
         deleteFollowerButton.setFocusableInTouchMode(false);
 
+        fStore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        CollectionReference collectionReference = fStore.collection("Users");
 
+        deleteFollowerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
+                currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for(QueryDocumentSnapshot document : task.getResult()) {
+                                currentLoggedInUser = document.getString("userName");
+                                collectionReference.document(currentLoggedInUser).update("following", FieldValue.arrayRemove(follower));
+                            }
+                        }
+                    }
+                });
+            }
+        });
 
         return view;
 
     }
-
-
     /**
      * brings to new screen to display public habits of the user clicked on
      * @param bundle bundle to bring to other activity
@@ -95,5 +127,4 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
-
 }

@@ -9,6 +9,8 @@ import android.widget.ListView;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
@@ -17,10 +19,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class AllHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener, CustomAdapter.habitCheckListener{
+public class AllHabitsActivity extends AppCompatActivity {
     private ArrayList<Habit> dataList;
-    private CustomAdapter habitAdapter;
-    private ListView list;
+    private HabitAdapter habitAdapter;
+    private RecyclerView list;
+    private LinearLayoutManager mLayoutManager;
     private DocumentReference docRef;
     private CollectionReference colRef;
     private FirebaseFirestore db;
@@ -43,15 +46,18 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
         reorder = findViewById(R.id.ReOrderToday);
         
         dataList = new ArrayList<>(); // reset the list
-
+        mLayoutManager = new LinearLayoutManager(this);
         list = findViewById(R.id.habit_list);
-        habitAdapter = new CustomAdapter(this,dataList);
+        habitAdapter = new HabitAdapter(dataList,false);
         list.setAdapter(habitAdapter);
+        list.setLayoutManager(mLayoutManager);
 
         // getting the habits from database and updating the view with them.
-        DatabaseManager.getAllHabits(dataList,habitAdapter);
+        DatabaseManager.getAllHabitsRecycler(dataList,habitAdapter);
 
 
+
+        /*
         reorder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -115,45 +121,11 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
             }
         });
 
+         */
+
     }
 
 
 
 
-    /**
-     * view the habit that we clicked on
-     * @param position
-     */
-    @Override
-    public void viewHabitPressed(int position) {
-        //on all habits screen
-        Intent intent = new Intent(AllHabitsActivity.this,ViewHabitTabsBase.class);
-        Bundle habitBundle = new Bundle();
-        //pass down the habit at the position
-        habitBundle.putSerializable("habit",dataList.get(position));
-        habitBundle.putSerializable("index",position);
-        habitBundle.putSerializable("habits",dataList);
-        habitBundle.putSerializable("User",passedUser);
-        //to use on another activity
-        intent.putExtras(habitBundle);
-        startActivity(intent);
-    }
-
-
-    /**
-     * open the recording fragment
-     * @param position
-     */
-    @Override
-    public void recordEvent(int position) {
-        Bundle habitBundle = new Bundle();
-        habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
-        habitBundle.putSerializable("index",position);
-        habitBundle.putSerializable("habits",dataList);
-
-        Intent intent = new Intent(this,CreateRecordBase.class);
-
-        intent.putExtras(habitBundle);
-        startActivity(intent);
-    }
 }
