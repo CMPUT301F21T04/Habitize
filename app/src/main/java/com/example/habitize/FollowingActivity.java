@@ -26,6 +26,7 @@ public class FollowingActivity extends AppCompatActivity {
     private FloatingActionButton searchButton;
     private EditText userSearchInputEditText;
     private String userSearchInput;
+    private ArrayList<String> existingFollowers;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +38,7 @@ public class FollowingActivity extends AppCompatActivity {
         //Assign XML List View to local variable listView.
         fStore = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = fStore.collection("Users");
-        List<String> existingFollowersDataList = new ArrayList<>();
-        listView = findViewById(R.id.listOfExistingFollowers);
+        ArrayList<String> existingFollowersDataList = new ArrayList<>();
         followRequestsButton = findViewById(R.id.followingReq);
         searchButton = findViewById(R.id.searchButton);
         userSearchInputEditText = findViewById(R.id.editTextTextPersonName);
@@ -47,18 +47,11 @@ public class FollowingActivity extends AppCompatActivity {
         //Append the existingFollowersDataList with new "userName" string values.
         //Pass the existingFollowersDataList into CustomListOfExistingFollowersAdapter.
         //Set adapter & render each list item in the custom layout file: "listOfExistingFollowers".
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        existingFollowersDataList.add(document.getString("userName"));
-                        CustomListOfExistingFollowersAdapter = new CustomListOfExistingFollowers(FollowingActivity.this, existingFollowersDataList);
-                        listView.setAdapter(CustomListOfExistingFollowersAdapter);
-                    }
-                }
-            }
-        });
+        existingFollowers = new ArrayList<String>();
+        CustomListOfExistingFollowersAdapter = new CustomListOfExistingFollowers(this,existingFollowers);
+        listView = findViewById(R.id.listOfExistingFollowers);
+        listView.setAdapter(CustomListOfExistingFollowersAdapter);
+        DatabaseManager.getFollowing(existingFollowers, CustomListOfExistingFollowersAdapter);
 
         followRequestsButton.setOnClickListener(new View.OnClickListener() {
             @Override
