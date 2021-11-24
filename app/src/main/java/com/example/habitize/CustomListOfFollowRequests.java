@@ -12,9 +12,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -28,6 +37,10 @@ public class CustomListOfFollowRequests extends ArrayAdapter<String> {
     private final Context context;
     private FloatingActionButton deleteFollowRequest;
     private FloatingActionButton acceptFollowRequest;
+    TextView nameField;
+    FirebaseFirestore fStore;
+    FirebaseAuth fAuth;
+    String currentLoggedInUser;
 
     /**
      * Initializes list of requested follower usernames and context variables.
@@ -58,17 +71,60 @@ public class CustomListOfFollowRequests extends ArrayAdapter<String> {
 
         deleteFollowRequest = view.findViewById(R.id.deleteFollowRequestButton);
         acceptFollowRequest = view.findViewById(R.id.acceptFollowRequestButton);
+        nameField = view.findViewById(R.id.requestedFollowerName);
 
         String requestedFollower = followersThatRequested.get(position);
-        TextView nameField = view.findViewById(R.id.requestedFollowerName);
-
         nameField.setText(requestedFollower);
-
         nameField.setClickable(false);
         deleteFollowRequest.setFocusable(false);
         deleteFollowRequest.setFocusableInTouchMode(false);
         acceptFollowRequest.setFocusable(false);
         acceptFollowRequest.setFocusableInTouchMode(false);
+
+        fStore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        CollectionReference collectionReference = fStore.collection("Users");
+
+        deleteFollowRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
+                currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for(QueryDocumentSnapshot document : task.getResult()) {
+                                currentLoggedInUser = document.getString("userName");
+                                collectionReference.document(currentLoggedInUser).update("followers", FieldValue.arrayRemove(requestedFollower));
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+        acceptFollowRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
+                currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for(QueryDocumentSnapshot document : task.getResult()) {
+                                currentLoggedInUser = document.getString("userName");
+                                collectionReference.document(currentLoggedInUser).update("followers", FieldValue.arrayRemove(requestedFollower));
+                                collectionReference.document(currentLoggedInUser).update("following", FieldValue.arrayUnion(requestedFollower));
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+
+
+
 
         return view;
 

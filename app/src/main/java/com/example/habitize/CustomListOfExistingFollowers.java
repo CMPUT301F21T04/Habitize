@@ -83,8 +83,6 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
         CollectionReference collectionReference = fStore.collection("Users");
-        ArrayList<String> existingFollowersDataList = new ArrayList<>();
-
 
         deleteFollowerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,14 +97,8 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
                                 collectionReference.document(currentLoggedInUser).update("following", FieldValue.arrayRemove(follower));
                             }
                         }
-                        else {
-                            System.out.println("QUERY TO GET CURRENT USER DOCUMENT IN USERS DIDN'T WORK");
-                        }
                     }
                 });
-
-
-
             }
         });
 
