@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-public class TodaysHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener, CustomAdapter.habitCheckListener {
+public class TodaysHabitsActivity extends AppCompatActivity {
 
     private ArrayList<Habit> dataList;
     private HabitAdapter habitAdapter;
@@ -119,30 +119,5 @@ public class TodaysHabitsActivity extends AppCompatActivity implements CustomAda
          */
 
     }
-
-
-    @Override
-    public void viewHabitPressed(int position) {
-        Intent intent = new Intent(TodaysHabitsActivity.this, ViewHabitTabsBase.class);
-        Bundle habitBundle = new Bundle();
-        habitBundle.putSerializable("habit", dataList.get(position));
-        habitBundle.putSerializable("index",posInFireBase.get(position));
-        habitBundle.putSerializable("habits",dataList);
-        intent.putExtras(habitBundle);
-        startActivity(intent);
-    }
-
-    @Override
-    public void recordEvent(int position) {
-        Bundle habitBundle = new Bundle();
-        habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
-        habitBundle.putSerializable("index",position);
-        habitBundle.putSerializable("habits",dataList);
-        Intent intent = new Intent(this,CreateRecordBase.class);
-        intent.putExtras(habitBundle);
-        startActivity(intent);
-    }
-
-
 
 }

@@ -138,6 +138,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             lastKnownLocation.setLatitude(lat);
             lastKnownLocation.setLongitude(lon);
             viewing = true;
+        }else{
+            lastKnownLocation = new Location("");
+            lastKnownLocation.setLatitude(defaultLocation.latitude);
+            lastKnownLocation.setLongitude(defaultLocation.longitude);
         }
 
 
@@ -240,9 +244,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         if (task.isSuccessful()) {
                             // Set the map's camera position to the current location of the device.
                             lastKnownLocation = task.getResult();
-                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                            if(map != null) {
+                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                         new LatLng(lastKnownLocation.getLatitude(),
                                                 lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                            }
 
                             MarkerOptions markerOptions = new MarkerOptions();
                             markerOptions.position(new LatLng(lastKnownLocation.getLatitude(),
