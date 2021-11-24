@@ -33,6 +33,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
     private CollectionReference userHabits;
     private CollectionReference followers;
     private CollectionReference following;
+    private com.google.android.gms.common.SignInButton googleSignUp;
 
     /**
      * Initialize activity
@@ -52,6 +53,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         EditText conPassword = findViewById(R.id.conPassword);
         EditText email = findViewById(R.id.email);
         ProgressBar progressBar = findViewById(R.id.progressBar2);
+        com.google.android.gms.common.SignInButton googleSignUp = findViewById(R.id.signUp_google);
         DatabaseManager.setRegistrationListener(this);
 
         db = FirebaseFirestore.getInstance(); // init db
@@ -60,6 +62,13 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         followers = db.collection("followers");
         following = db.collection("following");
 
+
+        googleSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(SignUp.this,"google",Toast.LENGTH_LONG).show();
+            }
+        });
 
         progressBar.setVisibility(View.GONE);
 
