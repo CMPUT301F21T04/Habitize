@@ -31,6 +31,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -126,15 +130,6 @@ public class MapsActivity extends AppCompatActivity
 
         // Initialize button
         locSearchBTN = findViewById(R.id.initSearchBTN);
-        /*
-        back = findViewById(R.id.backBTN);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-         */
 
         // Construct a PlacesClient
         Places.initialize(getApplicationContext(), "AIzaSyBYB0fEQjiorItqGhF8RyD9GVV_z7qOF5c");
@@ -190,7 +185,7 @@ public class MapsActivity extends AppCompatActivity
                 List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
                 // Start the auto complete intent
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN,placeFields).build(MapsActivity.this);
-                startActivityForResult(intent,AUTOCOMPLETE_REQUEST_CODE);
+                searchResult.launch(intent);
             }
         });
     }
@@ -363,54 +358,45 @@ public class MapsActivity extends AppCompatActivity
             }
         });
     }
-    @Override
-    // Handles if the user turned off the location services
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // This method handles what will happen when the user has selected a place
 
-        if (requestCode == REQUEST_CHECK_SETTINGS) {
-            // handle the result and check if the location is granted
-            switch (resultCode) {
-                case Activity.RESULT_OK:    // the user accepted permission to location services
-                    retryLocBTN.setVisibility(View.GONE);
-                    updateLocationUI();
-                    locationPermissionGranted = true;
-                    break;
-                case Activity.RESULT_CANCELED:  // the user denied permission to location services
-                    Toast.makeText(MapsActivity.this, "Location Services is required to access current location", Toast.LENGTH_SHORT).show();
-                    // create a retry button for the user to accept the permissions
-                    address = findViewById(R.id.addressView);
-                    retryLocBTN = findViewById(R.id.retryLocationBTN);
-                    address.setText("Location cannot be found. Please turn on Location Services Permission");
-                    retryLocBTN.setVisibility(View.VISIBLE);
-                    break;
-            }
-            retryLocBTN.setOnClickListener(new View.OnClickListener() {
+
+    // Handle results
+    public ActivityResultLauncher<Intent> searchResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
                 @Override
-                public void onClick(View v) {
-                    createLocationRequest();    // Prompt user to accept the permission again
-                }
-            });
-        }
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE){
-            // handle the result for the search bar on maps
-            switch (resultCode){
-                case RESULT_OK:    // success
-                    // Initialize place
-                    Place place = Autocomplete.getPlaceFromIntent(data);
-                    Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + ", " + place.getLatLng());  // check if it shows
-                    setNewLocation(place);
-                    break;
-                case AutocompleteActivity.RESULT_ERROR: // errro
-                    Toast.makeText(this,"An error has occured.",Toast.LENGTH_SHORT);
-                    Status status = Autocomplete.getStatusFromIntent(data);
-                    Log.i(TAG, status.getStatusMessage());
-                    break;
-                case AutocompleteActivity.RESULT_CANCELED:
-                    // the user canceled the operation. Just ignore.
-            }
-            return;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+                public void onActivityResult(ActivityResult result) {
+                    switch (result.getResultCode()){
+                        case RESULT_OK:    // success
+                            // Initialize place
+                            Place place = Autocomplete.getPlaceFromIntent(result.getData());
+                            Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + ", " + place.getLatLng());  // check if it shows
+                            setNewLocation(place);
+                            break;
+                        case AutocompleteActivity.RESULT_ERROR: // errro
+                            Status status = Autocomplete.getStatusFromIntent(result.getData());
+                            Log.i(TAG, status.getStatusMessage());
+                            break;
+                        case AutocompleteActivity.RESULT_CANCELED:
+                            // the user canceled the operation. Just ignore.
+                    }return;
+                }});
+    public ActivityResultLauncher<Intent> settingsResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    switch (result.getResultCode()) {
+                        case Activity.RESULT_OK:    // the user accepted permission to location services
+                            retryLocBTN.setVisibility(View.GONE);
+                            updateLocationUI();
+                            locationPermissionGranted = true;
+                            break;
+                        case Activity.RESULT_CANCELED:  // the user denied permission to location services
+                            Toast.makeText(MapsActivity.this, "Location Services is required to access current location", Toast.LENGTH_SHORT).show();
+                            // create a retry button for the user to accept the permissions
+                            address = findViewById(R.id.addressView);
+                            retryLocBTN = findViewById(R.id.retryLocationBTN);
+                            address.setText("Location cannot be found. Please turn on Location Services Permission");
+                            retryLocBTN.setVisibility(View.VISIBLE);}
+                            return;
+                }});
 }
