@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private StructuredQuery.FieldReference fieldReference;
     public ArrayList<Habit> habitList;
+    private int progressTrack = 0; //starting at 0 (max 100)
     private Integer completion = 0;
     private Integer totalHabits = 0;
 
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         allHabits = findViewById(R.id.allHabits);
         todaysHabits = findViewById(R.id.todaysHabits);
         followReq = (Button) findViewById(R.id.followReq);
+        progressBar3 = (ProgressBar)findViewById(R.id.progressBar3);
+
        // Branch the activities here:
 
         // When add habit button is clicked upon, it will bring you to a add activity screen
