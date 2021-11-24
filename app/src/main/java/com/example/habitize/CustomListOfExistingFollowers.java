@@ -27,9 +27,6 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
     private final Context context;
     private FloatingActionButton deleteFollowerButton;
     TextView tv;
-    public static final String USER_CLICKED_ON = "com.example.habitize.USER_CLICKED_ON";
-    private String userClicked;
-    // TODO: Add more fields here. Image..etc
 
     /**
      * Initializes list of existing follower usernames and context variables.

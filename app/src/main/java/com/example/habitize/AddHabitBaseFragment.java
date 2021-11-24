@@ -141,7 +141,7 @@ public class AddHabitBaseFragment extends Fragment {
                         getContext(),
                         android.R.style.Theme_DeviceDefault,
                         mDateSetListener,
-                        year, month, day);
+                        year, month, day); 
 
                 //set a minimum date the user can select (cannot choose past dates to start on)
                 dialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
