@@ -2,6 +2,7 @@ package com.example.habitize;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +37,12 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
     private final Context context;
     private FloatingActionButton deleteFollowerButton;
     TextView tv;
+
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
     String currentLoggedInUser;
 
     // TODO: Add more fields here. Image..etc
-
 
     /**
      * Initializes list of existing follower usernames and context variables.
@@ -70,11 +71,23 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
             view = LayoutInflater.from(context).inflate(R.layout.activity_custom_list_of_existing_followers,parent,false);
         }
 
-
         deleteFollowerButton = view.findViewById(R.id.deleteExistingFollowerButton);
         String follower = followers.get(position);
         TextView nameField = view.findViewById(R.id.existingFollowerName);
         nameField.setText(follower);
+
+        //When you click on another user in list - listener
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                //get the username that was clicked upon and save in Bundle
+                bundle.putString("name",follower);
+                //bring user to new screen/activity
+                openPublicHabitList(bundle);
+
+            }
+        });
 
         nameField.setClickable(false);
         deleteFollowerButton.setFocusable(false);
@@ -104,5 +117,16 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
 
         return view;
 
+    }
+    /**
+     * brings to new screen to display public habits of the user clicked on
+     * @param bundle bundle to bring to other activity
+     */
+    public void openPublicHabitList(Bundle bundle) {
+        //bring user to Public Habit Activity
+        Intent intent = new Intent(this.getContext(), PublicHabitsActivity.class);
+        //save the name that was clicked on
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 }
