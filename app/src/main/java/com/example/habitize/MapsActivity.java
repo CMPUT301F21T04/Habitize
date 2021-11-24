@@ -16,6 +16,7 @@ package com.example.habitize;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -34,6 +35,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.IntentSenderRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -344,19 +346,12 @@ public class MapsActivity extends AppCompatActivity
 
         task.addOnFailureListener(this, e -> {
             if (e instanceof ResolvableApiException) {
-                // Location settings are not satisfied, but this can be fixed
-                // by showing the user a dialog.
-                try {
-                    // Show the dialog by calling startResolutionForResult(),
-                    // and check the result in onActivityResult().
-                    ResolvableApiException resolvable = (ResolvableApiException) e;
-                    resolvable.startResolutionForResult(MapsActivity.this,
-                            REQUEST_CHECK_SETTINGS);
-                } catch (IntentSender.SendIntentException sendEx) {
-                    // Ignore the error.
+                    // Location settings are not satisfied, but this can be fixed by showing the user a dialog.
+                    // The dialog will be handled by forSettingsLauncher
+                    PendingIntent pendingIntent = ((ResolvableApiException) task.getException()).getResolution();
+                    forSettingsLauncher.launch(new IntentSenderRequest.Builder(pendingIntent).build());
                 }
-            }
-        });
+            });
     }
 
 
@@ -372,7 +367,7 @@ public class MapsActivity extends AppCompatActivity
                             Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + ", " + place.getLatLng());  // check if it shows
                             setNewLocation(place);
                             break;
-                        case AutocompleteActivity.RESULT_ERROR: // errro
+                        case AutocompleteActivity.RESULT_ERROR: // error
                             Status status = Autocomplete.getStatusFromIntent(result.getData());
                             Log.i(TAG, status.getStatusMessage());
                             break;
@@ -380,23 +375,30 @@ public class MapsActivity extends AppCompatActivity
                             // the user canceled the operation. Just ignore.
                     }return;
                 }});
-    public ActivityResultLauncher<Intent> settingsResult = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-                @Override
+
+    public ActivityResultLauncher<IntentSenderRequest> forSettingsLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartIntentSenderForResult(), new ActivityResultCallback<ActivityResult>() {
                 public void onActivityResult(ActivityResult result) {
                     switch (result.getResultCode()) {
                         case Activity.RESULT_OK:    // the user accepted permission to location services
                             retryLocBTN.setVisibility(View.GONE);
-                            updateLocationUI();
                             locationPermissionGranted = true;
+                            updateLocationUI();
+                            finish();
+                            startActivity(getIntent());
                             break;
                         case Activity.RESULT_CANCELED:  // the user denied permission to location services
                             Toast.makeText(MapsActivity.this, "Location Services is required to access current location", Toast.LENGTH_SHORT).show();
                             // create a retry button for the user to accept the permissions
                             address = findViewById(R.id.addressView);
-                            retryLocBTN = findViewById(R.id.retryLocationBTN);
                             address.setText("Location cannot be found. Please turn on Location Services Permission");
-                            retryLocBTN.setVisibility(View.VISIBLE);}
-                            return;
-                }});
-}
+                            retryLocBTN.setVisibility(View.VISIBLE);
+                            break;
+                    }
+                    retryLocBTN.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            createLocationRequest();    // Prompt user to accept the permission again
+                        }
+                    });
+                })
