@@ -19,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class AllHabitsActivity extends AppCompatActivity implements CustomAdapter.habitViewListener, CustomAdapter.habitCheckListener{
+public class AllHabitsActivity extends AppCompatActivity {
     private ArrayList<Habit> dataList;
     private HabitAdapter habitAdapter;
     private RecyclerView list;
@@ -128,40 +128,4 @@ public class AllHabitsActivity extends AppCompatActivity implements CustomAdapte
 
 
 
-    /**
-     * view the habit that we clicked on
-     * @param position
-     */
-    @Override
-    public void viewHabitPressed(int position) {
-        //on all habits screen
-        Intent intent = new Intent(AllHabitsActivity.this,ViewHabitTabsBase.class);
-        Bundle habitBundle = new Bundle();
-        //pass down the habit at the position
-        habitBundle.putSerializable("habit",dataList.get(position));
-        habitBundle.putSerializable("index",position);
-        habitBundle.putSerializable("habits",dataList);
-        habitBundle.putSerializable("User",passedUser);
-        //to use on another activity
-        intent.putExtras(habitBundle);
-        startActivity(intent);
-    }
-
-
-    /**
-     * open the recording fragment
-     * @param position
-     */
-    @Override
-    public void recordEvent(int position) {
-        Bundle habitBundle = new Bundle();
-        habitBundle.putSerializable("habit",dataList.get(position)); // pass down the habit at the position
-        habitBundle.putSerializable("index",position);
-        habitBundle.putSerializable("habits",dataList);
-
-        Intent intent = new Intent(this,CreateRecordBase.class);
-
-        intent.putExtras(habitBundle);
-        startActivity(intent);
-    }
 }
