@@ -2,6 +2,7 @@ package com.example.habitize;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,8 +22,9 @@ import java.io.ByteArrayOutputStream;
 
 public class AddHabitImageFragment extends Fragment {
     private ImageView imageView;
-    private Button addImageBtn;
+    private Button addImageBtn, addCamBtn;
     private static final int PICK_IMAGE = 100;
+    private static final int CAM_IMG = 200;
     private Uri imageUri;
     private byte[] data;
     private boolean viewing = false;
@@ -71,6 +73,7 @@ public class AddHabitImageFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_add_habit_image, container, false);
         imageView = root.findViewById(R.id.new_image);
         addImageBtn = root.findViewById(R.id.new_image_btn);
+        addCamBtn = root.findViewById(R.id.new_camera_btn);
 
         addImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +82,10 @@ public class AddHabitImageFragment extends Fragment {
             }
         });
 
-
+        addCamBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {openCamera();  }
+        });
 
         if(getArguments() != null){
             this.data = (byte[])getArguments().getSerializable("image");
@@ -101,6 +107,15 @@ public class AddHabitImageFragment extends Fragment {
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
+    private void openCamera(){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, CAM_IMG);
+        } catch (ActivityNotFoundException e) {
+            // display error state to the user
+        }
+    }
+
     /**
      *
      * @param requestCode
@@ -113,6 +128,11 @@ public class AddHabitImageFragment extends Fragment {
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
+        }
+        if(resultCode==RESULT_OK && requestCode == CAM_IMG){
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageView.setImageBitmap(imageBitmap);
         }
     }
 
