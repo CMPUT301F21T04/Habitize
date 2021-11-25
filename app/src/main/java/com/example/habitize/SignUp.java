@@ -42,7 +42,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Connecting variables with XML
-        setContentView(R.layout.signup_activity);
+        setContentView(R.layout.signup_activity_ui);
         Button login = findViewById(R.id.loginbutton);
         Button create = findViewById(R.id.create_button);
         EditText firstName = findViewById(R.id.firstName);
