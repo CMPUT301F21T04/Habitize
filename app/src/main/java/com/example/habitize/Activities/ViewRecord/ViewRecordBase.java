@@ -12,8 +12,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.habitize.Activities.AddHabit.AddHabitImageFragment;
 import com.example.habitize.Activities.CreateRecord.RecordCreate;
+import com.example.habitize.Activities.ViewHabit.ViewHabitImageFragment;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
 import com.example.habitize.Structural.Record;
@@ -98,9 +98,9 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
                     returningFragment = new RecordCreate(passedRecord.getDescription());
                     break;
                 case 1:
-                    returningFragment = new AddHabitImageFragment();
+                    returningFragment = new ViewHabitImageFragment(passedRecord.getByteArr());
                     Bundle bundle1 = new Bundle();
-                    bundle1.putSerializable("image",passedRecord.getByteArr());
+                    bundle1.putSerializable("viewing", true);
                     returningFragment.setArguments(bundle1);
                     break;
                 case 2:

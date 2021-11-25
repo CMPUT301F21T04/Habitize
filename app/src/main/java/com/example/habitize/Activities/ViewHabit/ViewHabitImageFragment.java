@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,13 +31,18 @@ public class ViewHabitImageFragment extends Fragment {
     private Uri imageUri;
     private String imageAddr;
     private boolean mViewing;
+    private byte[] imageByte;
 
-    public ViewHabitImageFragment(String imageAddr){
+    public ViewHabitImageFragment(String imageAddr) {
         this.imageAddr = imageAddr;
     }
 
+    public ViewHabitImageFragment(byte[] imageByte) {
+        this.imageByte = imageByte;
+    }
 
-    public byte[] getImageBytes(){
+
+    public byte[] getImageBytes() {
         imageView.setDrawingCacheEnabled(true);
         imageView.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
@@ -78,10 +84,17 @@ public class ViewHabitImageFragment extends Fragment {
 
         viewCamBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {openCamera();  }
+            public void onClick(View v) {
+                openCamera();
+            }
         });
-
-        DatabaseManager.getAndSetImage(imageAddr,imageView);
+        if (imageAddr != null) {
+            DatabaseManager.getAndSetImage(imageAddr, imageView);
+        }
+        if (imageByte != null) {
+            Bitmap bmp = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
+            imageView.setImageBitmap(bmp);
+        }
         return root;
     }
     private void openGallery() {
