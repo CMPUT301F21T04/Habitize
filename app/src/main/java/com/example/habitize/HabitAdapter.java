@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
         public static class HabitHolder extends RecyclerView.ViewHolder{
 
         private final TextView title;
-        private final FloatingActionButton recordButton;
+        private final ImageButton recordButton;
         private final ImageView habitImg;
         private final View thisView;
 
@@ -58,7 +59,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
             return title;
         }
 
-        public FloatingActionButton getRecordButton(){
+        public ImageButton getRecordButton(){
             return recordButton;
         }
 

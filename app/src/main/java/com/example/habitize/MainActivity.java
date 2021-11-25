@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar3;
     private TextView username;
     private Toolbar toolBar;
+    private ImageButton qrBTN;
 
     private StructuredQuery.FieldReference fieldReference;
     public ArrayList<Habit> habitList;
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         followReq =  findViewById(R.id.followingCard);
         username = findViewById(R.id.userNameMain);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBarmain);
+        qrBTN = findViewById(R.id.qrbtn);
         leaderboard = findViewById(R.id.leaderboard);
 
         fStore = FirebaseFirestore.getInstance();
