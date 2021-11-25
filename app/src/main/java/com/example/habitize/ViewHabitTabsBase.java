@@ -36,6 +36,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     private ArrayList<Habit> passedHabits;
     private Button deleteButton;
     private int passedIndex;
+    private boolean mViewing;
     private boolean editable;
     private ArrayList<Record> recordList;
     String[] titles = {"INFO","IMAGE","RECORDS"};
@@ -56,7 +57,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         passedHabit = (Habit)getIntent().getExtras().getSerializable("habit"); // a user
         passedHabits = new ArrayList<>(); // we will get the latest list from the database
         passedIndex = (int)getIntent().getExtras().getSerializable("index");
-
+        mViewing = (boolean)getIntent().getExtras().getSerializable("viewing");
 
 
         recordList = new ArrayList<>();
@@ -76,7 +77,11 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                 tab.setText(titles[position]);
             }
         }).attach();
-
+        if(mViewing){
+            AllowEdit.setVisibility(View.INVISIBLE);
+            deleteButton.setVisibility(View.INVISIBLE);
+            ConfirmEdit.setVisibility(View.INVISIBLE);
+        }
 
         //edit toggle button which
         AllowEdit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
