@@ -162,11 +162,15 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                 case 1: // TODO: This must be reorganized
                     // on creation, our passed habit fills in the fragment's information fields
                     returningFragment = new ViewHabitImageFragment(passedHabit.getRecordAddress());
+                    Bundle imgBundle = new Bundle();
+                    imgBundle.putSerializable("viewing",mViewing);
+                    returningFragment.setArguments(imgBundle);
                     break;
                 case 2:
                     returningFragment = new ViewRecordsFragment(passedHabit,passedHabits);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("records",recordList);
+                    bundle.putSerializable("viewing",mViewing);
                     returningFragment.setArguments(bundle);
                     break;
                 default:
@@ -174,6 +178,9 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                     returningFragment = new ViewHabitBaseFragment(passedHabit.getName(),passedHabit.getDescription(),passedHabit.getStartDate(),
                             passedHabit.getMondayR(),passedHabit.getTuesdayR(),passedHabit.getWednesdayR(), passedHabit.getThursdayR(),
                             passedHabit.getFridayR(),passedHabit.getSaturdayR(),passedHabit.getSundayR());
+                    Bundle viewBundle = new Bundle();
+                    viewBundle.putSerializable("viewing",mViewing);
+                    returningFragment.setArguments(viewBundle);
             }
             return returningFragment; }
 
