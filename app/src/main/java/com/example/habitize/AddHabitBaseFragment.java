@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,14 +141,15 @@ public class AddHabitBaseFragment extends Fragment {
                 //sets up the dialog box for datePicker
                 DatePickerDialog dialog = new DatePickerDialog(
                         getContext(),
-                        android.R.style.Theme_DeviceDefault,
+                        android.R.style.Theme_Holo_Light,
                         mDateSetListener,
                         year, month, day); 
 
                 //set a minimum date the user can select (cannot choose past dates to start on)
                 dialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
                 //change color of date picker background
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.LTGRAY));
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().setGravity(Gravity.CENTER);
                 dialog.show();
             }
         });

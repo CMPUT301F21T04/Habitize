@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private CardView allHabits;
     private CardView todaysHabits;
     private CardView followReq;
+    private Button leaderboard;
     private Button logOut;
     private ProgressBar progressBar3;
     private TextView username;
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         followReq =  findViewById(R.id.followingCard);
         username = findViewById(R.id.userNameMain);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBarmain);
+        leaderboard = findViewById(R.id.leaderboard);
 
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
@@ -121,6 +123,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, TodaysHabitsActivity.class);
                 Bundle userBundle = new Bundle();
                 intent.putExtras(userBundle);
+                startActivity(intent);
+            }
+        });
+
+        leaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Leaderboard.class);
                 startActivity(intent);
             }
         });
