@@ -29,6 +29,7 @@ public class PublicHabitsActivity extends AppCompatActivity {
     private String userAcct;
     private SimpleDateFormat simpleDateFormat;
     private String userNameToFollow;
+   // private ArrayList<Habit> allHabits;
 
     public PublicHabitsActivity() {
     }
@@ -44,6 +45,7 @@ public class PublicHabitsActivity extends AppCompatActivity {
         dataList = new ArrayList<>();
         posInFireBase = new ArrayList<>();
         mLayoutManager = new LinearLayoutManager(this);
+        //allHabits = new ArrayList<>();
         listView = findViewById(R.id.publicHabit_list);
         habitAdapter = new HabitAdapter(dataList,true);
         listView.setAdapter(habitAdapter);
@@ -53,6 +55,7 @@ public class PublicHabitsActivity extends AppCompatActivity {
         //sets var string to the username the user clicked on which will be passed into DataBaseManager
         userNameToFollow = b.getString("name");
 
+        //DatabaseManager.getAllHabits(allHabits);
         DatabaseManager.getPublicHabitsRecycler(dataList, habitAdapter,posInFireBase, userNameToFollow);
     }
     

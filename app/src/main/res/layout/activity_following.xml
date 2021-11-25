@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/follow_screen">
 
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar1"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/purple_500"
+        android:background="@color/zxing_transparent"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +67,7 @@
         android:layout_below="@+id/my_toolbar1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="FOLLOW REQUESTS"
+        android:background="#00000000"
         android:textSize="20sp" />
 
     <ListView
@@ -77,10 +78,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
+        android:choiceMode="none"
         android:clickable="true"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:choiceMode="none"
-        />
+        android:focusableInTouchMode="true" />
 
 </RelativeLayout>

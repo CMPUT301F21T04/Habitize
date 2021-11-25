@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -24,12 +25,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habitize">
         <activity
+            android:name=".Leaderboard"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".PublicHabitsActivity"
             android:exported="false" />
         <activity
             android:name=".CustomListOfSearchResults"
             android:exported="false" />
-        <activity android:name=".QRActivity"/>
+        <activity android:name=".QRActivity" />
         <activity
             android:name=".SearchResults"
             android:exported="false" />

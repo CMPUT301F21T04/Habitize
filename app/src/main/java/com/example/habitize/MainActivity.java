@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private CardView allHabits;
     private CardView todaysHabits;
     private CardView followReq;
+    private Button leaderboard;
     private Button logOut;
     private ProgressBar progressBar3;
     private TextView username;
@@ -75,10 +76,11 @@ public class MainActivity extends AppCompatActivity {
         username = findViewById(R.id.userNameMain);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBarmain);
         qrBTN = findViewById(R.id.qrbtn);
+        leaderboard = findViewById(R.id.leaderboard);
 
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
-        CollectionReference collectionReference = fStore.collection("Users");
+        CollectionReference collectionReference = fStore.collection("Users");/*
         Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
 
         currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-        });
+        });*/
 
        // Branch the activities here:
 
@@ -124,6 +126,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, TodaysHabitsActivity.class);
                 Bundle userBundle = new Bundle();
                 intent.putExtras(userBundle);
+                startActivity(intent);
+            }
+        });
+
+        leaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Leaderboard.class);
                 startActivity(intent);
             }
         });

@@ -76,33 +76,38 @@ public class AddHabitTabsBase extends AppCompatActivity {
                 boolean sunRec = addFrag.getSun();
 
                 //check if title empty
-                if(title == ""){
+                if(title.equals("")){
                     Toast.makeText(AddHabitTabsBase.this,"Enter a habit title",Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 //check if description empty
-                if(description == ""){
+                if(description.equals("")){
                     Toast.makeText(AddHabitTabsBase.this,"Enter a habit description",Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 //check if start date of habit is empty
-                if(startDate == ""){
+                if(startDate.equals("")){
                     Toast.makeText(AddHabitTabsBase.this,"Enter a habit start date",Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 //make sure title is up to 20 chars
                 if (title.length() > 20){
                     Toast.makeText(AddHabitTabsBase.this,"title length too long",Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 //make sure habit description is up to 30 chars
                 if (description.length() > 30){
                     Toast.makeText(AddHabitTabsBase.this,"Enter a habit title",Toast.LENGTH_LONG).show();
+                    return;
 
                 }
                 //creates the habit and stores in database only if validation above is correct
-                if (!(title == "") && (!(description == "")) &&
-                        (!(startDate == ""))) {
+                if (!(title.equals("")) && (!(description.equals(""))) &&
+                        (!(startDate.equals("")))) {
                     // Create the habit
                     Habit newHabit = new Habit(title, description,
                             startDate, monRec, tueRec, wedRec,
