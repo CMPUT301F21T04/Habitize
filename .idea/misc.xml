@@ -81,7 +81,7 @@
         <entry key="app/src/main/res/layout/activity_view_info.xml" value="0.25" />
         <entry key="app/src/main/res/layout/all_habits.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/custom_info_contents.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_add_habit_base.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_add_habit_base.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_view_habit_base.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_content.xml" value="0.335" />
         <entry key="app/src/main/res/layout/login_activity.xml" value="0.21002825169113126" />

@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddHabitBaseFragment">
+    tools:context=".AddHabitBaseFragment"
+    android:background="@drawable/addhabitscreen">
 
 
     <EditText
         android:id="@+id/FragmentViewHabitTitle"
-        android:layout_width="296dp"
-        android:layout_height="48dp"
+        android:layout_width="293dp"
+        android:layout_height="34dp"
+        android:background="@android:color/transparent"
         android:gravity="center_horizontal"
         android:hint="Enter Your Title"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,22 +20,22 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.058" />
+        app:layout_constraintVertical_bias="0.07" />
 
     <EditText
         android:id="@+id/FragmentViewHabitDescription"
         android:layout_width="295dp"
         android:layout_height="181dp"
         android:layout_marginTop="32dp"
-        android:background="@drawable/with_border"
+        android:background="@android:color/transparent"
         android:gravity="center_horizontal"
         android:hint="Enter Habit Description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitTitle"
-        app:layout_constraintVertical_bias="0.071" />
+        app:layout_constraintVertical_bias="0.025" />
 
     <TextView
         android:id="@+id/FragmentViewHabitStartDate"
