@@ -27,6 +27,7 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
     private ArrayList<Habit> passedHabits;
     private int index;
     private Record passedRecord;
+    private boolean mViewing;
     String[] titles = {"Info","Image","Location"};
 
     public ViewRecordBase(){};
