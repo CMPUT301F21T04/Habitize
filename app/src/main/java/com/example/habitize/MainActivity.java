@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
-        CollectionReference collectionReference = fStore.collection("Users");
+        CollectionReference collectionReference = fStore.collection("Users");/*
         Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
 
         currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-        });
+        });*/
 
        // Branch the activities here:
 

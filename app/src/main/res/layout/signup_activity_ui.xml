@@ -95,6 +95,13 @@
                 android:layout_width="169dp"
                 android:layout_height="48dp"
                 android:text="login" />
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/signUp_google"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                 />
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>
