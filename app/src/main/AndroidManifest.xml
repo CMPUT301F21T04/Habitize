@@ -25,18 +25,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habitize">
         <activity
-            android:name=".Leaderboard"
+            android:name=".Activities.Leaderboard"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".Activities.MainActivity" />
         <activity
-            android:name=".PublicHabitsActivity"
+            android:name=".Activities.Followers.PublicHabitsActivity"
             android:exported="false" />
         <activity
-            android:name=".CustomListOfSearchResults"
+            android:name=".Controllers.CustomListOfSearchResults"
             android:exported="false" />
-        <activity android:name=".QRActivity" />
+        <activity android:name=".Activities.QRActivity" />
         <activity
-            android:name=".SearchResults"
+            android:name=".Activities.Followers.SearchResults"
             android:exported="false" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -51,27 +51,24 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AddHabitTabsBase"
+            android:name=".Activities.AddHabit.AddHabitTabsBase"
             android:exported="true" />
         <activity
-            android:name=".CustomListOfExistingFollowers"
+            android:name=".Controllers.CustomListOfExistingFollowers"
             android:exported="false"
-            android:parentActivityName=".PublicHabitsActivity" />
-        <activity android:name=".FollowRequests" />
+            android:parentActivityName=".Activities.Followers.PublicHabitsActivity" />
+        <activity android:name=".Activities.Followers.FollowRequests" />
         <activity
-            android:name=".ViewRecordBase"
-            android:parentActivityName=".ViewHabitTabsBase" />
+            android:name=".Activities.ViewRecord.ViewRecordBase"
+            android:parentActivityName=".Activities.ViewHabit.ViewHabitTabsBase" />
         <activity
-            android:name=".FollowingActivity"
+            android:name=".Activities.Followers.FollowingActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewHabitTabsBase"
-            android:parentActivityName=".AllHabitsActivity" />
+            android:name=".Activities.ViewHabit.ViewHabitTabsBase"
+            android:parentActivityName=".Activities.ViewHabitLists.AllHabitsActivity" />
         <activity
-            android:name=".Login_Activity"
+            android:name=".Activities.SignupAndLogin.Login_Activity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -80,16 +77,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUp" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".AllHabitsActivity" />
+        <activity android:name=".Activities.SignupAndLogin.SignUp" />
+        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".Activities.ViewHabitLists.AllHabitsActivity" />
         <activity
-            android:name=".CreateRecordBase"
+            android:name=".Activities.CreateRecord.CreateRecordBase"
             android:exported="true"
-            android:parentActivityName=".AllHabitsActivity" />
+            android:parentActivityName=".Activities.ViewHabitLists.AllHabitsActivity" />
         <activity
-            android:name=".TodaysHabitsActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".Activities.ViewHabitLists.TodaysHabitsActivity"
+            android:parentActivityName=".Activities.MainActivity" />
     </application>
 
 </manifest>

@@ -1,4 +1,5 @@
 package com.example.habitize;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -8,26 +9,19 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.*;
 
-import android.app.Activity;
 import android.os.SystemClock;
-import android.widget.EditText;
-import android.widget.ListView;
 
-import androidx.test.core.app.ActivityScenario;
-import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.example.habitize.Activities.MainActivity;
+import com.example.habitize.Activities.SignupAndLogin.Login_Activity;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
