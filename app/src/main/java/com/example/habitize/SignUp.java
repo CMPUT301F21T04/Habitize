@@ -71,7 +71,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         com.google.android.gms.common.SignInButton googleSignUp = findViewById(R.id.signUp_google);
         DatabaseManager.setRegistrationListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
+        //mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance(); // init db
         users = db.collection("Users"); // reference to users collection. check if a user exists here
         userHabits = db.collection("userHabits");
@@ -188,7 +188,6 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         DatabaseManager.setInfoForRegistration(username,email,firstName,lastName,password);
         //check the user if is already signedUp
         DatabaseManager.checkUsernameAndRegister();
-        loginUser();
 
 
     }
