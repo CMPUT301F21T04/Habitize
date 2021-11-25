@@ -25,6 +25,7 @@ import java.util.Collections;
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder> {
     private ArrayList<Habit> dataset;
     private ArrayList<Integer> posInFireBase;
+    private ArrayList<Habit> allHabits;
     private Context mContext;
     private boolean mViewing;
         public static class HabitHolder extends RecyclerView.ViewHolder{
@@ -76,9 +77,10 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
         this.dataset = habits;
         this.mViewing = viewing;
     }
-    public HabitAdapter(ArrayList<Habit> habits, ArrayList<Integer> posInFirebase,boolean viewing){
+    public HabitAdapter(ArrayList<Habit> habits, ArrayList<Integer> posInFirebase,ArrayList<Habit> allHabits,boolean viewing){
             this.dataset = habits;
             this.posInFireBase = posInFirebase;
+            this.allHabits = allHabits;
     }
 
 
@@ -115,9 +117,16 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
                                     fromPos = viewHolder.getAdapterPosition();
                                     break;
                                 case ItemTouchHelper.ACTION_STATE_IDLE:
-                                    Collections.swap(dataset,fromPos,toPos);
-                                    recyclerView.getAdapter().notifyDataSetChanged();
-                                    DatabaseManager.updateHabits(dataset);
+                                    if(posInFireBase != null) {
+                                        Collections.swap(allHabits, posInFireBase.get(fromPos), posInFireBase.get(toPos));
+                                        recyclerView.getAdapter().notifyDataSetChanged();
+                                        DatabaseManager.updateHabits(allHabits);
+                                    }
+                                    else{
+                                        Collections.swap(dataset,fromPos,toPos);
+                                        recyclerView.getAdapter().notifyDataSetChanged();
+                                        DatabaseManager.updateHabits(dataset);
+                                    }
                                     break;
 
 

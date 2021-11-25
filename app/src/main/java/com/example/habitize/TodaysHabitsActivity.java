@@ -34,6 +34,7 @@ public class TodaysHabitsActivity extends AppCompatActivity {
     private String userAcct;
     private SimpleDateFormat simpleDateFormat;
     private Switch reorderT;
+    private ArrayList<Habit> allHabits;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,78 +46,14 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         dataList = new ArrayList<>();
         posInFireBase = new ArrayList<>();
         mLayoutManager = new LinearLayoutManager(this);
-
+        allHabits = new ArrayList<>();
         listView = findViewById(R.id.habit_list);
-        habitAdapter = new HabitAdapter(dataList,posInFireBase,false);
+        habitAdapter = new HabitAdapter(dataList,posInFireBase,allHabits,false);
         listView.setAdapter(habitAdapter);
         listView.setLayoutManager(mLayoutManager);
+        DatabaseManager.getAllHabits(allHabits);
         DatabaseManager.getTodaysHabitsRecycler(dataList, habitAdapter,posInFireBase);
 
-
-        /*
-        reorderT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    for(int i=0; i < habitAdapter.getCount(); i++){
-
-                        View view = listView.getChildAt(i);
-                        Button UP = view.findViewById(R.id.HabitUp);
-                        Button DOWN = view.findViewById(R.id.HabitDown);
-                        FloatingActionButton check = view.findViewById(R.id.completeHabit);
-                        check.setVisibility(View.GONE);
-                        DOWN.setVisibility(View.VISIBLE);
-                        UP.setVisibility(View.VISIBLE);
-
-                        int finalI = i;
-                        int finalJ = habitAdapter.getCount()-1 ;
-                        UP.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if ( finalI != 0) {
-
-                                    Habit tempUP1 = dataList.get(finalI);
-                                    Habit tempUP2 = dataList.get(finalI-1);
-                                    dataList.set(finalI - 1, tempUP1);
-                                    dataList.set(finalI, tempUP2);
-                                    DatabaseManager.updateHabits(dataList);
-                                    DatabaseManager.getTodaysHabits(dataList, habitAdapter,posInFireBase);
-                                }
-                            }
-                        });
-
-                        DOWN.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if ( finalI != finalJ) {
-                                    Habit tempDown1 = dataList.get(finalI);
-                                    Habit tempDown2 = dataList.get(finalI+1);
-                                    dataList.set(finalI +1, tempDown1);
-                                    dataList.set(finalI, tempDown2);
-                                    DatabaseManager.updateHabits(dataList);
-                                    DatabaseManager.getTodaysHabits(dataList, habitAdapter,posInFireBase);
-                                }
-                            }
-                        });
-
-
-                    }
-                    DatabaseManager.getTodaysHabits(dataList, habitAdapter,posInFireBase);
-                } else {
-                    for(int i=0; i < habitAdapter.getCount(); i++) {
-                        View view = listView.getChildAt(i);
-                        Button UP = view.findViewById(R.id.HabitUp);
-                        Button DOWN = view.findViewById(R.id.HabitDown);
-                        FloatingActionButton check = view.findViewById(R.id.completeHabit);
-                        check.setVisibility(View.VISIBLE);
-                        DOWN.setVisibility(View.GONE);
-                        UP.setVisibility(View.GONE);
-                    }
-                }
-
-            }
-        });
-         */
 
     }
 
