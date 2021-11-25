@@ -26,6 +26,7 @@ public class ViewHabitImageFragment extends Fragment {
     private static final int CAM_IMG = 200;
     private Uri imageUri;
     private String imageAddr;
+    private boolean mViewing;
 
     public ViewHabitImageFragment(String imageAddr){
         this.imageAddr = imageAddr;
@@ -55,8 +56,15 @@ public class ViewHabitImageFragment extends Fragment {
         imageView = root.findViewById(R.id.FragmentViewHabitNewImage);
         addImageBtn = root.findViewById(R.id.FragmentViewHabitNewImageBtn);
         viewCamBtn = root.findViewById(R.id.FragmentViewHabitNewCamBtn);
-        addImageBtn.setEnabled(false);
 
+        addImageBtn.setEnabled(false);
+        viewCamBtn.setEnabled(false);
+
+        mViewing = (boolean) getArguments().getSerializable("viewing");
+        if(mViewing){
+            addImageBtn.setVisibility(View.INVISIBLE);
+            viewCamBtn.setVisibility(View.INVISIBLE);
+        }
 
         addImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
