@@ -169,7 +169,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
                     habitBundle.putSerializable("habits", dataset);
                     intent.putExtras(habitBundle);
                     mContext.startActivity(intent);
-
                 }
             });
             holder.getRecordButton().setOnClickListener(new View.OnClickListener() {
