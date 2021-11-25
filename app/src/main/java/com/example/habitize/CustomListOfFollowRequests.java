@@ -1,6 +1,8 @@
 package com.example.habitize;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,7 @@ public class CustomListOfFollowRequests extends ArrayAdapter<String> {
     private FloatingActionButton deleteFollowRequest;
     private FloatingActionButton acceptFollowRequest;
     TextView nameField;
+
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
     String currentLoggedInUser;
@@ -86,6 +89,7 @@ public class CustomListOfFollowRequests extends ArrayAdapter<String> {
         CollectionReference collectionReference = fStore.collection("Users");
         Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
 
+
         deleteFollowRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,5 +133,6 @@ public class CustomListOfFollowRequests extends ArrayAdapter<String> {
 
 
     }
+
 
 }

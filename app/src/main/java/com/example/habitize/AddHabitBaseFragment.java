@@ -56,6 +56,7 @@ public class AddHabitBaseFragment extends Fragment {
     private boolean SunRecurrence;
     private Switch visible;
     private boolean publicHabit;
+
     private Switch geolocation;
     private Switch Geolocation;
     private Button imageBtn;

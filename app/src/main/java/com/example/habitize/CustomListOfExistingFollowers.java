@@ -3,6 +3,7 @@ package com.example.habitize;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,6 +39,8 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
     private final Context context;
     private FloatingActionButton deleteFollowerButton;
     TextView tv;
+    private static final String TAG = "doc error";
+    private ArrayList<String> usersWhoGrantedAccess;
 
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
@@ -74,7 +78,27 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
         TextView nameField = view.findViewById(R.id.existingFollowerName);
         nameField.setText(follower);
 
+        fStore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        CollectionReference collectionReference = fStore.collection("Users");
+
+        Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
+
+        currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+                    for(QueryDocumentSnapshot document : task.getResult()) {
+                        currentLoggedInUser = document.getString("userName");
+                    }
+                }
+            }
+
+        });
+
+
         //When you click on another user in list - listener
+        //check if user has granted
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,18 +106,47 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
                 //get the username that was clicked upon and save in Bundle
                 bundle.putString("name",follower);
                 //bring user to new screen/activity
-                openPublicHabitList(bundle);
+
+                System.out.println("USER IS:   " + follower);
+
+                Query queryToFindUsersHabits =  collectionReference.whereEqualTo("userName", follower);
+
+                queryToFindUsersHabits.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            System.out.println("IS SUCCESSFULLLLLLL");
+                            //for every document find the ones that match query
+                            for(QueryDocumentSnapshot document : task.getResult()) {
+
+                                usersWhoGrantedAccess = (ArrayList<String>) document.get("following");
+
+                                System.out.println("user looged in: " + currentLoggedInUser);
+                                System.out.println("user click on: " + usersWhoGrantedAccess);
+                                System.out.println("check: " + usersWhoGrantedAccess.contains(currentLoggedInUser));
+                                if(usersWhoGrantedAccess.contains(currentLoggedInUser)){
+                                    openPublicHabitList(bundle);
+                                } else {
+                                    System.out.println("User doesn't follow you back :( ");
+                                }
+                                //collectionReference.document(user).update("followers", FieldValue.arrayUnion(currentLoggedInUser));
+                            }
+                        } else{
+                            System.out.println("NOOOOOOOOOOOOOO");
+                        }
+                    }
+                });
+
 
             }
         });
+
+
 
         nameField.setClickable(false);
         deleteFollowerButton.setFocusable(false);
         deleteFollowerButton.setFocusableInTouchMode(false);
 
-        fStore = FirebaseFirestore.getInstance();
-        fAuth = FirebaseAuth.getInstance();
-        CollectionReference collectionReference = fStore.collection("Users");
 
         deleteFollowerButton.setOnClickListener(new View.OnClickListener() {
             @Override
