@@ -5,7 +5,6 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/zxing_transparent"
     android:foreground="?attr/selectableItemBackground"
     android:paddingTop="10dp"
     android:paddingLeft="5dp"
@@ -24,7 +23,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@drawable/bgitem">
             <androidx.constraintlayout.utils.widget.ImageFilterView
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="25dp"
@@ -32,6 +32,9 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="20dp"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:padding="5dp"
                 android:background="@drawable/list_item_outline"
                 />
 
@@ -45,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"
-                    android:textColor="@color/purple_500"
+
                     android:text="HabitName"
                     android:textSize="20dp"
                     />
@@ -61,6 +64,7 @@
                     android:layout_width="101dp"
                     android:layout_height="98dp"
                     android:layout_gravity="end"
+                    android:layout_marginRight="10dp"
                     android:layout_marginTop="20dp"
                     android:adjustViewBounds="true"
                     android:background="@color/white"
