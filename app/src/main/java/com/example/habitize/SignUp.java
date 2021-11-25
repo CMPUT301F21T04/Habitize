@@ -1,34 +1,23 @@
 package com.example.habitize;
 
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,17 +27,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SignUp extends AppCompatActivity implements DatabaseManager.onRegistrationLoginListener {
-    private static final int RC_SIGN_IN = 301;
     //Initializing variables
     private FirebaseFirestore db;
     private CollectionReference users;
     private CollectionReference userHabits;
     private CollectionReference followers;
     private CollectionReference following;
-    //google sign in init
-    private com.google.android.gms.common.SignInButton googleSignUp;
-    private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseAuth mAuth;
 
     /**
      * Initialize activity
@@ -68,31 +52,14 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         EditText conPassword = findViewById(R.id.conPassword);
         EditText email = findViewById(R.id.email);
         ProgressBar progressBar = findViewById(R.id.progressBar2);
-        com.google.android.gms.common.SignInButton googleSignUp = findViewById(R.id.signUp_google);
         DatabaseManager.setRegistrationListener(this);
 
-        //mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance(); // init db
         users = db.collection("Users"); // reference to users collection. check if a user exists here
         userHabits = db.collection("userHabits");
         followers = db.collection("followers");
         following = db.collection("following");
 
-        // Configure Google Sign In
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        googleSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                signIn();
-                //Toast.makeText(SignUp.this,"google",Toast.LENGTH_LONG).show();
-            }
-        });
 
         progressBar.setVisibility(View.GONE);
 
@@ -156,39 +123,6 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
 
             }
         });
-
-    }
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                Toast.makeText(SignUp.this,"Successful sign up with google welcome " +account.getDisplayName(),Toast.LENGTH_LONG).show();
-                firebaseAuthWithGoogle(account.getDisplayName(),account.getEmail(),account.getGivenName(),account.getFamilyName(), account.getId());
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Toast.makeText(SignUp.this,"Failed sign up with google ",Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    private void firebaseAuthWithGoogle(String username,String email, String firstName, String lastName, String password) {
-
-        DatabaseManager.setInfoForRegistration(username,email,firstName,lastName,password);
-        //check the user if is already signedUp
-        DatabaseManager.checkUsernameAndRegister();
-
 
     }
 
