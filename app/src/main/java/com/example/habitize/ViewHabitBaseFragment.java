@@ -56,6 +56,9 @@ public class ViewHabitBaseFragment extends Fragment   {
     private boolean FriRecurrence;
     private boolean SatRecurrence;
     private boolean SunRecurrence;
+    private Switch visible;
+    private boolean publicHabit;
+
     private Switch geolocation;
     private Switch Geolocation;
     private Button imageBtn;
@@ -105,6 +108,7 @@ public class ViewHabitBaseFragment extends Fragment   {
         Friday = root.findViewById(R.id.FragmentViewHabitFriday);
         Saturday = root.findViewById(R.id.FragmentViewHabitSaturday);
         Sunday  = root.findViewById(R.id.FragmentViewHabitSunday);
+        visible = root.findViewById(R.id.view_publicHabit);
 
         title.setEnabled(false);
         description.setEnabled(false);
@@ -247,7 +251,17 @@ public class ViewHabitBaseFragment extends Fragment   {
             }
         });
 
-
+        // if switch for public enable is on, the habit will be public to all users
+        visible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    publicHabit = true;
+                } else{
+                    publicHabit = false;
+                }
+            }
+        });
 
         return root;
     }

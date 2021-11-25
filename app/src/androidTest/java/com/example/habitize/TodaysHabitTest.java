@@ -1,11 +1,14 @@
 //package com.example.habitize;
 //
+//import static androidx.test.espresso.Espresso.onData;
 //import static androidx.test.espresso.Espresso.onView;
 //import static androidx.test.espresso.action.ViewActions.click;
 //import static androidx.test.espresso.action.ViewActions.replaceText;
 //import static androidx.test.espresso.intent.Intents.intended;
 //import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 //import static androidx.test.espresso.matcher.ViewMatchers.withId;
+//
+//import static org.hamcrest.CoreMatchers.anything;
 //
 //import android.os.SystemClock;
 //
@@ -34,8 +37,13 @@
 //        password = "password";
 //        onView(withId(R.id.email_login)).perform(replaceText(email));
 //        onView(withId(R.id.password_login)).perform(replaceText(password));
+//        SystemClock.sleep(1000);
 //        onView(withId(R.id.LoginBTN)).perform(click());
 //        SystemClock.sleep(5000);
+//      //  intended(hasComponent(MainActivity.class.getName()));
+//        onView(withId(R.id.todaysHabits)).perform(click());
+//       // intended(hasComponent(TodaysHabitsActivity.class.getName()));
+//
 //    }
 //
 //    @After
@@ -43,15 +51,16 @@
 //        Intents.release();
 //    }
 //
+//    //make a habit and make sure recurrence is made on system's day
+//    //if it was made correctly, then go to todays habit screen and check if its there
+//
+//
 //    @Test
 //    public void recurrenceTest(){
-////        onView(withId(R.id.email_login)).perform(replaceText(email));
-////        onView(withId(R.id.password_login)).perform(replaceText(password));
-////        onView(withId(R.id.LoginBTN)).perform(click());
-////        SystemClock.sleep(5000);
-//        intended(hasComponent(MainActivity.class.getName()));
-//        //onView(withId(R.id.todaysHabits)).perform(click());
+//        intended(hasComponent(TodaysHabitsActivity.class.getName()));
 //
+//        //onData(anything()).inAdapterView(withId(R.id.publicHabit_list)).atPosition(0).perform(click());
+//        SystemClock.sleep(5000);
 //    }
 //
 //}

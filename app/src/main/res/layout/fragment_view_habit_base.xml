@@ -49,22 +49,21 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitDescription"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Switch
         android:id="@+id/view_publicHabit"
-        android:layout_width="253dp"
-        android:layout_height="87dp"
-        android:layout_marginBottom="56dp"
+        android:layout_width="241dp"
+        android:layout_height="88dp"
         android:text="Enable As A Public Habit"
         android:textColorHighlight="#8C9EFF"
         android:textColorLink="#8C9EFF"
         android:thumbTint="#6200EE"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitSaturday"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
     <CheckBox
