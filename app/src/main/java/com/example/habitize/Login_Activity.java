@@ -62,7 +62,6 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
         password_EditText = findViewById(R.id.password_login);
         login_Button = findViewById(R.id.LoginBTN);
         register_Button = findViewById(R.id.RegisterBTN);
-        forgot_Button = findViewById(R.id.forgotPassBTN);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         DatabaseManager.setLoginContext(this);
