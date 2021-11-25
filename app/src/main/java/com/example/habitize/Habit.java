@@ -25,8 +25,6 @@ public class Habit implements Serializable {
     private int totalMissed; //total number of times habit was not checked
     private String identifier;
 
-    // TODO: Add image + public vs private function
-
     public Habit(){};
 
     public Habit(String name, String description, String startDate, boolean mondayR, boolean tuesdayR,

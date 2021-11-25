@@ -1,9 +1,10 @@
 package com.example.habitize;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.gesture.Gesture;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder> {
     private ArrayList<Habit> dataset;
     private ArrayList<Integer> posInFireBase;
+    private ArrayList<Habit> allHabits;
     private Context mContext;
     private boolean mViewing;
         public static class HabitHolder extends RecyclerView.ViewHolder{
@@ -71,9 +77,12 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
         this.dataset = habits;
         this.mViewing = viewing;
     }
-    public HabitAdapter(ArrayList<Habit> habits, ArrayList<Integer> posInFirebase,boolean viewing){
+    public HabitAdapter(ArrayList<Habit> habits, ArrayList<Integer> posInFirebase,ArrayList<Habit> allHabits,boolean viewing){
+            // dataset contains today's habits, but when we perform swaps we want to update the allhabits
+            // as it will delete habits otherwise
             this.dataset = habits;
             this.posInFireBase = posInFirebase;
+            this.allHabits = allHabits;
     }
 
 
@@ -82,7 +91,59 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
     public HabitHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_content,parent,false);
         this.mContext = parent.getContext();
+
         return new HabitHolder(view);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        if(!this.mViewing) {
+            ItemTouchHelper.SimpleCallback simpleCallback =
+                    new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0)   {
+                        private int toPos;
+                        private int fromPos;
+                        @Override
+                        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                            // setting the positions selected
+                            this.fromPos = viewHolder.getAdapterPosition();
+                            this.toPos = target.getAdapterPosition();
+                            return true;
+                        }
+
+                        @Override
+                        public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
+                            super.onSelectedChanged(viewHolder, actionState);
+                            // when we let go of the drag, let the swap happen
+                            switch(actionState){
+                                default:
+                                    fromPos = viewHolder.getAdapterPosition();
+                                    break;
+                                case ItemTouchHelper.ACTION_STATE_IDLE:
+                                    if(posInFireBase != null) {
+                                        Collections.swap(allHabits, posInFireBase.get(fromPos), posInFireBase.get(toPos));
+                                        recyclerView.getAdapter().notifyDataSetChanged();
+                                        DatabaseManager.updateHabits(allHabits);
+                                    }
+                                    else{
+                                        Collections.swap(dataset,fromPos,toPos);
+                                        recyclerView.getAdapter().notifyDataSetChanged();
+                                        DatabaseManager.updateHabits(dataset);
+                                    }
+                                    break;
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                        }
+                    };
+            ItemTouchHelper helper = new ItemTouchHelper(simpleCallback);
+            helper.attachToRecyclerView(recyclerView);
+        }
+
     }
 
     @Override
@@ -92,9 +153,8 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
         DatabaseManager.getAndSetImage(dataset.get(holder.getAdapterPosition()).getRecordAddress()
                 ,holder.getHabitImageView());
         holder.getTitle().setText(dataset.get(holder.getAdapterPosition()).getName());
-
-
-        if(!mViewing) {
+        // different cases based on whether we are viewing another person's habit or not.
+        if(!mViewing) { // if we aren't viewing. Set recording habit and view/edit screen opening listeners
             holder.getView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -137,7 +197,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
         }
         else{
             holder.getRecordButton().setVisibility(View.INVISIBLE); // we hide the record button if we are viewing.
-            // we should open a different activity if we are viewing someone else's habit. No edit button or anything
+            // we open a viewing habit activity. This one does not allow us to toggle edit or delete.
         }
     }
 

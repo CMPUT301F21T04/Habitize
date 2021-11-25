@@ -115,6 +115,22 @@ public class DatabaseManager {
                     });
         }
     }
+
+    public static void deleteImage(String imageIdentifier){
+        StorageReference imageRef = storageRef.child(imageIdentifier);
+        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                // image is deleted
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // image could not be deleted. Probably does not exist
+            }
+        });
+    }
+
     // retrieve an image from the identifier
     // right now this has to be called every time we refresh the images. WORKAROUND: just add the byte maps
     // to a list stored. The list will be initialized ONCE when we log in, and then we will add to it during runtime
@@ -343,6 +359,12 @@ public class DatabaseManager {
             }
         });
     }
+
+    public static void deleteRecord(String UUID){
+        db.collection("Users").document(user).collection("Records").document(UUID).delete();
+        deleteImage(UUID);
+    }
+
 
 
 
