@@ -52,6 +52,7 @@ public class AllHabitsActivity extends AppCompatActivity {
         list.setAdapter(habitAdapter);
         list.setLayoutManager(mLayoutManager);
 
+
         // getting the habits from database and updating the view with them.
         DatabaseManager.getAllHabitsRecycler(dataList,habitAdapter);
 

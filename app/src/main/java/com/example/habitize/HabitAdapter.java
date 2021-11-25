@@ -1,9 +1,10 @@
 package com.example.habitize;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.gesture.Gesture;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder> {
     private ArrayList<Habit> dataset;
@@ -82,7 +87,51 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
     public HabitHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_content,parent,false);
         this.mContext = parent.getContext();
+
         return new HabitHolder(view);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        if(!this.mViewing) {
+            ItemTouchHelper.SimpleCallback simpleCallback =
+                    new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0)   {
+                        private int toPos;
+                        private int fromPos;
+                        @Override
+                        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
+                            this.fromPos = viewHolder.getAdapterPosition();
+                            this.toPos = target.getAdapterPosition();
+                            return true;
+                        }
+
+                        @Override
+                        public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
+                            super.onSelectedChanged(viewHolder, actionState);
+                            switch(actionState){
+                                default:
+                                    fromPos = viewHolder.getAdapterPosition();
+                                    break;
+                                case ItemTouchHelper.ACTION_STATE_IDLE:
+                                    Collections.swap(dataset,fromPos,toPos);
+                                    recyclerView.getAdapter().notifyDataSetChanged();
+                                    DatabaseManager.updateHabits(dataset);
+                                    break;
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                        }
+                    };
+            ItemTouchHelper helper = new ItemTouchHelper(simpleCallback);
+            helper.attachToRecyclerView(recyclerView);
+        }
+
     }
 
     @Override
