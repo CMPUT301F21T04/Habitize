@@ -67,7 +67,6 @@
         <entry key="app/src/main/res/layout/activity_add_habit_image.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/activity_add_habit_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_add_habit_location.xml" value="0.16770833333333332" />
-
         <entry key="app/src/main/res/layout/activity_add_habit_tabs_base.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_create_record.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_custom_list_of_existing_followers.xml" value="0.19610507246376813" />
@@ -81,7 +80,6 @@
         <entry key="app/src/main/res/layout/activity_qr_code.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_view_info.xml" value="0.25" />
         <entry key="app/src/main/res/layout/all_habits.xml" value="0.16770833333333332" />
-
         <entry key="app/src/main/res/layout/custom_info_contents.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_add_habit_base.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_view_habit_base.xml" value="0.25" />
