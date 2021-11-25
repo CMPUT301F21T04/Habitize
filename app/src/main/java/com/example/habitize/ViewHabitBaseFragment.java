@@ -56,6 +56,10 @@ public class ViewHabitBaseFragment extends Fragment   {
     private boolean FriRecurrence;
     private boolean SatRecurrence;
     private boolean SunRecurrence;
+    private Switch visible;
+    private boolean publicHabit;
+    private boolean mViewing;
+
     private Switch geolocation;
     private Switch Geolocation;
     private Button imageBtn;
@@ -105,6 +109,7 @@ public class ViewHabitBaseFragment extends Fragment   {
         Friday = root.findViewById(R.id.FragmentViewHabitFriday);
         Saturday = root.findViewById(R.id.FragmentViewHabitSaturday);
         Sunday  = root.findViewById(R.id.FragmentViewHabitSunday);
+        visible = root.findViewById(R.id.view_publicHabit);
 
         title.setEnabled(false);
         description.setEnabled(false);
@@ -116,7 +121,8 @@ public class ViewHabitBaseFragment extends Fragment   {
         Friday.setEnabled(false);
         Saturday.setEnabled(false);
         Sunday.setEnabled(false);
-
+        visible.setEnabled(false);
+        mViewing = (boolean) getArguments().getSerializable("viewing");
 
         // setting views to values set in the constructor
         Monday.setChecked(MonRecurrence);
@@ -130,6 +136,11 @@ public class ViewHabitBaseFragment extends Fragment   {
         description.setText(descText);
         startDate.setText(startDateText);
 
+
+
+        if(mViewing){
+            startDate.setClickable(false);
+        }
         startDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -247,7 +258,17 @@ public class ViewHabitBaseFragment extends Fragment   {
             }
         });
 
-
+        // if switch for public enable is on, the habit will be public to all users
+        visible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    publicHabit = true;
+                } else{
+                    publicHabit = false;
+                }
+            }
+        });
 
         return root;
     }
@@ -261,7 +282,7 @@ public class ViewHabitBaseFragment extends Fragment   {
         Friday.setEnabled(true);
         Saturday.setEnabled(true);
         Sunday.setEnabled(true);
-
+        visible.setEnabled(true);
         title.setEnabled(true);
         description.setEnabled(true);
         startDate.setEnabled(true);
@@ -274,7 +295,7 @@ public class ViewHabitBaseFragment extends Fragment   {
         Friday.setEnabled(false);
         Saturday.setEnabled(false);
         Sunday.setEnabled(false);
-
+        visible.setEnabled(false);
         title.setEnabled(false);
         description.setEnabled(false);
         startDate.setEnabled(false);

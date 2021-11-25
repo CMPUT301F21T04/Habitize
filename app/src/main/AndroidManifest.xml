@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.habitize" >
-
+    package="com.example.habitize">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -12,6 +11,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -22,13 +24,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habitize">
         <activity
+            android:name=".PublicHabitsActivity"
+            android:exported="false" />
+        <activity
             android:name=".CustomListOfSearchResults"
             android:exported="false" />
+        <activity android:name=".QRActivity"/>
         <activity
             android:name=".SearchResults"
             android:exported="false" />
-
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -49,18 +53,22 @@
             android:exported="true" />
         <activity
             android:name=".CustomListOfExistingFollowers"
-            android:exported="false" />
-        <activity android:name=".FollowRequests"/>
-        <activity android:name=".ViewRecordBase"
-            android:parentActivityName=".ViewHabitTabsBase"/>
+            android:exported="false"
+            android:parentActivityName=".PublicHabitsActivity" />
+        <activity android:name=".FollowRequests" />
+        <activity
+            android:name=".ViewRecordBase"
+            android:parentActivityName=".ViewHabitTabsBase" />
         <activity
             android:name=".FollowingActivity"
             android:exported="false" />
-        <activity android:name=".ViewHabitTabsBase"
-            android:parentActivityName=".AllHabitsActivity"/>
+        <activity
+            android:name=".ViewHabitTabsBase"
+            android:parentActivityName=".AllHabitsActivity" />
         <activity
             android:name=".Login_Activity"
-            android:exported="true" >
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -70,9 +78,10 @@
         <activity android:name=".SignUp" />
         <activity android:name=".MainActivity" />
         <activity android:name=".AllHabitsActivity" />
-        <activity android:name=".CreateRecordBase"
+        <activity
+            android:name=".CreateRecordBase"
             android:exported="true"
-            android:parentActivityName=".AllHabitsActivity"/>
+            android:parentActivityName=".AllHabitsActivity" />
         <activity
             android:name=".TodaysHabitsActivity"
             android:parentActivityName=".MainActivity" />

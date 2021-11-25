@@ -64,7 +64,7 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.activity_login_ui);
         // UI components
         email_EditText = findViewById(R.id.email_login);
         password_EditText = findViewById(R.id.password_login);
@@ -139,42 +139,8 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
             }
         });
 
-        // Listener for the forgot password button. When user clicked the register button,
-        //redirect user to forgot password screen.
-        forgot_Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // have a alertDialog
-                View v = inflater.inflate(R.layout.reset_layout,null);
-                resetPass_alert.setTitle("Reset Password?")
-                        .setMessage("Enter your email. A reset link will be then sent to your email.")
-                        .setPositiveButton("Reset", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                // if the email address is valid then send the reset link
-                                EditText email_EditText = v.findViewById(R.id.email_reset);
-                                String email = email_EditText.getText().toString();
-                                if(email.isEmpty()){
-                                    email_EditText.setError("Email is required.");
-                                }
-                                Authenticator.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(Login_Activity.this,"Reset Email Sent",Toast.LENGTH_SHORT).show();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(Login_Activity.this,"Reset Email Failed: " + e.getMessage(),Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        })
-                        .setNegativeButton("Cancel", null)
-                        .setView(v)
-                        .create().show();
-            }
-        });
+
+
     }
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();

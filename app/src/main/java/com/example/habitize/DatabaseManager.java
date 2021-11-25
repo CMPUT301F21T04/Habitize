@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -114,6 +115,22 @@ public class DatabaseManager {
                     });
         }
     }
+
+    public static void deleteImage(String imageIdentifier){
+        StorageReference imageRef = storageRef.child(imageIdentifier);
+        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                // image is deleted
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // image could not be deleted. Probably does not exist
+            }
+        });
+    }
+
     // retrieve an image from the identifier
     // right now this has to be called every time we refresh the images. WORKAROUND: just add the byte maps
     // to a list stored. The list will be initialized ONCE when we log in, and then we will add to it during runtime
@@ -343,6 +360,12 @@ public class DatabaseManager {
         });
     }
 
+    public static void deleteRecord(String UUID){
+        db.collection("Users").document(user).collection("Records").document(UUID).delete();
+        deleteImage(UUID);
+    }
+
+
 
 
     /**
@@ -451,9 +474,10 @@ public class DatabaseManager {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 ArrayList<String> followerList = (ArrayList<String>) value.get("following");
                 retrievingList.clear();
-                for(int i = 0; i < retrievingList.size(); i++){
+                for(int i = 0; i < followerList.size(); i++){
                     retrievingList.add(followerList.get(i));
                 }
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -512,7 +536,7 @@ public class DatabaseManager {
      * @param recievingList
      * @param habitAdapter
      */
-    public static void getAllHabits(ArrayList<Habit> recievingList, CustomAdapter habitAdapter) {
+    public static void getAllHabitsRecycler(ArrayList<Habit> recievingList, RecyclerView.Adapter habitAdapter) {
         db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -595,8 +619,8 @@ public class DatabaseManager {
      * @param habitAdapter the adapter we will notify about changes
      * @param posInFirebase the position of the habit in firebase. allows for proper deletion and editing
      */
-    public static void getTodaysHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
-                                       posInFirebase){
+    public static void getTodaysHabitsRecycler(ArrayList<Habit> recievingList,RecyclerView.Adapter habitAdapter,ArrayList<Integer>
+            posInFirebase){
         simpleDateFormat = new SimpleDateFormat("EEEE");
         Date d = new Date();
         //gives the day of the week of the user (if today is actually Monday it will say Monday)
@@ -670,7 +694,7 @@ public class DatabaseManager {
      * @param posInFirebase the position of the habit in firebase
      * @param followingUser the user they want to see
      */
-    public static void getPublicHabits(ArrayList<Habit> recievingList,CustomAdapter habitAdapter,ArrayList<Integer>
+    public static void getPublicHabitsRecycler(ArrayList<Habit> recievingList,RecyclerView.Adapter habitAdapter,ArrayList<Integer>
             posInFirebase, String followingUser){
 
         db.collection("Users").document(followingUser).addSnapshotListener(new EventListener<DocumentSnapshot>() {
