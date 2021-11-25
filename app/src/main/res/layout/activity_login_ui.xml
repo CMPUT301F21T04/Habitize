@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/loginbanner">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp" />
+
+    <LinearLayout
+        android:id="@+id/txtfieldslogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="290dp"
+        android:layout_marginStart="85dp"
+       >
+
+        <EditText
+            android:id="@+id/email_login"
+            android:layout_width="322dp"
+            android:layout_height="67dp"
+            android:ems="10"
+            android:hint="Email Address"
+            android:inputType="textPersonName"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/password_login"
+            android:layout_width="322dp"
+            android:layout_height="67dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textAlignment="center" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/buttonslogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="150dp"
+        android:layout_below="@id/txtfieldslogin">
+        <Button
+            android:id="@+id/LoginBTN"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="193dp"
+            android:layout_height="48dp"
+            android:text="LOGIN"
+             />
+
+        <Button
+            android:id="@+id/RegisterBTN"
+            android:text="Register"
+            android:layout_width="195dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="15dp"
+
+             />
+    </LinearLayout>
+
+<!-- for google button... if you need    -->
+<!--    <ImageButton-->
+<!--        android:layout_width="70dp"-->
+<!--        android:layout_height="70dp"-->
+<!--        android:layout_below="@id/buttonslogin"-->
+<!--        android:layout_marginLeft="300dp"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:padding="5dp"-->
+<!--        android:src="@drawable/googlebtn"></ImageButton>-->
+
+
+</RelativeLayout>
+</ScrollView>
