@@ -2,14 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AddHabitImage">
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/FragmentViewHabitNewCamBtn"
         android:layout_width="194dp"
         android:layout_height="49dp"
-        android:layout_marginTop="50dp"
         android:layout_marginBottom="184dp"
         android:text="Take a picture"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,9 +32,10 @@
         android:id="@+id/FragmentViewHabitNewImageBtn"
         android:layout_width="197dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="284dp"
+        android:layout_marginBottom="10dp"
         android:text="Load Image"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintBottom_toTopOf="@+id/FragmentViewHabitNewCamBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FragmentViewHabitNewImage" />
