@@ -36,6 +36,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     private ArrayList<Habit> passedHabits;
     private Button deleteButton;
     private int passedIndex;
+    private boolean mViewing;
     private boolean editable;
     private ArrayList<Record> recordList;
     String[] titles = {"INFO","IMAGE","RECORDS"};
@@ -56,7 +57,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         passedHabit = (Habit)getIntent().getExtras().getSerializable("habit"); // a user
         passedHabits = new ArrayList<>(); // we will get the latest list from the database
         passedIndex = (int)getIntent().getExtras().getSerializable("index");
-
+        mViewing = (boolean)getIntent().getExtras().getSerializable("viewing");
 
 
         recordList = new ArrayList<>();
@@ -76,7 +77,11 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                 tab.setText(titles[position]);
             }
         }).attach();
-
+        if(mViewing){
+            AllowEdit.setVisibility(View.INVISIBLE);
+            deleteButton.setVisibility(View.INVISIBLE);
+            ConfirmEdit.setVisibility(View.INVISIBLE);
+        }
 
         //edit toggle button which
         AllowEdit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -157,11 +162,15 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                 case 1: // TODO: This must be reorganized
                     // on creation, our passed habit fills in the fragment's information fields
                     returningFragment = new ViewHabitImageFragment(passedHabit.getRecordAddress());
+                    Bundle imgBundle = new Bundle();
+                    imgBundle.putSerializable("viewing",mViewing);
+                    returningFragment.setArguments(imgBundle);
                     break;
                 case 2:
                     returningFragment = new ViewRecordsFragment(passedHabit,passedHabits);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("records",recordList);
+                    bundle.putSerializable("viewing",mViewing);
                     returningFragment.setArguments(bundle);
                     break;
                 default:
@@ -169,6 +178,9 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                     returningFragment = new ViewHabitBaseFragment(passedHabit.getName(),passedHabit.getDescription(),passedHabit.getStartDate(),
                             passedHabit.getMondayR(),passedHabit.getTuesdayR(),passedHabit.getWednesdayR(), passedHabit.getThursdayR(),
                             passedHabit.getFridayR(),passedHabit.getSaturdayR(),passedHabit.getSundayR());
+                    Bundle viewBundle = new Bundle();
+                    viewBundle.putSerializable("viewing",mViewing);
+                    returningFragment.setArguments(viewBundle);
             }
             return returningFragment; }
 

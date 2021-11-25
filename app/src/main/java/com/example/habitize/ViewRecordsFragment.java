@@ -24,6 +24,8 @@ public class ViewRecordsFragment extends Fragment implements RecordAdapter.recor
     private RecordAdapter recordAdapter;
     private Habit habit;
     private ArrayList<Habit> habits;
+    private boolean mViewing;
+
     View root;
 
     public ViewRecordsFragment(Habit habit,ArrayList<Habit> habits){
@@ -38,6 +40,8 @@ public class ViewRecordsFragment extends Fragment implements RecordAdapter.recor
         root = inflater.inflate(R.layout.fragment_view_records,container,false);
         // no method for filling yet
         records = new ArrayList<>();
+        mViewing = (boolean) getArguments().getSerializable("viewing");
+
         list = root.findViewById(R.id.record_list);
         recordAdapter = new RecordAdapter(this,R.layout.record_list_content,records);
         list.setAdapter(recordAdapter);

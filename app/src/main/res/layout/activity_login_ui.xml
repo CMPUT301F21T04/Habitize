@@ -3,10 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginbanner">
+    android:background="@drawable/loginscrn"
+    >
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
 >
     <ProgressBar
         android:id="@+id/progressBar"
@@ -22,7 +24,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="290dp"
-        android:layout_marginStart="85dp"
        >
 
         <EditText
@@ -45,41 +46,42 @@
 
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/buttonslogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_below="@id/txtfieldslogin"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="150dp"
-        android:layout_below="@id/txtfieldslogin">
+        android:orientation="vertical">
+
         <Button
             android:id="@+id/LoginBTN"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="193dp"
             android:layout_height="48dp"
-            android:text="LOGIN"
-             />
+            android:text="LOGIN" />
 
         <Button
             android:id="@+id/RegisterBTN"
-            android:text="Register"
             android:layout_width="195dp"
             android:layout_height="48dp"
             android:layout_marginBottom="15dp"
+            android:text="Register"
 
-             />
+            />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/signIn_google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
-<!-- for google button... if you need    -->
-<!--    <ImageButton-->
-<!--        android:layout_width="70dp"-->
-<!--        android:layout_height="70dp"-->
-<!--        android:layout_below="@id/buttonslogin"-->
-<!--        android:layout_marginLeft="300dp"-->
-<!--        android:layout_marginTop="15dp"-->
-<!--        android:padding="5dp"-->
-<!--        android:src="@drawable/googlebtn"></ImageButton>-->
+<!-- for google button... -->
+
 
 
 </RelativeLayout>

@@ -28,7 +28,16 @@
                 android:id="@+id/welcomeBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Welcome Back!"
+                android:text="Welcome Back"
+                android:textColor="@color/white"
+                android:textSize="22dp"></TextView>
+
+            <TextView
+                android:id="@+id/userNameMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/welcomeBack"
+                android:text="Username"
                 android:textColor="@color/white"
                 android:textSize="22dp"></TextView>
 

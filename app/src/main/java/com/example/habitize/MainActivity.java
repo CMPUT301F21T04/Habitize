@@ -26,6 +26,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.v1.StructuredQuery;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private Button leaderboard;
     private Button logOut;
     private ProgressBar progressBar3;
-    private TextView textView2;
+    private TextView username;
     private Toolbar toolBar;
 
     private StructuredQuery.FieldReference fieldReference;
@@ -52,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
     private int progressTrack = 0; //starting at 0 (max 100)
     private Integer completion = 0;
     private Integer totalHabits = 0;
+
+    FirebaseFirestore fStore;
+    FirebaseAuth fAuth;
+    String currentLoggedInUser;
 
     /**
      * Start the mainactivity
@@ -66,8 +71,28 @@ public class MainActivity extends AppCompatActivity {
         allHabits = findViewById(R.id.allHabitCard);
         todaysHabits = findViewById(R.id.todayHabitCard);
         followReq =  findViewById(R.id.followingCard);
+        username = findViewById(R.id.userNameMain);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBarmain);
         leaderboard = findViewById(R.id.leaderboard);
+
+        fStore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        CollectionReference collectionReference = fStore.collection("Users");/*
+        Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
+
+        currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+                    for(QueryDocumentSnapshot document : task.getResult()) {
+                        currentLoggedInUser = document.getString("userName");
+                        System.out.println(currentLoggedInUser);
+                        username.setText(currentLoggedInUser.toString()+"!");
+                    }
+                }
+            }
+
+        });*/
 
        // Branch the activities here:
 

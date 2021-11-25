@@ -58,6 +58,7 @@ public class ViewHabitBaseFragment extends Fragment   {
     private boolean SunRecurrence;
     private Switch visible;
     private boolean publicHabit;
+    private boolean mViewing;
 
     private Switch geolocation;
     private Switch Geolocation;
@@ -120,7 +121,8 @@ public class ViewHabitBaseFragment extends Fragment   {
         Friday.setEnabled(false);
         Saturday.setEnabled(false);
         Sunday.setEnabled(false);
-
+        visible.setEnabled(false);
+        mViewing = (boolean) getArguments().getSerializable("viewing");
 
         // setting views to values set in the constructor
         Monday.setChecked(MonRecurrence);
@@ -134,6 +136,11 @@ public class ViewHabitBaseFragment extends Fragment   {
         description.setText(descText);
         startDate.setText(startDateText);
 
+
+
+        if(mViewing){
+            startDate.setClickable(false);
+        }
         startDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -275,7 +282,7 @@ public class ViewHabitBaseFragment extends Fragment   {
         Friday.setEnabled(true);
         Saturday.setEnabled(true);
         Sunday.setEnabled(true);
-
+        visible.setEnabled(true);
         title.setEnabled(true);
         description.setEnabled(true);
         startDate.setEnabled(true);
@@ -288,7 +295,7 @@ public class ViewHabitBaseFragment extends Fragment   {
         Friday.setEnabled(false);
         Saturday.setEnabled(false);
         Sunday.setEnabled(false);
-
+        visible.setEnabled(false);
         title.setEnabled(false);
         description.setEnabled(false);
         startDate.setEnabled(false);
