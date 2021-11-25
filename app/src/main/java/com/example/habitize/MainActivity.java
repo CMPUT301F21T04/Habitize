@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private CardView allHabits;
     private CardView todaysHabits;
     private CardView followReq;
+    private Button leaderboard;
     private Button logOut;
     private ProgressBar progressBar3;
     private TextView textView2;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         todaysHabits = findViewById(R.id.todayHabitCard);
         followReq =  findViewById(R.id.followingCard);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBarmain);
+        leaderboard = findViewById(R.id.leaderboard);
 
        // Branch the activities here:
 
@@ -96,6 +98,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, TodaysHabitsActivity.class);
                 Bundle userBundle = new Bundle();
                 intent.putExtras(userBundle);
+                startActivity(intent);
+            }
+        });
+
+        leaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Leaderboard.class);
                 startActivity(intent);
             }
         });

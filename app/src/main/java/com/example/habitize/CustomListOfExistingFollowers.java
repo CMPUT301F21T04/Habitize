@@ -121,9 +121,9 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
 
                                 usersWhoGrantedAccess = (ArrayList<String>) document.get("following");
 
-                                System.out.println("user looged in: " + currentLoggedInUser);
-                                System.out.println("user click on: " + usersWhoGrantedAccess);
-                                System.out.println("check: " + usersWhoGrantedAccess.contains(currentLoggedInUser));
+//                                System.out.println("user looged in: " + currentLoggedInUser);
+//                                System.out.println("user click on: " + usersWhoGrantedAccess);
+//                                System.out.println("check: " + usersWhoGrantedAccess.contains(currentLoggedInUser));
                                 if(usersWhoGrantedAccess.contains(currentLoggedInUser)){
                                     openPublicHabitList(bundle);
                                 } else {
@@ -132,7 +132,7 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
                                 //collectionReference.document(user).update("followers", FieldValue.arrayUnion(currentLoggedInUser));
                             }
                         } else{
-                            System.out.println("NOOOOOOOOOOOOOO");
+                            //System.out.println("NOOOOOOOOOOOOOO");
                         }
                     }
                 });
