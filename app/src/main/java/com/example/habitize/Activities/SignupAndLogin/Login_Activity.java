@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.habitize.Activities.MainActivity;
 import com.example.habitize.Controllers.Authentication;
 import com.example.habitize.Controllers.DatabaseManager;
+import com.example.habitize.Controllers.ErrorShower;
 import com.example.habitize.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,7 +30,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class Login_Activity extends AppCompatActivity implements DatabaseManager.onLoginListener {
+public class Login_Activity extends AppCompatActivity implements DatabaseManager.onLoginListener, ErrorShower.ErrorHandler {
     // variables to be worked in
     EditText email_EditText, password_EditText;
     Button login_Button, register_Button, forgot_Button;
@@ -47,6 +48,7 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
 
     /**
      * Will instantiate the UI view of the activity screen.
+     *
      * @param savedInstanceState to be used for Bundle where fragment is re-constructed from a previous state
      */
     @Override
@@ -60,6 +62,7 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
         register_Button = findViewById(R.id.RegisterBTN);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
+        ErrorShower errorShower = new ErrorShower(this);
         DatabaseManager.setLoginContext(this);
 
         // Create a Pop up dialog when user forgot password
@@ -93,17 +96,17 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
                 String password = password_EditText.getText().toString().trim();
                 // Error handlers to make sure the required fields are filled.
                 if (TextUtils.isEmpty(email)){
-                    email_EditText.setError("Email is Required.");
+                    errorShower.throwError(1);
                     return;
                 }
 
                 if(TextUtils.isEmpty(password)){
-                    password_EditText.setError("Password is Required.");
+                    errorShower.throwError(2);
                     return;
                 }
 
                 if (password.length() < 8) {
-                    password_EditText.setError("Password must be at least 8 characters");
+                    errorShower.throwError(3);
                     return;
                 }
 
@@ -161,8 +164,6 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
         Authentication.authenticateAndSignIn();
 
 
-
-
     }
 
     /**
@@ -172,5 +173,17 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
     public void loginUser() {
         Intent intent = new Intent(Login_Activity.this, MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public String getErrorMessage(int errorCode) {
+        switch (errorCode) {
+            case 1:
+                return "Email is required";
+            case 2:
+                return "Password is required";
+            default:
+                return "Password must be at least 8 characters";
+        }
     }
 }
