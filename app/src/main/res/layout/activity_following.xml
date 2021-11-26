@@ -11,6 +11,10 @@
         android:id="@+id/my_toolbar1"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="80dp"
         android:background="@color/zxing_transparent"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
@@ -42,10 +46,11 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/searchButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="46dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="17dp"
                 android:clickable="true"
                 android:tint="@color/white"
@@ -62,25 +67,36 @@
     <Button
         android:id="@+id/followingReq"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="fill_parent"
-        android:layout_height="129dp"
+        android:layout_width="262dp"
+        android:layout_height="84dp"
         android:layout_below="@+id/my_toolbar1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="36dp"
         android:background="#00000000"
         android:textSize="20sp" />
 
     <ListView
         android:id="@+id/listOfExistingFollowers"
-        android:layout_width="fill_parent"
-        android:layout_height="533dp"
+        android:layout_width="match_parent"
+        android:layout_height="444dp"
         android:layout_below="@+id/followingReq"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:choiceMode="none"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true" />
+
+    <Button
+        android:id="@+id/openCameraButton"
+        android:layout_width="105dp"
+        android:layout_height="88dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="168dp"
+        android:background="#00000000" />
 
 </RelativeLayout>
