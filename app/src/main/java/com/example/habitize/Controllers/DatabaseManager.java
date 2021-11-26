@@ -248,10 +248,12 @@ public class DatabaseManager {
 
          */
     public static void getRecord(String UUID, ArrayList<Record> recievingList, RecordAdapter adapter){
+
         db.collection("Users").document(user).collection("Records").document(UUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 recievingList.clear();
+                adapter.notifyDataSetChanged();
                 // get the mapped data of records
                 ArrayList<Record> mappedRecords = (ArrayList<Record>) value.get("records");
                 // retrieving all records
@@ -265,34 +267,30 @@ public class DatabaseManager {
                         Double lat = (Double) hashedRecord.get("lat");
                         Double lon = (Double) hashedRecord.get("lon");
 
-                        db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                                long TEN_MEGABYTES = 1024*1024*10;
-                                StorageReference imageRef = storageRef.child(identifier);
-                                imageRef.getBytes(TEN_MEGABYTES)
-                                        .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                                            @Override
-                                            public void onSuccess(byte[] bytes) {
-                                                if(bytes != null) {
-                                                    recievingList.add(new Record(date, description, bytes,identifier,lat,lon));
-                                                    adapter.notifyDataSetChanged();
-                                                }
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
+                        long TEN_MEGABYTES = 1024 * 1024 * 10;
+                        StorageReference imageRef = storageRef.child(identifier);
+                        imageRef.getBytes(TEN_MEGABYTES)
+                                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
                                     @Override
-                                    public void onFailure(@NonNull Exception e) {
-
+                                    public void onSuccess(byte[] bytes) {
+                                        if (bytes != null) {
+                                            recievingList.add(new Record(date, description, bytes, identifier, lat, lon));
+                                            adapter.notifyDataSetChanged();
+                                        }
                                     }
-                                });
-
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                recievingList.add(new Record(date, description, null, identifier, lat, lon));
+                                adapter.notifyDataSetChanged();
                             }
                         });
+
                     }
                 }
-                adapter.notifyDataSetChanged();
             }
         });
+
     }
 
     /**
@@ -344,7 +342,7 @@ public class DatabaseManager {
                                 ArrayList<Record> records = new ArrayList<>();
                                 records.add(newRecord);
                                 HashMap<String,Object> mappedData = new HashMap<>(); // hash the record
-                                mappedData.put("records",records); // put it in the record space
+                                mappedData.put("records", records); // put it in the record space
                                 db.collection("Users").document(user).collection("Records").document(UUID).set(mappedData);
                             }
                         }
@@ -354,20 +352,21 @@ public class DatabaseManager {
         });
     }
 
-    public static void deleteRecord(String UUID){
-        db.collection("Users").document(user).collection("Records").document(UUID).delete();
-        deleteImage(UUID);
+    public static void updateBecauseDeleted(String UUID, ArrayList<Record> newRecords) {
+        for (Record i : newRecords) {
+            i.setByteArr(null);
+        }
+        HashMap<String, Object> mappedData = new HashMap<>();
+        mappedData.put("records", newRecords);
+        db.collection("Users").document(user).collection("Records").document(UUID).update(mappedData);
     }
 
 
-
-
     /**
-     *
      * Create a new user with all the data collected with their own data collections
      */
 
-    public static void createUserDocumentAndLogin(){
+    public static void createUserDocumentAndLogin() {
         HashMap<String,Object> userNameField = new HashMap<>();
         HashMap<String,Object> nameField = new HashMap<>();
         HashMap<String,Object> lastNameField = new HashMap<>();

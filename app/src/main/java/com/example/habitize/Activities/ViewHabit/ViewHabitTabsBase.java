@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.habitize.Activities.ViewRecord.ViewRecordsFragment;
 import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
@@ -138,6 +137,8 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // clear the image associated with the habit in the database
+                DatabaseManager.deleteImage(passedHabits.get(passedIndex).getRecordAddress());
                 passedHabits.remove(passedIndex); // remove the habit at the position we are on
                 // hash the list and replace the one at the database
                 DatabaseManager.updateHabits(passedHabits);

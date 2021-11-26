@@ -14,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.habitize.Activities.CreateRecord.RecordCreate;
 import com.example.habitize.Activities.ViewHabit.ViewHabitImageFragment;
+import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
 import com.example.habitize.Structural.Record;
@@ -32,13 +33,18 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
     private ArrayList<Habit> passedHabits;
     private int index;
     private Record passedRecord;
+    private ArrayList<Record> passedRecords;
+    private int passedIndex;
     private boolean mViewing;
-    String[] titles = {"Info","Image","Location"};
+    String[] titles = {"Info", "Image", "Location"};
 
-    public ViewRecordBase(){};
+    public ViewRecordBase() {
+    }
+
+    ;
 
 
-    protected void onCreate(@Nullable Bundle savedInstanceState){
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_record);
         pager = findViewById(R.id.recordPager);
@@ -50,6 +56,8 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
 
         passedHabit = (Habit) getIntent().getSerializableExtra("habit");
         passedRecord = (Record) getIntent().getSerializableExtra("record");
+        passedRecords = (ArrayList<Record>) getIntent().getSerializableExtra("records");
+        passedIndex = (int) getIntent().getSerializableExtra("index");
 
         mAdapter = new ViewRecordBase.ViewRecordAdapter(this);
         pager.setOffscreenPageLimit(8);
@@ -67,7 +75,9 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                passedRecords.remove(passedIndex);
+                DatabaseManager.updateBecauseDeleted(passedHabit.getRecordAddress(), passedRecords);
+                finish();
             }
         });
     }
