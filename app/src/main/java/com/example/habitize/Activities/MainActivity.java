@@ -16,10 +16,10 @@ import com.example.habitize.Activities.AddHabit.AddHabitTabsBase;
 import com.example.habitize.Activities.Followers.FollowingActivity;
 import com.example.habitize.Activities.ViewHabitLists.AllHabitsActivity;
 import com.example.habitize.Activities.ViewHabitLists.TodaysHabitsActivity;
+import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firestore.v1.StructuredQuery;
 
@@ -44,10 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private Integer completion = 0;
     private Integer totalHabits = 0;
 
-    FirebaseFirestore fStore;
-    FirebaseAuth fAuth;
-    String currentLoggedInUser;
-
     /**
      * Start the mainactivity
      * @param savedInstanceState to be used for Bundle where fragment is re-constructed from a previous state
@@ -66,34 +62,23 @@ public class MainActivity extends AppCompatActivity {
         qrBTN = findViewById(R.id.qrbtn);
         leaderboard = findViewById(R.id.leaderboard);
 
-        fStore = FirebaseFirestore.getInstance();
-        fAuth = FirebaseAuth.getInstance();
-        CollectionReference collectionReference = fStore.collection("Users");/*
-        Query currentUserDocQuery = collectionReference.whereEqualTo("email", fAuth.getCurrentUser().getEmail());
 
-        currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
-                    for(QueryDocumentSnapshot document : task.getResult()) {
-                        currentLoggedInUser = document.getString("userName");
-                        System.out.println(currentLoggedInUser);
-                        username.setText(currentLoggedInUser.toString()+"!");
-                    }
-                }
-            }
-
-        });*/
-
-       // Branch the activities here:
-
+        username.setText(DatabaseManager.getUser());
         // When add habit button is clicked upon, it will bring you to a add activity screen
         addHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddHabitTabsBase.class);
                 startActivity(intent);
+            }
+        });
 
+
+        qrBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, QRActivity.class);
+                startActivity(intent);
             }
         });
 

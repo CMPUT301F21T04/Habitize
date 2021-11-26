@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.habitize.Activities.MainActivity;
 import com.example.habitize.Controllers.DatabaseManager;
+import com.example.habitize.Controllers.ErrorShower;
 import com.example.habitize.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -25,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class SignUp extends AppCompatActivity implements DatabaseManager.onRegistrationLoginListener {
+public class SignUp extends AppCompatActivity implements DatabaseManager.onRegistrationLoginListener, ErrorShower.ErrorHandler {
     private static final int RC_SIGN_IN = 301;
     //Initializing variables
     private FirebaseFirestore db;
@@ -60,11 +61,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         ProgressBar progressBar = findViewById(R.id.progressBar2);
         DatabaseManager.setRegistrationListener(this);
         com.google.android.gms.common.SignInButton googleSignUp = findViewById(R.id.signUp_google);
-        db = FirebaseFirestore.getInstance(); // init db
-        users = db.collection("Users"); // reference to users collection. check if a user exists here
-        userHabits = db.collection("userHabits");
-        followers = db.collection("followers");
-        following = db.collection("following");
+
 
 
         progressBar.setVisibility(View.GONE);
@@ -83,13 +80,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
                 //Toast.makeText(SignUp.this,"google",Toast.LENGTH_LONG).show();
             }
         });
-        // disabling so i stop getting merked
-        /*
-         * if (fAuth.getCurrentUser() != null){ startActivity(new
-         * Intent(getApplicationContext(),MainActivity.class)); finish(); }
-         * 
-         */
-        //send the user to login when login button
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +116,6 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
                     password.setError("Passsword should be greater than 8 characters");
                     return;
                 }
-
                 //check if the password are the same
                 if (!inputPassword.equals(inputConPass)) {
                     conPassword.setError("The passwords are not the same!");
@@ -178,10 +168,29 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         //check the user if is already signedUp
         DatabaseManager.checkUsernameAndRegister();
     }
+
     @Override
     public void loginUser() {
         Intent intent = new Intent(SignUp.this, MainActivity.class);
         startActivity(intent);
 
+    }
+
+    @Override
+    public String getErrorMessage(int errorCode) {
+        switch (errorCode) {
+            case 1:
+                return "Enter an email";
+            case 2:
+                return "Password is required";
+            case 3:
+                return "Password should be greater than 8 characters";
+            case 4:
+                return "Registration with google success";
+            case 5:
+                return "Failed to register with google";
+            default:
+                return "Passwords do not match";
+        }
     }
 }
