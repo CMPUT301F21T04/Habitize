@@ -17,12 +17,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </LinearLayout>
+
     <Button
         android:id="@+id/delete_button_tabs"
         android:layout_width="96dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="288dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="296dp"
+        android:layout_marginBottom="4dp"
         android:background="#00000000"
         android:text="DELETE"
         android:textColor="#6200EE"
@@ -33,8 +34,8 @@
         android:id="@+id/ConfirmEdit"
         android:layout_width="107dp"
         android:layout_height="53dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="4dp"
         android:background="#00000000"
         android:text="Confirm Edit"
         android:textColor="#6200EE"
@@ -43,8 +44,8 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/recordPager"
-        android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_width="415dp"
+        android:layout_height="562dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

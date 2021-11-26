@@ -63,7 +63,8 @@
             android:parentActivityName=".Activities.ViewHabit.ViewHabitTabsBase" />
         <activity
             android:name=".Activities.Followers.FollowingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".Activities.ViewHabit.ViewHabitTabsBase"
             android:parentActivityName=".Activities.ViewHabitLists.AllHabitsActivity" />
