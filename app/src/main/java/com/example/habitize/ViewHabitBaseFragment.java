@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -60,6 +61,10 @@ public class ViewHabitBaseFragment extends Fragment   {
     private Switch Geolocation;
     private Button imageBtn;
     private Button locationBtn;
+    private ProgressBar progressBar5;
+    private int totalComplete;
+    private int totalDays;
+    private int progress;
 
     private String passedEmail;
     private List<Habit> passedHabits;
@@ -72,7 +77,7 @@ public class ViewHabitBaseFragment extends Fragment   {
     // filling constructor for viewing
     public ViewHabitBaseFragment(String titleText, String descText,String startTextDate, boolean monRecurrence,
                                  boolean tueRecurrence, boolean wedRecurrence, boolean thurRecurrence,
-                                 boolean friRecurrence, boolean satRecurrence, boolean sunRecurrence ){
+                                 boolean friRecurrence, boolean satRecurrence, boolean sunRecurrence, int totalComplete, int totalDays){
         this.titleText = titleText;
         this.descText = descText;
         this.startDateText = startTextDate;
@@ -83,6 +88,8 @@ public class ViewHabitBaseFragment extends Fragment   {
         this.FriRecurrence = friRecurrence;
         this.SatRecurrence = satRecurrence;
         this.SunRecurrence = sunRecurrence;
+        this.totalComplete = totalComplete;
+        this.totalDays = totalDays;
 
 
     }
@@ -105,6 +112,7 @@ public class ViewHabitBaseFragment extends Fragment   {
         Friday = root.findViewById(R.id.FragmentViewHabitFriday);
         Saturday = root.findViewById(R.id.FragmentViewHabitSaturday);
         Sunday  = root.findViewById(R.id.FragmentViewHabitSunday);
+        progressBar5 = root.findViewById(R.id.progressBar5);
 
         title.setEnabled(false);
         description.setEnabled(false);
@@ -116,6 +124,14 @@ public class ViewHabitBaseFragment extends Fragment   {
         Friday.setEnabled(false);
         Saturday.setEnabled(false);
         Sunday.setEnabled(false);
+        ////////////////////////////////////////////////////////////////////////
+        totalDays++;// CHANGE TO FIND OUT HOW MANY DAYS SINCE LAST CHECK IN +
+        ////////////////////////////////////////////////////////////////////////
+
+        progress = (totalComplete/(totalDays))*100;
+        progressBar5.setProgress(progress);//setting the progress bar
+
+
 
 
         // setting views to values set in the constructor

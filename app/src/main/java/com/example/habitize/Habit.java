@@ -22,7 +22,7 @@ public class Habit implements Serializable {
     private Integer completion; //If the habit was completed today = 1, if not = 0
     private Long streak;
     private int totalComplete; // total number of times the habit was checked
-    private int totalMissed; //total number of times habit was not checked
+    private int totalDays; //total number of times habit was not checked
     private String identifier;
 
     // TODO: Add image + public vs private function
@@ -188,12 +188,12 @@ public class Habit implements Serializable {
         this.totalComplete = totalComplete;
     }
 
-    public int getTotalMissed() {
-        return totalMissed;
+    public int getTotalDays() {
+        return totalDays;
     }
 
-    public void setTotalMissed(int totalMissed) {
-        this.totalMissed = totalMissed;
+    public void setTotalDays(int totalDays) {
+        this.totalDays = totalDays;
     }
 
 }

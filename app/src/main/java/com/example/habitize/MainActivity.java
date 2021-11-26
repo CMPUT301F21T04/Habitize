@@ -41,14 +41,11 @@ public class MainActivity extends AppCompatActivity {
     private Button todaysHabits;
     private Button followReq;
     private Button logOut;
-    private ProgressBar progressBar3;
     private TextView textView2;
     private Toolbar toolBar;
 
     private StructuredQuery.FieldReference fieldReference;
     public ArrayList<Habit> habitList;
-    private Integer completion = 0;
-    private Integer totalHabits = 0;
 
     /**
      * Start the mainactivity
