@@ -14,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.habitize.Activities.CreateRecord.RecordCreate;
 import com.example.habitize.Activities.ViewHabit.ViewHabitImageFragment;
+import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
 import com.example.habitize.Structural.Record;
@@ -67,6 +68,8 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DatabaseManager.deleteRecord(passedRecord.getRecordIdentifier());
+                finish();
 
             }
         });

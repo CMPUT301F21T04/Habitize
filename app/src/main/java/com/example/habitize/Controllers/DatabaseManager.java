@@ -361,7 +361,6 @@ public class DatabaseManager {
 
 
 
-
     /**
      *
      * Create a new user with all the data collected with their own data collections

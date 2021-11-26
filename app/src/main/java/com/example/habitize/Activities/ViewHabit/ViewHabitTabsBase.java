@@ -138,6 +138,8 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // clear the image associated with the habit in the database
+                DatabaseManager.deleteImage(passedHabits.get(passedIndex).getRecordAddress());
                 passedHabits.remove(passedIndex); // remove the habit at the position we are on
                 // hash the list and replace the one at the database
                 DatabaseManager.updateHabits(passedHabits);
