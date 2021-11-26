@@ -65,6 +65,8 @@ public class ViewHabitBaseFragment extends Fragment   {
     private int totalComplete;
     private int totalDays;
     private int progress;
+    private TextView streakCounter;
+    private int streak;
 
     private String passedEmail;
     private List<Habit> passedHabits;
@@ -77,7 +79,7 @@ public class ViewHabitBaseFragment extends Fragment   {
     // filling constructor for viewing
     public ViewHabitBaseFragment(String titleText, String descText,String startTextDate, boolean monRecurrence,
                                  boolean tueRecurrence, boolean wedRecurrence, boolean thurRecurrence,
-                                 boolean friRecurrence, boolean satRecurrence, boolean sunRecurrence, int totalComplete, int totalDays){
+                                 boolean friRecurrence, boolean satRecurrence, boolean sunRecurrence, int totalComplete, int totalDays, long streak){
         this.titleText = titleText;
         this.descText = descText;
         this.startDateText = startTextDate;
@@ -90,6 +92,7 @@ public class ViewHabitBaseFragment extends Fragment   {
         this.SunRecurrence = sunRecurrence;
         this.totalComplete = totalComplete;
         this.totalDays = totalDays;
+        this.streak = (int)streak;
 
 
     }
@@ -113,6 +116,7 @@ public class ViewHabitBaseFragment extends Fragment   {
         Saturday = root.findViewById(R.id.FragmentViewHabitSaturday);
         Sunday  = root.findViewById(R.id.FragmentViewHabitSunday);
         progressBar5 = root.findViewById(R.id.progressBar5);
+        streakCounter = (TextView)root.findViewById(R.id.streakCounter);
 
         title.setEnabled(false);
         description.setEnabled(false);
@@ -130,6 +134,7 @@ public class ViewHabitBaseFragment extends Fragment   {
 
         progress = (totalComplete/(totalDays))*100;
         progressBar5.setProgress(progress);//setting the progress bar
+        streakCounter.setText(streak);
 
 
 

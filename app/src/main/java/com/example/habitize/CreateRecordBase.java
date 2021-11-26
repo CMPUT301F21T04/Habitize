@@ -128,6 +128,11 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
         pager.setUserInputEnabled(true);
     }
 
+    public void checkStreak(){
+        //make a last check in
+        passedHabit.incrementStreak();
+    }
+
 
     class AddRecordAdapter extends FragmentStateAdapter{
         public AddRecordAdapter(@NonNull FragmentActivity fragmentActivity){super(fragmentActivity);}
