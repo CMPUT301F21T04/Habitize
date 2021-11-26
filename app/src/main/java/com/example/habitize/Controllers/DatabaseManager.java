@@ -204,8 +204,7 @@ public class DatabaseManager {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(!documentSnapshot.exists()){
                     Authentication.checkEmailBeforeRegistering(); // user doesn't exist, continue with registration
-                }
-                else{ // do nothing
+                } else { // do nothing
 
                 }
 
@@ -213,8 +212,13 @@ public class DatabaseManager {
         });
     }
 
+    public static String getUser() {
+        return user;
+    }
+
     /**
      * get records for each user
+     *
      * @param UUID
      * @param adapter
      */
