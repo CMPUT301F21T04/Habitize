@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.habitize.Activities.ViewRecord.ViewRecordsFragment;
+import com.example.habitize.Activities.ViewHabit.ViewRecordsFragment;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Record;
 
@@ -48,8 +48,6 @@ public class RecordAdapter extends ArrayAdapter<Record> {
         ImageView recordImage = view.findViewById(R.id.recordImage);
 
 
-
-
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,11 +59,7 @@ public class RecordAdapter extends ArrayAdapter<Record> {
         dateField.setText(record.getDate());
         DatabaseManager.getAndSetImage(record.getRecordIdentifier(),recordImage);
 
-
-
         return view;
-
-
     }
 
 }

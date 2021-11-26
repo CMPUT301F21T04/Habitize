@@ -1,4 +1,4 @@
-package com.example.habitize.Activities.ViewRecord;
+package com.example.habitize.Activities.ViewHabit;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.habitize.Activities.ViewRecord.ViewRecordBase;
 import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.Controllers.RecordAdapter;
 import com.example.habitize.R;
@@ -55,10 +56,12 @@ public class ViewRecordsFragment extends Fragment implements RecordAdapter.recor
     @Override
     public void viewRecord(int position) {
         Bundle habitBundle = new Bundle();
-        habitBundle.putSerializable("habit",habit); // pass down the habit at the position
-        habitBundle.putSerializable("habits",habits);
-        habitBundle.putSerializable("record",records.get(position));
-        Intent intent = new Intent(getContext(),ViewRecordBase.class);
+        habitBundle.putSerializable("habit", habit); // pass down the habit at the position
+        habitBundle.putSerializable("habits", habits);
+        habitBundle.putSerializable("record", records.get(position));
+        habitBundle.putSerializable("index", position);
+        habitBundle.putSerializable("records", records);
+        Intent intent = new Intent(getContext(), ViewRecordBase.class);
         intent.putExtras(habitBundle);
         startActivity(intent);
     }
