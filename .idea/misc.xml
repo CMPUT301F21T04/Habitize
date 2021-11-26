@@ -64,6 +64,7 @@
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/signup_activity.xml" value="0.176" />
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/menu/current_place_menu.xml" value="0.4" />
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/menu/main_menu.xml" value="0.264" />
+        <entry key="app/src/main/res/drawable/ic_baseline_clear_24.xml" value="0.3921875" />
         <entry key="app/src/main/res/layout/activity_add_habit_image.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/activity_add_habit_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_add_habit_location.xml" value="0.16770833333333332" />
@@ -71,6 +72,7 @@
         <entry key="app/src/main/res/layout/activity_create_record.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_custom_list_of_existing_followers.xml" value="0.17899275826457176" />
         <entry key="app/src/main/res/layout/activity_custom_list_of_follow_requests.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_custom_list_of_search_results.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_follow_requests.xml" value="0.1140625" />
         <entry key="app/src/main/res/layout/activity_following.xml" value="0.2268124881824164" />
         <entry key="app/src/main/res/layout/activity_leaderboard.xml" value="0.3692708333333333" />
@@ -79,13 +81,15 @@
         <entry key="app/src/main/res/layout/activity_public_habits.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_qr.xml" value="0.15885416666666666" />
         <entry key="app/src/main/res/layout/activity_qr_code.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_view_habit_tabs.xml" value="0.2421875" />
         <entry key="app/src/main/res/layout/activity_view_info.xml" value="0.25" />
         <entry key="app/src/main/res/layout/all_habits.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/custom_info_contents.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_add_habit_base.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_view_habit_base.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_add_habit_base.xml" value="0.1518987341772152" />
+        <entry key="app/src/main/res/layout/fragment_view_habit_base.xml" value="0.23369565217391305" />
         <entry key="app/src/main/res/layout/list_content.xml" value="0.335" />
         <entry key="app/src/main/res/layout/login_activity.xml" value="0.21002825169113126" />
+        <entry key="app/src/main/res/layout/record_list_content.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/reset_layout.xml" value="0.15833333333333333" />
         <entry key="app/src/main/res/layout/signup_activity.xml" value="0.31458966565349544" />
         <entry key="app/src/main/res/layout/signup_activity_ui.xml" value="0.21739130434782608" />

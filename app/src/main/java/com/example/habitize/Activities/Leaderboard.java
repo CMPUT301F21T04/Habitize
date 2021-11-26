@@ -27,11 +27,15 @@ public class Leaderboard extends AppCompatActivity {
     listview with the leaderboard
      */
 
+
+
+
+//
 //        fStore = FirebaseFirestore.getInstance();
 //        fAuth = FirebaseAuth.getInstance();
 //        CollectionReference collectionReference = fStore.collection("Users");
 //
-//        Query queryToFindUsersPoints =  collectionReference.whereEqualTo("userName", true);
+//        Query findUsersWithHighestPoints =  collectionReference.whereEqualTo("userName", true);
 //
 //        queryToFindUsersPoints.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 //            @Override

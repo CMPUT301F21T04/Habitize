@@ -1,6 +1,8 @@
 package com.example.habitize.Controllers;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,15 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.habitize.Activities.AddHabit.AddHabitTabsBase;
+import com.example.habitize.Activities.Followers.FollowingActivity;
 import com.example.habitize.Activities.Followers.PublicHabitsActivity;
 import com.example.habitize.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
@@ -40,6 +46,7 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
     TextView tv;
     private static final String TAG = "doc error";
     private ArrayList<String> usersWhoGrantedAccess;
+
 
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
@@ -127,6 +134,19 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
                                     openPublicHabitList(bundle);
                                 } else {
                                     System.out.println("User doesn't follow you back :( ");
+
+//                                    AlertDialog alertDialog = new AlertDialog.Builder(FollowingActivity.this).create();
+//                                    alertDialog.setTitle("Alert");
+//                                    alertDialog.setMessage("Alert message to be shown");
+//                                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//                                            new DialogInterface.OnClickListener() {
+//                                                public void onClick(DialogInterface dialog, int which) {
+//                                                    dialog.dismiss();
+//                                                }
+//                                            });
+//                                    alertDialog.show();
+                                    //showToast(FollowingActivity.this, "Cannot view user's habit because they do not follow you back");
+                                    //Toast.makeText(FollowingActivity.this,"Cannot view user's habit because they do not follow you back",Toast.LENGTH_LONG).show();
                                 }
                                 //collectionReference.document(user).update("followers", FieldValue.arrayUnion(currentLoggedInUser));
                             }
@@ -179,4 +199,8 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
+
+
+
+
 }

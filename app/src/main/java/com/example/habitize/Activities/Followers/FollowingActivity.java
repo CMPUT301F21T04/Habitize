@@ -1,11 +1,13 @@
 package com.example.habitize.Activities.Followers;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,6 +30,8 @@ public class FollowingActivity extends AppCompatActivity {
     private EditText userSearchInputEditText;
     private String userSearchInput;
     private ArrayList<String> existingFollowers;
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,4 +84,8 @@ public class FollowingActivity extends AppCompatActivity {
         intent.putExtra(USER_INPUT_SEARCH, userSearchInput);
         startActivity(intent);
     }
+
+
+
+
 }
