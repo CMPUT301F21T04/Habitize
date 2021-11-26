@@ -46,12 +46,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
             thisView = itemView;
 
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    System.out.println("Hello");
-                }
-            });
 
         }
 
@@ -92,7 +86,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
     public HabitHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_content,parent,false);
         this.mContext = parent.getContext();
-
         return new HabitHolder(view);
     }
 
@@ -153,6 +146,8 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
         // each cell is responsible for communicating with firebase and populating its image.
         DatabaseManager.getAndSetImage(dataset.get(holder.getAdapterPosition()).getRecordAddress()
                 ,holder.getHabitImageView());
+
+        DatabaseManager.habitComplete(dataset.get(holder.getAdapterPosition()).getRecordAddress(),holder.getRecordButton());
         holder.getTitle().setText(dataset.get(holder.getAdapterPosition()).getName());
         // different cases based on whether we are viewing another person's habit or not.
         if(!mViewing) { // if we aren't viewing. Set recording habit and view/edit screen opening listeners

@@ -3,7 +3,9 @@ package com.example.habitize.Controllers;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -12,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habitize.Structural.Habit;
 import com.example.habitize.Structural.Record;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -64,7 +69,27 @@ public class DatabaseManager {
     }
 
 
-    // We need communication between the authenticator class and the activity we login from
+    // We only want to display the checkmark is a habit has not already been complete
+    public static void habitComplete(String habitIdentifier, ImageButton button){
+        db.collection("Users").document(user).collection("Records").document(habitIdentifier).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                ArrayList<Record> mappedRecords = (ArrayList<Record>) value.get("records");
+                if(mappedRecords != null && mappedRecords.size() > 0) {
+                    Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(mappedRecords.size() - 1);
+                    String lastCompletionDate = (String) hashedRecord.get("date");
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    Date d = new Date();
+                    String currentDate = formatter.format(d);
+                    if (currentDate.equals(lastCompletionDate)) {
+                        button.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        });
+
+    }
 
     /**
      * takes the data from login and pass it here
