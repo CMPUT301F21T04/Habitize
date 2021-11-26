@@ -24,6 +24,7 @@ public class Habit implements Serializable {
     private int totalComplete; // total number of times the habit was checked
     private int totalDays; //total number of times habit was not checked
     private String identifier;
+    private Date lastCheckIn;
 
     // TODO: Add image + public vs private function
 
@@ -31,7 +32,7 @@ public class Habit implements Serializable {
 
     public Habit(String name, String description, String startDate, boolean mondayR, boolean tuesdayR,
                  boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR,ArrayList<Record> passedList
-    ,String identifier,boolean visible){
+    ,String identifier,boolean visible, Date lastCheckIn){
         this.name = name;
         this.description = description;
         this.startDate = startDate;
@@ -46,10 +47,11 @@ public class Habit implements Serializable {
         this.identifier = identifier;
         this.streak = 0L;
         this.visible = visible;
+        this.lastCheckIn = new Date();
     }
     public Habit(String name, String description, String startDate, boolean mondayR, boolean tuesdayR,
                  boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR,ArrayList<Record> passedList
-            ,String identifier,Long streak,boolean visible){
+            ,String identifier,Long streak,boolean visible, Date lastCheckIn){
         this.name = name;
         this.description = description;
         this.startDate = startDate;
@@ -64,6 +66,7 @@ public class Habit implements Serializable {
         this.identifier = identifier;
         this.streak = streak;
         this.visible = visible;
+        this.lastCheckIn = lastCheckIn;
     }
 
     public void setVisible(){this.visible = true;}
@@ -194,6 +197,14 @@ public class Habit implements Serializable {
 
     public void setTotalDays(int totalDays) {
         this.totalDays = totalDays;
+    }
+
+    public Date getLastCheckIn() {
+        return lastCheckIn;
+    }
+
+    public void setLastCheckIn(Date lastCheckIn) {
+        this.lastCheckIn = lastCheckIn;
     }
 
 }

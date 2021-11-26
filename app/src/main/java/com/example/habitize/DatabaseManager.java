@@ -30,6 +30,7 @@ import com.google.firebase.storage.UploadTask;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -534,9 +535,10 @@ public class DatabaseManager {
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     String UUID = (String)habitFields.get("recordAddress");
                     Long streak = (Long)habitFields.get("streak");
+                    Date lastCheckIn = Calendar.getInstance().getTime();
                     boolean visibility = (boolean) habitFields.get("visibility");
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),UUID,streak,visibility); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),UUID,streak,visibility,lastCheckIn); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
                 }
                 habitAdapter.notifyDataSetChanged();
@@ -570,8 +572,9 @@ public class DatabaseManager {
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     String identifier = (String) habitFields.get("recordAddress");
                     boolean visibility = (boolean) habitFields.get("visibility");
+                    Date lastCheckIn = (Date) habitFields.get("lastCheckIn");
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier,visibility); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier,visibility, lastCheckIn); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
                 }
             }
@@ -624,8 +627,9 @@ public class DatabaseManager {
                     String identifier = (String) habitFields.get("recordAddress");
                     Long streak = (Long) habitFields.get("streak");
                     boolean visibility = (boolean) habitFields.get("visibility");
+                    Date lastCheckIn = (Date) habitFields.get("lastCheckIn");
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier,streak,visibility); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier,streak,visibility,lastCheckIn); // create a new habit out of this information
 
                     //recievingList.add(newHabit);
                     if ((mondayRec == true) && (dayOfTheWeek.equals("Monday"))){
@@ -697,8 +701,9 @@ public class DatabaseManager {
                     String identifier = (String) habitFields.get("recordAddress");
                     Long streak = (Long) habitFields.get("streak");
                     boolean visibility = (boolean) habitFields.get("visibility");
+                    Date lastCheckIn = (Date) habitFields.get("lastCheckIn");
                     Habit newHabit = new Habit(name,description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<Record>(),identifier,visibility); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<Record>(),identifier,visibility, lastCheckIn); // create a new habit out of this information
 
                     //if the habit is public then add to the list to display
                     if (visibility == true){

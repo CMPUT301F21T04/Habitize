@@ -17,8 +17,11 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class CreateRecordBase extends AppCompatActivity implements MapFragment.scrollDisabler {
     private ViewPager2 pager;
@@ -40,7 +43,7 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
         pager = findViewById(R.id.recordPager);
         tabLayout = findViewById(R.id.recordTabs);
 
-
+        checkStreak();
         passedHabits = (ArrayList<Habit>) getIntent().getSerializableExtra("habits");
         passedHabit = (Habit) getIntent().getSerializableExtra("habit");
         passedRecord = (Record) getIntent().getSerializableExtra("record");
@@ -128,9 +131,82 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
         pager.setUserInputEnabled(true);
     }
 
+
+
     public void checkStreak(){
-        //make a last check in
-        passedHabit.incrementStreak();
+        int dayOfWeekNow;
+        int dayOfWeek;
+        boolean found = false;
+        int track = 0;
+        int countDays = 0;
+        int dow = 0;
+        Date today = Calendar.getInstance().getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+
+        Calendar calPast = Calendar.getInstance();
+        calPast.setTime(passedHabit.getLastCheckIn());
+
+        dayOfWeekNow = cal.get(Calendar.DAY_OF_WEEK);// sunday = 1, sat = 7
+        dayOfWeek = calPast.get(Calendar.DAY_OF_WEEK);// sunday = 1, sat = 7
+        List<Boolean> occurence = new ArrayList<Boolean>();
+        occurence.add(passedHabit.getSundayR());
+        occurence.add(passedHabit.getMondayR());
+        occurence.add(passedHabit.getTuesdayR());
+        occurence.add(passedHabit.getWednesdayR());
+        occurence.add(passedHabit.getThursdayR());
+        occurence.add(passedHabit.getFridayR());
+        occurence.add(passedHabit.getSaturdayR());
+        long diffInMil = Math.abs(passedHabit.getLastCheckIn().getTime() - today.getTime());
+        int diff = (int)TimeUnit.DAYS.convert(diffInMil, TimeUnit.MILLISECONDS);
+
+
+
+
+        if (diff > 7){
+            passedHabit.resetStreak();
+        }
+        else if(diff < 7){
+            while(found == false){
+                if(occurence.get(dayOfWeekNow-1) == true && dayOfWeek == dayOfWeekNow){
+                    found = true;
+                    passedHabit.incrementStreak();
+                }
+                else if(occurence.get(dayOfWeekNow-1) == true && dayOfWeek != dayOfWeekNow){
+                    found = true;
+                    passedHabit.resetStreak();
+                }
+                else{
+                    if(dayOfWeekNow <= 1){
+                        dayOfWeekNow = 7;
+                    }
+                    else{
+                        dayOfWeekNow--;
+                    }
+                }
+            }
+        }
+        else{
+            passedHabit.incrementStreak();
+        };
+
+        //Checking how many days to add to total
+        for(int i = 0; i < diff;i++){
+            if(occurence.get(dow) == true){
+                countDays++;
+            }
+            if(dow == 6){
+                dow = 0;
+            }
+            else{
+                dow++;
+            }
+        }
+
+
+        passedHabit.setTotalDays(passedHabit.getTotalDays()+countDays);
+
+
     }
 
 
