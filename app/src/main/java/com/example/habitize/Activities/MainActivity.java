@@ -19,6 +19,7 @@ import com.example.habitize.Activities.ViewHabitLists.TodaysHabitsActivity;
 import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firestore.v1.StructuredQuery;
@@ -27,12 +28,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
-    private CardView addHabit;
-    private CardView allHabits;
-    private CardView todaysHabits;
-    private CardView followReq;
-    private Button leaderboard;
-    private Button logOut;
+    private CardView addHabit,allHabits,todaysHabits,followReq,leaderboard,logOut;
     private ProgressBar progressBar3;
     private TextView username;
     private Toolbar toolBar;
@@ -44,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private Integer completion = 0;
     private Integer totalHabits = 0;
 
+    private FloatingActionButton fmain,logoutf,lboardf;
+    Float translationYaxis = 100f;
+    Boolean menuOpen =false;
     /**
      * Start the mainactivity
      * @param savedInstanceState to be used for Bundle where fragment is re-constructed from a previous state
@@ -51,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        logOut = findViewById(R.id.logoutmain);
+        setContentView(R.layout.activity_main_ui);
+        logOut = findViewById(R.id.logoutCard);
         addHabit = findViewById(R.id.addHabitCard); // our 4 buttons
         allHabits = findViewById(R.id.allHabitCard);
         todaysHabits = findViewById(R.id.todayHabitCard);
@@ -60,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         username = findViewById(R.id.userNameMain);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBarmain);
         qrBTN = findViewById(R.id.qrbtn);
-        leaderboard = findViewById(R.id.leaderboard);
+        leaderboard = findViewById(R.id.leaderboardCard);
+
+
 
 
         username.setText(DatabaseManager.getUser());
@@ -73,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+                finish();
+            }
+        });
 
         qrBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,33 +111,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         leaderboard.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Leaderboard.class);
                 startActivity(intent);
             }
         });
 
-        // When following habit button is clicked upon, it will bring you to a following activity screen
-        followReq.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFollowingPage();
-
-            }
-        });
-        // When logout habit button is clicked upon, it will bring you to a logout activity screen
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logout(); // logout
-                finish(); // close, leave to parent activity.
-            }
-        });
-
     }
-
     /**
      * get this to log out when "back" is pressed on navBar
      */
@@ -138,12 +129,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * This method sends the user to a new activity screen: the following list.
-     */
-    public void openFollowingPage() {
-        Intent intent = new Intent(this, FollowingActivity.class);
-        startActivity(intent);
-    }
 
 }
