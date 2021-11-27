@@ -31,6 +31,7 @@
         <activity
             android:name=".Activities.Followers.PublicHabitsActivity"
             android:exported="false" />
+
         <activity
             android:name=".Controllers.CustomListOfSearchResults"
             android:exported="false" />
@@ -88,6 +89,8 @@
         <activity
             android:name=".Activities.ViewHabitLists.TodaysHabitsActivity"
             android:parentActivityName=".Activities.MainActivity" />
+        <activity android:name=".Activities.ViewOther.ViewOtherHabitTabsBase"/>
+        <activity android:name=".Activities.ViewOther.ViewOtherRecordBase"/>
     </application>
 
 </manifest>

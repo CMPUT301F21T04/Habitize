@@ -131,6 +131,14 @@ public class RecordCreate extends Fragment{
     }
 
 
+    public void setEditable(){
+        this.comment.setEnabled(true);
+    }
+    public void setNotEditable(){
+        this.comment.setEnabled(false);
+    }
+
+
     /**
      * This method takes the uploaded image from the storage and handles it here.
      * Extract the info from the imageView and convert it to a bitmap.
