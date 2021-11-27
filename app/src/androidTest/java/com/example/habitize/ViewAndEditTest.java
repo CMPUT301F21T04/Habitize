@@ -84,7 +84,7 @@ public class ViewAndEditTest {
     //the right activity
     @Test
     public void Test_1_AllHabitsActivity(){
-        onView(withId(R.id.allHabits)).perform(click());
+        onView(withId(R.id.allHabitCard)).perform(click());
         SystemClock.sleep(4000);
         intended(hasComponent(AllHabitsActivity.class.getName()));
     }
@@ -110,7 +110,7 @@ public class ViewAndEditTest {
 //        onView(withText("OK")).perform(click());
 //        onView(withId(R.id.create_habit_tabs)).perform(click());
         //go to view habits
-        onView(withId(R.id.allHabits)).perform(click());
+        onView(withId(R.id.allHabitCard)).perform(click());
         onView(withText("VIEW")).perform(click());
         SystemClock.sleep(4000);
         intended(hasComponent(ViewHabitTabsBase.class.getName()));
@@ -119,7 +119,7 @@ public class ViewAndEditTest {
 
     @Test
     public void Test_4_DeleteHabitActivity(){
-        onView(withId(R.id.allHabits)).perform(click());
+        onView(withId(R.id.allHabitCard)).perform(click());
         onView(withText("VIEW")).perform(click());
         SystemClock.sleep(4000);
         onView(withText("DELETE")).perform(click());
@@ -128,7 +128,7 @@ public class ViewAndEditTest {
     @Test
     public void Test_3_EditHabitActivity(){
         //add new habit first
-        onView(withId(R.id.addHabit)).perform(click());
+        onView(withId(R.id.addHabitCard)).perform(click());
         SystemClock.sleep(1000);
         onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
         SystemClock.sleep(1000);
@@ -137,7 +137,7 @@ public class ViewAndEditTest {
         onView(withText("OK")).perform(click());
         onView(withId(R.id.create_habit_tabs)).perform(click());
         //editing start here
-        onView(withId(R.id.allHabits)).perform(click());
+        onView(withId(R.id.allHabitCard)).perform(click());
         onView(withText("VIEW")).perform(click());
         SystemClock.sleep(4000);
         onView(withId(R.id.AllowEditing)).perform(click());

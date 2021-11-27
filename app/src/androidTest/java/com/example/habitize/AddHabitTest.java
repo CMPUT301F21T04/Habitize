@@ -78,14 +78,14 @@ public class AddHabitTest {
     //the right activity
     @Test
     public void addNewHabitAcctivity(){
-        onView(withId(R.id.addHabit)).perform(click());
+        onView(withId(R.id.addHabitCard)).perform(click());
         SystemClock.sleep(1000);
         intended(hasComponent(AddHabitTabsBase.class.getName()));
     }
     //Check the error massage when no data added
     @Test
     public void EmptyInputs(){
-        onView(withId(R.id.addHabit)).perform(click());
+        onView(withId(R.id.addHabitCard)).perform(click());
         SystemClock.sleep(1000);
         onView(withId(R.id.create_habit_tabs)).perform(click());
         intended(hasComponent(AddHabitTabsBase.class.getName()));
@@ -93,7 +93,7 @@ public class AddHabitTest {
     //Add title to a new habit without the rest of the data
     @Test
     public void IncompleteInputs(){
-        onView(withId(R.id.addHabit)).perform(click());
+        onView(withId(R.id.addHabitCard)).perform(click());
         SystemClock.sleep(1000);
         onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
         onView(withId(R.id.create_habit_tabs)).perform(click());
@@ -103,7 +103,7 @@ public class AddHabitTest {
 
     @Test
     public void createNewHabitSuccessful(){
-        onView(withId(R.id.addHabit)).perform(click());
+        onView(withId(R.id.addHabitCard)).perform(click());
         SystemClock.sleep(1000);
         onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
         SystemClock.sleep(1000);
