@@ -18,6 +18,7 @@ import com.example.habitize.Activities.MainActivity;
 import com.example.habitize.Activities.SignupAndLogin.Login_Activity;
 import com.example.habitize.Activities.ViewHabitLists.AllHabitsActivity;
 import com.example.habitize.Activities.ViewHabitLists.TodaysHabitsActivity;
+import com.example.habitize.Activities.ViewRecord.ViewRecordBase;
 
 import org.junit.After;
 import org.junit.Before;
@@ -80,8 +81,9 @@ public class HabitEventsTest {
     @Test
     public void Test_1_RecordHabitActivity(){
         onView(withId(R.id.allHabitCard)).perform(click());
+
         SystemClock.sleep(1000);
-        intended(hasComponent(AllHabitsActivity.class.getName()));
+        intended(hasComponent(ViewRecordBase.class.getName()));
     }
 
     @After
