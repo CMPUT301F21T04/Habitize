@@ -57,6 +57,7 @@ public class DatabaseManager {
     private static String inputPassword;
     private static String first;
     private static String last;
+    private static String searched;
 
 
 
@@ -66,6 +67,7 @@ public class DatabaseManager {
         dbs = FirebaseStorage.getInstance();
         storageRef = dbs.getReference().child("images");
         users = db.collection("Users");
+        searched = "";
     }
 
 
@@ -91,6 +93,13 @@ public class DatabaseManager {
 
     }
 
+    public static void setSearched(String searchedUser) {
+        searched = searchedUser;
+    }
+
+    public static String getSearched() {
+        return searched;
+    }
     /**
      * takes the data from login and pass it here
      * @param context
@@ -277,8 +286,53 @@ public class DatabaseManager {
 
          */
     public static void getRecord(String UUID, ArrayList<Record> recievingList, RecordAdapter adapter){
-
         db.collection("Users").document(user).collection("Records").document(UUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                recievingList.clear();
+                adapter.notifyDataSetChanged();
+                // get the mapped data of records
+                ArrayList<Record> mappedRecords = (ArrayList<Record>) value.get("records");
+                // retrieving all records
+                if(mappedRecords != null) {
+                    for (int i = 0; i < mappedRecords.size(); i++) {
+
+                        Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
+                        String date = (String) hashedRecord.get("date");
+                        String description = (String) hashedRecord.get("description");
+                        String identifier = (String) hashedRecord.get("recordIdentifier");
+                        Double lat = (Double) hashedRecord.get("lat");
+                        Double lon = (Double) hashedRecord.get("lon");
+
+                        long TEN_MEGABYTES = 1024 * 1024 * 10;
+                        StorageReference imageRef = storageRef.child(identifier);
+                        imageRef.getBytes(TEN_MEGABYTES)
+                                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                    @Override
+                                    public void onSuccess(byte[] bytes) {
+                                        if (bytes != null) {
+                                            recievingList.add(new Record(date, description, bytes, identifier, lat, lon));
+                                            adapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                recievingList.add(new Record(date, description, null, identifier, lat, lon));
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+
+                    }
+                }
+            }
+        });
+
+    }
+
+
+    public static void getSearchedRecord(String UUID, ArrayList<Record> recievingList, RecordAdapter adapter){
+        db.collection("Users").document(searched).collection("Records").document(UUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 recievingList.clear();
