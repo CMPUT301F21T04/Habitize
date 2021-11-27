@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.habitize.Activities.ViewHabit.ViewRecordsFragment;
 import com.example.habitize.R;
@@ -18,16 +19,16 @@ import java.util.ArrayList;
 
 public class RecordAdapter extends ArrayAdapter<Record> {
     private ArrayList<Record> records;
-    private ViewRecordsFragment context;
+    private Fragment context;
     private int resource;
     private recordViewer viewer;
 
-    public RecordAdapter(ViewRecordsFragment context, int resource, ArrayList<Record> recordList){
+    public RecordAdapter(Fragment context, int resource, ArrayList<Record> recordList){
         super(context.getContext(),resource,recordList);
         this.context = context;
         this.records = recordList;
         this.resource = resource;
-        viewer = context;
+        viewer = (recordViewer) context;
     }
 
     public interface recordViewer{

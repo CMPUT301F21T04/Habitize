@@ -124,6 +124,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         return lastKnownLocation.getLongitude();
     }
 
+    public void setEditable(){
+        this.locSearchBTN.setEnabled(true);
+        this.locSearchBTN.setVisibility(View.VISIBLE);
+        enableMapScroll();
+    }
+    public void setNotEditable(){
+        this.locSearchBTN.setEnabled(false);
+        this.locSearchBTN.setVisibility(View.INVISIBLE);
+        disableMapScroll();
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.activity_maps,container,false);
@@ -199,6 +210,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         this.map = map;
         mUISettings = map.getUiSettings();
+        locSearchBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+                // Start the auto complete intent
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, placeFields).build(activity);
+                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+            }
+        });
         if(!viewing) {
             // Prompt the user for permission.
             createLocationRequest();
@@ -214,15 +234,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             // Listener for the location search button. When the button is clicked, construct the
             // autocomplete search bar. Set the fields to specify which types of place data to
             // return after the user has made a selection.
-            locSearchBTN.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
-                    // Start the auto complete intent
-                    Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, placeFields).build(activity);
-                    startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
-                }
-            });
+
         }
         else{
             setLastKnownLocation();
