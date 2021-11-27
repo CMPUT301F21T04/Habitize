@@ -7,6 +7,7 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -41,8 +42,8 @@ public class Login_ActivityTest {
     @Before
     public void initValidate(){
         Intents.init();
-        testEmail = "shanemel@ualberta.ca";
-        testPassword = "password";
+        testEmail = "lll@gmail.com";
+        testPassword = "12345678";
         testIncorrectPass = "123";
     }
 
@@ -58,7 +59,9 @@ public class Login_ActivityTest {
         onView(withId(R.id.email_login))
                 .perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.LoginBTN)).perform(click());
-        onView(withId(R.id.email_login)).check(matches(hasErrorText("Email is Required.")));
+        // The screen shouldn't move because invalid input on password
+        intending(hasComponent(Login_Activity.class.getName()));
+
     }
 //  Tests if the error handling for password works
     @Test
@@ -66,19 +69,22 @@ public class Login_ActivityTest {
         onView(withId(R.id.email_login))
                 .perform(typeText(testEmail),closeSoftKeyboard());
         onView(withId(R.id.LoginBTN)).perform(click());
-        onView(withId(R.id.password_login)).check(matches(hasErrorText("Password is Required.")));
+        // The screen shouldn't move because invalid input on password
+        intending(hasComponent(Login_Activity.class.getName()));
+
     }
 
 //  Tests if the user enters a valid password (>= 8 characters)
-//    @Test
-//    public void lessthan8Pass(){
-//        onView(withId(R.id.email_login))
-//                .perform(typeText(testEmail), closeSoftKeyboard());
-//        onView(withId(R.id.password_login))
-//                .perform(typeText(testIncorrectPass), closeSoftKeyboard());
-//        onView(withId(R.id.LoginBTN)).perform(click());
-//        onView(withId(R.id.password_login)).check(matches(hasErrorText("Password must be at least 8 characters")));
-//    }
+    @Test
+    public void lessthan8Pass(){
+        onView(withId(R.id.email_login))
+                .perform(typeText(testEmail), closeSoftKeyboard());
+        onView(withId(R.id.password_login))
+                .perform(typeText(testIncorrectPass), closeSoftKeyboard());
+        onView(withId(R.id.LoginBTN)).perform(click());
+        // The screen shouldn't move because invalid input on password
+        intending(hasComponent(Login_Activity.class.getName()));
+    }
 
 
 //    Tests if the user enters an email with valid format
@@ -87,6 +93,8 @@ public class Login_ActivityTest {
         onView(withId(R.id.email_login)).perform(replaceText("username"));
         onView(withId(R.id.password_login)).perform(replaceText("password"));
         onView(withId(R.id.LoginBTN)).perform(click());
+        // The screen shouldn't move because invalid input on password
+        intending(hasComponent(Login_Activity.class.getName()));
     }
 
 //    Tests if the user successfully login
@@ -107,8 +115,8 @@ public class Login_ActivityTest {
         onView(withId(R.id.password_login)).perform(replaceText("wrongPass"));
         onView(withId(R.id.LoginBTN)).perform(click());
         onView(hasErrorText("Login Failed"));
-        
-
+        // The screen shouldn't move because invalid input on password
+        intending(hasComponent(Login_Activity.class.getName()));
     }
 }
 
