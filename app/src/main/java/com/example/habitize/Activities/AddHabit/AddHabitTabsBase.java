@@ -19,7 +19,11 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AddHabitTabsBase extends AppCompatActivity {
     private ViewPager2 pager;
@@ -77,6 +81,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
                 boolean friRec = addFrag.getFri();
                 boolean satRec = addFrag.getSat();
                 boolean sunRec = addFrag.getSun();
+                Date todaysDate = Calendar.getInstance().getTime();
 
                 //check if title empty
                 if(title.equals("")){
@@ -115,7 +120,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
                     Habit newHabit = new Habit(title, description,
                             startDate, monRec, tueRec, wedRec,
                             thurRec, friRec, satRec, sunRec,new ArrayList<>(),new UUID(20,10).randomUUID().toString()
-                    ,true);
+                    ,true, todaysDate);
                     // add it to the user list
                     passedHabits.add(newHabit);
                     DatabaseManager.storeImage(addImage.getImageBytes(),newHabit.getRecordAddress());

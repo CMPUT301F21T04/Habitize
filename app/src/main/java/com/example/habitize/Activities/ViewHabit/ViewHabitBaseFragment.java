@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -23,7 +24,11 @@ import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 // this is one of the 3 fragments that gets created when viewing a habit
 public class ViewHabitBaseFragment extends Fragment   {
@@ -57,6 +62,13 @@ public class ViewHabitBaseFragment extends Fragment   {
     private Switch Geolocation;
     private Button imageBtn;
     private Button locationBtn;
+    private ProgressBar progressBar5;
+    private int totalComplete;
+    private int totalDays;
+    private int progress;
+    private TextView streakCounter;
+    private int streak;
+    private Date lastCheckIn;
 
     private String passedEmail;
     private List<Habit> passedHabits;
@@ -69,7 +81,7 @@ public class ViewHabitBaseFragment extends Fragment   {
     // filling constructor for viewing
     public ViewHabitBaseFragment(String titleText, String descText,String startTextDate, boolean monRecurrence,
                                  boolean tueRecurrence, boolean wedRecurrence, boolean thurRecurrence,
-                                 boolean friRecurrence, boolean satRecurrence, boolean sunRecurrence ){
+                                 boolean friRecurrence, boolean satRecurrence, boolean sunRecurrence, int totalComplete, int totalDays, long streak, Date lastCheckIn){
         this.titleText = titleText;
         this.descText = descText;
         this.startDateText = startTextDate;
@@ -80,6 +92,10 @@ public class ViewHabitBaseFragment extends Fragment   {
         this.FriRecurrence = friRecurrence;
         this.SatRecurrence = satRecurrence;
         this.SunRecurrence = sunRecurrence;
+        this.totalComplete = totalComplete;
+        this.totalDays = totalDays;
+        this.streak = (int)streak;
+        this.lastCheckIn = lastCheckIn;
 
 
     }
@@ -104,6 +120,9 @@ public class ViewHabitBaseFragment extends Fragment   {
         Sunday  = root.findViewById(R.id.FragmentViewHabitSunday);
         visible = root.findViewById(R.id.view_publicHabit);
 
+        progressBar5 = root.findViewById(R.id.progressBar5);
+        streakCounter = (TextView)root.findViewById(R.id.streakCounter);
+
         title.setEnabled(false);
         description.setEnabled(false);
         startDate.setEnabled(false);
@@ -116,6 +135,14 @@ public class ViewHabitBaseFragment extends Fragment   {
         Sunday.setEnabled(false);
         visible.setEnabled(false);
         mViewing = (boolean) getArguments().getSerializable("viewing");
+
+
+
+        progress = (totalComplete/(totalDays))*100;
+        progressBar5.setProgress(progress);//setting the progress bar
+        streakCounter.setText(streak);
+
+
 
         // setting views to values set in the constructor
         Monday.setChecked(MonRecurrence);
@@ -327,6 +354,8 @@ public class ViewHabitBaseFragment extends Fragment   {
     public boolean getSun(){
         return Sunday.isChecked();
     }
+    public Date getLastCheckIn(){return getLastCheckIn();}
+
 
     // setters for fields
     public ViewHabitBaseFragment setMon(boolean mon){
@@ -369,6 +398,12 @@ public class ViewHabitBaseFragment extends Fragment   {
         descText = desc;
         return this;
     }
+    public ViewHabitBaseFragment setLastCheckIn(Date lastCheckIn1){
+        lastCheckIn = lastCheckIn1;
+        return this;
+    }
+
+
     public void onCheckboxClicked(View view){
         boolean checked = ((CheckBox) view).isChecked();
 
@@ -433,6 +468,9 @@ public class ViewHabitBaseFragment extends Fragment   {
                 break;
         }
     }
+
+
+
 }
 
 
