@@ -15,7 +15,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.habitize.Activities.ViewHabit.ViewHabitBaseFragment;
 import com.example.habitize.Activities.ViewHabit.ViewHabitImageFragment;
-import com.example.habitize.Activities.ViewHabit.ViewRecordsFragment;
 import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
@@ -65,7 +64,7 @@ public class ViewOtherHabitTabsBase extends AppCompatActivity {
         passedIndex = (int)getIntent().getExtras().getSerializable("index");
         mViewing = (boolean)getIntent().getExtras().getSerializable("viewing");
 
-
+        deleteButton.setVisibility(View.INVISIBLE);
         recordList = new ArrayList<>();
         // pulling the most recent habits
 
@@ -115,7 +114,7 @@ public class ViewOtherHabitTabsBase extends AppCompatActivity {
                     returningFragment.setArguments(imgBundle);
                     break;
                 case 2:
-                    returningFragment = new ViewRecordsFragment(passedHabit,passedHabits);
+                    returningFragment = new ViewOtherRecordFragment(passedHabit,passedHabits);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("records",recordList);
                     bundle.putSerializable("viewing",true);
