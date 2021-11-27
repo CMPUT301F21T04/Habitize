@@ -46,8 +46,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
             recordButton.setFocusableInTouchMode(false);
             thisView = itemView;
 
-
-
         }
 
         public TextView getTitle(){
@@ -147,7 +145,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
         // each cell is responsible for communicating with firebase and populating its image.
         DatabaseManager.getAndSetImage(dataset.get(holder.getAdapterPosition()).getRecordAddress()
                 ,holder.getHabitImageView());
-
         DatabaseManager.habitComplete(dataset.get(holder.getAdapterPosition()).getRecordAddress(),holder.getRecordButton());
         holder.getTitle().setText(dataset.get(holder.getAdapterPosition()).getName());
         // different cases based on whether we are viewing another person's habit or not.

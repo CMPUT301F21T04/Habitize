@@ -58,7 +58,7 @@ public class RecordAdapter extends ArrayAdapter<Record> {
 
         // Setting our custom list items
         dateField.setText(record.getDate());
-        DatabaseManager.getAndSetImage(record.getRecordIdentifier(),recordImage);
+        DatabaseManager.getAndSetRecordImage(record.getRecordIdentifier(),recordImage);
 
         return view;
     }
