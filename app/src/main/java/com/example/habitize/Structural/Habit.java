@@ -2,7 +2,6 @@ package com.example.habitize.Structural;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Habit implements Serializable {
     private String name;
@@ -21,15 +20,14 @@ public class Habit implements Serializable {
     private Integer completion; //If the habit was completed today = 1, if not = 0
     private Long streak;
     private int totalComplete; // total number of times the habit was checked
-    private int totalDays; //total number of times habit was not checked
+    private int totalMissed; //total number of times habit was not checked
     private String identifier;
-    private Date lastCheckIn;
 
     public Habit(){};
 
     public Habit(String name, String description, String startDate, boolean mondayR, boolean tuesdayR,
                  boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR,ArrayList<Record> passedList
-    ,String identifier,boolean visible, Date lastCheckIn){
+    ,String identifier,boolean visible){
         this.name = name;
         this.description = description;
         this.startDate = startDate;
@@ -44,11 +42,10 @@ public class Habit implements Serializable {
         this.identifier = identifier;
         this.streak = 0L;
         this.visible = visible;
-        this.lastCheckIn = new Date();
     }
     public Habit(String name, String description, String startDate, boolean mondayR, boolean tuesdayR,
                  boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR,ArrayList<Record> passedList
-            ,String identifier,Long streak,boolean visible, Date lastCheckIn){
+            ,String identifier,Long streak,boolean visible){
         this.name = name;
         this.description = description;
         this.startDate = startDate;
@@ -63,7 +60,6 @@ public class Habit implements Serializable {
         this.identifier = identifier;
         this.streak = streak;
         this.visible = visible;
-        this.lastCheckIn = lastCheckIn;
     }
 
     public void setVisible(){this.visible = true;}
@@ -188,20 +184,12 @@ public class Habit implements Serializable {
         this.totalComplete = totalComplete;
     }
 
-    public int getTotalDays() {
-        return totalDays;
+    public int getTotalMissed() {
+        return totalMissed;
     }
 
-    public void setTotalDays(int totalDays) {
-        this.totalDays = totalDays;
-    }
-
-    public Date getLastCheckIn() {
-        return lastCheckIn;
-    }
-
-    public void setLastCheckIn(Date lastCheckIn) {
-        this.lastCheckIn = lastCheckIn;
+    public void setTotalMissed(int totalMissed) {
+        this.totalMissed = totalMissed;
     }
 
 }

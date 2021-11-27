@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.habitize.Activities.ViewOthersHabit.ViewOtherRecordBase;
+import com.example.habitize.Activities.ViewRecord.ViewRecordBase;
 import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.Controllers.RecordAdapter;
 import com.example.habitize.R;
@@ -61,7 +61,7 @@ public class ViewRecordsFragment extends Fragment implements RecordAdapter.recor
         habitBundle.putSerializable("record", records.get(position));
         habitBundle.putSerializable("index", position);
         habitBundle.putSerializable("records", records);
-        Intent intent = new Intent(getContext(), ViewOtherRecordBase.class);
+        Intent intent = new Intent(getContext(), ViewRecordBase.class);
         intent.putExtras(habitBundle);
         startActivity(intent);
     }

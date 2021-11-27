@@ -28,21 +28,17 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
-
     private CardView addHabit,allHabits,todaysHabits,followReq,leaderboard,logOut;
     private ProgressBar progressBar3;
     private TextView username;
-
     private Toolbar toolBar;
     private ImageButton qrBTN;
 
     private StructuredQuery.FieldReference fieldReference;
     public ArrayList<Habit> habitList;
-
     private int progressTrack = 0; //starting at 0 (max 100)
     private Integer completion = 0;
     private Integer totalHabits = 0;
-
 
     private FloatingActionButton fmain,logoutf,lboardf;
     Float translationYaxis = 100f;
@@ -80,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         followReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,FollowingActivity.class);
+                Intent intent = new Intent(MainActivity.this, FollowingActivity.class);
                 startActivity(intent);
             }
         });
