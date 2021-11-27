@@ -111,6 +111,7 @@ public class CustomListOfExistingFollowers extends ArrayAdapter<String> {
                 Bundle bundle = new Bundle();
                 //get the username that was clicked upon and save in Bundle
                 bundle.putString("name",follower);
+                DatabaseManager.setSearched(follower);
                 //bring user to new screen/activity
 
                 System.out.println("USER IS:   " + follower);
