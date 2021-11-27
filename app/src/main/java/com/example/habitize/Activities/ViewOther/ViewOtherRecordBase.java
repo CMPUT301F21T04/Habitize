@@ -3,6 +3,7 @@ package com.example.habitize.Activities.ViewOther;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +38,7 @@ public class ViewOtherRecordBase extends AppCompatActivity implements MapFragmen
     private ArrayList<Record> passedRecords;
     private int passedIndex;
     private boolean mViewing;
+    private Switch editSwitch;
     String[] titles = {"Info", "Image", "Location"};
 
     public ViewOtherRecordBase() {
@@ -52,9 +54,10 @@ public class ViewOtherRecordBase extends AppCompatActivity implements MapFragmen
         tabLayout = findViewById(R.id.recordTabs);
         createButton = findViewById(R.id.createRecord);
         deleteButton = findViewById(R.id.deleteRecord);
+        editSwitch = findViewById(R.id.recordEditSwitch);
         createButton.setVisibility(View.INVISIBLE);
         deleteButton.setVisibility(View.INVISIBLE);
-
+        editSwitch.setVisibility(View.INVISIBLE);
 
         passedHabit = (Habit) getIntent().getSerializableExtra("habit");
         passedRecord = (Record) getIntent().getSerializableExtra("record");

@@ -115,11 +115,15 @@ public class ViewHabitImageFragment extends Fragment {
     public void setEditable(){
         addImageBtn.setEnabled(true);
         viewCamBtn.setEnabled(true);
+        addImageBtn.setVisibility(View.VISIBLE);
+        viewCamBtn.setVisibility(View.VISIBLE);
 
     }
     public void setNotEditable(){
         addImageBtn.setEnabled(false);
         viewCamBtn.setEnabled(false);
+        addImageBtn.setVisibility(View.INVISIBLE);
+        viewCamBtn.setVisibility(View.INVISIBLE);
     }
 
     // get image from fragment to send to the database

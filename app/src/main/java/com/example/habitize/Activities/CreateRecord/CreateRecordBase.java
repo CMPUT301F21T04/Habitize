@@ -3,6 +3,7 @@ package com.example.habitize.Activities.CreateRecord;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
     private ArrayList<Habit> passedHabits;
     private int index;
     private Record passedRecord;
+    private Switch editSwitch;
     String[] titles = {"Info","Image","Location"};
 
 
@@ -44,7 +46,8 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
         createButton = findViewById(R.id.createRecord);
         pager = findViewById(R.id.recordPager);
         tabLayout = findViewById(R.id.recordTabs);
-
+        editSwitch = findViewById(R.id.recordEditSwitch);
+        editSwitch.setVisibility(View.INVISIBLE);
 
         passedHabits = (ArrayList<Habit>) getIntent().getSerializableExtra("habits");
         passedHabit = (Habit) getIntent().getSerializableExtra("habit");

@@ -286,7 +286,6 @@ public class DatabaseManager {
 
          */
     public static void getRecord(String UUID, ArrayList<Record> recievingList, RecordAdapter adapter){
-
         db.collection("Users").document(user).collection("Records").document(UUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {

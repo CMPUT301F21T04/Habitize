@@ -207,6 +207,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
                     }
                     habitBundle.putSerializable("habits", dataset);
                     habitBundle.putSerializable("viewing",false);
+                    habitBundle.putSerializable("searchedUser",DatabaseManager.getSearched());
                     intent.putExtras(habitBundle);
                     mContext.startActivity(intent);
                 }
