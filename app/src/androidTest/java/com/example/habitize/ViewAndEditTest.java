@@ -84,7 +84,7 @@ public class ViewAndEditTest {
     //the right activity
     @Test
     public void Test_1_AllHabitsActivity(){
-        onView(withId(R.id.allHabits)).perform(click());
+        onView(withId(R.id.allHabitCard)).perform(click());
         SystemClock.sleep(4000);
         intended(hasComponent(AllHabitsActivity.class.getName()));
     }

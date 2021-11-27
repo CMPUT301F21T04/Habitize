@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
 //@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4.class)
 
-public class ViewAndEditTest {
+public class MainActivityTests {
     String testEmail;
     String testPassword;
     String testTitle;

@@ -137,10 +137,10 @@ public class ViewHabitBaseFragment extends Fragment   {
         mViewing = (boolean) getArguments().getSerializable("viewing");
 
 
-
+/*
         progress = (totalComplete/(totalDays))*100;
         progressBar5.setProgress(progress);//setting the progress bar
-        streakCounter.setText(streak);
+        streakCounter.setText(streak);*/
 
 
 
