@@ -1,4 +1,4 @@
-package com.example.habitize.Activities.ViewHabit;
+package com.example.habitize.Activities.ViewOthersHabit;
 
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +13,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.habitize.Activities.ViewHabit.ViewHabitBaseFragment;
+import com.example.habitize.Activities.ViewHabit.ViewHabitImageFragment;
+import com.example.habitize.Activities.ViewHabit.ViewRecordsFragment;
 import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
@@ -24,10 +27,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
-public class ViewHabitTabsBase extends AppCompatActivity {
+public class ViewOthersHabitTabsBase extends AppCompatActivity {
     private ViewPager2 pager;
     private TabLayout tabLayout;
 
@@ -82,11 +84,12 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                 tab.setText(titles[position]);
             }
         }).attach();
-        if(mViewing){
-            AllowEdit.setVisibility(View.INVISIBLE);
-            deleteButton.setVisibility(View.INVISIBLE);
-            ConfirmEdit.setVisibility(View.INVISIBLE);
-        }
+
+
+        AllowEdit.setVisibility(View.INVISIBLE);
+        deleteButton.setVisibility(View.INVISIBLE);
+        ConfirmEdit.setVisibility(View.INVISIBLE);
+
 
         //edit toggle button which
         AllowEdit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
