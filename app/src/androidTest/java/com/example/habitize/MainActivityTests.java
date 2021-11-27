@@ -16,10 +16,12 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.habitize.Activities.AddHabit.AddHabitTabsBase;
+import com.example.habitize.Activities.Followers.FollowingActivity;
 import com.example.habitize.Activities.MainActivity;
 import com.example.habitize.Activities.SignupAndLogin.Login_Activity;
 import com.example.habitize.Activities.ViewHabit.ViewHabitTabsBase;
 import com.example.habitize.Activities.ViewHabitLists.AllHabitsActivity;
+import com.example.habitize.Activities.ViewHabitLists.TodaysHabitsActivity;
 
 import org.junit.After;
 import org.junit.Before;
@@ -86,14 +88,14 @@ public class MainActivityTests {
     @Test
     public void Test_1_AddHabitActivity(){
         onView(withId(R.id.addHabitCard)).perform(click());
-        SystemClock.sleep(4000);
-        intended(hasComponent(AllHabitsActivity.class.getName()));
+        SystemClock.sleep(1000);
+        intended(hasComponent(AddHabitTabsBase.class.getName()));
     }
     @Test
     public void Test_2_AllHabitsActivity(){
         onView(withId(R.id.allHabitCard)).perform(click());
-        SystemClock.sleep(4000);
-        intended(hasComponent(AddHabitTabsBase.class.getName()));
+        SystemClock.sleep(1000);
+        intended(hasComponent(AllHabitsActivity.class.getName()));
     }
     //check if we can access view habits
 
@@ -102,38 +104,13 @@ public class MainActivityTests {
     @Test
     public void Test_3_TodayHabitActivity(){
         onView(withId(R.id.todayHabitCard)).perform(click());
-        onView(withText("VIEW")).perform(click());
-        SystemClock.sleep(4000);
-        onView(withText("DELETE")).perform(click());
-        intended(hasComponent(AllHabitsActivity.class.getName()));
+        intended(hasComponent(TodaysHabitsActivity.class.getName()));
     }
     @Test
-    public void Test_3_EditHabitActivity(){
+    public void Test_4_followingActivity(){
         //add new habit first
-        onView(withId(R.id.addHabitCard)).perform(click());
-        SystemClock.sleep(1000);
-        onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
-        SystemClock.sleep(1000);
-        onView(withId(R.id.fragmentHabitDescription)).perform(replaceText(testDesc));
-        onView(withId(R.id.fragmentStartDate)).perform(click());
-        onView(withText("OK")).perform(click());
-        onView(withId(R.id.create_habit_tabs)).perform(click());
-        //editing start here
-        onView(withId(R.id.allHabitCard)).perform(click());
-        onView(withText("VIEW")).perform(click());
-        SystemClock.sleep(4000);
-        onView(withId(R.id.AllowEditing)).perform(click());
-        SystemClock.sleep(1000);
-        onView(withText(testTitle)).perform(replaceText(testEditTitle));
-        onView(withId(R.id.ConfirmEdit)).perform(click());
-
-        SystemClock.sleep(1000);
-        onView(withText("VIEW")).perform(click());
-        SystemClock.sleep(1000);
-        onView(withText(testEditTitle)).check(matches(withText(testEditTitle)));
-
-
-
+        onView(withId(R.id.followingCard)).perform(click());
+        intended(hasComponent(FollowingActivity.class.getName()));
     }
     @After
     public void tearDown() {
