@@ -38,13 +38,7 @@
         <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/layout/signup_activity.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/layout/todays_habits.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Stanislav/Desktop/Habitize/Habitize/app/src/main/res/menu/main_menu.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14537037037037037" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.14537037037037037" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/drawable/list_item_outline.xml" value="0.14537037037037037" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/drawable/purplebox.xml" value="0.14537037037037037" />
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_add_habit_location.xml" value="0.23854166666666668" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_main_ui.xml" value="0.264" />
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_map.xml" value="0.264" />
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_map_search.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/activity_maps.xml" value="0.264" />
@@ -64,40 +58,32 @@
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/layout/signup_activity.xml" value="0.176" />
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/menu/current_place_menu.xml" value="0.4" />
         <entry key="..\:/Users/shane/OneDrive/Desktop/Shanemel/Projects/CMPUT301_personal/projects/Habitize/app/src/main/res/menu/main_menu.xml" value="0.264" />
-        <entry key="app/src/main/res/drawable/ic_baseline_clear_24.xml" value="0.3921875" />
         <entry key="app/src/main/res/layout/activity_add_habit_image.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/activity_add_habit_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_add_habit_location.xml" value="0.16770833333333332" />
-        <entry key="app/src/main/res/layout/activity_add_habit_tabs_base.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/activity_create_record.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/activity_custom_list_of_existing_followers.xml" value="0.17899275826457176" />
-        <entry key="app/src/main/res/layout/activity_custom_list_of_follow_requests.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/activity_custom_list_of_search_results.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/activity_create_record.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_follow_requests.xml" value="0.1140625" />
-        <entry key="app/src/main/res/layout/activity_following.xml" value="0.2467308461469749" />
-        <entry key="app/src/main/res/layout/activity_leaderboard.xml" value="0.3692708333333333" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.18559057880957147" />
+        <entry key="app/src/main/res/layout/activity_following.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_login_ui.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.24851047672717724" />
+        <entry key="app/src/main/res/layout/activity_main_ui.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_my_navigation_service.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/activity_public_habits.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_qr.xml" value="0.15885416666666666" />
         <entry key="app/src/main/res/layout/activity_qr_code.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_view_habit_tabs.xml" value="0.2421875" />
+        <entry key="app/src/main/res/layout/activity_view_habit_tabs.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_view_info.xml" value="0.25" />
         <entry key="app/src/main/res/layout/all_habits.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/custom_info_contents.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_add_habit_base.xml" value="0.1518987341772152" />
-        <entry key="app/src/main/res/layout/fragment_view_habit_base.xml" value="0.23369565217391305" />
         <entry key="app/src/main/res/layout/list_content.xml" value="0.335" />
         <entry key="app/src/main/res/layout/login_activity.xml" value="0.21002825169113126" />
-        <entry key="app/src/main/res/layout/record_list_content.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/reset_layout.xml" value="0.15833333333333333" />
         <entry key="app/src/main/res/layout/signup_activity.xml" value="0.31458966565349544" />
-        <entry key="app/src/main/res/layout/signup_activity_ui.xml" value="0.21739130434782608" />
         <entry key="app/src/main/res/layout/todays_habits.xml" value="0.1408514492753623" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
