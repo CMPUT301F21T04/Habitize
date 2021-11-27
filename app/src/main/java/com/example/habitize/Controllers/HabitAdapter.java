@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habitize.Activities.CreateRecord.CreateRecordBase;
 import com.example.habitize.Activities.ViewHabit.ViewHabitTabsBase;
+import com.example.habitize.Activities.ViewOther.ViewOtherHabitTabsBase;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
 
@@ -193,10 +194,23 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
         }
         else{
             holder.getRecordButton().setVisibility(View.INVISIBLE); // we hide the record button if we are viewing.
-            Intent intent = new Intent(mContext,ViewHabitTabsBase.class);
-            Bundle habitBundle = new Bundle();
-            habitBundle.putSerializable("viewing",false);
-            mContext.startActivity(intent);
+            holder.getView().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, ViewOtherHabitTabsBase.class);
+                    Bundle habitBundle = new Bundle();
+                    habitBundle.putSerializable("habit", dataset.get(holder.getAdapterPosition()));
+                    if (posInFireBase != null) {
+                        habitBundle.putSerializable("index", posInFireBase.get(holder.getAdapterPosition()));
+                    } else {
+                        habitBundle.putSerializable("index", holder.getAdapterPosition());
+                    }
+                    habitBundle.putSerializable("habits", dataset);
+                    habitBundle.putSerializable("viewing",false);
+                    intent.putExtras(habitBundle);
+                    mContext.startActivity(intent);
+                }
+            });
 
             // we open a viewing habit activity. This one does not allow us to toggle edit or delete.
         }
