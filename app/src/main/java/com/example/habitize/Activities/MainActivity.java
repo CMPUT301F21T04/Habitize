@@ -73,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        followReq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, FollowingActivity.class);
+                startActivity(intent);
+            }
+        });
 
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
