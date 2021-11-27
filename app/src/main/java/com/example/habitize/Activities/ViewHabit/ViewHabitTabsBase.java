@@ -24,8 +24,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class ViewHabitTabsBase extends AppCompatActivity {
     private ViewPager2 pager;
@@ -112,13 +110,12 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                             boolean friRec = baseFrag.getFri();
                             boolean satRec = baseFrag.getSat();
                             boolean sunRec = baseFrag.getSun();
-                            Date todaysDate = baseFrag.getLastCheckIn();
                             passedHabits.remove(passedIndex); // remove the habit at the position we are on
                             // hash the list and replace the one at the database
 
                             Habit newHabit = new Habit(title, description,
                                     startDate, monRec, tueRec, wedRec,
-                                    thurRec, friRec, satRec, sunRec,new ArrayList<Record>(),passedHabit.getRecordAddress(),true,todaysDate);
+                                    thurRec, friRec, satRec, sunRec,new ArrayList<Record>(),passedHabit.getRecordAddress(),true);
                             // add it to the user list
                             passedHabits.add(newHabit);
                             DatabaseManager.storeImage(imgFrag.getImageBytes(),newHabit.getRecordAddress());
@@ -185,8 +182,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                     // on creation, our passed habit fills in the fragment's information fields
                     returningFragment = new ViewHabitBaseFragment(passedHabit.getName(),passedHabit.getDescription(),passedHabit.getStartDate(),
                             passedHabit.getMondayR(),passedHabit.getTuesdayR(),passedHabit.getWednesdayR(), passedHabit.getThursdayR(),
-                            passedHabit.getFridayR(),passedHabit.getSaturdayR(),passedHabit.getSundayR(),
-                            passedHabit.getTotalComplete(), passedHabit.getTotalDays(), passedHabit.getStreak(),passedHabit.getLastCheckIn());
+                            passedHabit.getFridayR(),passedHabit.getSaturdayR(),passedHabit.getSundayR());
                     Bundle viewBundle = new Bundle();
                     viewBundle.putSerializable("viewing",mViewing);
                     returningFragment.setArguments(viewBundle);
@@ -202,3 +198,5 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     }
 
 }
+
+
