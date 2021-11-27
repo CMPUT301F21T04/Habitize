@@ -16,27 +16,27 @@
         android:background="@drawable/purplebox"
      >
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="239dp"
-            >
+            android:layout_height="300dp">
 
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="82dp"
-                android:layout_height="82dp"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/smalllogo"
                 app:layout_constraintStart_toStartOf="@id/progressBarmain"
-                app:layout_constraintTop_toTopOf="parent"></ImageView>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/qrbtn"
                 style="@style/Widget.AppCompat.Button"
-                android:layout_width="82dp"
-                android:layout_height="82dp"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
                 android:adjustViewBounds="true"
                 android:clickable="true"
                 android:focusable="true"
@@ -45,35 +45,33 @@
                 android:src="@drawable/qrcodebtn"
                 app:layout_constraintEnd_toEndOf="@id/progressBarmain"
                 app:layout_constraintTop_toTopOf="@id/imageView"
-                app:layout_constraintVertical_bias="1.0"></ImageButton>
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
-                    android:id="@+id/welcomeBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Welcome Back"
-                    android:textColor="@color/white"
-                    android:textSize="22dp"
-                    app:layout_constraintStart_toStartOf="@id/progressBarmain"
-                    app:layout_constraintTop_toBottomOf="@id/imageView"
-                    app:layout_constraintBottom_toTopOf="@id/progressBarmain"></TextView>
+                android:id="@+id/welcomeBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="5dp"
+                android:text="Welcome Back"
+                android:textColor="@color/white"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toTopOf="@id/progressBarmain"
+                app:layout_constraintStart_toStartOf="@id/progressBarmain" />
 
-                <TextView
-                    android:id="@+id/userNameMain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Username"
-                    android:textColor="@color/white"
-                    android:textSize="22dp"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView"
-                    app:layout_constraintBottom_toTopOf="@id/progressBarmain"
-                    app:layout_constraintStart_toEndOf="@+id/welcomeBack"></TextView>
+            <TextView
+                android:id="@+id/userNameMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Username"
+                android:textColor="@color/white"
+                android:textSize="22dp"
+                app:layout_constraintBottom_toTopOf="@id/progressBarmain"
+                app:layout_constraintStart_toEndOf="@+id/welcomeBack" />
 
             <ProgressBar
                 android:id="@+id/progressBarmain"
@@ -101,20 +99,18 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:alignmentMode="alignMargins"
             android:columnCount="2"
-            android:columnOrderPreserved="false">
+            android:columnOrderPreserved="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/addHabitCard"
-                android:clickable="true"
-                android:focusable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
@@ -122,9 +118,10 @@
                 android:layout_column="0"
                 android:layout_columnWeight="1"
                 android:layout_margin="12dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="60dp"
-                >
+                app:cardElevation="60dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -150,14 +147,14 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/todayHabitCard"
                 android:layout_width="73dp"
-                android:clickable="true"
-                android:focusable="true"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
                 android:layout_rowWeight="1"
                 android:layout_column="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="12dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="60dp">
 
@@ -184,8 +181,6 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/allHabitCard"
-                android:clickable="true"
-                android:focusable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="1"
@@ -193,6 +188,8 @@
                 android:layout_column="0"
                 android:layout_columnWeight="1"
                 android:layout_margin="12dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="60dp">
 
@@ -219,8 +216,6 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/followingCard"
-                android:clickable="true"
-                android:focusable="true"
                 android:layout_width="128dp"
                 android:layout_height="wrap_content"
                 android:layout_row="1"
@@ -228,6 +223,8 @@
                 android:layout_column="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="12dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="60dp">
 
@@ -251,10 +248,9 @@
                         android:textColor="#6f6f6f"></TextView>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/leaderboardCard"
-                android:clickable="true"
-                android:focusable="true"
                 android:layout_width="128dp"
                 android:layout_height="wrap_content"
                 android:layout_row="2"
@@ -262,6 +258,8 @@
                 android:layout_column="0"
                 android:layout_columnWeight="1"
                 android:layout_margin="12dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="60dp">
 
@@ -285,10 +283,9 @@
                         android:textColor="#6f6f6f"></TextView>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/logoutCard"
-                android:clickable="true"
-                android:focusable="true"
                 android:layout_width="128dp"
                 android:layout_height="wrap_content"
                 android:layout_row="2"
@@ -296,6 +293,8 @@
                 android:layout_column="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="12dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="60dp">
 
@@ -321,9 +320,6 @@
             </androidx.cardview.widget.CardView>
 
         </GridLayout>
-
-
-
 
 
     </LinearLayout>
