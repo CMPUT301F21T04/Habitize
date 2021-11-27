@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -114,8 +115,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public MapFragment() {
     }
-
-
 
     public Double getLat(){
         return lastKnownLocation.getLatitude();
@@ -222,13 +221,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         if(!viewing) {
             // Prompt the user for permission.
             createLocationRequest();
-
             // Turn on the My Location layer and the related control on the map.
             updateLocationUI();
-
             // Get the current location of the device and set the position of the map.
             getDeviceLocation();
-
             // if we are moving the camera we dont want to scroll the tabs
 
             // Listener for the location search button. When the button is clicked, construct the
