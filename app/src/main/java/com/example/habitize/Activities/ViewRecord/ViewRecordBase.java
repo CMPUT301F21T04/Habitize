@@ -1,4 +1,4 @@
-package com.example.habitize.Activities.ViewOthersHabit;
+package com.example.habitize.Activities.ViewRecord;
 
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +14,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.habitize.Activities.CreateRecord.RecordCreate;
 import com.example.habitize.Activities.ViewHabit.ViewHabitImageFragment;
-import com.example.habitize.Activities.ViewRecord.MapFragment;
 import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
@@ -24,12 +23,12 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 
-public class ViewOtherRecordBase extends AppCompatActivity implements MapFragment.scrollDisabler {
+public class ViewRecordBase extends AppCompatActivity implements MapFragment.scrollDisabler {
     private ViewPager2 pager;
     private TabLayout tabLayout;
     private Button createButton;
     private Button deleteButton;
-    private ViewOtherRecordBase.ViewRecordAdapter mAdapter;
+    private ViewRecordBase.ViewRecordAdapter mAdapter;
     private Habit passedHabit;
     private ArrayList<Habit> passedHabits;
     private int index;
@@ -39,7 +38,7 @@ public class ViewOtherRecordBase extends AppCompatActivity implements MapFragmen
     private boolean mViewing;
     String[] titles = {"Info", "Image", "Location"};
 
-    public ViewOtherRecordBase() {
+    public ViewRecordBase() {
     }
 
     ;
@@ -53,14 +52,14 @@ public class ViewOtherRecordBase extends AppCompatActivity implements MapFragmen
         createButton = findViewById(R.id.createRecord);
         deleteButton = findViewById(R.id.deleteRecord);
         createButton.setVisibility(View.INVISIBLE);
-        deleteButton.setVisibility(View.INVISIBLE);
+        deleteButton.setVisibility(View.VISIBLE);
 
         passedHabit = (Habit) getIntent().getSerializableExtra("habit");
         passedRecord = (Record) getIntent().getSerializableExtra("record");
         passedRecords = (ArrayList<Record>) getIntent().getSerializableExtra("records");
         passedIndex = (int) getIntent().getSerializableExtra("index");
 
-        mAdapter = new ViewOtherRecordBase.ViewRecordAdapter(this);
+        mAdapter = new ViewRecordBase.ViewRecordAdapter(this);
         pager.setOffscreenPageLimit(8);
         pager.setAdapter(mAdapter);
         tabLayout = findViewById(R.id.recordTabs);

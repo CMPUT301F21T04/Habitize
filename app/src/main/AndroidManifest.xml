@@ -59,7 +59,7 @@
             android:parentActivityName=".Activities.Followers.PublicHabitsActivity" />
         <activity android:name=".Activities.Followers.FollowRequests" />
         <activity
-            android:name=".Activities.ViewOthersHabit.ViewOtherRecordBase"
+            android:name=".Activities.ViewRecord.ViewRecordBase"
             android:parentActivityName=".Activities.ViewHabit.ViewHabitTabsBase" />
         <activity
             android:name=".Activities.Followers.FollowingActivity"
