@@ -186,7 +186,32 @@ public class DatabaseManager {
 
             }
         });
+    }
 
+    public static void getAndSetRecordImage(String imageIdentifier, ImageView destination){
+        db.collection("Users").document(user).collection("Records").document(imageIdentifier).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                long TEN_MEGABYTES = 1024*1024*10;
+                StorageReference imageRef = storageRef.child(imageIdentifier);
+                imageRef.getBytes(TEN_MEGABYTES)
+                        .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                if(bytes != null) {
+                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    destination.setImageBitmap(bmp);
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+            }
+        });
     }
 
     /**
