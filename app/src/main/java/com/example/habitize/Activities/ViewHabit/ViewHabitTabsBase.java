@@ -110,12 +110,13 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                             boolean friRec = baseFrag.getFri();
                             boolean satRec = baseFrag.getSat();
                             boolean sunRec = baseFrag.getSun();
+                            boolean visible = baseFrag.getVisible();
                             passedHabits.remove(passedIndex); // remove the habit at the position we are on
                             // hash the list and replace the one at the database
 
                             Habit newHabit = new Habit(title, description,
                                     startDate, monRec, tueRec, wedRec,
-                                    thurRec, friRec, satRec, sunRec,new ArrayList<Record>(),passedHabit.getRecordAddress(),true);
+                                    thurRec, friRec, satRec, sunRec,new ArrayList<Record>(),passedHabit.getRecordAddress(),visible);
                             // add it to the user list
                             passedHabits.add(newHabit);
                             DatabaseManager.storeImage(imgFrag.getImageBytes(),newHabit.getRecordAddress());
@@ -182,7 +183,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
                     // on creation, our passed habit fills in the fragment's information fields
                     returningFragment = new ViewHabitBaseFragment(passedHabit.getName(),passedHabit.getDescription(),passedHabit.getStartDate(),
                             passedHabit.getMondayR(),passedHabit.getTuesdayR(),passedHabit.getWednesdayR(), passedHabit.getThursdayR(),
-                            passedHabit.getFridayR(),passedHabit.getSaturdayR(),passedHabit.getSundayR());
+                            passedHabit.getFridayR(),passedHabit.getSaturdayR(),passedHabit.getSundayR(),passedHabit.getVisibility());
                     Bundle viewBundle = new Bundle();
                     viewBundle.putSerializable("viewing",mViewing);
                     returningFragment.setArguments(viewBundle);
