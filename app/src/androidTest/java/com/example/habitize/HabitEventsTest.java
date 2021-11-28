@@ -4,12 +4,17 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.os.SystemClock;
 
+import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
@@ -20,6 +25,7 @@ import com.example.habitize.Activities.SignupAndLogin.Login_Activity;
 import com.example.habitize.Activities.ViewHabit.ViewRecordsFragment;
 import com.example.habitize.Activities.ViewHabitLists.AllHabitsActivity;
 import com.example.habitize.Activities.ViewHabitLists.TodaysHabitsActivity;
+import com.example.habitize.Activities.ViewRecord.MapFragment;
 import com.example.habitize.Activities.ViewRecord.ViewRecordBase;
 
 import org.junit.After;
@@ -41,6 +47,7 @@ public class HabitEventsTest {
     Boolean testFRec;
     Boolean testSRec;
     Boolean testSuRec;
+    String recordComment;
 
     @Rule
     public ActivityScenarioRule<Login_Activity> activityRule = new ActivityScenarioRule<Login_Activity>(Login_Activity.class);
@@ -61,6 +68,7 @@ public class HabitEventsTest {
         testFRec = true;
         testSRec = false;
         testSuRec = false;
+        recordComment = "done";
     }
 
     @Before
@@ -82,14 +90,22 @@ public class HabitEventsTest {
     //the right activity
     @Test
     public void Test_1_RecordHabitActivity(){
+        //check record activity is displayed
         onView(withId(R.id.allHabitCard)).perform(click());
         SystemClock.sleep(1000);
+
+        //create a record
+        onView(withId(R.id.completeHabit)).perform(click());
+        onView(withId(R.id.recordComment)).perform(replaceText(recordComment));
+        SystemClock.sleep(1000);
+        onView(withId(R.id.createRecord)).perform(click());
+
         onView(withId(R.id.habitName)).perform(click());
         onView(withId(R.id.FragmentViewHabitTitle)).perform(swipeLeft());
         SystemClock.sleep(1000);
         onView(withId(R.id.FragmentViewHabitNewImage)).perform(swipeLeft());
-        SystemClock.sleep(1000);
-        intended(hasComponent(ViewRecordsFragment.class.getName()));
+        SystemClock.sleep(2000);
+        onView(withId(R.id.recordDate)).check(matches(isDisplayed()));
     }
 
     @After

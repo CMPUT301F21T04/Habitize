@@ -207,7 +207,7 @@ public class FollowingTest {
         //onView(withId(R.id.requestedFollowerName)).check(doesNotExist());
         onView(withId(R.id.existingFollowerName)).check(matches(withText(testUsernameOtherUser)));
         onView(withId(R.id.deleteExistingFollowerButton)).perform(click());
-        //onView(withId(R.id.requestedFollowerName)).check(doesNotExist());
+        onView(withId(R.id.requestedFollowerName)).check(doesNotExist());
     }
     @Test
     public void Test_7_deleteFollowerFunction(){
