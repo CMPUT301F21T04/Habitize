@@ -55,6 +55,8 @@ public class ViewRecordsFragment extends Fragment implements RecordAdapter.recor
     @Override
     public void onResume() {
         super.onResume();
+        records.clear();
+        recordAdapter.notifyDataSetChanged();
         DatabaseManager.getRecord(habit.getRecordAddress(), records, recordAdapter);
     }
 

@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-public class PublicHabitsActivity extends AppCompatActivity implements HabitAdapter.activityEnder {
+public class PublicHabitsActivity extends AppCompatActivity implements HabitAdapter.activityEnder, HabitAdapter.reorderEnabler {
 
     private ArrayList<Habit> dataList;
     private HabitAdapter habitAdapter;
@@ -64,5 +64,10 @@ public class PublicHabitsActivity extends AppCompatActivity implements HabitAdap
     @Override
     public void endActivity() {
         // doesn't have to do anything since we cant edit other's habits.
+    }
+
+    @Override
+    public boolean reoderEnabled() {
+        return false;
     }
 }
