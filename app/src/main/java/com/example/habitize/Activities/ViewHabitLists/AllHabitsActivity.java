@@ -52,6 +52,7 @@ public class AllHabitsActivity extends AppCompatActivity implements HabitAdapter
         DatabaseManager.getAllHabitsRecycler(dataList, habitAdapter);
     }
 
+
     @Override
     public void endActivity() {
         finish();
