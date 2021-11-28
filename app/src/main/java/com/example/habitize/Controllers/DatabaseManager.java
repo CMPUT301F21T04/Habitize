@@ -693,9 +693,10 @@ public class DatabaseManager {
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     String identifier = (String) habitFields.get("recordAddress");
+                    Long streak = (Long) habitFields.get("streak");
                     boolean visibility = (boolean) habitFields.get("visibility");
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier,visibility); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec, new ArrayList<>(), identifier, streak, visibility); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
                 }
             }
