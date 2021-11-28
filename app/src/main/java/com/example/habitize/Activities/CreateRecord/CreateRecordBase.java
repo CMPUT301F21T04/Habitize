@@ -120,7 +120,7 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
                 Calendar calendar = Calendar.getInstance();
                 String daysArray[] = {"Sunday","Monday","Tuesday", "Wednesday","Thursday","Friday", "Saturday"};
                 int day = calendar.get(Calendar.DAY_OF_WEEK);
-                today = daysArray[day];
+                today = daysArray[day-1];
 
                 if (recurrenceValues.contains(today)) {
                     passedHabit.incrementStreak();

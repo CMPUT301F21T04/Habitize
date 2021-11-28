@@ -64,6 +64,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         ConfirmEdit = findViewById(R.id.ConfirmEdit);
         AllowEdit = findViewById(R.id.AllowEditing);
         deleteButton = findViewById(R.id.delete_button_tabs);
+        percentValue = findViewById(R.id.percentValue);
         editable = false;
         passedHabit = (Habit)getIntent().getExtras().getSerializable("habit"); // a user
         passedHabits = new ArrayList<>(); // we will get the latest list from the database
@@ -155,13 +156,16 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
             }
         });
+
         passedHabits = (ArrayList<Habit>) getIntent().getSerializableExtra("habits");
 
         double currentStreak = passedHabits.get(passedIndex).getStreak();
         //the amount of the time the user was supposed to perform record
         double fullStreak = passedHabits.get(passedIndex).computeRecurrence().size();
         double percentageNumber = (currentStreak/fullStreak)* 100;
-        System.out.println("DID IT WORKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK " +"percentageNumber "+ percentageNumber+" currentStreak "+currentStreak+" fullStreak "+fullStreak);
+        int finalPercentageNumber = (int) percentageNumber;
+        percentValue.setText(String.valueOf(finalPercentageNumber));
+        //System.out.println("DID IT WORKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK " +"percentageNumber "+ finalPercentageNumber+" currentStreak "+currentStreak+" fullStreak "+fullStreak);
 
     }
 
