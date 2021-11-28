@@ -124,7 +124,7 @@ public class ViewOtherHabitTabsBase extends AppCompatActivity {
                     // on creation, our passed habit fills in the fragment's information fields
                     returningFragment = new ViewHabitBaseFragment(passedHabit.getName(),passedHabit.getDescription(),passedHabit.getStartDate(),
                             passedHabit.getMondayR(),passedHabit.getTuesdayR(),passedHabit.getWednesdayR(), passedHabit.getThursdayR(),
-                            passedHabit.getFridayR(),passedHabit.getSaturdayR(),passedHabit.getSundayR());
+                            passedHabit.getFridayR(),passedHabit.getSaturdayR(),passedHabit.getSundayR(),passedHabit.getVisibility());
                     Bundle viewBundle = new Bundle();
                     viewBundle.putSerializable("viewing",true);
                     returningFragment.setArguments(viewBundle);

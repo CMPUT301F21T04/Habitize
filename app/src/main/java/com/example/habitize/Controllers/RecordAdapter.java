@@ -52,6 +52,7 @@ public class RecordAdapter extends ArrayAdapter<Record> {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 viewer.viewRecord(position);
             }
         });
@@ -63,4 +64,8 @@ public class RecordAdapter extends ArrayAdapter<Record> {
         return view;
     }
 
+    @Override
+    public int getCount() {
+        return records.size();
+    }
 }
