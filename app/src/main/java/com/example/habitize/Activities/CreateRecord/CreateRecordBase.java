@@ -52,7 +52,7 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
 
         passedHabits = (ArrayList<Habit>) getIntent().getSerializableExtra("habits");
         passedHabit = (Habit) getIntent().getSerializableExtra("habit");
-        passedRecord = (Record) getIntent().getSerializableExtra("record");
+        index = (int)getIntent().getSerializableExtra("index");
 
         ErrorShower shower = new ErrorShower(this);
 
