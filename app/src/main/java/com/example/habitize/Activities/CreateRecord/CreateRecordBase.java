@@ -23,7 +23,9 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -34,6 +36,8 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
     private AddRecordAdapter mAdapter;
     private Habit passedHabit;
     private ArrayList<Habit> passedHabits;
+    private ArrayList<String> recurrenceValues;
+    private String today;
     private int index;
     private Record passedRecord;
     private Switch editSwitch;
@@ -98,12 +102,30 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
 
                 Record newRecord = new Record(currentDate,comment,null,id,lat,lon);
                 DatabaseManager.updateRecord(passedHabit.getRecordAddress(),newRecord);
+
                 passedHabits.get(index).incrementStreak();
+                double currentStreak = passedHabits.get(index).getStreak();
+                //the amount of the time the user was supposed to perform record
+                double fullStreak = passedHabits.get(index).computeRecurrence().size();
+                double percentageNumber = (currentStreak/fullStreak)* 100;
+                System.out.println("DID IT WORKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK " +"percentageNumber "+ percentageNumber+" currentStreak "+currentStreak+" fullStreak "+fullStreak);
                 DatabaseManager.updateHabits(passedHabits);
 
                 if(recordImg != null){
                     DatabaseManager.storeImage(recordImg,newRecord.getRecordIdentifier());
                 }
+
+                //Calculate the current day of the week:
+                recurrenceValues = passedHabit.computeRecurrence();
+                Calendar calendar = Calendar.getInstance();
+                String daysArray[] = {"Sunday","Monday","Tuesday", "Wednesday","Thursday","Friday", "Saturday"};
+                int day = calendar.get(Calendar.DAY_OF_WEEK);
+                today = daysArray[day-1];
+
+                if (recurrenceValues.contains(today)) {
+                    passedHabit.incrementStreak();
+                }
+
                 finish();
             }
         });

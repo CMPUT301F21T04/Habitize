@@ -14,14 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habitize.Structural.Habit;
 import com.example.habitize.Structural.Record;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -44,6 +48,7 @@ public class DatabaseManager {
     private static Context signUpContext;
     private static SimpleDateFormat simpleDateFormat;
     private static StorageReference storageRef;
+    private static String currentLoggedInUser;
 
     private static onRegistrationLoginListener registrationListener;
     private static onLoginListener loginListener;
@@ -829,6 +834,22 @@ public class DatabaseManager {
             }
         });
     }
+
+    public static void incrementPoints(int points) {
+        Query currentUserDocQuery = users.whereEqualTo("userName", user);
+        currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+                    for(QueryDocumentSnapshot document : task.getResult()) {
+                        users.document(user).update("points", FieldValue.increment(points));
+                    }
+                }
+            }
+        });
+    }
+
+
 
 
 
