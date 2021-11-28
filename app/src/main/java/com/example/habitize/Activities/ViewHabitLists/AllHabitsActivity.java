@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class AllHabitsActivity extends AppCompatActivity implements HabitAdapter.activityEnder {
+public class AllHabitsActivity extends AppCompatActivity implements HabitAdapter.activityEnder, HabitAdapter.reorderEnabler {
     private ArrayList<Habit> dataList;
     private HabitAdapter habitAdapter;
     private RecyclerView list;
@@ -27,7 +28,7 @@ public class AllHabitsActivity extends AppCompatActivity implements HabitAdapter
     private FirebaseFirestore db;
     private String passedUser;
     private Switch reorder;
-    
+
 
     /**
      * Initialize activity
@@ -38,20 +39,27 @@ public class AllHabitsActivity extends AppCompatActivity implements HabitAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
         reorder = findViewById(R.id.ReOrderToday);
-        
+
         dataList = new ArrayList<>(); // reset the list
         mLayoutManager = new LinearLayoutManager(this);
         list = findViewById(R.id.habit_list);
         habitAdapter = new HabitAdapter(dataList, false);
         list.setAdapter(habitAdapter);
+        list.setItemAnimator(null);
         list.setLayoutManager(mLayoutManager);
 
 
         DatabaseManager.getAllHabitsRecycler(dataList, habitAdapter);
     }
 
+
     @Override
     public void endActivity() {
         finish();
+    }
+
+    @Override
+    public boolean reoderEnabled() {
+        return reorder.isChecked();
     }
 }
