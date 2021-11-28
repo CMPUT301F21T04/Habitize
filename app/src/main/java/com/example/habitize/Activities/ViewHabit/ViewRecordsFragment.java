@@ -45,11 +45,17 @@ public class ViewRecordsFragment extends Fragment implements RecordAdapter.recor
         mViewing = (boolean) getArguments().getSerializable("viewing");
 
         list = root.findViewById(R.id.record_list);
-        recordAdapter = new RecordAdapter(this,R.layout.record_list_content,records);
+        recordAdapter = new RecordAdapter(this, R.layout.record_list_content, records);
         list.setAdapter(recordAdapter);
-        DatabaseManager.getRecord(habit.getRecordAddress(),records,recordAdapter);
+        DatabaseManager.getRecord(habit.getRecordAddress(), records, recordAdapter);
         return root;
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DatabaseManager.getRecord(habit.getRecordAddress(), records, recordAdapter);
     }
 
 

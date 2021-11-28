@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-public class TodaysHabitsActivity extends AppCompatActivity {
+public class TodaysHabitsActivity extends AppCompatActivity implements HabitAdapter.activityEnder {
 
     private ArrayList<Habit> dataList;
     private HabitAdapter habitAdapter;
@@ -46,13 +46,17 @@ public class TodaysHabitsActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         allHabits = new ArrayList<>();
         listView = findViewById(R.id.habit_list);
-        habitAdapter = new HabitAdapter(dataList,posInFireBase,allHabits,false);
+        habitAdapter = new HabitAdapter(dataList, posInFireBase, allHabits, false);
         listView.setAdapter(habitAdapter);
         listView.setLayoutManager(mLayoutManager);
         DatabaseManager.getAllHabits(allHabits);
-        DatabaseManager.getTodaysHabitsRecycler(dataList, habitAdapter,posInFireBase);
+        DatabaseManager.getTodaysHabitsRecycler(dataList, habitAdapter, posInFireBase);
 
 
     }
 
+    @Override
+    public void endActivity() {
+        finish();
+    }
 }

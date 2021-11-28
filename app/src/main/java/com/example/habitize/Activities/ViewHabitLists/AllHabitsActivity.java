@@ -17,7 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class AllHabitsActivity extends AppCompatActivity {
+public class AllHabitsActivity extends AppCompatActivity implements HabitAdapter.activityEnder {
     private ArrayList<Habit> dataList;
     private HabitAdapter habitAdapter;
     private RecyclerView list;
@@ -42,17 +42,16 @@ public class AllHabitsActivity extends AppCompatActivity {
         dataList = new ArrayList<>(); // reset the list
         mLayoutManager = new LinearLayoutManager(this);
         list = findViewById(R.id.habit_list);
-        habitAdapter = new HabitAdapter(dataList,false);
+        habitAdapter = new HabitAdapter(dataList, false);
         list.setAdapter(habitAdapter);
         list.setLayoutManager(mLayoutManager);
 
 
-        DatabaseManager.getAllHabitsRecycler(dataList,habitAdapter);
-
-
+        DatabaseManager.getAllHabitsRecycler(dataList, habitAdapter);
     }
 
-
-
-
+    @Override
+    public void endActivity() {
+        finish();
+    }
 }

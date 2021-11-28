@@ -1,6 +1,5 @@
 package com.example.habitize.Activities.ViewRecord;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +15,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.habitize.Activities.CreateRecord.RecordCreate;
-import com.example.habitize.Activities.ViewHabit.ViewHabitBaseFragment;
 import com.example.habitize.Activities.ViewHabit.ViewHabitImageFragment;
 import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.R;
@@ -42,16 +40,10 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
     private int passedIndex;
     private boolean mViewing;
     private Switch enableEdit;
-    private imageUpdater updater;
     String[] titles = {"Info", "Image", "Location"};
 
     public ViewRecordBase() {
     }
-
-    public interface imageUpdater{
-        public void updateImage();
-    }
-
 
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,7 +83,6 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
                 passedRecords.add(new Record(date,comment,img,identifier,lat,lon));
                 DatabaseManager.updateBecauseDeleted(passedHabit.getRecordAddress(),passedRecords);
                 DatabaseManager.storeImage(img,passedRecord.getRecordIdentifier());
-                updater.updateImage();
                 finish();
 
             }
