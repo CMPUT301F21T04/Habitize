@@ -104,7 +104,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
 
                 //make sure habit description is up to 30 chars
                 if (description.length() > 30){
-                    Toast.makeText(AddHabitTabsBase.this,"Enter a habit title",Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddHabitTabsBase.this,"habit description is too long",Toast.LENGTH_LONG).show();
                     return;
 
                 }

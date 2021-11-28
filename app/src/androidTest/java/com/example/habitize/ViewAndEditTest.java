@@ -6,11 +6,14 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.os.SystemClock;
 
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -54,7 +57,7 @@ public class ViewAndEditTest {
         testPassword = "12345678";
         testTitle = "Learn French";
         testEditTitle = "Learn English";
-        testDesc = "Go on DuoLingo and practice French";
+        testDesc = "Learn";
         testStartDate = "11/05/2021";
         testMRec = true;
         testTRec = false;
@@ -90,39 +93,46 @@ public class ViewAndEditTest {
     }
     //check if we can access view habits
     @Test
-    public void Test_2_ViewActivity(){
-//        //deleting the habit
-//        onView(withId(R.id.allHabits)).perform(click());
-//        onView(withText("VIEW")).perform(click());
-//        SystemClock.sleep(4000);
-//        onView(withText("DELETE")).perform(click());
-//        intended(hasComponent(AllHabitsActivity.class.getName()));
-//
-//        //add new habit first
-//
-//        onView(isRoot()).perform(ViewActions.pressBack());
-//        onView(withId(R.id.addHabit)).perform(click());
-//        SystemClock.sleep(1000);
-//        onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
-//        SystemClock.sleep(1000);
-//        onView(withId(R.id.fragmentHabitDescription)).perform(replaceText(testDesc));
-//        onView(withId(R.id.fragmentStartDate)).perform(click());
-//        onView(withText("OK")).perform(click());
-//        onView(withId(R.id.create_habit_tabs)).perform(click());
+    public void Test_2_ViewHabitActivity(){
+    //add habit
+        onView(withId(R.id.addHabitCard)).perform(click());
+        SystemClock.sleep(1000);
+        onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
+        SystemClock.sleep(1000);
+        onView(withId(R.id.fragmentHabitDescription)).perform(replaceText(testDesc));
+        onView(withId(R.id.fragmentStartDate)).perform(click());
+        onView(withText("OK")).perform(click());
+        SystemClock.sleep(3000);
+        onView(withId(R.id.create_habit_tabs)).perform(click());
         //go to view habits
         onView(withId(R.id.allHabitCard)).perform(click());
-        onView(withText("VIEW")).perform(click());
-        SystemClock.sleep(4000);
+        onView(withText(testTitle)).perform(click());
         intended(hasComponent(ViewHabitTabsBase.class.getName()));
+        //delete
+
+
+        onView(withId(R.id.delete_button_tabs)).perform(click());
     }
 
 
     @Test
     public void Test_4_DeleteHabitActivity(){
+        //add habit
+        onView(withId(R.id.addHabitCard)).perform(click());
+        SystemClock.sleep(1000);
+        onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
+        SystemClock.sleep(1000);
+        onView(withId(R.id.fragmentHabitDescription)).perform(replaceText(testDesc));
+        onView(withId(R.id.fragmentStartDate)).perform(click());
+        onView(withText("OK")).perform(click());
+        SystemClock.sleep(3000);
+        onView(withId(R.id.create_habit_tabs)).perform(click());
+
+        //delete
         onView(withId(R.id.allHabitCard)).perform(click());
-        onView(withText("VIEW")).perform(click());
-        SystemClock.sleep(4000);
-        onView(withText("DELETE")).perform(click());
+        onView(withText(testTitle)).check(matches(isDisplayed()));
+        onView(withText(testTitle)).perform(click());
+        onView(withId(R.id.delete_button_tabs)).perform(click());
         intended(hasComponent(AllHabitsActivity.class.getName()));
     }
     @Test
@@ -135,20 +145,24 @@ public class ViewAndEditTest {
         onView(withId(R.id.fragmentHabitDescription)).perform(replaceText(testDesc));
         onView(withId(R.id.fragmentStartDate)).perform(click());
         onView(withText("OK")).perform(click());
+        SystemClock.sleep(3000);
         onView(withId(R.id.create_habit_tabs)).perform(click());
         //editing start here
         onView(withId(R.id.allHabitCard)).perform(click());
-        onView(withText("VIEW")).perform(click());
+        onView(withText(testTitle)).perform(click());
         SystemClock.sleep(4000);
         onView(withId(R.id.AllowEditing)).perform(click());
         SystemClock.sleep(1000);
         onView(withText(testTitle)).perform(replaceText(testEditTitle));
         onView(withId(R.id.ConfirmEdit)).perform(click());
 
-        SystemClock.sleep(1000);
-        onView(withText("VIEW")).perform(click());
-        SystemClock.sleep(1000);
-        onView(withText(testEditTitle)).check(matches(withText(testEditTitle)));
+        //check the new edited habit title
+        onView(withText(testEditTitle)).check(matches(isDisplayed()));
+        //delete the habit
+        onView(withText(testEditTitle)).perform(click());
+        onView(withId(R.id.delete_button_tabs)).perform(click());
+
+
 
 
 
