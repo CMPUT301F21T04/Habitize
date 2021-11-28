@@ -14,11 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habitize.Structural.Habit;
 import com.example.habitize.Structural.Record;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -186,7 +183,32 @@ public class DatabaseManager {
 
             }
         });
+    }
 
+    public static void getAndSetRecordImage(String imageIdentifier, ImageView destination){
+        db.collection("Users").document(user).collection("Records").document(imageIdentifier).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                long TEN_MEGABYTES = 1024*1024*10;
+                StorageReference imageRef = storageRef.child(imageIdentifier);
+                imageRef.getBytes(TEN_MEGABYTES)
+                        .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                if(bytes != null) {
+                                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                    destination.setImageBitmap(bmp);
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+            }
+        });
     }
 
     /**
@@ -290,7 +312,6 @@ public class DatabaseManager {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 recievingList.clear();
-                adapter.notifyDataSetChanged();
                 // get the mapped data of records
                 ArrayList<Record> mappedRecords = (ArrayList<Record>) value.get("records");
                 // retrieving all records
@@ -613,10 +634,10 @@ public class DatabaseManager {
      * @param habitAdapter
      */
     public static void getAllHabitsRecycler(ArrayList<Habit> recievingList, RecyclerView.Adapter habitAdapter) {
-        db.collection("Users").document(user).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        db.collection("Users").document(user).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                ArrayList<Habit> mappedList = (ArrayList<Habit>) value.get("habits");
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                ArrayList<Habit> mappedList = (ArrayList<Habit>) documentSnapshot.get("habits");
                 recievingList.clear();
                 for (int i = 0; i < mappedList.size(); i++) { // get each item one by one
                     Map<String, Object> habitFields = (Map<String, Object>) mappedList.get(i); // map to all the fields

@@ -15,7 +15,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.habitize.Activities.CreateRecord.RecordCreate;
-import com.example.habitize.Activities.ViewHabit.ViewHabitBaseFragment;
 import com.example.habitize.Activities.ViewHabit.ViewHabitImageFragment;
 import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.R;
@@ -47,8 +46,6 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
     }
 
 
-
-
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_record);
@@ -61,12 +58,10 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
         createButton.setVisibility(View.INVISIBLE);
         deleteButton.setVisibility(View.VISIBLE);
         confirmEditButton.setVisibility(View.VISIBLE);
-
         passedHabit = (Habit) getIntent().getSerializableExtra("habit");
         passedRecord = (Record) getIntent().getSerializableExtra("record");
         passedRecords = (ArrayList<Record>) getIntent().getSerializableExtra("records");
         passedIndex = (int) getIntent().getSerializableExtra("index");
-
         mAdapter = new ViewRecordBase.ViewRecordAdapter(this);
         pager.setOffscreenPageLimit(8);
         pager.setAdapter(mAdapter);
@@ -77,7 +72,6 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
                 RecordCreate baseFrag = (RecordCreate) getSupportFragmentManager().findFragmentByTag("f0");
                 ViewHabitImageFragment imgFrag = (ViewHabitImageFragment) getSupportFragmentManager().findFragmentByTag("f1");
                 MapFragment mapFrag = (MapFragment) getSupportFragmentManager().findFragmentByTag("f2");
-
 
                 Double lat = mapFrag.getLat();
                 Double lon = mapFrag.getLon();
@@ -100,7 +94,6 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
                 ViewHabitImageFragment imgFrag = (ViewHabitImageFragment) getSupportFragmentManager().findFragmentByTag("f1");
                 MapFragment mapFrag = (MapFragment) getSupportFragmentManager().findFragmentByTag("f2");
 
-
                 if(compoundButton.isChecked()){
                     baseFrag.setEditable();
                     imgFrag.setEditable();
@@ -122,7 +115,6 @@ public class ViewRecordBase extends AppCompatActivity implements MapFragment.scr
             }
         });
         mediator.attach();
-
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

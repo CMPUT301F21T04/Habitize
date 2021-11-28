@@ -30,7 +30,18 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
     private ArrayList<Habit> allHabits;
     private Context mContext;
     private boolean mViewing;
-        public static class HabitHolder extends RecyclerView.ViewHolder{
+    private activityEnder ender;
+
+    @NonNull
+    @Override
+    public HabitHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_content, parent, false);
+        this.mContext = parent.getContext();
+        ender = (activityEnder) parent.getContext();
+        return new HabitHolder(view);
+    }
+
+    public static class HabitHolder extends RecyclerView.ViewHolder {
 
         private final TextView title;
         private final ImageButton recordButton;
@@ -45,8 +56,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
             recordButton.setFocusable(false);
             recordButton.setFocusableInTouchMode(false);
             thisView = itemView;
-
-
 
         }
 
@@ -81,73 +90,12 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
             this.allHabits = allHabits;
     }
 
-
-    @NonNull
-    @Override
-    public HabitHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_content,parent,false);
-        this.mContext = parent.getContext();
-        return new HabitHolder(view);
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        if(!this.mViewing) {
-            ItemTouchHelper.SimpleCallback simpleCallback =
-                    new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0)   {
-                        private int toPos;
-                        private int fromPos;
-                        @Override
-                        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                            // setting the positions selected
-                            this.fromPos = viewHolder.getAdapterPosition();
-                            this.toPos = target.getAdapterPosition();
-                            return true;
-                        }
-
-                        @Override
-                        public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
-                            super.onSelectedChanged(viewHolder, actionState);
-                            // when we let go of the drag, let the swap happen
-                            switch(actionState){
-                                default:
-                                    fromPos = viewHolder.getAdapterPosition();
-                                    break;
-                                case ItemTouchHelper.ACTION_STATE_IDLE:
-                                    if(posInFireBase != null) {
-                                        Collections.swap(allHabits, posInFireBase.get(fromPos), posInFireBase.get(toPos));
-                                        recyclerView.getAdapter().notifyDataSetChanged();
-                                        DatabaseManager.updateHabits(allHabits);
-                                    }
-                                    else{
-                                        Collections.swap(dataset,fromPos,toPos);
-                                        recyclerView.getAdapter().notifyDataSetChanged();
-                                        DatabaseManager.updateHabits(dataset);
-                                    }
-                                    break;
-
-
-                            }
-                        }
-
-                        @Override
-                        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                        }
-                    };
-            ItemTouchHelper helper = new ItemTouchHelper(simpleCallback);
-            helper.attachToRecyclerView(recyclerView);
-        }
-
-    }
-
     @Override
     public void onBindViewHolder(@NonNull HabitHolder holder, int position) {
 
         // each cell is responsible for communicating with firebase and populating its image.
         DatabaseManager.getAndSetImage(dataset.get(holder.getAdapterPosition()).getRecordAddress()
                 ,holder.getHabitImageView());
-
         DatabaseManager.habitComplete(dataset.get(holder.getAdapterPosition()).getRecordAddress(),holder.getRecordButton());
         holder.getTitle().setText(dataset.get(holder.getAdapterPosition()).getName());
         // different cases based on whether we are viewing another person's habit or not.
@@ -167,6 +115,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
                     habitBundle.putSerializable("viewing",false);
                     intent.putExtras(habitBundle);
                     mContext.startActivity(intent);
+                    ender.endActivity();
                 }
             });
             holder.getRecordButton().setOnClickListener(new View.OnClickListener() {
@@ -207,7 +156,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
                     }
                     habitBundle.putSerializable("habits", dataset);
                     habitBundle.putSerializable("viewing",false);
-                    habitBundle.putSerializable("searchedUser",DatabaseManager.getSearched());
+                    habitBundle.putSerializable("searchedUser", DatabaseManager.getSearched());
                     intent.putExtras(habitBundle);
                     mContext.startActivity(intent);
                 }
@@ -215,6 +164,62 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
 
             // we open a viewing habit activity. This one does not allow us to toggle edit or delete.
         }
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        if (!this.mViewing) {
+            ItemTouchHelper.SimpleCallback simpleCallback =
+                    new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+                        private int toPos;
+                        private int fromPos;
+
+                        @Override
+                        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                            // setting the positions selected
+                            this.fromPos = viewHolder.getAdapterPosition();
+                            this.toPos = target.getAdapterPosition();
+                            return true;
+                        }
+
+                        @Override
+                        public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
+                            super.onSelectedChanged(viewHolder, actionState);
+                            // when we let go of the drag, let the swap happen
+                            switch (actionState) {
+                                default:
+                                    fromPos = viewHolder.getAdapterPosition();
+                                    break;
+                                case ItemTouchHelper.ACTION_STATE_IDLE:
+                                    if (posInFireBase != null) {
+                                        Collections.swap(allHabits, posInFireBase.get(fromPos), posInFireBase.get(toPos));
+                                        recyclerView.getAdapter().notifyDataSetChanged();
+                                        DatabaseManager.updateHabits(allHabits);
+                                    } else {
+                                        Collections.swap(dataset, fromPos, toPos);
+                                        recyclerView.getAdapter().notifyDataSetChanged();
+                                        DatabaseManager.updateHabits(dataset);
+                                    }
+                                    break;
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                        }
+                    };
+            ItemTouchHelper helper = new ItemTouchHelper(simpleCallback);
+            helper.attachToRecyclerView(recyclerView);
+        }
+
+    }
+
+
+    public interface activityEnder {
+        void endActivity();
     }
 
     @Override

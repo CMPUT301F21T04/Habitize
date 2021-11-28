@@ -52,15 +52,20 @@ public class RecordAdapter extends ArrayAdapter<Record> {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 viewer.viewRecord(position);
             }
         });
 
         // Setting our custom list items
         dateField.setText(record.getDate());
-        DatabaseManager.getAndSetImage(record.getRecordIdentifier(),recordImage);
+        DatabaseManager.getAndSetRecordImage(record.getRecordIdentifier(),recordImage);
 
         return view;
     }
 
+    @Override
+    public int getCount() {
+        return records.size();
+    }
 }
