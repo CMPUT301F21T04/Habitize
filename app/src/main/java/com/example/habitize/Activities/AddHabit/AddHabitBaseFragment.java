@@ -106,7 +106,7 @@ public class AddHabitBaseFragment extends Fragment {
         Saturday = root.findViewById(R.id.fragmentSaturday);
         Sunday  = root.findViewById(R.id.fragmentSunday);
         visible = root.findViewById(R.id.publicHabit);
-        emoji = root.findViewById(R.id.emoji);
+
 
         /*
         Make sure if switch is on, the habit will be public

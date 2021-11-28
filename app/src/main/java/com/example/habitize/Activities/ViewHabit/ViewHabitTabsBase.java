@@ -164,7 +164,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         double fullStreak = passedHabits.get(passedIndex).computeRecurrence().size();
         double percentageNumber = (currentStreak/fullStreak)* 100;
         int finalPercentageNumber = (int) percentageNumber;
-        percentValue.setText(String.valueOf(finalPercentageNumber));
+        percentValue.setText(String.valueOf(finalPercentageNumber) + "%");
         //System.out.println("DID IT WORKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK " +"percentageNumber "+ finalPercentageNumber+" currentStreak "+currentStreak+" fullStreak "+fullStreak);
 
     }
