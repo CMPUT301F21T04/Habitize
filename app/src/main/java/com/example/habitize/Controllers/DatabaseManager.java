@@ -70,10 +70,10 @@ public class DatabaseManager {
 
     // We only want to display the checkmark is a habit has not already been complete
     public static void habitComplete(String habitIdentifier, ImageButton button){
+        //gives the day of the week of the user (if today is actually Monday it will say Monday)
         db.collection("Users").document(user).collection("Records").document(habitIdentifier).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-
                 ArrayList<Record> mappedRecords = (ArrayList<Record>) value.get("records");
                 if(mappedRecords != null && mappedRecords.size() > 0) {
                     Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(mappedRecords.size() - 1);
@@ -87,7 +87,6 @@ public class DatabaseManager {
                 }
             }
         });
-
     }
 
     public static void setSearched(String searchedUser) {

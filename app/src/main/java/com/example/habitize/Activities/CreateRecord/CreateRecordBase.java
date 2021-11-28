@@ -98,7 +98,7 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
 
                 Record newRecord = new Record(currentDate,comment,null,id,lat,lon);
                 DatabaseManager.updateRecord(passedHabit.getRecordAddress(),newRecord);
-                passedHabit.incrementStreak();
+                passedHabits.get(index).incrementStreak();
                 DatabaseManager.updateHabits(passedHabits);
 
                 if(recordImg != null){

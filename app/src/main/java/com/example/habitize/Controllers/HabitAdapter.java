@@ -21,8 +21,10 @@ import com.example.habitize.Activities.ViewOther.ViewOtherHabitTabsBase;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder> {
     private ArrayList<Habit> dataset;
@@ -100,7 +102,48 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
         // today it should not display.)
         DatabaseManager.getAndSetImage(dataset.get(holder.getAdapterPosition()).getRecordAddress()
                 ,holder.getHabitImageView());
+        holder.getRecordButton().setVisibility(View.INVISIBLE);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
+        Date d = new Date();
+        //gives the day of the week of the user (if today is actually Monday it will say Monday)
+        String dayOfTheWeek = simpleDateFormat.format(d);
+
+        boolean mondayRec = dataset.get(holder.getAdapterPosition()).getMondayR();
+        boolean tuesdayRec = dataset.get(holder.getAdapterPosition()).getTuesdayR();
+        boolean wednesdayRec = dataset.get(holder.getAdapterPosition()).getWednesdayR();
+        boolean thursdayRec = dataset.get(holder.getAdapterPosition()).getThursdayR();
+        boolean fridayRec = dataset.get(holder.getAdapterPosition()).getFridayR();
+        boolean saturdayRec = dataset.get(holder.getAdapterPosition()).getSaturdayR();
+        boolean sundayRec = dataset.get(holder.getAdapterPosition()).getSundayR();
+
+        if ((mondayRec == true) && (dayOfTheWeek.equals("Monday"))){
+            holder.getRecordButton().setVisibility(View.VISIBLE);
+        }
+        if ((tuesdayRec == true) && (dayOfTheWeek.equals("Tuesday"))){
+            holder.getRecordButton().setVisibility(View.VISIBLE);
+        }
+        if ((wednesdayRec == true) && (dayOfTheWeek.equals("Wednesday"))){
+            holder.getRecordButton().setVisibility(View.VISIBLE);
+        }
+        if ((thursdayRec == true) && (dayOfTheWeek.equals("Thursday"))){
+            holder.getRecordButton().setVisibility(View.VISIBLE);
+        }
+        if ((fridayRec == true) && (dayOfTheWeek.equals("Friday"))){
+            holder.getRecordButton().setVisibility(View.VISIBLE);
+        }
+        if ((saturdayRec == true) && (dayOfTheWeek.equals("Saturday"))){
+            holder.getRecordButton().setVisibility(View.VISIBLE);
+        }
+        if ((sundayRec == true) && (dayOfTheWeek.equals("Sunday"))){
+            holder.getRecordButton().setVisibility(View.VISIBLE);
+        }
+
         DatabaseManager.habitComplete(dataset.get(holder.getAdapterPosition()).getRecordAddress(),holder.getRecordButton());
+
+
+
+
+
         holder.getTitle().setText(dataset.get(holder.getAdapterPosition()).getName());
         holder.getView().setClickable(true);
         // different cases based on whether we are viewing another person's habit or not.
