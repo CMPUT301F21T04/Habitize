@@ -68,6 +68,7 @@ public class PublicHabitsActivity extends AppCompatActivity implements HabitAdap
 
     @Override
     public boolean reoderEnabled() {
+        // we cant reorder other people's habits
         return false;
     }
 }

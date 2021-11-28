@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -79,7 +78,6 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 signIn();
-                //Toast.makeText(SignUp.this,"google",Toast.LENGTH_LONG).show();
             }
         });
 
@@ -126,7 +124,6 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
 
 
                 progressBar.setVisibility(View.VISIBLE);
-                // TODO: the startActivity here might mess with NAVCONTROLLER
                 // call authentication here using data Manager
                 DatabaseManager.setInfoForRegistration(user,inputEmail,first,last,inputConPass);
                 //check the user if is already signedUp

@@ -23,7 +23,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,7 +56,7 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
         passedHabits = (ArrayList<Habit>) getIntent().getSerializableExtra("habits");
         passedHabit = (Habit) getIntent().getSerializableExtra("habit");
         index = (int)getIntent().getSerializableExtra("index");
-
+        // errorshower is used to show error toast messages
         ErrorShower shower = new ErrorShower(this);
 
         mAdapter = new AddRecordAdapter(this);
@@ -108,7 +107,6 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
                 //the amount of the time the user was supposed to perform record
                 double fullStreak = passedHabits.get(index).computeRecurrence().size();
                 double percentageNumber = (currentStreak/fullStreak)* 100;
-                System.out.println("DID IT WORKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK " +"percentageNumber "+ percentageNumber+" currentStreak "+currentStreak+" fullStreak "+fullStreak);
                 DatabaseManager.updateHabits(passedHabits);
 
                 if(recordImg != null){
@@ -179,6 +177,7 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
     }
 
 
+    // addapter for the tabs
     class AddRecordAdapter extends FragmentStateAdapter{
         public AddRecordAdapter(@NonNull FragmentActivity fragmentActivity){super(fragmentActivity);}
 
@@ -188,11 +187,11 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
             Fragment returningFragment;
             switch(position){
                 default: returningFragment = new RecordCreate();
-                break;
+                    break;
                 case 1: returningFragment = new AddHabitImageFragment();
-                break;
+                    break;
                 case 2: returningFragment = new MapFragment();
-                break;
+                    break;
             }
             return returningFragment;
         }

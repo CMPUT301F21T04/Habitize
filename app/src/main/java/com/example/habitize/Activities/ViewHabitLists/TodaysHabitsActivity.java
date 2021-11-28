@@ -39,8 +39,6 @@ public class TodaysHabitsActivity extends AppCompatActivity implements HabitAdap
         setContentView(R.layout.all_habits);
         reorderT = findViewById(R.id.ReOrderToday);
 
-
-
         dataList = new ArrayList<>();
         posInFireBase = new ArrayList<>();
         mLayoutManager = new LinearLayoutManager(this);

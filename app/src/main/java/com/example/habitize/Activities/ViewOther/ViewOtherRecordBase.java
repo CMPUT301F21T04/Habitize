@@ -87,12 +87,14 @@ public class ViewOtherRecordBase extends AppCompatActivity implements MapFragmen
         });
     }
 
+    // disable tab scroll. Used to be able to use map without scrolling on the tabs.
     @Override
     public void disableScroll() {
         pager.setUserInputEnabled(false);
 
     }
 
+    // enable tab scroll
     @Override
     public void enableScroll() {
         pager.setUserInputEnabled(true);

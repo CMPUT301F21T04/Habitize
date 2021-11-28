@@ -3,7 +3,6 @@ package com.example.habitize.Activities.ViewOther;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import androidx.annotation.NonNull;
@@ -15,15 +14,11 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.habitize.Activities.ViewHabit.ViewHabitBaseFragment;
 import com.example.habitize.Activities.ViewHabit.ViewHabitImageFragment;
-import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
 import com.example.habitize.Structural.Record;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -33,16 +28,9 @@ public class ViewOtherHabitTabsBase extends AppCompatActivity {
 
     private Button ConfirmEdit;
     private Switch AllowEdit;
-    private String passedUser;
     private Habit passedHabit; // habit to view
-    private FirebaseFirestore db;
-    private CollectionReference userCol;
-    private DocumentReference docRef;
     private ArrayList<Habit> passedHabits;
     private Button deleteButton;
-    private int passedIndex;
-    private boolean mViewing;
-    private boolean editable;
     private ArrayList<Record> recordList;
     String[] titles = {"INFO","IMAGE","RECORDS"};
 
@@ -58,11 +46,8 @@ public class ViewOtherHabitTabsBase extends AppCompatActivity {
         ConfirmEdit = findViewById(R.id.ConfirmEdit);
         AllowEdit = findViewById(R.id.AllowEditing);
         deleteButton = findViewById(R.id.delete_button_tabs);
-        editable = false;
-        passedHabit = (Habit)getIntent().getExtras().getSerializable("habit"); // a user
+        passedHabit = (Habit) getIntent().getExtras().getSerializable("habit"); // a user
         passedHabits = new ArrayList<>(); // we will get the latest list from the database
-        passedIndex = (int)getIntent().getExtras().getSerializable("index");
-        mViewing = (boolean)getIntent().getExtras().getSerializable("viewing");
 
         deleteButton.setVisibility(View.INVISIBLE);
         recordList = new ArrayList<>();
@@ -70,6 +55,8 @@ public class ViewOtherHabitTabsBase extends AppCompatActivity {
 
         // pager holds fragments, madapter is the adapter needed for it
         ViewAdapter mAdapter = new ViewAdapter(this);
+        // set high off screen page limit so every fragment exists. Otherwise they would die
+        // when we swipe away from them
         pager.setOffscreenPageLimit(8);
         pager.setAdapter(mAdapter);
         tabLayout = findViewById(R.id.recordTabs);
@@ -105,23 +92,24 @@ public class ViewOtherHabitTabsBase extends AppCompatActivity {
         @Override
         public Fragment createFragment(int position) {
             Fragment returningFragment;
-            switch(position){
-                case 1: // TODO: This must be reorganized
-                    // on creation, our passed habit fills in the fragment's information fields
+            switch(position) {
+                case 1:
+                    // pass down the needed information into the fragment
                     returningFragment = new ViewHabitImageFragment(passedHabit.getRecordAddress());
                     Bundle imgBundle = new Bundle();
-                    imgBundle.putSerializable("viewing",true);
+                    imgBundle.putSerializable("viewing", true);
                     returningFragment.setArguments(imgBundle);
                     break;
                 case 2:
-                    returningFragment = new ViewOtherRecordFragment(passedHabit,passedHabits);
+                    // pass down the needed information into the fragment
+                    returningFragment = new ViewOtherRecordFragment(passedHabit, passedHabits);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("records",recordList);
+                    bundle.putSerializable("records", recordList);
                     bundle.putSerializable("viewing",true);
                     returningFragment.setArguments(bundle);
                     break;
                 default:
-                    // on creation, our passed habit fills in the fragment's information fields
+                    // pass down the needed information into the fragment
                     returningFragment = new ViewHabitBaseFragment(passedHabit.getName(),passedHabit.getDescription(),passedHabit.getStartDate(),
                             passedHabit.getMondayR(),passedHabit.getTuesdayR(),passedHabit.getWednesdayR(), passedHabit.getThursdayR(),
                             passedHabit.getFridayR(),passedHabit.getSaturdayR(),passedHabit.getSundayR(),passedHabit.getVisibility());

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,9 +11,6 @@ import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.Controllers.HabitAdapter;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -23,10 +19,6 @@ public class AllHabitsActivity extends AppCompatActivity implements HabitAdapter
     private HabitAdapter habitAdapter;
     private RecyclerView list;
     private LinearLayoutManager mLayoutManager;
-    private DocumentReference docRef;
-    private CollectionReference colRef;
-    private FirebaseFirestore db;
-    private String passedUser;
     private Switch reorder;
 
 

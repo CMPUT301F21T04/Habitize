@@ -1,6 +1,5 @@
 package com.example.habitize.Activities.Followers;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -111,9 +110,9 @@ public class FollowingActivity extends AppCompatActivity {
             if (intentResult.getContents() == null) {
                 Toast.makeText(getBaseContext(), "Cancelled", Toast.LENGTH_SHORT).show();
             } else {
-                // if the intentResult is not null we'll set
-                // the content and format of scan message
-                System.out.println(intentResult.getContents());
+                // if the intentResult is not null
+                // we send a request to the owner of the QR code
+
                 DatabaseManager.requestFollow(intentResult.getContents());
             }
         } else {

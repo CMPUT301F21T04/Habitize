@@ -50,23 +50,6 @@ public class RecordCreate extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_record_create,container,false);
 
-        /*
-        ActivityResultLauncher<Intent> forActivityResult = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode()!= RESULT_CANCELED) {
-                            Intent data = result.getData();
-                            imageUri = data.getData();
-                            imageViewer.setImageURI(imageUri);
-                            uploadImg();
-                        }
-                    }
-                }
-        );
-         */
-        // Access arguments
-
 
 
 
