@@ -181,7 +181,6 @@ public class HabitEventsTest {
 //                IntentMatchers.hasData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
 //        intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, getGalleryIntent()));
 
-
         SystemClock.sleep(8000);
         //create record
         onView(withId(R.id.createRecord)).perform(click());
