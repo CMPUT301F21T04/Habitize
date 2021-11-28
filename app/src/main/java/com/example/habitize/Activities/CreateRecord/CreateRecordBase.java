@@ -102,7 +102,13 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
 
                 Record newRecord = new Record(currentDate,comment,null,id,lat,lon);
                 DatabaseManager.updateRecord(passedHabit.getRecordAddress(),newRecord);
+
                 passedHabits.get(index).incrementStreak();
+                double currentStreak = passedHabits.get(index).getStreak();
+                //the amount of the time the user was supposed to perform record
+                double fullStreak = passedHabits.get(index).computeRecurrence().size();
+                double percentageNumber = (currentStreak/fullStreak)* 100;
+                System.out.println("DID IT WORKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK " +"percentageNumber "+ percentageNumber+" currentStreak "+currentStreak+" fullStreak "+fullStreak);
                 DatabaseManager.updateHabits(passedHabits);
 
                 if(recordImg != null){

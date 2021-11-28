@@ -155,13 +155,14 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
             }
         });
+        passedHabits = (ArrayList<Habit>) getIntent().getSerializableExtra("habits");
 
-        //the streak value for the current habit
-        Long currentStreak = passedHabits.get(passedIndex).getStreak();
+        double currentStreak = passedHabits.get(passedIndex).getStreak();
         //the amount of the time the user was supposed to perform record
-        int fullStreak = passedHabits.get(passedIndex).computeRecurrence().size();
-        Long percentageNumber = (currentStreak/fullStreak)* 100;
-        System.out.println("DID IT WORKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK " + percentageNumber);
+        double fullStreak = passedHabits.get(passedIndex).computeRecurrence().size();
+        double percentageNumber = (currentStreak/fullStreak)* 100;
+        System.out.println("DID IT WORKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK " +"percentageNumber "+ percentageNumber+" currentStreak "+currentStreak+" fullStreak "+fullStreak);
+
     }
 
 
