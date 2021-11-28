@@ -31,6 +31,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
     private Context mContext;
     private boolean mViewing;
     private activityEnder ender;
+    private reorderEnabler enabler;
 
     @NonNull
     @Override
@@ -38,6 +39,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_content, parent, false);
         this.mContext = parent.getContext();
         ender = (activityEnder) parent.getContext();
+        enabler = (reorderEnabler) parent.getContext();
         return new HabitHolder(view);
     }
 
@@ -93,55 +95,64 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
     @Override
     public void onBindViewHolder(@NonNull HabitHolder holder, int position) {
 
-        // each cell is responsible for communicating with firebase and populating its image.
+        // each cell is responsible for communicating with firebase and populating its image/ deciding
+        // whether is should display its record button. (if the habit has already been complete
+        // today it should not display.)
         DatabaseManager.getAndSetImage(dataset.get(holder.getAdapterPosition()).getRecordAddress()
                 ,holder.getHabitImageView());
         DatabaseManager.habitComplete(dataset.get(holder.getAdapterPosition()).getRecordAddress(),holder.getRecordButton());
         holder.getTitle().setText(dataset.get(holder.getAdapterPosition()).getName());
+        holder.getView().setClickable(true);
         // different cases based on whether we are viewing another person's habit or not.
         if(!mViewing) { // if we aren't viewing. Set recording habit and view/edit screen opening listeners
             holder.getView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, ViewHabitTabsBase.class);
-                    Bundle habitBundle = new Bundle();
-                    habitBundle.putSerializable("habit", dataset.get(holder.getAdapterPosition()));
-                    if (posInFireBase != null) {
-                        habitBundle.putSerializable("index", posInFireBase.get(holder.getAdapterPosition()));
-                    } else {
-                        habitBundle.putSerializable("index", holder.getAdapterPosition());
+                    if(!enabler.reoderEnabled()) {
+                        // onclick pass the habit down into an activity for viewing.
+                        Intent intent = new Intent(mContext, ViewHabitTabsBase.class);
+                        Bundle habitBundle = new Bundle();
+                        habitBundle.putSerializable("habit", dataset.get(holder.getAdapterPosition()));
+                        if (posInFireBase != null) {
+                            habitBundle.putSerializable("index", posInFireBase.get(holder.getAdapterPosition()));
+                        } else {
+                            habitBundle.putSerializable("index", holder.getAdapterPosition());
+                        }
+                        habitBundle.putSerializable("habits", dataset);
+                        habitBundle.putSerializable("viewing", false);
+                        intent.putExtras(habitBundle);
+                        mContext.startActivity(intent);
+                        ender.endActivity();
                     }
-                    habitBundle.putSerializable("habits", dataset);
-                    habitBundle.putSerializable("viewing",false);
-                    intent.putExtras(habitBundle);
-                    mContext.startActivity(intent);
-                    ender.endActivity();
                 }
             });
             holder.getRecordButton().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, CreateRecordBase.class);
-                    Bundle habitBundle = new Bundle();
-                    // depending on whether our list is relative or an exact copy.
-                    if(posInFireBase != null){
-                        habitBundle.putSerializable("habit",dataset.get(holder.getAdapterPosition())); // pass down the habit at the position
-                        habitBundle.putSerializable("index",posInFireBase.get(holder.getAdapterPosition()));
-                        habitBundle.putSerializable("habits",dataset);
+                    if(!enabler.reoderEnabled()) {
+                        // on clicking of the record button, pass all the data down required to record.
+                        Intent intent = new Intent(mContext, CreateRecordBase.class);
+                        Bundle habitBundle = new Bundle();
+                        // depending on whether our list is relative or an exact copy.
+                        if (posInFireBase != null) {
+                            habitBundle.putSerializable("habit", dataset.get(holder.getAdapterPosition())); // pass down the habit at the position
+                            habitBundle.putSerializable("index", posInFireBase.get(holder.getAdapterPosition()));
+                            habitBundle.putSerializable("habits", dataset);
 
-                    }
-                    else{
-                        habitBundle.putSerializable("habit",dataset.get(holder.getAdapterPosition())); // pass down the habit at the position
-                        habitBundle.putSerializable("index",holder.getAdapterPosition());
-                        habitBundle.putSerializable("habits",dataset);
-                    }
+                        } else {
+                            habitBundle.putSerializable("habit", dataset.get(holder.getAdapterPosition())); // pass down the habit at the position
+                            habitBundle.putSerializable("index", holder.getAdapterPosition());
+                            habitBundle.putSerializable("habits", dataset);
+                        }
 
-                    intent.putExtras(habitBundle);
-                    mContext.startActivity(intent);
+                        intent.putExtras(habitBundle);
+                        mContext.startActivity(intent);
+                    }
                 }
             });
         }
         else{
+            // else we are viewing. The record button should not be visible.
             holder.getRecordButton().setVisibility(View.INVISIBLE); // we hide the record button if we are viewing.
             holder.getView().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -169,6 +180,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+        // different cases based on if we are viewing another person's habits.
         if (!this.mViewing) {
             ItemTouchHelper.SimpleCallback simpleCallback =
                     new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
@@ -183,27 +195,31 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
                             return true;
                         }
 
+
+                        // setting the drag/drop reorder logic.
                         @Override
                         public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
                             super.onSelectedChanged(viewHolder, actionState);
                             // when we let go of the drag, let the swap happen
-                            switch (actionState) {
-                                default:
-                                    fromPos = viewHolder.getAdapterPosition();
-                                    break;
-                                case ItemTouchHelper.ACTION_STATE_IDLE:
-                                    if (posInFireBase != null) {
-                                        Collections.swap(allHabits, posInFireBase.get(fromPos), posInFireBase.get(toPos));
-                                        recyclerView.getAdapter().notifyDataSetChanged();
-                                        DatabaseManager.updateHabits(allHabits);
-                                    } else {
-                                        Collections.swap(dataset, fromPos, toPos);
-                                        recyclerView.getAdapter().notifyDataSetChanged();
-                                        DatabaseManager.updateHabits(dataset);
-                                    }
-                                    break;
-
-
+                            if(enabler.reoderEnabled()){
+                                switch (actionState) {
+                                    default:
+                                        fromPos = viewHolder.getAdapterPosition();
+                                        break;
+                                    case ItemTouchHelper.ACTION_STATE_IDLE:
+                                        if (posInFireBase != null) {
+                                            Collections.swap(allHabits, posInFireBase.get(fromPos), posInFireBase.get(toPos));
+                                            recyclerView.getAdapter().notifyItemMoved(posInFireBase.get(fromPos), posInFireBase.get(toPos));
+                                            fromPos = toPos;
+                                            DatabaseManager.updateHabits(allHabits);
+                                        } else {
+                                            Collections.swap(dataset, fromPos, toPos);
+                                            recyclerView.getAdapter().notifyItemMoved(fromPos, toPos);
+                                            fromPos = toPos;
+                                            DatabaseManager.updateHabits(dataset);
+                                        }
+                                        break;
+                                }
                             }
                         }
 
@@ -217,9 +233,13 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
 
     }
 
-
+    // after editing of the image, it doesn't change right away. This is a cheap fix, we will
+    // just go back to the main menu after clicking a habit.
     public interface activityEnder {
         void endActivity();
+    }
+    public interface reorderEnabler{
+        public boolean reoderEnabled();
     }
 
     @Override

@@ -34,6 +34,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
     private CollectionReference userHabits;
     private CollectionReference followers;
     private CollectionReference following;
+    private ErrorShower shower;
     //google sign in init
     private com.google.android.gms.common.SignInButton googleSignUp;
     private GoogleSignInClient mGoogleSignInClient;
@@ -49,6 +50,7 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Connecting variables with XML
+        shower = new ErrorShower(this);
         setContentView(R.layout.signup_activity_ui);
         Button login = findViewById(R.id.loginbutton);
         Button create = findViewById(R.id.create_button);
@@ -153,11 +155,13 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                Toast.makeText(SignUp.this,"Successful sign up with google welcome " +account.getDisplayName(),Toast.LENGTH_LONG).show();
+                shower.throwError(4);
                 firebaseAuthWithGoogle(account.getDisplayName(),account.getEmail(),account.getGivenName(),account.getFamilyName(), account.getId());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Toast.makeText(SignUp.this,"Failed sign up with google ",Toast.LENGTH_LONG).show();
+                shower.throwError(5);
+
+
             }
         }
     }

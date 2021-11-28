@@ -64,7 +64,6 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
         progressBar.setVisibility(View.GONE);
         ErrorShower errorShower = new ErrorShower(this);
         DatabaseManager.setLoginContext(this);
-
         // Create a Pop up dialog when user forgot password
         resetPass_alert = new AlertDialog.Builder(this);
         inflater = this.getLayoutInflater();

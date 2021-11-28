@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-public class TodaysHabitsActivity extends AppCompatActivity implements HabitAdapter.activityEnder {
+public class TodaysHabitsActivity extends AppCompatActivity implements HabitAdapter.activityEnder, HabitAdapter.reorderEnabler{
 
     private ArrayList<Habit> dataList;
     private HabitAdapter habitAdapter;
@@ -49,6 +49,7 @@ public class TodaysHabitsActivity extends AppCompatActivity implements HabitAdap
         habitAdapter = new HabitAdapter(dataList, posInFireBase, allHabits, false);
         listView.setAdapter(habitAdapter);
         listView.setLayoutManager(mLayoutManager);
+        listView.setItemAnimator(null);
         DatabaseManager.getAllHabits(allHabits);
         DatabaseManager.getTodaysHabitsRecycler(dataList, habitAdapter, posInFireBase);
 
@@ -58,5 +59,10 @@ public class TodaysHabitsActivity extends AppCompatActivity implements HabitAdap
     @Override
     public void endActivity() {
         finish();
+    }
+
+    @Override
+    public boolean reoderEnabled() {
+        return reorderT.isChecked();
     }
 }
