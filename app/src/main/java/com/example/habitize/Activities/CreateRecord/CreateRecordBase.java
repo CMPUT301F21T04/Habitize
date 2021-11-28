@@ -117,7 +117,7 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
                 today = daysArray[day];
 
                 if (recurrenceValues.contains(today)) {
-                    //increment streak points by one
+                    passedHabit.incrementStreak();
                 }
 
                 finish();

@@ -26,17 +26,6 @@ public class Habit implements Serializable {
 
     public Habit(){};
 
-//    public Habit(boolean mondayR, boolean tuesdayR,
-//                 boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR){
-//        this.mondayR = mondayR;
-//        this.tuesdayR = tuesdayR;
-//        this.wednesdayR = wednesdayR;
-//        this.thursdayR = thursdayR;
-//        this.fridayR = fridayR;
-//        this.saturdayR = saturdayR;
-//        this.sundayR = sundayR;
-//    };
-
     public Habit(String name, String description, String startDate, boolean mondayR, boolean tuesdayR,
                  boolean wednesdayR, boolean thursdayR, boolean fridayR, boolean saturdayR, boolean sundayR,ArrayList<Record> passedList
     ,String identifier,boolean visible){

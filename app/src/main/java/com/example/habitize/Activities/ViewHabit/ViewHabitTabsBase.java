@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,11 +18,17 @@ import com.example.habitize.Controllers.DatabaseManager;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
 import com.example.habitize.Structural.Record;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -41,6 +48,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     private int passedIndex;
     private boolean mViewing;
     private boolean editable;
+    private TextView percentValue;
     private ArrayList<Record> recordList;
     String[] titles = {"INFO","IMAGE","RECORDS"};
 
@@ -147,6 +155,13 @@ public class ViewHabitTabsBase extends AppCompatActivity {
 
             }
         });
+
+        //the streak value for the current habit
+        Long currentStreak = passedHabits.get(passedIndex).getStreak();
+        //the amount of the time the user was supposed to perform record
+        int fullStreak = passedHabits.get(passedIndex).computeRecurrence().size();
+        Long percentageNumber = (currentStreak/fullStreak)* 100;
+        System.out.println("DID IT WORKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK " + percentageNumber);
     }
 
 
