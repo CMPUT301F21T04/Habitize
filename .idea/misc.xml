@@ -89,7 +89,8 @@
         <entry key="app/src/main/res/layout/custom_info_contents.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_add_habit_base.xml" value="0.1518987341772152" />
         <entry key="app/src/main/res/layout/fragment_view_habit_base.xml" value="0.23369565217391305" />
-        <entry key="app/src/main/res/layout/list_content.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_view_habit_image.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/list_content.xml" value="0.1" />
         <entry key="app/src/main/res/layout/login_activity.xml" value="0.21002825169113126" />
         <entry key="app/src/main/res/layout/record_list_content.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/reset_layout.xml" value="0.15833333333333333" />

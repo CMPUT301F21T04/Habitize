@@ -3,6 +3,7 @@ package com.example.habitize;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -16,6 +17,7 @@ import com.example.habitize.Activities.AddHabit.AddHabitTabsBase;
 import com.example.habitize.Activities.Followers.FollowingActivity;
 import com.example.habitize.Activities.MainActivity;
 import com.example.habitize.Activities.SignupAndLogin.Login_Activity;
+import com.example.habitize.Activities.ViewHabit.ViewRecordsFragment;
 import com.example.habitize.Activities.ViewHabitLists.AllHabitsActivity;
 import com.example.habitize.Activities.ViewHabitLists.TodaysHabitsActivity;
 import com.example.habitize.Activities.ViewRecord.ViewRecordBase;
@@ -81,9 +83,13 @@ public class HabitEventsTest {
     @Test
     public void Test_1_RecordHabitActivity(){
         onView(withId(R.id.allHabitCard)).perform(click());
-
         SystemClock.sleep(1000);
-        intended(hasComponent(ViewRecordBase.class.getName()));
+        onView(withId(R.id.habitName)).perform(click());
+        onView(withId(R.id.FragmentViewHabitTitle)).perform(swipeLeft());
+        SystemClock.sleep(1000);
+        onView(withId(R.id.FragmentViewHabitNewImage)).perform(swipeLeft());
+        SystemClock.sleep(1000);
+        intended(hasComponent(ViewRecordsFragment.class.getName()));
     }
 
     @After
