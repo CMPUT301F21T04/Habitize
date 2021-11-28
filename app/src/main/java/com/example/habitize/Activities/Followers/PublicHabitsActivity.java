@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-public class PublicHabitsActivity extends AppCompatActivity {
+public class PublicHabitsActivity extends AppCompatActivity implements HabitAdapter.activityEnder {
 
     private ArrayList<Habit> dataList;
     private HabitAdapter habitAdapter;
@@ -58,7 +58,11 @@ public class PublicHabitsActivity extends AppCompatActivity {
         userNameToFollow = b.getString("name");
 
         //DatabaseManager.getAllHabits(allHabits);
-        DatabaseManager.getPublicHabitsRecycler(dataList, habitAdapter,posInFireBase, userNameToFollow);
+        DatabaseManager.getPublicHabitsRecycler(dataList, habitAdapter, posInFireBase, userNameToFollow);
     }
-    
+
+    @Override
+    public void endActivity() {
+        // doesn't have to do anything since we cant edit other's habits.
+    }
 }

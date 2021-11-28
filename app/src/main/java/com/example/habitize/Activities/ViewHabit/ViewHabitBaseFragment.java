@@ -52,6 +52,7 @@ public class ViewHabitBaseFragment extends Fragment   {
     private Switch visible;
     private boolean publicHabit;
     private boolean mViewing;
+    private boolean visibility;
 
     private Switch geolocation;
     private Switch Geolocation;
@@ -69,7 +70,7 @@ public class ViewHabitBaseFragment extends Fragment   {
     // filling constructor for viewing
     public ViewHabitBaseFragment(String titleText, String descText,String startTextDate, boolean monRecurrence,
                                  boolean tueRecurrence, boolean wedRecurrence, boolean thurRecurrence,
-                                 boolean friRecurrence, boolean satRecurrence, boolean sunRecurrence ){
+                                 boolean friRecurrence, boolean satRecurrence, boolean sunRecurrence,boolean visible ){
         this.titleText = titleText;
         this.descText = descText;
         this.startDateText = startTextDate;
@@ -80,6 +81,7 @@ public class ViewHabitBaseFragment extends Fragment   {
         this.FriRecurrence = friRecurrence;
         this.SatRecurrence = satRecurrence;
         this.SunRecurrence = sunRecurrence;
+        this.visibility = visible;
 
 
     }
@@ -114,8 +116,8 @@ public class ViewHabitBaseFragment extends Fragment   {
         Friday.setEnabled(false);
         Saturday.setEnabled(false);
         Sunday.setEnabled(false);
-        visible.setEnabled(false);
         mViewing = (boolean) getArguments().getSerializable("viewing");
+
 
         // setting views to values set in the constructor
         Monday.setChecked(MonRecurrence);
@@ -128,6 +130,9 @@ public class ViewHabitBaseFragment extends Fragment   {
         title.setText(titleText);
         description.setText(descText);
         startDate.setText(startDateText);
+        visible.setChecked(visibility);
+
+
 
 
 
@@ -297,7 +302,9 @@ public class ViewHabitBaseFragment extends Fragment   {
     }
 
 
-
+    public boolean getVisible(){
+        return this.visible.isChecked();
+    }
 
     public String getTitle(){
         return title.getText().toString();
