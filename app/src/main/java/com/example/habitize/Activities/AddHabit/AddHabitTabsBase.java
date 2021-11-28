@@ -13,6 +13,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.habitize.Controllers.DatabaseManager;
+import com.example.habitize.Controllers.ErrorShower;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
 import com.google.android.material.tabs.TabLayout;
@@ -21,7 +22,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class AddHabitTabsBase extends AppCompatActivity {
+public class AddHabitTabsBase extends AppCompatActivity implements ErrorShower.ErrorHandler {
     private ViewPager2 pager;
     private TabLayout tabLayout;
     private Button createButton;
@@ -40,6 +41,7 @@ public class AddHabitTabsBase extends AppCompatActivity {
         setContentView(R.layout.activity_add_habit_tabs_base);
         pager = findViewById(R.id.recordPager);
         createButton = findViewById(R.id.create_habit_tabs);
+        ErrorShower shower = new ErrorShower(this);
 
         //to store habits
         passedHabits = new ArrayList<>();
@@ -80,34 +82,39 @@ public class AddHabitTabsBase extends AppCompatActivity {
 
                 //check if title empty
                 if(title.equals("")){
-                    Toast.makeText(AddHabitTabsBase.this,"Enter a habit title",Toast.LENGTH_LONG).show();
+                    shower.throwError(1);
                     return;
                 }
 
                 //check if description empty
                 if(description.equals("")){
-                    Toast.makeText(AddHabitTabsBase.this,"Enter a habit description",Toast.LENGTH_LONG).show();
+                    shower.throwError((2));
                     return;
                 }
 
                 //check if start date of habit is empty
                 if(startDate.equals("")){
-                    Toast.makeText(AddHabitTabsBase.this,"Enter a habit start date",Toast.LENGTH_LONG).show();
+                    shower.throwError(3);
                     return;
                 }
 
                 //make sure title is up to 20 chars
                 if (title.length() > 20){
-                    Toast.makeText(AddHabitTabsBase.this,"title length too long",Toast.LENGTH_LONG).show();
+                    shower.throwError(4);
                     return;
                 }
-
+                if(monRec == false && tueRec == false && wedRec == false && thurRec == false && friRec == false
+                        && satRec == false && sunRec == false){
+                    shower.throwError((5));
+                    return;
+                }
                 //make sure habit description is up to 30 chars
                 if (description.length() > 30){
-                    Toast.makeText(AddHabitTabsBase.this,"Enter a habit title",Toast.LENGTH_LONG).show();
+                    shower.throwError(6);
                     return;
-
                 }
+
+
                 //creates the habit and stores in database only if validation above is correct
                 if (!(title.equals("")) && (!(description.equals(""))) &&
                         (!(startDate.equals("")))) {
@@ -125,6 +132,24 @@ public class AddHabitTabsBase extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public String getErrorMessage(int errorCode) {
+        switch(errorCode){
+            case 1:
+                return "Habit requires a title";
+            case 2:
+                return "Habit requires a description";
+            case 3:
+                return "Habit requires a start date";
+            case 4:
+                return "Habit title should be less than 20 characters";
+            case 5:
+                return "Habit should occur atleast once a week";
+            default:
+                return "Habit description should be lass than 30 characters";
+        }
     }
 
 

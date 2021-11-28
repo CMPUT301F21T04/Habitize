@@ -81,52 +81,6 @@ public class RecordCreate extends Fragment{
             comment.setEnabled(false);
         }
 
-
-
-        /*
-        // Listener for the image button. When the button is clicked, redirect user to the openGallery method
-        RecordImgBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                forActivityResult.launch(gallery);
-            }
-        });
-
-         */
-
-/*
-        // Create the dialog builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        return builder
-                .setTitle("New Record")
-                .setView(view)
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                        Date d = new Date();
-                        String currentDate = formatter.format(d);
-                        Record newRecord = new Record(currentDate,comment.getText().toString(),null,new UUID(20,10).randomUUID().toString());
-                        DatabaseManager.updateRecord(args.getRecordAddress(),newRecord);
-                        // retrieve the habit, increment its streak and update the database.
-                        passedHabits.get(index).incrementStreak();
-                        DatabaseManager.updateHabits(passedHabits);
-
-                        imageViewer.setDrawingCacheEnabled(true);
-                        imageViewer.buildDrawingCache();
-                        Bitmap bitmap = ((BitmapDrawable) imageViewer.getDrawable()).getBitmap();
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                        byte[] data = baos.toByteArray();
-                        if(data != null){
-                            DatabaseManager.storeImage(data,newRecord.getRecordIdentifier());
-                        }
-
-                    }
-                }).create();
-                */
         return view;
     }
 

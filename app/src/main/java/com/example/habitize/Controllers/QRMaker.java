@@ -13,6 +13,9 @@ public class QRMaker {
     public static int WHITE = 0xFFFFFFFF;
     public static int BLACK = 0xFF000000;
 
+
+
+    // creates a QR code out of the given string
     public static Bitmap makeQR(String source) throws WriterException {
         BitMatrix result;
         Bitmap bitmap;
@@ -37,6 +40,8 @@ public class QRMaker {
         return bitmap;
     }
 
+
+    // sets the imageview to the QR code bitmap generated
     public static void setQRIMAGE(String source, ImageView imageView) {
         try {
             Bitmap bmp = makeQR(source);

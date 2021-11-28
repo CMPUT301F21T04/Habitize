@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.habitize.Activities.AddHabit.AddHabitImageFragment;
 import com.example.habitize.Activities.ViewRecord.MapFragment;
 import com.example.habitize.Controllers.DatabaseManager;
+import com.example.habitize.Controllers.ErrorShower;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
 import com.example.habitize.Structural.Record;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-public class CreateRecordBase extends AppCompatActivity implements MapFragment.scrollDisabler {
+public class CreateRecordBase extends AppCompatActivity implements MapFragment.scrollDisabler, ErrorShower.ErrorHandler {
     private ViewPager2 pager;
     private TabLayout tabLayout;
     private Button createButton;
@@ -53,7 +54,7 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
         passedHabit = (Habit) getIntent().getSerializableExtra("habit");
         passedRecord = (Record) getIntent().getSerializableExtra("record");
 
-
+        ErrorShower shower = new ErrorShower(this);
 
         mAdapter = new AddRecordAdapter(this);
         pager.setOffscreenPageLimit(8);
@@ -80,6 +81,16 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
                 String currentDate = formatter.format(d);
 
                 String comment = recordCreateFrag.getComment();
+
+
+                if(comment.equals("")){
+                    shower.throwError(1);
+                    return;
+                }
+                if(comment.length() > 20){
+                    shower.throwError(2);
+                    return;
+                }
                 byte[] recordImg = imgFrag.getImageBytes();
                 Double lon = mapFrag.getLon();
                 Double lat = mapFrag.getLat();
@@ -133,6 +144,16 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
     @Override
     public void enableScroll() {
         pager.setUserInputEnabled(true);
+    }
+
+    @Override
+    public String getErrorMessage(int errorCode) {
+        switch(errorCode){
+            case 1:
+                return "Comment cannot be empty";
+            default:
+                return "comment should be less than 20 characters";
+        }
     }
 
 
