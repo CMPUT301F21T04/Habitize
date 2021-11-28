@@ -47,6 +47,7 @@ public class AddHabitImageFragment extends Fragment {
             return null;
         }
         else{
+            // get the
             imageView.setDrawingCacheEnabled(true);
             imageView.buildDrawingCache();
             Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();

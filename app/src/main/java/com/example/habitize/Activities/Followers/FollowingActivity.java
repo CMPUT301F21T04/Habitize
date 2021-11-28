@@ -113,8 +113,8 @@ public class FollowingActivity extends AppCompatActivity {
             } else {
                 // if the intentResult is not null we'll set
                 // the content and format of scan message
-                Toast.makeText(this,intentResult.getContents(),Toast.LENGTH_SHORT);
-                DatabaseManager.sendFollow(intentResult.getContents());
+                System.out.println(intentResult.getContents());
+                DatabaseManager.requestFollow(intentResult.getContents());
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
