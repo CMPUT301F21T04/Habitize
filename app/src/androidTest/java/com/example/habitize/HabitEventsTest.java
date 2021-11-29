@@ -21,11 +21,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.not;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.SystemClock;
 
 import androidx.test.espresso.ViewAssertion;
@@ -34,6 +37,7 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.matcher.IntentMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
 
 import com.example.habitize.Activities.AddHabit.AddHabitTabsBase;
 import com.example.habitize.Activities.Followers.FollowingActivity;
@@ -53,6 +57,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class HabitEventsTest {
     String testEmail;
@@ -72,6 +77,14 @@ public class HabitEventsTest {
 
     @Rule
     public ActivityScenarioRule<Login_Activity> activityRule = new ActivityScenarioRule<Login_Activity>(Login_Activity.class);
+//    @Rule
+//    public GrantPermissionRule permissionRule = GrantPermissionRule.grant(android.Manifest.permission.READ_EXTERNAL_STORAGE);
+//    @Rule
+//    public GrantPermissionRule permissionRule2 = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
+//    @Rule
+//    public GrantPermissionRule permissionRule3 = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_COARSE_LOCATION);
+//    @Rule
+//    public GrantPermissionRule permissionRule4 = GrantPermissionRule.grant(Manifest.permission.INTERNET);
 
     @Before
     public void initValidate(){
@@ -114,8 +127,7 @@ public class HabitEventsTest {
         onView(withId(R.id.create_habit_tabs)).perform(click());
         intended(hasComponent(MainActivity.class.getName()));
     }
-    //Check the add habits button if it works and if it takes you to
-    //the right activity
+    //Check the add habits button if it works and if it takes you to the right activity
     //Make sure that its signed in
     @Test
     public void Test_0_successLogin() {
@@ -124,6 +136,8 @@ public class HabitEventsTest {
     }
     @Test
     public void Test_1_RecordHabitActivity(){
+        // This test only test creation of record with just a comment, the only required one.
+        // There will be a seperate test for images and location
         //check record activity is displayed
         SystemClock.sleep(3000);
         onView(withId(R.id.allHabitCard)).perform(scrollTo(),click());
@@ -132,6 +146,7 @@ public class HabitEventsTest {
         //create a record
         onView(withId(R.id.completeHabit)).perform(click());
         SystemClock.sleep(3000);
+        // only record is required
         onView(withId(R.id.recordComment)).perform(replaceText(recordComment));
         SystemClock.sleep(1000);
         onView(withId(R.id.createRecord)).perform(click());
@@ -145,64 +160,11 @@ public class HabitEventsTest {
         onView(withId(R.id.recordDate)).check(matches(isDisplayed())).perform(click());
         onView(withText("Image")).perform(click());
         onView(withText("Location")).perform(click());
-        onView(isRoot()).perform(ViewActions.pressBack());
+//        onView(isRoot()).perform(ViewActions.pressBack());
         //delete the habit
         onView(withId(R.id.delete_button_tabs)).perform(click());
-        //delete the habit
-        onView(withId(R.id.delete_button_tabs)).perform(click());
+
     }
-
-    @Test
-    public void Test_2_TestImageInRecord(){
-        //check record activity is displayed
-        SystemClock.sleep(3000);
-        onView(withId(R.id.allHabitCard)).perform(scrollTo(),click());
-        SystemClock.sleep(3000);
-
-        //create a record
-        onView(withId(R.id.completeHabit)).perform(click());
-        SystemClock.sleep(3000);
-        //add comment
-        onView(withId(R.id.recordComment)).perform(replaceText(recordComment));
-        SystemClock.sleep(1000);
-        // add image
-        onView(withText("Image")).perform(click());
-        Intent resultData = new Intent();
-        String filename = "image.jpeg";
-        String path = "content://com.android.providers.downloads.documents/document/downloads" + filename;
-        File f = new File(path);
-        Context context = InstrumentationRegistry.getInstrumentation().getContext();
-        Uri contentUri = getUriForFile(context, "com.otsuka.ikigai.fileprovider", f);
-        resultData.setData(Uri.parse("content://com.android.providers.downloads.documents/document/downloads/image.jpeg"));
-        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK,resultData);
-        intending(not(isInternal())).respondWith(result);
-        onView(withText("Load Image")).perform(click());
-//        Matcher<Intent> expectedIntent = AllOf.allOf(IntentMatchers.hasAction(Intent.ACTION_PICK),
-//                IntentMatchers.hasData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI));
-//        intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, getGalleryIntent()));
-
-        SystemClock.sleep(8000);
-        //create record
-        onView(withId(R.id.createRecord)).perform(click());
-
-        // click to view the habit
-        onView(withText(testTitle)).perform(click());
-        onView(withId(R.id.habitName)).perform(click());
-        SystemClock.sleep(1000);
-        onView(withId(R.id.FragmentViewHabitTitle)).perform(swipeLeft());
-        SystemClock.sleep(1000);
-
-        // view the habit event / record
-        onView(withId(R.id.recordDate)).check(matches(isDisplayed()));
-        onView(withId(R.id.recordDate)).check(matches(isDisplayed())).perform(click());
-        onView(withText("Image")).perform(click());
-        onView(withText("Location")).perform(click());
-        onView(isRoot()).perform(ViewActions.pressBack());
-        //delete the habit
-        onView(withId(R.id.delete_button_tabs)).perform(click());
-    }
-
-
 
     @After
     public void tearDown() {

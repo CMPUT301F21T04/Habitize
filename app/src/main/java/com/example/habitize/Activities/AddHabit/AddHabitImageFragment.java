@@ -23,7 +23,7 @@ import com.example.habitize.R;
 import java.io.ByteArrayOutputStream;
 
 public class AddHabitImageFragment extends Fragment {
-    private ImageView imageView;
+    private static ImageView imageView;
     private Button addImageBtn, addCamBtn;
     private static final int PICK_IMAGE = 100;
     private static final int CAM_IMG = 200;
@@ -111,6 +111,7 @@ public class AddHabitImageFragment extends Fragment {
 
     private void openCamera(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
         try {
             startActivityForResult(takePictureIntent, CAM_IMG);
         } catch (ActivityNotFoundException e) {
@@ -138,8 +139,14 @@ public class AddHabitImageFragment extends Fragment {
         }
     }
 
-
-
+    public static boolean getIMGStat(){
+        if(imageView.getDrawable() == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
 
 }
