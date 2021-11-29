@@ -20,6 +20,7 @@ import com.example.habitize.Activities.ViewHabit.ViewHabitTabsBase;
 import com.example.habitize.Activities.ViewOther.ViewOtherHabitTabsBase;
 import com.example.habitize.R;
 import com.example.habitize.Structural.Habit;
+import com.google.firebase.database.DataSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
     private boolean mViewing;
     private activityEnder ender;
     private reorderEnabler enabler;
+
 
     @NonNull
     @Override
@@ -285,10 +287,12 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitHolder>
         public boolean reoderEnabled();
     }
 
+
     @Override
     public int getItemCount() {
         return dataset.size();
     }
+
 
 
 }
