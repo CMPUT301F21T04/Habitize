@@ -12,7 +12,7 @@ public class Authentication{
     private static FirebaseAuth fAuth;
 
 
-    // we initialize the firestore ONCE. Many objects but all will refer to the same instance
+    // we initialize the fAuth ONCE. Many objects but all will refer to the same instance
     static {
         fAuth = FirebaseAuth.getInstance();
     }

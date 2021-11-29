@@ -61,6 +61,7 @@
         <entry key="app/src/main/res/layout/activity_add_habit_image.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/activity_add_habit_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_add_habit_location.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/activity_add_habit_tabs_base.xml" value="0.11666666666666667" />
         <entry key="app/src/main/res/layout/activity_create_record.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_follow_requests.xml" value="0.1140625" />
         <entry key="app/src/main/res/layout/activity_following.xml" value="0.335" />
@@ -71,10 +72,12 @@
         <entry key="app/src/main/res/layout/activity_public_habits.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_qr.xml" value="0.15885416666666666" />
         <entry key="app/src/main/res/layout/activity_qr_code.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_view_habit_tabs.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_view_habit_tabs.xml" value="0.32897558591367193" />
         <entry key="app/src/main/res/layout/activity_view_info.xml" value="0.25" />
         <entry key="app/src/main/res/layout/all_habits.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/custom_info_contents.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_add_habit_base.xml" value="0.25729166666666664" />
+        <entry key="app/src/main/res/layout/fragment_view_habit_base.xml" value="0.229656559256854" />
         <entry key="app/src/main/res/layout/list_content.xml" value="0.335" />
         <entry key="app/src/main/res/layout/login_activity.xml" value="0.21002825169113126" />
         <entry key="app/src/main/res/layout/reset_layout.xml" value="0.15833333333333333" />

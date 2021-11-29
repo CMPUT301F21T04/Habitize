@@ -26,7 +26,6 @@ public class ViewRecordsFragment extends Fragment implements RecordAdapter.recor
     private RecordAdapter recordAdapter;
     private Habit habit;
     private ArrayList<Habit> habits;
-    private boolean mViewing;
 
     View root;
 
@@ -40,9 +39,7 @@ public class ViewRecordsFragment extends Fragment implements RecordAdapter.recor
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         root = inflater.inflate(R.layout.fragment_view_records,container,false);
-        // no method for filling yet
         records = new ArrayList<>();
-        mViewing = (boolean) getArguments().getSerializable("viewing");
 
         list = root.findViewById(R.id.record_list);
         recordAdapter = new RecordAdapter(this, R.layout.record_list_content, records);
@@ -55,6 +52,8 @@ public class ViewRecordsFragment extends Fragment implements RecordAdapter.recor
     @Override
     public void onResume() {
         super.onResume();
+        records.clear();
+        recordAdapter.notifyDataSetChanged();
         DatabaseManager.getRecord(habit.getRecordAddress(), records, recordAdapter);
     }
 

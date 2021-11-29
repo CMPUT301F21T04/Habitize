@@ -17,6 +17,7 @@ public class Habit implements Serializable {
     private boolean sundayR;
     private boolean visible;
     private ArrayList<Record> recordList;
+    private ArrayList<String> recurrenceArray;
     private Integer completion; //If the habit was completed today = 1, if not = 0
     private Long streak;
     private int totalComplete; // total number of times the habit was checked
@@ -192,5 +193,30 @@ public class Habit implements Serializable {
         this.totalMissed = totalMissed;
     }
 
+    public ArrayList<String> computeRecurrence() {
+        recurrenceArray = new ArrayList<String>();
+        if (mondayR) {
+            recurrenceArray.add("Monday");
+        }
+        if (tuesdayR) {
+            recurrenceArray.add("Tuesday");
+        }
+        if (wednesdayR) {
+            recurrenceArray.add("Wednesday");
+        }
+        if (thursdayR) {
+            recurrenceArray.add("Thursday");
+        }
+        if (fridayR) {
+            recurrenceArray.add("Friday");
+        }
+        if (saturdayR) {
+            recurrenceArray.add("Saturday");
+        }
+        if (sundayR) {
+            recurrenceArray.add("Sunday");
+        }
+        return recurrenceArray;
+    }
 }
 

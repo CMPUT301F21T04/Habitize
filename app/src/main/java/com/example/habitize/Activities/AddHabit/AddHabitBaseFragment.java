@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -49,6 +50,8 @@ public class AddHabitBaseFragment extends Fragment {
     private boolean SunRecurrence;
     private Switch visible;
     private boolean publicHabit;
+
+    private ImageView emoji;
 
     private Switch geolocation;
     private Switch Geolocation;
@@ -103,6 +106,7 @@ public class AddHabitBaseFragment extends Fragment {
         Saturday = root.findViewById(R.id.fragmentSaturday);
         Sunday  = root.findViewById(R.id.fragmentSunday);
         visible = root.findViewById(R.id.publicHabit);
+
 
         /*
         Make sure if switch is on, the habit will be public

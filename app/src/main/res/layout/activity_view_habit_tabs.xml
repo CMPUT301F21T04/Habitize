@@ -16,6 +16,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/percentValue"
+            android:layout_width="137dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="35dp"
+            android:text="0%"
+            android:textSize="16dp" />
     </LinearLayout>
 
     <Button
@@ -44,8 +53,8 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/recordPager"
-        android:layout_width="415dp"
-        android:layout_height="509dp"
+        android:layout_width="411dp"
+        android:layout_height="554dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -55,12 +64,11 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/recordTabs"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
+        android:layout_width="405dp"
+        android:layout_height="39dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
 
     </com.google.android.material.tabs.TabLayout>
 

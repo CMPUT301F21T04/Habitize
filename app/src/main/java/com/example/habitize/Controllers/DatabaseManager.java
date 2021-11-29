@@ -14,14 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habitize.Structural.Habit;
 import com.example.habitize.Structural.Record;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -44,6 +48,7 @@ public class DatabaseManager {
     private static Context signUpContext;
     private static SimpleDateFormat simpleDateFormat;
     private static StorageReference storageRef;
+    private static String currentLoggedInUser;
 
     private static onRegistrationLoginListener registrationListener;
     private static onLoginListener loginListener;
@@ -70,10 +75,10 @@ public class DatabaseManager {
 
     // We only want to display the checkmark is a habit has not already been complete
     public static void habitComplete(String habitIdentifier, ImageButton button){
+        //gives the day of the week of the user (if today is actually Monday it will say Monday)
         db.collection("Users").document(user).collection("Records").document(habitIdentifier).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-
                 ArrayList<Record> mappedRecords = (ArrayList<Record>) value.get("records");
                 if(mappedRecords != null && mappedRecords.size() > 0) {
                     Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(mappedRecords.size() - 1);
@@ -87,7 +92,6 @@ public class DatabaseManager {
                 }
             }
         });
-
     }
 
     public static void setSearched(String searchedUser) {
@@ -352,7 +356,14 @@ public class DatabaseManager {
     }
 
 
-    public static void getSearchedRecord(String UUID, ArrayList<Record> recievingList, RecordAdapter adapter){
+    /**
+     * Description: populate a list with the records of the user we have searched for
+     *
+     * @Param UUID : the identifier of the record
+     * @Param recievingList : the list to populate
+     * @Param adapter: the adapter to notify of changes
+     */
+    public static void getSearchedRecord(String UUID, ArrayList<Record> recievingList, RecordAdapter adapter) {
         db.collection("Users").document(searched).collection("Records").document(UUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -361,9 +372,9 @@ public class DatabaseManager {
                 // get the mapped data of records
                 ArrayList<Record> mappedRecords = (ArrayList<Record>) value.get("records");
                 // retrieving all records
-                if(mappedRecords != null) {
+                if (mappedRecords != null) {
                     for (int i = 0; i < mappedRecords.size(); i++) {
-
+                        // unhashing the data
                         Map<String, Object> hashedRecord = (Map<String, Object>) mappedRecords.get(i);
                         String date = (String) hashedRecord.get("date");
                         String description = (String) hashedRecord.get("description");
@@ -373,6 +384,7 @@ public class DatabaseManager {
 
                         long TEN_MEGABYTES = 1024 * 1024 * 10;
                         StorageReference imageRef = storageRef.child(identifier);
+                        // get the image associated with the record.
                         imageRef.getBytes(TEN_MEGABYTES)
                                 .addOnSuccessListener(new OnSuccessListener<byte[]>() {
                                     @Override
@@ -416,8 +428,7 @@ public class DatabaseManager {
                     HashMap<String,Object> mappedData = new HashMap<>(); // hash the record
                     mappedData.put("records",records); // put it in the record space
                     db.collection("Users").document(user).collection("Records").document(UUID).set(mappedData);
-                }
-                else{
+                } else{
                     // this collection exists, we must check whether the document exists now.
 
                     db.collection("Users").document(user).collection("Records").document(UUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -441,8 +452,7 @@ public class DatabaseManager {
                                 HashMap<String, Object> mappedDate = new HashMap<>();
                                 mappedDate.put("records", updatedRecords);
                                 db.collection("Users").document(user).collection("Records").document(UUID).set(mappedDate);
-                            }
-                            else{
+                            } else{
                                 ArrayList<Record> records = new ArrayList<>();
                                 records.add(newRecord);
                                 HashMap<String,Object> mappedData = new HashMap<>(); // hash the record
@@ -456,6 +466,13 @@ public class DatabaseManager {
         });
     }
 
+
+    /**
+     * @param UUID       the identifier of the record
+     * @param newRecords the new records we want in place of the old ones. We pull the records first and then
+     *                   update them
+     *                   this function is used to edit an already recorded habit event or to notify a list that a record was deleted
+     */
     public static void updateBecauseDeleted(String UUID, ArrayList<Record> newRecords) {
         for (Record i : newRecords) {
             i.setByteArr(null);
@@ -534,18 +551,10 @@ public class DatabaseManager {
         });
     }
 
-    /**
-     * send a follow request to the given username
-     * @param user
-     */
-
-    public static void sendFollow(String user){
-
-    }
 
     /**
      * get all the followers
-     * puts loggin in users current followers into retrievingList, updates the adapter
+     * puts logged-in user's current followers into retrievingList, updates the adapter
      * @param retrievingList
      * @param adapter
      */
@@ -689,9 +698,10 @@ public class DatabaseManager {
                     boolean saturdayRec = (boolean) habitFields.get("saturdayR");
                     boolean sundayRec = (boolean) habitFields.get("sundayR");
                     String identifier = (String) habitFields.get("recordAddress");
+                    Long streak = (Long) habitFields.get("streak");
                     boolean visibility = (boolean) habitFields.get("visibility");
                     Habit newHabit = new Habit(name, description, date, mondayRec, tuesdayRec, wednesdayRec,
-                            thursdayRec, fridayRec, saturdayRec, sundayRec,new ArrayList<>(),identifier,visibility); // create a new habit out of this information
+                            thursdayRec, fridayRec, saturdayRec, sundayRec, new ArrayList<>(), identifier, streak, visibility); // create a new habit out of this information
                     recievingList.add(newHabit); // add it to the habitList
                 }
             }
@@ -830,6 +840,22 @@ public class DatabaseManager {
             }
         });
     }
+
+    public static void incrementPoints(int points) {
+        Query currentUserDocQuery = users.whereEqualTo("userName", user);
+        currentUserDocQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+                    for(QueryDocumentSnapshot document : task.getResult()) {
+                        users.document(user).update("points", FieldValue.increment(points));
+                    }
+                }
+            }
+        });
+    }
+
+
 
 
 
