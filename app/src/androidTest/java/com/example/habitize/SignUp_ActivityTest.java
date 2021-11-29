@@ -37,6 +37,13 @@ public class SignUp_ActivityTest {
     String testPassword;
     String testConPassword;
     String testIncorrectPass;
+    //user two
+    String testEmailOtherUser;
+    String testFirstNameOtherUser;
+    String testLastNameOtherUser;
+    String testUsernameOtherUser;
+    String testPasswordOtherUser;
+    String testConPasswordOtherUser;
 
     // tests fail because of this error
     //https://stackoverflow.com/questions/66338416/internal-error-in-cloud-firestore-22-1-0-when-running-instrumentation-test
@@ -49,10 +56,19 @@ public class SignUp_ActivityTest {
         testFirstName = "Rick";
         testLastName = "Grimes";
         testEmail = "rick0grimes301@gmail.com";
-        testUsername = "Rick";
+        testUsername = "RickGrimes";
         testPassword = "12345678";
         testConPassword = "12345678";
         testIncorrectPass = "123";
+
+        //User two
+        testEmailOtherUser = "negen0evil301@gmail.com";
+        testFirstNameOtherUser = "negen";
+        testLastNameOtherUser = "Evil";
+        testUsernameOtherUser = "negenEvil";
+        testPasswordOtherUser= "12345678";
+        testConPasswordOtherUser = "12345678";
+
     }
 
     @After
@@ -80,16 +96,7 @@ public class SignUp_ActivityTest {
     }
 
     //  Tests if the user enters a valid password (>= 8 characters)
-    @Test
-    public void lessthan8Pass(){
-        onView(withId(R.id.RegisterBTN)).perform(click());
-        onView(withId(R.id.email))
-                .perform(typeText(testEmail), closeSoftKeyboard());
-        onView(withId(R.id.password))
-                .perform(typeText(testIncorrectPass), closeSoftKeyboard());
-        onView(withId(R.id.create_button)).perform(click());
-        onView(withId(R.id.password)).check(matches(hasErrorText("Password should be greater than 8 characters")));
-    }
+
 
 
     //    Tests if the user enters an email with valid format
@@ -106,8 +113,26 @@ public class SignUp_ActivityTest {
     public void successSignUp(){
         onView(withId(R.id.RegisterBTN)).perform(click());
         onView(withId(R.id.email)).perform(replaceText(testEmail));
+        onView(withId(R.id.firstName)).perform(replaceText(testFirstName));
+        onView(withId(R.id.lastName)).perform(replaceText(testLastName));
+        onView(withId(R.id.userName)).perform(replaceText(testUsername));
         onView(withId(R.id.password)).perform(replaceText(testPassword));
         onView(withId(R.id.conPassword)).perform(replaceText(testPassword));
+        onView(withId(R.id.create_button)).perform(click());
+        SystemClock.sleep(5000);
+        intended(hasComponent(MainActivity.class.getName()));
+
+
+    }
+    @Test
+    public void successSignUpWithOtherUser(){
+        onView(withId(R.id.RegisterBTN)).perform(click());
+        onView(withId(R.id.email)).perform(replaceText(testEmailOtherUser));
+        onView(withId(R.id.firstName)).perform(replaceText(testFirstNameOtherUser));
+        onView(withId(R.id.lastName)).perform(replaceText(testLastNameOtherUser));
+        onView(withId(R.id.userName)).perform(replaceText(testUsernameOtherUser));
+        onView(withId(R.id.password)).perform(replaceText(testPasswordOtherUser));
+        onView(withId(R.id.conPassword)).perform(replaceText(testPasswordOtherUser));
         onView(withId(R.id.create_button)).perform(click());
         SystemClock.sleep(5000);
         intended(hasComponent(MainActivity.class.getName()));
@@ -119,7 +144,7 @@ public class SignUp_ActivityTest {
     @Test
     public void failedLogin(){
         onView(withId(R.id.RegisterBTN)).perform(click());
-        onView(withId(R.id.email)).perform(replaceText(testEmail));
+        onView(withId(R.id.email)).perform(replaceText(testEmailOtherUser));
         onView(withId(R.id.password)).perform(replaceText("wrongPass"));
         onView(withId(R.id.create_button)).perform(click());
         onView(hasErrorText("Login Failed"));
