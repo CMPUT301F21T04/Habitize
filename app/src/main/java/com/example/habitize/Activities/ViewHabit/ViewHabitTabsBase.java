@@ -195,7 +195,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return 3;
-        }
+        } // why 3
     }
 
 }
