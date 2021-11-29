@@ -48,7 +48,7 @@ public class AddHabitTest {
         testEmail = "rick0grimes301@gmail.com";
         testPassword = "12345678";
         testTitle = "Learn French";
-        testDesc = "Go on DuoLingo and practice French";
+        testDesc = "Go on DuoLingo";
         testStartDate = "11/05/2021";
         testMRec = true;
         testTRec = false;
