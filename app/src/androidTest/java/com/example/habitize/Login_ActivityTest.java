@@ -4,16 +4,22 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.os.SystemClock;
 
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -42,7 +48,7 @@ public class Login_ActivityTest {
     @Before
     public void initValidate(){
         Intents.init();
-        testEmail = "lll@gmail.com ";
+        testEmail = "lll@gmail.com";
         testPassword = "12345678";
         testIncorrectPass = "123";
     }
@@ -53,25 +59,28 @@ public class Login_ActivityTest {
     }
 
 
-//   Tests if the error handling for email works
+    //   Tests if the error handling for email works
     @Test
     public void emptyEmail(){
         onView(withId(R.id.email_login))
                 .perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.LoginBTN)).perform(click());
-        // The screen should stay in Login because required fields are not filled
+        // The screen shouldn't move because invalid input on password
         intending(hasComponent(Login_Activity.class.getName()));
+
     }
-//  Tests if the error handling for password works
+    //  Tests if the error handling for password works
     @Test
     public void emptyPass(){
         onView(withId(R.id.email_login))
                 .perform(typeText(testEmail),closeSoftKeyboard());
         onView(withId(R.id.LoginBTN)).perform(click());
+        // The screen shouldn't move because invalid input on password
         intending(hasComponent(Login_Activity.class.getName()));
+
     }
 
-//  Tests if the user enters a valid password (>= 8 characters)
+    //  Tests if the user enters a valid password (>= 8 characters)
     @Test
     public void lessthan8Pass(){
         onView(withId(R.id.email_login))
@@ -79,23 +88,22 @@ public class Login_ActivityTest {
         onView(withId(R.id.password_login))
                 .perform(typeText(testIncorrectPass), closeSoftKeyboard());
         onView(withId(R.id.LoginBTN)).perform(click());
-        // The screen should stay in Login because required fields are not filled
+        // The screen shouldn't move because invalid input on password
         intending(hasComponent(Login_Activity.class.getName()));
     }
 
 
-//    Tests if the user enters an email with valid format
+    //    Tests if the user enters an email with valid format
     @Test
     public void testSetup() throws IOException {
         onView(withId(R.id.email_login)).perform(replaceText("username"));
         onView(withId(R.id.password_login)).perform(replaceText("password"));
         onView(withId(R.id.LoginBTN)).perform(click());
-        SystemClock.sleep(5000);
-        // The screen should stay in login because the email field is incorrectly filled
+        // The screen shouldn't move because invalid input on password
         intending(hasComponent(Login_Activity.class.getName()));
     }
 
-//    Tests if the user successfully login
+    //    Tests if the user successfully login
     @Test
     public void successLogin(){
         onView(withId(R.id.email_login)).perform(replaceText(testEmail));
@@ -106,15 +114,15 @@ public class Login_ActivityTest {
 
     }
 
-//    Tests if the user failed to login
+    //    Tests if the user failed to login
     @Test
     public void failedLogin(){
         onView(withId(R.id.email_login)).perform(replaceText(testEmail));
         onView(withId(R.id.password_login)).perform(replaceText("wrongPass"));
         onView(withId(R.id.LoginBTN)).perform(click());
         onView(hasErrorText("Login Failed"));
-        
-
+        // The screen shouldn't move because invalid input on password
+        intending(hasComponent(Login_Activity.class.getName()));
     }
 }
 
