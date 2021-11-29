@@ -226,7 +226,7 @@ public class FollowingTest {
         onView(withId(R.id.requestedFollowerName)).check(doesNotExist());
     }
     @Test
-    public void Test_7_deleteFollowerFunction(){
+    public void Test_8_deleteFollowerFunction(){
         //other user send follow req
         onView(withId(R.id.logoutCard)).perform(scrollTo(),click());
         onView(withId(R.id.email_login)).perform(replaceText(testEmailOtherUser));
