@@ -34,7 +34,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
-
+//PLEASE RUN FIRST SignUp_ActivityTest OR THIS TEST WILL NOT WORK ALL THE TIME!
+//Because this test uses user account that is made in SignUp_ActivityTest
+//and if the data base got cleaned then test user account will not exist
 @RunWith(AndroidJUnit4.class)
 public class Login_ActivityTest {
     String testEmail;
@@ -48,7 +50,7 @@ public class Login_ActivityTest {
     @Before
     public void initValidate(){
         Intents.init();
-        testEmail = "lll@gmail.com";
+        testEmail = "rick0grimes301@gmail.com";
         testPassword = "12345678";
         testIncorrectPass = "123";
     }
