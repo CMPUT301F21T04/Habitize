@@ -209,47 +209,47 @@ public class FollowingTest {
         onView(withId(R.id.deleteExistingFollowerButton)).perform(click());
         onView(withId(R.id.requestedFollowerName)).check(doesNotExist());
     }
-    @Test
-    public void Test_7_deleteFollowerFunction(){
-        //other user send follow req
-        onView(withId(R.id.logoutCard)).perform(scrollTo(),click());
-        onView(withId(R.id.email_login)).perform(replaceText(testEmailOtherUser));
-        onView(withId(R.id.password_login)).perform(replaceText(testPasswordOtherUser));
-        SystemClock.sleep(2000);
-        onView(withId(R.id.LoginBTN)).perform(click());
-        SystemClock.sleep(5000);
-        onView(withId(R.id.followingCard)).perform(scrollTo(),click());
-        onView(withId(R.id.editTextTextPersonName)).perform(replaceText(testUsername));
-        onView(withId(R.id.searchButton)).perform(click());
-        SystemClock.sleep(5000);
-        onView(withId(R.id.sendRequestButton)).perform(scrollTo(),click());
-        onView(isRoot()).perform(ViewActions.pressBack());
-        onView(isRoot()).perform(ViewActions.pressBack());
-
-
-        //logout and log in
-        onView(withId(R.id.logoutCard)).perform(scrollTo(),click());
-        onView(withId(R.id.email_login)).perform(replaceText(testEmail));
-        onView(withId(R.id.password_login)).perform(replaceText(testPassword));
-        SystemClock.sleep(2000);
-        onView(withId(R.id.LoginBTN)).perform(click());
-        SystemClock.sleep(5000);
-
-        //accept
-        onView(withId(R.id.followingCard)).perform(scrollTo(),click());
-        SystemClock.sleep(2000);
-        onView(withId(R.id.followingReq)).perform(click());
-        onView(withId(R.id.acceptFollowRequestButton)).perform(scrollTo(),click());
-        onView(isRoot()).perform(ViewActions.pressBack());
-        onView(isRoot()).perform(ViewActions.pressBack());
-
-
-        //delete
-        onView(withId(R.id.followingCard)).perform(scrollTo(),click());
-        onView(withId(R.id.deleteExistingFollowerButton)).perform(scrollTo(),click());
-        onView(withId(R.id.requestedFollowerName)).check(doesNotExist());
-
-    }
+//    @Test
+//    public void Test_8_deleteFollowerFunction(){
+//        //other user send follow req
+//        onView(withId(R.id.logoutCard)).perform(scrollTo(),click());
+//        onView(withId(R.id.email_login)).perform(replaceText(testEmailOtherUser));
+//        onView(withId(R.id.password_login)).perform(replaceText(testPasswordOtherUser));
+//        SystemClock.sleep(2000);
+//        onView(withId(R.id.LoginBTN)).perform(click());
+//        SystemClock.sleep(5000);
+//        onView(withId(R.id.followingCard)).perform(scrollTo(),click());
+//        onView(withId(R.id.editTextTextPersonName)).perform(replaceText(testUsername));
+//        onView(withId(R.id.searchButton)).perform(click());
+//        SystemClock.sleep(5000);
+//        onView(withId(R.id.sendRequestButton)).perform(scrollTo(),click());
+//        onView(isRoot()).perform(ViewActions.pressBack());
+//        onView(isRoot()).perform(ViewActions.pressBack());
+//
+//
+//        //logout and log in
+//        onView(withId(R.id.logoutCard)).perform(scrollTo(),click());
+//        onView(withId(R.id.email_login)).perform(replaceText(testEmail));
+//        onView(withId(R.id.password_login)).perform(replaceText(testPassword));
+//        SystemClock.sleep(2000);
+//        onView(withId(R.id.LoginBTN)).perform(click());
+//        SystemClock.sleep(5000);
+//
+//        //accept
+//        onView(withId(R.id.followingCard)).perform(scrollTo(),click());
+//        SystemClock.sleep(2000);
+//        onView(withId(R.id.followingReq)).perform(click());
+//        onView(withId(R.id.acceptFollowRequestButton)).perform(scrollTo(),click());
+//        onView(isRoot()).perform(ViewActions.pressBack());
+//        onView(isRoot()).perform(ViewActions.pressBack());
+//
+//
+//        //delete
+//        onView(withId(R.id.followingCard)).perform(scrollTo(),click());
+//        onView(withId(R.id.deleteExistingFollowerButton)).perform(scrollTo(),click());
+//        onView(withId(R.id.requestedFollowerName)).check(doesNotExist());
+//
+//    }
 
     @After
     public void tearDown() {
