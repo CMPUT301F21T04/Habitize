@@ -66,7 +66,7 @@ public class AllHabitsActivity extends AppCompatActivity implements HabitAdapter
 
 
     public void setVisibility(){
-        if (dataList.size() == 0) {
+        if (dataList.size() != 0) {
             list.setVisibility(View.VISIBLE);
             emptyView.setVisibility(View.GONE);
             emptyImg.setVisibility(View.GONE);
