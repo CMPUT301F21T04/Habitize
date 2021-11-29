@@ -93,6 +93,7 @@ public class LocationTest {
         SystemClock.sleep(3000);
         onView(withId(R.id.recordComment)).perform(replaceText(recordComment));
         SystemClock.sleep(1000);
+        // check if location is not null
         onView(withText("Location")).perform(click());
         onView(withId(R.id.addressView)).check(matches(not(withText(""))));
     }

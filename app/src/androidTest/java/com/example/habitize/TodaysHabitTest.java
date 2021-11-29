@@ -4,6 +4,7 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -52,7 +53,7 @@ public class TodaysHabitTest {
         SystemClock.sleep(1000);
         onView(withId(R.id.LoginBTN)).perform(click());
         SystemClock.sleep(5000);
-        onView(withId(R.id.addHabitCard)).perform(click());
+        onView(withId(R.id.addHabitCard)).perform(scrollTo(),click());
         SystemClock.sleep(1000);
         onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
         SystemClock.sleep(1000);
@@ -73,7 +74,7 @@ public class TodaysHabitTest {
     //if it was made correctly, then go to todays habit screen and check if its there
     @Test
     public void recurrenceTest(){
-        onView(withId(R.id.todayHabitCard)).perform(click());
+        onView(withId(R.id.todayHabitCard)).perform(scrollTo(),click());
         onView(withText("Learn French")).perform(click());
         SystemClock.sleep(1000);
     }
