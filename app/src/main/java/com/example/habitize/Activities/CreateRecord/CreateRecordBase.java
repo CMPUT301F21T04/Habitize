@@ -28,6 +28,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * This code will run for all create record screens and contains the logic to display the list
+ * of records. */
 public class CreateRecordBase extends AppCompatActivity implements MapFragment.scrollDisabler, ErrorShower.ErrorHandler {
     private ViewPager2 pager;
     private TabLayout tabLayout;
@@ -155,17 +158,25 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
 
     }
 
+    /**
+     * Disable scroll functionality for the list of records.
+     * */
     @Override
     public void disableScroll() {
         pager.setUserInputEnabled(false);
 
     }
 
+    /**
+     * Allow user to scroll through the list of records. */
     @Override
     public void enableScroll() {
         pager.setUserInputEnabled(true);
     }
 
+    /**
+     * Retrieve the custom error message for record comments.
+     * */
     @Override
     public String getErrorMessage(int errorCode) {
         switch(errorCode){
@@ -176,8 +187,9 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
         }
     }
 
-
-    // addapter for the tabs
+    /**
+     * Add record adapter creates a fragment which allows for habit record creation.
+     * */
     class AddRecordAdapter extends FragmentStateAdapter{
         public AddRecordAdapter(@NonNull FragmentActivity fragmentActivity){super(fragmentActivity);}
 

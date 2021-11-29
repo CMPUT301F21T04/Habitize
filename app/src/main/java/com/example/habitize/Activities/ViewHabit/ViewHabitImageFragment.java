@@ -23,6 +23,8 @@ import com.example.habitize.R;
 
 import java.io.ByteArrayOutputStream;
 
+/**
+ * Allows the user to view the habit image they have chosen. */
 public class ViewHabitImageFragment extends Fragment {
     private ImageView imageView;
     private Button addImageBtn, viewCamBtn;

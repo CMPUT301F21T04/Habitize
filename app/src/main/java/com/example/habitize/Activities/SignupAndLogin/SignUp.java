@@ -25,6 +25,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * Handles the creation of user accounts. Users must register on the login screen
+ * before they are allowed to log in to the application and create a Habit. */
 public class SignUp extends AppCompatActivity implements DatabaseManager.onRegistrationLoginListener, ErrorShower.ErrorHandler {
     private static final int RC_SIGN_IN = 301;
     //Initializing variables
@@ -141,6 +144,11 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    /**
+     * Handles the google sign up functionality.
+     * @param data The contents of the result
+     * @param requestCode the code for the API request
+     * @param resultCode the result for the API request*/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -163,6 +171,8 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         }
     }
 
+    /**
+     * Will allow for firebase to authenticate users using denoted user account details */
     private void firebaseAuthWithGoogle(String username,String email, String firstName, String lastName, String password) {
 
         DatabaseManager.setInfoForRegistration(username, email, firstName, lastName, password);
@@ -170,6 +180,9 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
         DatabaseManager.checkUsernameAndRegister();
     }
 
+    /**
+     * Redirects the user to the mainActivity page once they log into the application
+     * successfully. */
     @Override
     public void loginUser() {
         Intent intent = new Intent(SignUp.this, MainActivity.class);
@@ -177,6 +190,8 @@ public class SignUp extends AppCompatActivity implements DatabaseManager.onRegis
 
     }
 
+    /**
+     * Handle which error message gets displayed when the user enters invalid data upon sign up.*/
     @Override
     public String getErrorMessage(int errorCode) {
         switch (errorCode) {

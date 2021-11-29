@@ -17,7 +17,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-
+/**
+ * This activity will run when the user clicks on a follower item from either FollowingActivity or
+ * FollowRequests. They are able to see a list of public habits for their follower if they are
+ * mutual followers of each other.
+ * EXMAPLE: If user1 has NOT accepted a follow request from user2:
+ * then user2 is NOT able to see user1's public habits and this activity will not get run. */
 public class PublicHabitsActivity extends AppCompatActivity implements HabitAdapter.activityEnder, HabitAdapter.reorderEnabler {
 
     private ArrayList<Habit> dataList;
