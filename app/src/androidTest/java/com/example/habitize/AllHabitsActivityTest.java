@@ -3,6 +3,7 @@ package com.example.habitize;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -48,7 +49,7 @@ public class AllHabitsActivityTest {
             SystemClock.sleep(1000);
             onView(withId(R.id.LoginBTN)).perform(click());
             SystemClock.sleep(5000);
-            onView(withId(R.id.addHabitCard)).perform(click());
+            onView(withId(R.id.addHabitCard)).perform(scrollTo(),click());
             SystemClock.sleep(1000);
             onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
             SystemClock.sleep(1000);
@@ -60,10 +61,11 @@ public class AllHabitsActivityTest {
             onView(withId(R.id.fragmentSaturday)).perform(click());
             onView(withId(R.id.fragmentSunday)).perform(click());
             onView(withId(R.id.create_habit_tabs)).perform(click());
+            SystemClock.sleep(4000);
 
             testTitle2 = "Learn Mandarin";
             testDesc2 = "Go on DuoLingo Now";
-            onView(withId(R.id.addHabitCard)).perform(click());
+            onView(withId(R.id.addHabitCard)).perform(scrollTo(),click());
             SystemClock.sleep(1000);
             onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle2));
             SystemClock.sleep(1000);
@@ -72,7 +74,9 @@ public class AllHabitsActivityTest {
             onView(withText("OK")).perform(click());
             onView(withId(R.id.fragmentMonday)).perform(click());
             onView(withId(R.id.fragmentTuesday)).perform(click());
+            SystemClock.sleep(1000);
             onView(withId(R.id.create_habit_tabs)).perform(click());
+            SystemClock.sleep(8000);
 
         }
 
@@ -80,10 +84,13 @@ public class AllHabitsActivityTest {
         //if it was made correctly, then go to todays habit screen and check if its there
         @Test
         public void HabitsInAllHabitsListTest(){
-            onView(withId(R.id.allHabitCard)).perform(click());
+            onView(withId(R.id.allHabitCard)).perform(scrollTo(),click());
             onView(withText("Learn Spanish")).perform(click());
+            SystemClock.sleep(1000);
             onView(isRoot()).perform(ViewActions.pressBack());
-            onView(withText("Learn Mandarin"));
+            SystemClock.sleep(1000);
+            onView(withId(R.id.allHabitCard)).perform(scrollTo(),click());
+            onView(withText("Learn Mandarin")).perform(click());
             SystemClock.sleep(1000);
         }
 

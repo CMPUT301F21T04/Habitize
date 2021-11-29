@@ -88,7 +88,7 @@ public class ImageTest {
 
     @Test
     public void withCam(){
-        // check if the intent matches when app asks to access gallery
+        // check if the intent matches when app asks to access camera
         SystemClock.sleep(1000);
         onView(withId(R.id.new_camera_btn)).perform(click());
         SystemClock.sleep(8000);
