@@ -30,6 +30,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * Handles the sign up activity and displays a custom error message to the user upon
+ * unsuccessful sign ins. Also contains code for the google sign in API.*/
 public class Login_Activity extends AppCompatActivity implements DatabaseManager.onLoginListener, ErrorShower.ErrorHandler {
     // variables to be worked in
     EditText email_EditText, password_EditText;
@@ -136,6 +139,11 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    /**
+     * Handles the google sign in functionality.
+     * @param data The contents of the result
+     * @param requestCode the code for the API request
+     * @param resultCode the result for the API request*/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -174,6 +182,8 @@ public class Login_Activity extends AppCompatActivity implements DatabaseManager
         startActivity(intent);
     }
 
+    /**
+     * Displays error message for incorrect combination of sign in credentials. */
     @Override
     public String getErrorMessage(int errorCode) {
         switch (errorCode) {

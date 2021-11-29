@@ -25,6 +25,8 @@ import com.example.habitize.Structural.Habit;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Runs when the user views a habit already created.*/
 // this is one of the 3 fragments that gets created when viewing a habit
 public class ViewHabitBaseFragment extends Fragment   {
 
@@ -63,6 +65,8 @@ public class ViewHabitBaseFragment extends Fragment   {
     private List<Habit> passedHabits;
     private static final String TAG = "MainActivity";
 
+    /**
+     * */
     public ViewHabitBaseFragment() {
         // Required empty public constructor
     }

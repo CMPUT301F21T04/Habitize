@@ -12,6 +12,10 @@ import com.example.habitize.R;
 
 import java.util.ArrayList;
 
+
+/**
+ * Displays the list of users which matches the query obtained from the editText in FollowingActivity
+ * search bar.*/
 public class SearchResults extends AppCompatActivity {
     private CustomListOfSearchResults CustomListOfSearch;
     private ListView listView;

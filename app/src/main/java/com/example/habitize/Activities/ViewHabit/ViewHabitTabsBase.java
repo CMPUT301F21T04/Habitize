@@ -32,6 +32,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/**
+ * Allows user to view a habit they've created and toggles edit Habit functionality on and off.*/
 public class ViewHabitTabsBase extends AppCompatActivity {
     private ViewPager2 pager;
     private TabLayout tabLayout;
@@ -95,7 +97,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
             ConfirmEdit.setVisibility(View.INVISIBLE);
         }
 
-        //edit toggle button which
+        /**edit toggle button which allows user to edit their habit from the view habit screen*/
         AllowEdit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ViewHabitBaseFragment baseFrag = (ViewHabitBaseFragment) getSupportFragmentManager().findFragmentByTag("f0");
@@ -143,7 +145,7 @@ public class ViewHabitTabsBase extends AppCompatActivity {
             }
         });
 
-        // ask user to confirm delete
+        /** ask user to confirm delete habit*/
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,10 +172,8 @@ public class ViewHabitTabsBase extends AppCompatActivity {
     }
 
 
-    // class for managing the views in the pager. Tells the pager where to get the fragments on
-    // navigation.
-
-
+    /**class for managing the views in the pager. Tells the pager where to get the fragments on
+   navigation.*/
     class ViewAdapter extends FragmentStateAdapter{
 
         public ViewAdapter(@NonNull FragmentActivity fragmentActivity) {

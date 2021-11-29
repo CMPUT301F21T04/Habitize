@@ -135,6 +135,10 @@ public class AddHabitTabsBase extends AppCompatActivity implements ErrorShower.E
 
     }
 
+    /**
+     * @param errorCode is the Java error which happens when the user tries to create a habit
+     * without including a required field. From here we include a switch case to create a custom
+     * error message.*/
     @Override
     public String getErrorMessage(int errorCode) {
         switch(errorCode){
@@ -154,7 +158,9 @@ public class AddHabitTabsBase extends AppCompatActivity implements ErrorShower.E
     }
 
 
-    //adapter to make fragments
+    /**
+     * Makes an adapter to create the fragments for tabs
+     * */
     class addAdapter extends FragmentStateAdapter{
 
         /**

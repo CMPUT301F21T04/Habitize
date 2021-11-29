@@ -15,13 +15,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.habitize.R;
 
-
+/**
+ * RecordCreate contains the logic that governs the creation of a record.
+ * Allows comments to be editable and sets the comment for the record to a habit.*/
 public class RecordCreate extends Fragment{
-    // Ui components
-
-
-
-
     private Button RecordLocBTN, RecordImgBTN;
     private EditText comment;
     private String commentText;
@@ -49,12 +46,6 @@ public class RecordCreate extends Fragment{
 
 
         View view = inflater.inflate(R.layout.fragment_record_create,container,false);
-
-
-
-
-
-
 
         // Link UI components to the its respective pairs in XML
 

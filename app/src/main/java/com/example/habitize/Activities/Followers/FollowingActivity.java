@@ -22,6 +22,12 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 
+/**
+ * FollowingActivity gets launched when user clicks Following button on MainActivity.
+ * Populates activity_following.xml UI with data retrieved from firestore.
+ * Calls the CustomListOfExistingFollowers adapter to render requested follower usernames
+ * as custom list items.
+ * */
 public class FollowingActivity extends AppCompatActivity {
     private CustomListOfExistingFollowers CustomListOfExistingFollowersAdapter;
     FirebaseFirestore fStore;
@@ -90,16 +96,25 @@ public class FollowingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Launches FollowRequests activity when the user clicks the followRequests button from
+     * FollowingActivity. */
     public void openFollowRequestsActivity() {
         Intent intent = new Intent(this, FollowRequests.class);
         startActivity(intent);
     }
 
+    /**
+     * Launches SearchResults activity when the user performs a search by clicking the
+     * search floating action button from FollowingActivity. */
     public void openSearchResultsActivity() {
         Intent intent = new Intent(this, SearchResults.class);
         intent.putExtra(USER_INPUT_SEARCH, userSearchInput);
         startActivity(intent);
     }
+
+    /**
+     * Allows screen to gain a "cancelled" toast message when they have an empty intentResult */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

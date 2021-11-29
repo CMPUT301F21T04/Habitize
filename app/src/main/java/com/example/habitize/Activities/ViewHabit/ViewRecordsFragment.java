@@ -49,6 +49,8 @@ public class ViewRecordsFragment extends Fragment implements RecordAdapter.recor
 
     }
 
+    /**
+     * Updates the record adapter. */
     @Override
     public void onResume() {
         super.onResume();
@@ -57,7 +59,7 @@ public class ViewRecordsFragment extends Fragment implements RecordAdapter.recor
         DatabaseManager.getRecord(habit.getRecordAddress(), records, recordAdapter);
     }
 
-
+    /** Allows user to view the record of their habti using bundle. */
     @Override
     public void viewRecord(int position) {
         Bundle habitBundle = new Bundle();

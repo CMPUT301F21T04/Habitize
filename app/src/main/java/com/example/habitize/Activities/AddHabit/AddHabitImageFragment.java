@@ -22,6 +22,10 @@ import com.example.habitize.R;
 
 import java.io.ByteArrayOutputStream;
 
+/**
+ * AddHabitImageFragment is the fragment which takes place from tabs
+ * where the user can add an image to their habit upon habit creation.
+ * */
 public class AddHabitImageFragment extends Fragment {
     private static ImageView imageView;
     private Button addImageBtn, addCamBtn;
@@ -32,7 +36,7 @@ public class AddHabitImageFragment extends Fragment {
     private boolean viewing = false;
 
     /*
-     * Empty required c onstructor
+     * Empty required constructor
      */
     public AddHabitImageFragment(){
 
@@ -102,7 +106,7 @@ public class AddHabitImageFragment extends Fragment {
         return root;
     }
 
-    /*
+    /**
      * opens gallery in another screen
      */
     private void openGallery() {
@@ -139,6 +143,8 @@ public class AddHabitImageFragment extends Fragment {
         }
     }
 
+    /**
+     * @return true when the imageView drawable is not null */
     public static boolean getIMGStat(){
         if(imageView.getDrawable() == null){
             return false;
