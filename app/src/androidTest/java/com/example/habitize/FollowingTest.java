@@ -3,6 +3,9 @@ package com.example.habitize;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -101,21 +104,22 @@ public class FollowingTest {
     @Test
     public void Test_1_followingActivity(){
         //add new habit first
-        onView(withId(R.id.followingCard)).perform(scrollTo(),click());
+        onView(withId(R.id.followingCard)).perform(click());
         intended(hasComponent(FollowingActivity.class.getName()));
     }
 
     @Test
     public void Test_2_searchFollowingActivity(){
         //add new habit first
-        onView(withId(R.id.followingCard)).perform(scrollTo(),click());
+        onView(withId(R.id.followingCard)).perform(click());
+
         onView(withId(R.id.searchButton)).perform(click());
         intended(hasComponent(FollowingActivity.class.getName()));
     }
     @Test
     public void Test_3_FollowReqActivity(){
         //add new habit first
-        onView(withId(R.id.followingCard)).perform(scrollTo(),click());
+        onView(withId(R.id.followingCard)).perform(click());
         onView(withId(R.id.followingReq)).perform(click());
         intended(hasComponent(FollowRequests.class.getName()));
     }
@@ -123,14 +127,14 @@ public class FollowingTest {
     public void Test_4_searchCorrectAndSendFollowReqActivity(){
         //signing out and then signing in with otherUser
         //DatabaseManager.getFollowing(existingFollowers, CustomListOfExistingFollowersAdapter);
-        onView(withId(R.id.logoutCard)).perform(scrollTo(),click());
+        onView(withId(R.id.logoutCard)).perform(click());
         onView(withId(R.id.email_login)).perform(replaceText(testEmailOtherUser));
         onView(withId(R.id.password_login)).perform(replaceText(testPasswordOtherUser));
-        SystemClock.sleep(2000);
         onView(withId(R.id.LoginBTN)).perform(click());
-        SystemClock.sleep(10000);
-        intending(hasComponent(MainActivity.class.getName()));
-        onView(withId(R.id.followingCard)).perform(scrollTo(),click());
+        SystemClock.sleep(5000);
+
+        onView(withId(R.id.followingCard)).perform(click());
+
         onView(withId(R.id.editTextTextPersonName)).perform(replaceText(testUsername));
 
         onView(withId(R.id.searchButton)).perform(click());
@@ -141,6 +145,7 @@ public class FollowingTest {
     }
     @Test
     public void Test_5_FollowReqFunction(){
+        onView(withId(R.id.followingCard)).perform(click());
         //other user send follow req
         onView(withId(R.id.logoutCard)).perform(scrollTo(),click());
         onView(withId(R.id.email_login)).perform(replaceText(testEmailOtherUser));
@@ -171,6 +176,17 @@ public class FollowingTest {
     }
     @Test
     public void Test_6_FollowersFunction(){
+        onView(withId(R.id.followingCard)).perform(click());
+        onView(withId(R.id.followingReq)).perform(click());
+        onView(withId(R.id.acceptFollowRequestButton)).perform(click());
+        onView(isRoot()).perform(ViewActions.pressBack());
+        onView(withId(R.id.existingFollowerName)).check(matches(withText(testUsernameOtherUser)));
+    }
+    @Test
+    public void Test_7_deleteFollowerFunction(){
+        onView(withId(R.id.followingCard)).perform(click());
+
+        onView(withId(R.id.deleteExistingFollowerButton)).perform(click());
         //other user send follow req
         onView(withId(R.id.logoutCard)).perform(scrollTo(),click());
         onView(withId(R.id.email_login)).perform(replaceText(testEmailOtherUser));
