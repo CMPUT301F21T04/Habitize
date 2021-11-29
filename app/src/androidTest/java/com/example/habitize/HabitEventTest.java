@@ -1,20 +1,22 @@
+
 package com.example.habitize;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
 import android.os.SystemClock;
-
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import com.example.habitize.Activities.AddHabit.AddHabitTabsBase;
 import com.example.habitize.Activities.MainActivity;
 import com.example.habitize.Activities.SignupAndLogin.Login_Activity;
 
@@ -22,13 +24,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
-public class AddHabitTest {
+
+
+public class HabitEventTest {
     String testEmail;
     String testPassword;
     String testTitle;
+    String testEditTitle;
     String testDesc;
     String testStartDate;
     Boolean testMRec;
@@ -38,16 +41,17 @@ public class AddHabitTest {
     Boolean testFRec;
     Boolean testSRec;
     Boolean testSuRec;
+    String recordComment;
 
     @Rule
     public ActivityScenarioRule<Login_Activity> activityRule = new ActivityScenarioRule<Login_Activity>(Login_Activity.class);
-
     @Before
     public void initValidate(){
         Intents.init();
         testEmail = "rick0grimes301@gmail.com";
         testPassword = "12345678";
         testTitle = "Learn French";
+        testEditTitle = "Learn English";
         testDesc = "Go on DuoLingo";
         testStartDate = "11/05/2021";
         testMRec = true;
@@ -57,6 +61,7 @@ public class AddHabitTest {
         testFRec = true;
         testSRec = false;
         testSuRec = false;
+        recordComment = "done";
     }
 
     @Before
@@ -68,41 +73,12 @@ public class AddHabitTest {
 
     }
 
-    //Make sure that its signed in
-    @Test
-    public void successLogin() {
-
-        intended(hasComponent(MainActivity.class.getName()));
-    }
-    //Check the add habits button if it works and if it takes you to
-    //the right activity
-    @Test
-    public void addNewHabitAcctivity(){
-        onView(withId(R.id.addHabitCard)).perform(click());
-        SystemClock.sleep(1000);
-        intended(hasComponent(AddHabitTabsBase.class.getName()));
-    }
-    //Check the error massage when no data added
-    @Test
-    public void EmptyInputs(){
-        onView(withId(R.id.addHabitCard)).perform(click());
-        SystemClock.sleep(1000);
-        onView(withId(R.id.create_habit_tabs)).perform(click());
-        intended(hasComponent(AddHabitTabsBase.class.getName()));
-    }
-    //Add title to a new habit without the rest of the data
-    @Test
-    public void IncompleteInputs(){
-        onView(withId(R.id.addHabitCard)).perform(click());
-        SystemClock.sleep(1000);
-        onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
-        onView(withId(R.id.create_habit_tabs)).perform(click());
-        SystemClock.sleep(3000);
-        intended(hasComponent(AddHabitTabsBase.class.getName()));
-    }
 
     @Test
-    public void createNewHabitSuccessful(){
+    public void Test_1_RecordHabitActivity(){
+        // This test only test creation of record with just a comment, the only required one.
+        // There will be a seperate test for images and location
+        //check record activity is displayed
         onView(withId(R.id.addHabitCard)).perform(click());
         SystemClock.sleep(1000);
         onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
@@ -112,18 +88,36 @@ public class AddHabitTest {
         onView(withText("OK")).perform(click());
         onView(withId(R.id.create_habit_tabs)).perform(click());
         intended(hasComponent(MainActivity.class.getName()));
+        intended(hasComponent(MainActivity.class.getName()));
+        SystemClock.sleep(3000);
+        onView(withId(R.id.allHabitCard)).perform(scrollTo(),click());
+        SystemClock.sleep(3000);
+
+        //create a record
+        onView(withId(R.id.completeHabit)).perform(click());
+        SystemClock.sleep(3000);
+        // only record is required
+        onView(withId(R.id.recordComment)).perform(replaceText(recordComment));
+        SystemClock.sleep(1000);
+        onView(withId(R.id.createRecord)).perform(click());
+        onView(withText(testTitle)).perform(click());
+        onView(withId(R.id.habitName)).perform(click());
+        onView(withId(R.id.FragmentViewHabitTitle)).perform(swipeLeft());
+        SystemClock.sleep(1000);
+        onView(withId(R.id.FragmentViewHabitNewImage)).perform(swipeLeft());
+        SystemClock.sleep(2000);
+        //view habit
+        onView(withId(R.id.recordDate)).check(matches(isDisplayed())).perform(click());
+        onView(withText("Image")).perform(click());
+        onView(withText("Location")).perform(click());
+        onView(isRoot()).perform(ViewActions.pressBack());
+        //delete the habit
+        onView(withId(R.id.delete_button_tabs)).perform(click());
 
     }
-
-
-
 
     @After
     public void tearDown() {
         Intents.release();
     }
-
 }
-
-
-
