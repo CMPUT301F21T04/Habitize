@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import com.example.habitize.Activities.AddHabit.AddHabitTabsBase;
+import com.example.habitize.Activities.CreateRecord.CreateRecordBase;
 import com.example.habitize.Activities.Followers.FollowingActivity;
 import com.example.habitize.Activities.ViewHabitLists.AllHabitsActivity;
 import com.example.habitize.Activities.ViewHabitLists.TodaysHabitsActivity;
@@ -33,8 +34,10 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar3;
     private TextView username;
     private Toolbar toolBar;
+    private int sumStreaks;
+    int totalExpectedRecords = 0;
     private ImageButton qrBTN;
-
+    private ArrayList<Habit> passedHabits;
     private StructuredQuery.FieldReference fieldReference;
     public ArrayList<Habit> habitList;
     private int progressTrack = 0; //starting at 0 (max 100)
@@ -61,11 +64,8 @@ public class MainActivity extends AppCompatActivity {
         progressBar3 = (ProgressBar)findViewById(R.id.progressBarmain);
         qrBTN = findViewById(R.id.qrbtn);
         leaderboard = findViewById(R.id.leaderboardCard);
-
-
-
-
         username.setText(DatabaseManager.getUser());
+
         // When add habit button is clicked upon, it will bring you to a add activity screen
         addHabit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +127,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+//        passedHabits = new ArrayList<Habit>();
+//        DatabaseManager.getAllHabits(passedHabits);
+//
+//        for(int i=0; i<passedHabits.size(); i++){
+//            sumStreaks = (int) (sumStreaks + passedHabits.get(i).getStreak());
+//        }
+//
+//        for(int i = 0; i<passedHabits.size(); i++) {
+//            ArrayList<String> recurrenceForHabit = passedHabits.get(i).computeRecurrence();
+//            int recurrenceForHabitLength = recurrenceForHabit.size();
+//            totalExpectedRecords = totalExpectedRecords + recurrenceForHabitLength;
+//        }
+//
+//
+//        int valueForProgressBar = (sumStreaks / totalExpectedRecords) * 100;
+//
+//        progressBar3.setProgress(valueForProgressBar);
+
+
     }
     /**
      * get this to log out when "back" is pressed on navBar

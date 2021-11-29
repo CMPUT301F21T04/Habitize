@@ -21,6 +21,10 @@ import com.example.habitize.Structural.Habit;
 import com.example.habitize.Structural.Record;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.Query;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,9 +42,14 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
     private ArrayList<String> recurrenceValues;
     private String today;
     private int index;
+    private int sumStreaks;
     private Record passedRecord;
     private Switch editSwitch;
+    private int valueForProgressBar;
+    int totalExpectedRecords = 0;
     String[] titles = {"Info","Image","Location"};
+//    FirebaseFirestore fStore;
+//    FirebaseAuth fAuth;
 
 
 
@@ -63,6 +72,9 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
         pager.setOffscreenPageLimit(8);
         pager.setAdapter(mAdapter);
         tabLayout = findViewById(R.id.recordTabs);
+
+//        fStore = FirebaseFirestore.getInstance();
+//        fAuth = FirebaseAuth.getInstance();
 
         TabLayoutMediator mediator = new TabLayoutMediator(tabLayout, pager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -102,12 +114,28 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
                 Record newRecord = new Record(currentDate,comment,null,id,lat,lon);
                 DatabaseManager.updateRecord(passedHabit.getRecordAddress(),newRecord);
 
-                passedHabits.get(index).incrementStreak();
-                double currentStreak = passedHabits.get(index).getStreak();
-                //the amount of the time the user was supposed to perform record
-                double fullStreak = passedHabits.get(index).computeRecurrence().size();
-                double percentageNumber = (currentStreak/fullStreak)* 100;
-                DatabaseManager.updateHabits(passedHabits);
+//                            passedHabits.get(index).incrementStreak();
+//                            double currentStreak = passedHabits.get(index).getStreak();
+//
+//                            //the amount of the time the user was supposed to perform record
+//                            double fullStreak = passedHabits.get(index).computeRecurrence().size();
+//                            double percentageNumber = (currentStreak/fullStreak)* 100;
+//                            DatabaseManager.updateHabits(passedHabits);
+//
+//            //                CollectionReference collectionReference = fStore.collection("Users");
+//            //                Query getAllStreakValues =
+//
+//                            for(int i=0; i<passedHabits.size(); i++){
+//                                sumStreaks = (int) (sumStreaks + passedHabits.get(i).getStreak());
+//                            }
+//
+//                            for(int i = 0; i<passedHabits.size(); i++) {
+//                                ArrayList<String> recurrenceForHabit = passedHabits.get(i).computeRecurrence();
+//                                int recurrenceForHabitLength = recurrenceForHabit.size();
+//                                totalExpectedRecords = totalExpectedRecords + recurrenceForHabitLength;
+//                            }
+//
+//                            valueForProgressBar = (sumStreaks/totalExpectedRecords) * 100;
 
                 if(recordImg != null){
                     DatabaseManager.storeImage(recordImg,newRecord.getRecordIdentifier());
@@ -201,4 +229,17 @@ public class CreateRecordBase extends AppCompatActivity implements MapFragment.s
             return 3;
         }
     }
+
+    public long getSumStreaks() {
+        return sumStreaks;
+    }
+
+    public int getTotalExpectedRecords() {
+        return totalExpectedRecords;
+    }
+
+    public int getValueForProgressBar(){
+        return valueForProgressBar;
+    }
+
 }
