@@ -1,7 +1,11 @@
 package com.example.habitize.Activities.ViewHabitLists;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,11 +37,16 @@ public class TodaysHabitsActivity extends AppCompatActivity implements HabitAdap
     private SimpleDateFormat simpleDateFormat;
     private Switch reorderT;
     private ArrayList<Habit> allHabits;
+    private TextView emptyView;
+    private ImageView emptyImg;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_habits);
         reorderT = findViewById(R.id.ReOrderToday);
+        
+        emptyImg = (ImageView) findViewById(R.id.emptyImg);
+        emptyView = (TextView) findViewById(R.id.empty);
 
         dataList = new ArrayList<>();
         posInFireBase = new ArrayList<>();
@@ -48,11 +57,43 @@ public class TodaysHabitsActivity extends AppCompatActivity implements HabitAdap
         listView.setAdapter(habitAdapter);
         listView.setLayoutManager(mLayoutManager);
         listView.setItemAnimator(null);
+
+
+
+
         DatabaseManager.getAllHabits(allHabits);
         DatabaseManager.getTodaysHabitsRecycler(dataList, habitAdapter, posInFireBase);
 
+        listView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
+        emptyImg.setVisibility(View.GONE);
+        
+//waiting for firebase to update
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                setVisibility();
+            }
+        }, 1000);
+
+
 
     }
+    //setting visibility if the list is empty vs having a habit
+    //for having an empty state screen
+    public void setVisibility(){
+        if (habitAdapter.getItemCount() != 0) {
+            listView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+            emptyImg.setVisibility(View.GONE);
+        }
+        else {
+            listView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+            emptyImg.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     @Override
     public void endActivity() {

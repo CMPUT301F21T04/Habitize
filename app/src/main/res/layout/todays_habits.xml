@@ -38,22 +38,83 @@
 
     </LinearLayout>
 
-    <ListView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <!--    <android.support.constraint.ConstraintLayout-->
+        <!--        app:layout_constraintTop_toTopOf="parent"-->
+        <!--        android:layout_below="@+id/linearLayout"-->
+        <!--        android:id="@+id/empty_view"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content">-->
+
+        <TextView
+            android:id="@+id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Oops! Looks like you don't have any habits!"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/emptyImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="44dp"
+            android:contentDescription="Oops! Looks like you don't have any habits!"
+            android:src="@drawable/emptylogo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/empty"
+            app:layout_constraintTop_toTopOf="@+id/empty"
+            app:layout_constraintVertical_bias="0.52" />
+        <!--    </android.support.constraint.ConstraintLayout>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--    <ListView-->
+<!--        android:id="@+id/todaysHabit_list"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:choiceMode="singleChoice"-->
+<!--        android:listSelector="#999999"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout"-->
+<!--        app:layout_constraintVertical_bias="0.019"-->
+<!--        android:divider="@android:color/transparent"-->
+<!--        android:dividerHeight="20dp">-->
+
+<!--    </ListView>-->
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/todaysHabit_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:choiceMode="singleChoice"
-        android:listSelector="#999999"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="20dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.019"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="20dp">
+        app:layout_constraintStart_toStartOf="parent"
+        android:focusable="true">
 
-    </ListView>
+
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
