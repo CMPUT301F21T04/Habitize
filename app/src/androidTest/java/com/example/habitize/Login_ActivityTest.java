@@ -48,7 +48,7 @@ public class Login_ActivityTest {
     @Before
     public void initValidate(){
         Intents.init();
-        testEmail = "lll@gmail.com";
+        testEmail = "rick0grimes301@gmail.com";
         testPassword = "12345678";
         testIncorrectPass = "123";
     }
