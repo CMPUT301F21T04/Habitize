@@ -67,7 +67,8 @@ public class TodaysHabitsActivity extends AppCompatActivity implements HabitAdap
         listView.setVisibility(View.GONE);
         emptyView.setVisibility(View.GONE);
         emptyImg.setVisibility(View.GONE);
-
+        
+//waiting for firebase to update
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -78,7 +79,8 @@ public class TodaysHabitsActivity extends AppCompatActivity implements HabitAdap
 
 
     }
-
+    //setting visibility if the list is empty vs having a habit
+    //for having an empty state screen
     public void setVisibility(){
         if (habitAdapter.getItemCount() != 0) {
             listView.setVisibility(View.VISIBLE);

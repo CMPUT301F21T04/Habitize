@@ -55,6 +55,7 @@ public class AllHabitsActivity extends AppCompatActivity implements HabitAdapter
         emptyView.setVisibility(View.GONE);
         emptyImg.setVisibility(View.GONE);
 
+        //waiting for firebase to update
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -64,7 +65,8 @@ public class AllHabitsActivity extends AppCompatActivity implements HabitAdapter
 
     }
 
-
+    //setting visibility if the list is empty vs having a habit
+    //for having an empty state screen
     public void setVisibility(){
         if (dataList.size() != 0) {
             list.setVisibility(View.VISIBLE);
