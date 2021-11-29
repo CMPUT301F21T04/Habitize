@@ -48,7 +48,7 @@ public class HabitEventTest {
     @Before
     public void initValidate(){
         Intents.init();
-        testEmail = "maya123@gmail.com";
+        testEmail = "negen0evil301@gmail.com";
         testPassword = "12345678";
         testTitle = "Learn Arabic";
         testEditTitle = "Learn English";
