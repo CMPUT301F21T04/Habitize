@@ -77,15 +77,6 @@ public class HabitEventsTest {
 
     @Rule
     public ActivityScenarioRule<Login_Activity> activityRule = new ActivityScenarioRule<Login_Activity>(Login_Activity.class);
-//    @Rule
-//    public GrantPermissionRule permissionRule = GrantPermissionRule.grant(android.Manifest.permission.READ_EXTERNAL_STORAGE);
-//    @Rule
-//    public GrantPermissionRule permissionRule2 = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
-//    @Rule
-//    public GrantPermissionRule permissionRule3 = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_COARSE_LOCATION);
-//    @Rule
-//    public GrantPermissionRule permissionRule4 = GrantPermissionRule.grant(Manifest.permission.INTERNET);
-
     @Before
     public void initValidate(){
         Intents.init();
@@ -115,8 +106,11 @@ public class HabitEventsTest {
     }
 
 
-    @Before
-    public void Test_1_createHabit(){
+    @Test
+    public void Test_1_RecordHabitActivity(){
+        // This test only test creation of record with just a comment, the only required one.
+        // There will be a seperate test for images and location
+        //check record activity is displayed
         onView(withId(R.id.addHabitCard)).perform(click());
         SystemClock.sleep(1000);
         onView(withId(R.id.fragmentHabitTitle)).perform(replaceText(testTitle));
@@ -126,19 +120,7 @@ public class HabitEventsTest {
         onView(withText("OK")).perform(click());
         onView(withId(R.id.create_habit_tabs)).perform(click());
         intended(hasComponent(MainActivity.class.getName()));
-    }
-    //Check the add habits button if it works and if it takes you to the right activity
-    //Make sure that its signed in
-    @Test
-    public void Test_0_successLogin() {
-
         intended(hasComponent(MainActivity.class.getName()));
-    }
-    @Test
-    public void Test_1_RecordHabitActivity(){
-        // This test only test creation of record with just a comment, the only required one.
-        // There will be a seperate test for images and location
-        //check record activity is displayed
         SystemClock.sleep(3000);
         onView(withId(R.id.allHabitCard)).perform(scrollTo(),click());
         SystemClock.sleep(3000);
@@ -160,7 +142,7 @@ public class HabitEventsTest {
         onView(withId(R.id.recordDate)).check(matches(isDisplayed())).perform(click());
         onView(withText("Image")).perform(click());
         onView(withText("Location")).perform(click());
-//        onView(isRoot()).perform(ViewActions.pressBack());
+        onView(isRoot()).perform(ViewActions.pressBack());
         //delete the habit
         onView(withId(R.id.delete_button_tabs)).perform(click());
 
