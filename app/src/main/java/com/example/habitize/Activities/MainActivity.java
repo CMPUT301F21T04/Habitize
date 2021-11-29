@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
-    private CardView addHabit,allHabits,todaysHabits,followReq,leaderboard,logOut;
+    private CardView addHabit,allHabits,todaysHabits,followReq,logOut;
     private ProgressBar progressBar3;
     private TextView username;
     private Toolbar toolBar;
@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         username = findViewById(R.id.userNameMain);
         progressBar3 = (ProgressBar)findViewById(R.id.progressBarmain);
         qrBTN = findViewById(R.id.qrbtn);
-        leaderboard = findViewById(R.id.leaderboardCard);
 
 
 
@@ -120,13 +119,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        leaderboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Leaderboard.class);
-                startActivity(intent);
-            }
-        });
     }
     /**
      * get this to log out when "back" is pressed on navBar
