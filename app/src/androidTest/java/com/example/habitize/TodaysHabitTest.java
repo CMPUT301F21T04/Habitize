@@ -35,10 +35,10 @@ public class TodaysHabitTest {
     String testDesc;
     String testStartDate;
 
-
     @Rule
     public ActivityScenarioRule<Login_Activity> activityRule = new ActivityScenarioRule<Login_Activity>(Login_Activity.class);
 
+    //create a habit before testing Today's Habit Screen
     @Before
     public void getToScreenAndMakeAHabit(){
         Intents.init();
@@ -47,8 +47,8 @@ public class TodaysHabitTest {
         testTitle = "Learn French";
         testDesc = "Go on DuoLingo";
         testStartDate = "12/05/2021";
-        onView(withId(R.id.email_login)).perform(replaceText(email));
-        onView(withId(R.id.password_login)).perform(replaceText(password));
+        onView(withId(R.id.email_login)).perform(replaceText(testEmail));
+        onView(withId(R.id.password_login)).perform(replaceText(testPassword));
         SystemClock.sleep(1000);
         onView(withId(R.id.LoginBTN)).perform(click());
         SystemClock.sleep(5000);
@@ -67,18 +67,6 @@ public class TodaysHabitTest {
         onView(withId(R.id.fragmentSaturday)).perform(click());
         onView(withId(R.id.fragmentSunday)).perform(click());
         onView(withId(R.id.create_habit_tabs)).perform(click());
-
-
-
-      //  intended(hasComponent(MainActivity.class.getName()));
-        //onView(withId(R.id.todaysHabits)).perform(click());
-       // intended(hasComponent(TodaysHabitsActivity.class.getName()));
-
-    }
-
-    @After
-    public void tearDown() {
-        Intents.release();
     }
 
     //make a habit and make sure recurrence is made on system's day
@@ -87,8 +75,12 @@ public class TodaysHabitTest {
     public void recurrenceTest(){
         onView(withId(R.id.todayHabitCard)).perform(click());
         onView(withText("Learn French")).perform(click());
-        SystemClock.sleep(5000);
+        SystemClock.sleep(1000);
     }
-    //onData(anything()).inAdapterView(withId(R.id.publicHabit_list)).atPosition(0).perform(click());
+
+    @After
+    public void tearDown() {
+        Intents.release();
+    }
 
 }
